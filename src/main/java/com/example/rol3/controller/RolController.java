@@ -37,7 +37,7 @@ public class RolController {
     @PutMapping
     public ResponseEntity<Rol> update(@RequestBody Rol rol) {
 
-        Rol rolExists = rolService.findById(rol.getId());
+    	Rol rolExists = rolService.findById(rol.getId());
         if (rolExists.getId() == 0) {
             //throw new ModelNotFoundException("ID not found.");
         }
@@ -56,7 +56,7 @@ public class RolController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") int id) {
-        Rol rol = rolService.findById(id);
+    	Rol rol = rolService.findById(id);
         if (rol.getId() == 0) {
             //throw new ModelNotFoundException("ID not found.");
         }

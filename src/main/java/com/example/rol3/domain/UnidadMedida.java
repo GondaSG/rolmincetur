@@ -1,13 +1,10 @@
 package com.example.rol3.domain;
 
-import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,17 +15,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rol {
+public class UnidadMedida {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pk", unique = true, nullable = false)
 	private int id;
-	@Column(length=80)
+	@Column(length=200)
 	private String nombre;
-	@Column(length=600)
+	@Column(length=400)
 	private String descripcion;
-	@ManyToMany
-	Set<Asignacion> asignacion;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -46,11 +44,6 @@ public class Rol {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	public Set<Asignacion> getAsignacion() {
-		return asignacion;
-	}
-	public void setAsignacion(Set<Asignacion> asignacion) {
-		this.asignacion = asignacion;
-	}
+	}	
+	
 }
