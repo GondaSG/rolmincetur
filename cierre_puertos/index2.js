@@ -4,6 +4,8 @@ let codeUbigeo = "";
 //let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
 let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
+let puertoxano;
+let terminalesxano;
 require([
     "esri/core/urlUtils",
     "esri/Map",
@@ -39,25 +41,58 @@ require([
         await $.getJSON(urlServicePuertos, function(response) {
             puerto = response;
         })
-        let valuesCombo = puerto.data.map(t => t.puerto).filter((obj, index, array) => { return array.indexOf(obj) == index });
-        let valuesRadioButton = puerto.data2.map(t => t.terminal).filter((obj, index, array) => { return array.indexOf(obj) == index });
-        console.log(valuesRadioButton);
-        createOptions();
-        prepareTerminal();
+        const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
+        prepareComboAnos()
+        $("#idanos").on("change", function() {
+            puertoxano = puerto.data.filter(t => t.ano == this.value);
+            terminalesxano = puerto.data2.filter(t => t.ano == this.value);
+            const valuesCombo = puertoxano.map(t => t.puerto).filter((obj, index, array) => { return array.indexOf(obj) == index });
+            const valuesRadioButton = terminalesxano.map(t => t.terminal).filter((obj, index, array) => { return array.indexOf(obj) == index });
+            createOptions(valuesCombo);
+            prepareDataBarras(valuesCombo);
+            prepareTerminal(valuesRadioButton);
+            $("input:radio[name=terminales]").on("change", function() {
+                prepareDataTable(this.value);
+            });
+        });
+
         createHighCharts();
-        prepareDataBarras();
         $("#idPuertos").on("change", function() {
             console.log(this.value);
         });
         //$("#idPuertos").on("change");
-        function prepareTerminal() {
+        function prepareTerminal(valuesRadioButton) {
             let values = valuesRadioButton.map((t, index) => `<input type='radio' id='combo${index}' name='terminales' value='${t}'><label for='combo${index}'>${t}</label><br>`);
-            $("#idTerminal").append(values);
+            $("#idTerminal").html(values);
+
         }
 
-        function prepareDataBarras() {
+        function prepareComboAnos() {
+            let values = anos.map((t, index) => `<option id='${index}'> ${t} </option>`);
+            $("#idanos").html(values);
+        }
+
+        function prepareDataTable(_terminal) {
+            const terminal = terminalesxano
+                .filter(t => t.terminal == _terminal);
+            const productos = terminal.map(t => t.producto)
+                .filter((obj, index, array) => { return array.indexOf(obj) == index });
+            const data = productos.map(t => {
+                    let valor = terminal
+                        .filter(t2 => t2.producto == t)
+                        .map(t3 => t3.diasDespacho)
+                        .reduce((a, b) => Number(a) + Number(b), 0);
+                    return { nombre: t, diasAcumulados: valor };
+                }).sort((a, b) => b[1] - a[1])
+                .map(t => `<tr><td>${t.nombre}</td><td>${t.diasAcumulados}</td></tr>`);
+
+            $("#idtable").html(data);
+            return data
+        }
+
+        function prepareDataBarras(valuesCombo) {
             const data = valuesCombo.map(t => {
-                    let acumulado = puerto.data.filter(t2 => t2.puerto == t).map(t => t.díasDeCierre).reduce((a, b) => Number(a) + Number(b), 0)
+                    let acumulado = puertoxano.filter(t2 => t2.puerto == t).map(t => t.díasDeCierre).reduce((a, b) => Number(a) + Number(b), 0)
                     return [t, acumulado]
                 })
                 .sort((a, b) => b[1] - a[1]);
@@ -109,9 +144,9 @@ require([
 
         }
 
-        function createOptions() {
+        function createOptions(valuesCombo) {
             let values = valuesCombo.map((t, index) => `<option id='${index}'> ${t} </option>`);
-            $("#idPuertos").append(values);
+            $("#idPuertos").html(values);
         }
 
         function createHighCharts() {
