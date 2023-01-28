@@ -1,8 +1,8 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-//let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
-let urlServicePuertos = "http://localhost:27185/puerto";
+let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
+//let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
 let terminalesxano;
@@ -77,6 +77,7 @@ require([
                 .filter(t => t.terminal == _terminal);
             const productos = terminal.map(t => t.producto)
                 .filter((obj, index, array) => { return array.indexOf(obj) == index });
+            console.log(productos);
             const data = productos.map(t => {
                     let valor = terminal
                         .filter(t2 => t2.producto == t)
