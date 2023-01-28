@@ -1,8 +1,8 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-//let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
-let urlServicePuertos = "http://localhost:27185/puerto";
+let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
+//let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
 let terminalesxano;
@@ -38,6 +38,63 @@ require([
 
     _proxyurl = "http://gisem.osinergmin.gob.pe/proxy_developer/proxy.ashx";
     $(document).ready(async function() {
+
+        var urlPuertos1 = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/DISPONIBILIDAD_PUERTOS_Capa_vista/FeatureServer/0";
+        var urlPuertos2 = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/DISPONIBILIDAD_PUERTOS_Capa_vista/FeatureServer/1";
+        var urlPuertos3 = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/DISPONIBILIDAD_PUERTOS_Capa_vista/FeatureServer/2";
+        var layer1 = {
+            url: urlPuertos1,
+            title: "",
+            index: 0
+        }
+        var layer2 = {
+            url: urlPuertos2,
+            title: "",
+            index: 0
+        }
+        var layer3 = {
+            url: urlPuertos3,
+            title: "",
+            index: 0
+        }
+
+        map = new Map({
+            basemap: "osm"
+        });
+
+        view = new MapView({
+            container: "map",
+            map: map,
+            center: [-74.049, -8.185],
+            zoom: 5
+        });
+
+        
+
+        $("#map").css("height", "100%");
+
+        var layer_Feature1 = createFeatureLayer(layer1, "1=1");
+        var layer_Feature2 = createFeatureLayer(layer3, "1=1");
+        var layer_Feature3 = createFeatureLayer(layer3, "1=1");
+        map.add(layer_Feature1, 0);
+        map.add(layer_Feature2, 0);
+        map.add(layer_Feature3, 0);
+
+
+        function createFeatureLayer(layer, where) {
+            let featureLayer = new FeatureLayer({
+                url: layer.url,
+                title: layer.title,
+                index: layer.index,
+                uurl: layer.url,
+                outFields: ["*"],
+                definitionExpression: where
+            });
+            return featureLayer;
+        }
+
+
+
         await $.getJSON(urlServicePuertos, function(response) {
             puerto = response;
         })
