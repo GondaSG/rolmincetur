@@ -1,0 +1,11 @@
+.esri-editor .esri-feature-form {
+    width: 100% !important;
+    padding: 0;
+}
+/* .list-group-item{
+    height: 35px
+} */
+.esri-editor__back-button{
+	display:none;
+}
+

@@ -1,0 +1,109 @@
+
+SELECT * from entidad
+INSERT INTO public.entidad(abreviatura, nombre)VALUES ('COMPIAL', 'Comisión Multisectorial Permanente de Inocuidad Alimentaria');
+INSERT INTO public.entidad(abreviatura, nombre)VALUES ('DIGESA', 'Dirección General de Salud Ambiental e Inocuidad Alimentaria del Perú');
+INSERT INTO public.entidad(abreviatura, nombre)VALUES ('SENASA', 'Servicio Nacional de Sanidad Agraria del Perú');
+INSERT INTO public.entidad(abreviatura, nombre)VALUES ('SANIPES', 'Organismo Nacional de Sanidad Pesquera del Perú');
+INSERT INTO public.entidad(abreviatura, nombre)VALUES ('MINCETUR', 'Ministerio de Comercio Exterior y Turismo del Perú');
+INSERT INTO public.entidad(abreviatura, nombre)VALUES ('RREE', 'Ministerio de Relaciones Exteriores');
+	
+
+SELECT * from unidad_medida	
+INSERT INTO public.unidad_medida(nombre)VALUES ('Tonelada');
+INSERT INTO public.unidad_medida(nombre)VALUES ('Kilos');
+INSERT INTO public.unidad_medida(nombre)VALUES ('Litros');	
+
+
+
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Control Oficial', 'Nacional');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Laboratorios Acreditados Externos', 'Nacional');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Otras Instituciones Locales', 'Nacional');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Ciudadanía', 'Nacional');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('ONG', 'Nacional');
+
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('INFOSAN', 'Extranjero');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('RAFF', 'Extranjero');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('USDA', 'Extranjero');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('FDA', 'Extranjero');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Embajada', 'Extranjero');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Vigilancia', 'Extranjero');
+INSERT INTO public.fuente_notificacion(nombre, origen)VALUES ('Otro', 'Otros países');
+select * from fuente_notificacion
+
+
+
+select * from categoria_alimento
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Leche y productos lácteos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Helados y mezclas para helados');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Productos grasos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Productos deshidratados, liofilizados o concentrados y mezclas');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Granos de cereales, leguminosas y derivados');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Azúcares, mieles y productos similares');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Productos de confitería y derivados del cacao');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Productos de panadería, pastelería, galletería y otros');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Alimentos para Regímenes especiales');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Carnes y productos cárnicos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Productos hidrobiológicos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Huevos y ovoproductos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Especias, condimentos y salsas');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Frutas, hortalizas y frutos secos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Comidas preparadas');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Bebidas');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Estimulantes y fruitivos');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Conservas y semiconservas');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Bebidas alcohólicas');
+INSERT INTO public.categoria_alimento(nombre)VALUES ('Piensos');
+
+
+
+TABLAS SIN MANTENIMIENTO -
+
+select * from tipo_notificacion
+
+CREATE TABLE tipo_notificacion (
+	id SERIAL PRIMARY KEY,
+    nombre varchar(50)
+);
+
+INSERT INTO public.tipo_notificacion(nombre)VALUES ('Alerta');
+INSERT INTO public.tipo_notificacion(nombre)VALUES ('Información');
+INSERT INTO public.tipo_notificacion(nombre)VALUES ('Rechazo');
+
+
+
+select * from tipo_peligro
+
+CREATE TABLE tipo_peligro(
+	id SERIAL PRIMARY KEY,
+    nombre varchar(200)
+);
+
+INSERT INTO public.tipo_peligro(nombre)VALUES ('Físico');
+INSERT INTO public.tipo_peligro(nombre)VALUES ('Químico');
+INSERT INTO public.tipo_peligro(nombre)VALUES ('Biológico');
+INSERT INTO public.tipo_peligro(nombre)VALUES ('Otros tipos de peligro');
+
+
+
+select * from tipo_presentacion
+
+CREATE TABLE tipo_presentacion(
+	id SERIAL PRIMARY KEY,
+    nombre varchar(30)
+);
+
+INSERT INTO public.tipo_presentacion(nombre)VALUES ('Bolsa');
+INSERT INTO public.tipo_presentacion(nombre)VALUES ('Tarro');
+INSERT INTO public.tipo_presentacion(nombre)VALUES ('Lata');
+
+
+
+select * from lugar_evento
+
+CREATE TABLE lugar_evento(
+	id SERIAL PRIMARY KEY,
+    nombre varchar(20)
+);
+
+INSERT INTO public.lugar_evento(nombre)VALUES ('Nacional');
+INSERT INTO public.lugar_evento(nombre)VALUES ('Extranjero');
