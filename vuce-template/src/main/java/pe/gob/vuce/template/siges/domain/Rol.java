@@ -52,4 +52,10 @@ public class Rol {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	public Set<Asignacion> getAsignacion() {
+		return asignacion;
+	}
+	public void setAsignacion(Set<Asignacion> asignacion) {
+		this.asignacion = asignacion;
+	}
 }
