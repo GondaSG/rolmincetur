@@ -329,14 +329,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/entidad/7",
+									"raw": "localhost:8080/entidad/5",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"entidad",
-										"7"
+										"5"
 									]
 								}
 							},
@@ -369,6 +369,30 @@
 					]
 				},
 				{
+					"name": "TipoNotificacion",
+					"item": [
+						{
+							"name": "list TipoNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoNotificacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "TipoAlimento",
 					"item": [
 						{
@@ -393,7 +417,103 @@
 					]
 				},
 				{
-					"name": "Notificacion",
+					"name": "OrigenNotificacion",
+					"item": [
+						{
+							"name": "list origen",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/origenNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"origenNotificacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ciudad",
+					"item": [
+						{
+							"name": "list ciudad",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ciudad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudad"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pais",
+					"item": [
+						{
+							"name": "list pais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/pais",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pais"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoPeligro",
+					"item": [
+						{
+							"name": "list TipoPeligro",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoPeligro",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoPeligro"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "NOTIFICACION",
 					"item": [
 						{
 							"name": "list Notificacion",
@@ -451,7 +571,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"productor\": \"07Prod\",\r\n        \"datoImportador\": \"07Import\",\r\n        \"datoExportador\": \"07Export\",\r\n        \"nombreAlimento\": \"07Aliment\",\r\n        \"fechaProduccion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"titulo\": \"07Titulo\",\r\n        \"codigoGenerado\": \"C0070\"\r\n    }"
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"tipoAlimento\": {\"id\": 2},\r\n        \"origenNotificacion\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"productor\": \"10Prod\",\r\n        \"datoImportador\": \"10Import\",\r\n        \"datoExportador\": \"10Export\",\r\n        \"nombreAlimento\": \"10Aliment\",\r\n        \"fechaProduccion\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"titulo\": \"10Titulo\",\r\n        \"codigoGenerado\": \"C0100\"\r\n    }"
 								},
 								"url": {
 									"raw": "http://localhost:8080/notificacion",
@@ -502,14 +622,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/notificacion/6",
+									"raw": "localhost:8080/notificacion/10",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"notificacion",
-										"6"
+										"10"
 									]
 								}
 							},
