@@ -69,6 +69,9 @@ INSERT INTO public.tipo_notificacion(nombre)VALUES ('Alerta');
 INSERT INTO public.tipo_notificacion(nombre)VALUES ('Información');
 INSERT INTO public.tipo_notificacion(nombre)VALUES ('Rechazo');
 
+INSERT INTO public.tipo_notificacion(nombre,descripcion)VALUES ('Alerta', 'Descripcion01');
+INSERT INTO public.tipo_notificacion(nombre,descripcion)VALUES ('Información', 'Descripcion02');
+INSERT INTO public.tipo_notificacion(nombre,descripcion)VALUES ('Rechazo', 'Descripcion03');
 
 
 select * from tipo_peligro
@@ -107,3 +110,16 @@ CREATE TABLE lugar_evento(
 
 INSERT INTO public.lugar_evento(nombre)VALUES ('Nacional');
 INSERT INTO public.lugar_evento(nombre)VALUES ('Extranjero');
+
+
+
+INSERT INTO public.tipo_alimento(nombre)VALUES ('Vitaminas');
+INSERT INTO public.tipo_alimento(nombre)VALUES ('Proteinas');
+
+
+INSERT INTO public.origen_notificacion(nombre)VALUES ('Nacional');
+INSERT INTO public.origen_notificacion(nombre)VALUES ('Internacional');
+
+
+INSERT INTO public.ciudad(nombre,descripcion)VALUES ('Lima', 'ciudad01');
+INSERT INTO public.ciudad(nombre,descripcion)VALUES ('Arequipa', 'ciudad02');

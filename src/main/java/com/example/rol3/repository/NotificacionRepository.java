@@ -1,5 +1,11 @@
 package com.example.rol3.repository;
 
-public interface NotificacionRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.rol3.domain.Notificacion;
+
+@Repository
+public interface NotificacionRepository extends JpaRepository<Notificacion, Integer>{
 
 }

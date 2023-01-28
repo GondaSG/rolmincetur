@@ -1,0 +1,1018 @@
+{
+	"info": {
+		"_postman_id": "cd31f989-bbf2-4092-a49d-a76f67a1daa3",
+		"name": "API Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16915442"
+	},
+	"item": [
+		{
+			"name": "Proyecto-Local",
+			"item": [
+				{
+					"name": "Authenticacion",
+					"item": [
+						{
+							"name": "Autorización Extranet",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8081/v1/vuce-services/template/authorization/extranet",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"v1",
+										"vuce-services",
+										"template",
+										"authorization",
+										"extranet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener Session Info",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Cliente-Id",
+										"value": "mincetur-appmovil",
+										"type": "text"
+									},
+									{
+										"key": "X-Api-Key",
+										"value": "AmwJux54x9",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://authorize-test.vuce.gob.pe/session/info?sesion_id=6367737acacb8c2480be943616312fde&=",
+									"protocol": "https",
+									"host": [
+										"authorize-test",
+										"vuce",
+										"gob",
+										"pe"
+									],
+									"path": [
+										"session",
+										"info"
+									],
+									"query": [
+										{
+											"key": "sesion_id",
+											"value": "6367737acacb8c2480be943616312fde"
+										},
+										{
+											"key": "",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rol",
+					"item": [
+						{
+							"name": "create rol",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/rol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rol"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update rol",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas 2.\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/rol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rol"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail rol",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/rol/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rol",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list rol",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rol"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete rol",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rol/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rol",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Entidad",
+					"item": [
+						{
+							"name": "list entidad",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/entidad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"entidad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete entidad",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/entidad/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"entidad",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create entidad",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"administradorB\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.B\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/entidad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"entidad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update entidad",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 7,\r\n    \"nombre\" : \"administradorBORRAR\",\r\n    \"abreviatura\" : \"ADD2\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/entidad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"entidad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail entidad",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/entidad/5",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"entidad",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoPresentacion",
+					"item": [
+						{
+							"name": "list TipoPresentacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoPresentacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoPresentacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoNotificacion",
+					"item": [
+						{
+							"name": "list TipoNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoNotificacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoAlimento",
+					"item": [
+						{
+							"name": "list TipoPresentacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoAlimento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoAlimento"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrigenNotificacion",
+					"item": [
+						{
+							"name": "list origen",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/origenNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"origenNotificacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ciudad",
+					"item": [
+						{
+							"name": "list ciudad",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ciudad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudad"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pais",
+					"item": [
+						{
+							"name": "list pais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/pais",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pais"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoPeligro",
+					"item": [
+						{
+							"name": "list TipoPeligro",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoPeligro",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoPeligro"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "NOTIFICACION",
+					"item": [
+						{
+							"name": "list Notificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/notificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete Notificacion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/notificacion/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"notificacion",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Notificacion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"tipoAlimento\": {\"id\": 2},\r\n        \"origenNotificacion\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"productor\": \"10Prod\",\r\n        \"datoImportador\": \"10Import\",\r\n        \"datoExportador\": \"10Export\",\r\n        \"nombreAlimento\": \"10Aliment\",\r\n        \"fechaProduccion\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"titulo\": \"10Titulo\",\r\n        \"codigoGenerado\": \"C0100\"\r\n    }"
+								},
+								"url": {
+									"raw": "http://localhost:8080/notificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Notificacion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 7,\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"productor\": \"07Prod\",\r\n        \"datoImportador\": \"07Import\",\r\n        \"datoExportador\": \"07Export\",\r\n        \"nombreAlimento\": \"07Aliment\",\r\n        \"fechaProduccion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"titulo\": \"07Titulo\",\r\n        \"codigoGenerado\": \"C0010\"\r\n    }"
+								},
+								"url": {
+									"raw": "http://localhost:8080/notificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail Notificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/notificacion/10",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"notificacion",
+										"10"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UnidadMedida",
+					"item": [
+						{
+							"name": "LIST UnidadMedida",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE UnidadMedida",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE UnidadMedida",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"administradorB\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.B\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE UnidadMedida",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nombre\": \"xx\",\r\n    \"descripcion\": \" \"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DETAIL   UnidadMedida",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/unidadMedida/4",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "FuenteNotificacion",
+					"item": [
+						{
+							"name": "LIST FuenteNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE FuenteNotificacion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion/13",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion",
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE FuenteNotificacion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"Adm01\",\r\n    \"origen\" : \"Pais\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE FuenteNotificacion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 13,\r\n    \"nombre\": \"Adm02\",\r\n    \"origen\": \"Pais02\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DETAIL   FuenteNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/fuenteNotificacion/13",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion",
+										"13"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CategoriaAlimento",
+					"item": [
+						{
+							"name": "LIST CategoriaAlimento",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/categoriaAlimento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categoriaAlimento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE CategoriaAlimento",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/categoriaAlimento/21",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categoriaAlimento",
+										"21"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE CategoriaAlimento",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"ADMI\",\r\n    \"descripcion\": \"ADMI\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/categoriaAlimento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categoriaAlimento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE CategoriaAlimento",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 21,\r\n    \"nombre\": \"ADMI02\",\r\n    \"descripcion\": \"ADMI02\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/categoriaAlimento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categoriaAlimento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DETAIL   CategoriaAlimento",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/categoriaAlimento/21",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"categoriaAlimento",
+										"21"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
