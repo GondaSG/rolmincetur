@@ -1,11 +1,11 @@
 package pe.gob.vuce.template.siges.domain;
 
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,18 +16,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Entidad {
+public class Pais {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	@SequenceGenerator(name = "entidad_id_seq", sequenceName="entidad_id_seq", allocationSize=1)
+	@SequenceGenerator(name = "pais_id_seq", sequenceName="pais_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=400)
+	@Column(length=250)
 	private String nombre;
-	@Column(length=500)
-	private String abreviatura;
-	
+	@Column(length=400)
+	private String descripcion;
 	
 	public int getId() {
 		return id;
@@ -41,11 +40,10 @@ public class Entidad {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getAbreviatura() {
-		return abreviatura;
+	public String getDescripcion() {
+		return descripcion;
 	}
-	public void setAbreviatura(String abreviatura) {
-		this.abreviatura = abreviatura;
-	}		
-	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}	
 }

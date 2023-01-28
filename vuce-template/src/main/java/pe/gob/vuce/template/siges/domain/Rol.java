@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "rol")
 public class Rol {
 	
 	@Id

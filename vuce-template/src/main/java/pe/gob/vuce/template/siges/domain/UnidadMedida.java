@@ -22,7 +22,7 @@ public class UnidadMedida {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	@SequenceGenerator(name = "tipo_alimento_id_seq", sequenceName="tipo_alimento_id_seq", allocationSize=1)
+	@SequenceGenerator(name = "unidad_medida_id_seq", sequenceName="unidad_medida_id_seq", allocationSize=1)
 	private int id;
 	@Column(length=200)
 	private String nombre;
