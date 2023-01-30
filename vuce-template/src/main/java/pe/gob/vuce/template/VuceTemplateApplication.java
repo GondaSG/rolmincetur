@@ -18,7 +18,7 @@ public class VuceTemplateApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**").allowedOrigins("/**").allowedMethods("*").allowedHeaders("*");
+				registry.addMapping("/**").allowedOrigins("/**").allowedMethods("*").allowedHeaders("*");
 			}
 		};
 	}
