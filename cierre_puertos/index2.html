@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <title>Reporte de </title>
+    <title>Osinergmin</title>
     <!-- Template CSS -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
     <link rel="stylesheet" href="assets/css/template.css">
@@ -12,56 +12,141 @@
 </head>
 
 <body>
-    <section class="main__section__title">
+    <select name="" id="idanos"></select>
+	<header class="header__section">
         <div class="container-fluid">
+            <div class="row align-items-center border-bottom border-primary border-2 g-2">
+                <div class="col-12 col-md-3 col-lg-2 col-xxl-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="./assets/images/logo.svg" alt="Logo" style="max-width: 12rem;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 col-lg-6 col-xxl-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="header__title_main">Estado y Autonomía de Principales Puertos de Hidrocarburos</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 col-xxl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="header__right__title">División de Supervisión Regional</div>
+                            <div class="header__right__source">Fuente: APN, DICAPI, COEN, PETROPERU Y TDP</div>
+                            <div class="header__right__date">Fecha de Actualización: 23/01/2023 05:05:00 p.m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body d-flex justify-content-between">
-                            <h1 class="h4 mb-0">Reporte de acciones efectuadas en LVGLP Informales</h1>
-                            <select name="" id="idanos"></select>
-                            <div>
-                                <div class="dropdown d-inline-block">
-                                    <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-bell"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item border-bottom" href="#">
-                                                <h3 class="h6">Notificaciones</h3>
-                                            </a>
-                                        </li>
-                                        <section class="container_notification" id="divNotifications">
-                                        </section>
-                                    </ul>
-                                </div>
-
-                                <div class="dropdown d-inline-block">
-                                    <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-user"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#" id="userLi">Usuario: </a></li>
-                                        <li><a class="dropdown-item" href="#" id="regionLi">Region:</a></li>
-                                        <li><a class="dropdown-item" href="#" id="closeSession">Cerrar Session</a></li>
-                                    </ul>
-                                </div>
+                        <div class="card-body">
+                            <div class="btn__group__year">
+                                <button type="button" class="btn btn-primary-light text-primary">2016</button>
+                                <button type="button" class="btn btn-primary-light text-primary">2017</button>
+                                <button type="button" class="btn btn-primary-light text-primary">2018</button>
+                                <button type="button" class="btn btn-primary-light text-primary">2019</button>
+                                <button type="button" class="btn btn-primary-light text-primary">2020</button>
+                                <button type="button" class="btn btn-primary-light text-primary">2021</button>
+                                <button type="button" class="btn btn-primary-light text-primary">2022</button>
+                                <button type="button" class="btn btn-primary-light text-primary active">2023</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </header>
 
     <section class="main__section">
         <div class="container-fluid">
             <div class="row g-3">
+				<div class="col-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="pb-2">
+                                Estado: 
+                                <small><i class="fa-solid fa-circle text-primary"></i> ABIERTO</small> 
+                                <small><i class="fa-solid fa-circle text-danger"></i> CERRADO</small>
+                            </div>
+                            
+                            <div class="section__map border">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">				
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6 col-lg-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 class="h6">DÍAS DE CIERRE ACUMULADO</h2>
+                                    <div class="section__info">
+                                        <div id="containerBarra" style="height: 750px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-12 col-md-6 col-lg-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 class="h6">TERMINAL</h2>
+                                    <div class="section__info">
+                                        
+                                        <div class="content__radios py-2 mb-4 text-secondary">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                  CALLAO
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                  CHIMBOTE
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
+                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                  ETEN
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" checked>
+                                                <label class="form-check-label" for="flexRadioDefault4">
+                                                  ILO
+                                                </label>
+                                              </div>
+                                        </div>
+                                        
+                                        <h2 class="h6 text-center"> AUTONOMIA DEL TERMINAL CALLAO AL 23/01/2023 </h2>
+											<table id="idtableProducto">
+											<thead>	
+												<tr>
+													<th>Producto</th>
+													<th>Dias</th>
+												</tr>
+											</thead>
+											<tbody id="idtable"></tbody>
+										</table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				
                 <div class="col-12 col-md-6 col-lg-3 order-1 order-lg-1">
                     <div class="card mb-2 section__bottom__left">
                         <div class="card-body">
                             <p class="text-center h6">Evolución mensual de Casos Registrados y Modificados</p>
-                            <div id="containerBarra" style="height: 750px;"></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -75,15 +160,7 @@
                         <div class="card-body">
                             <div class="row row-cols-lg-2 g-3 mb-4">
                                 <div class="col">
-                                    <table id="idtableProducto">
-                                        <thead>
-                                            <tr>
-                                                <th>Producto</th>
-                                                <th>Dias</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="idtable"></tbody>
-                                    </table>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -94,7 +171,7 @@
                         <select name="" id="idPuertos">
                             
                         </select>
-                        <div id="map"></div>
+                        
                         <section class="legend__mapa">
                             <div class="card">
                                 <div class="card-body">
