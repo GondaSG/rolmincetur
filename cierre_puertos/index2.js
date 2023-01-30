@@ -1,11 +1,12 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
-//let urlServicePuertos = "http://localhost:27185/puerto";
+//let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
+let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
 let terminalesxano;
+let terminalxanolast;
 require([
     "esri/core/urlUtils",
     "esri/Map",
@@ -69,7 +70,7 @@ require([
             zoom: 5
         });
 
-        
+
 
         $("#map").css("height", "100%");
 
@@ -101,16 +102,7 @@ require([
         const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
         prepareComboAnos()
         $("#idanos").on("change", function() {
-            puertoxano = puerto.data.filter(t => t.ano == this.value);
-            terminalesxano = puerto.data2.filter(t => t.ano == this.value);
-            const valuesCombo = puertoxano.map(t => t.puerto).filter((obj, index, array) => { return array.indexOf(obj) == index });
-            const valuesRadioButton = terminalesxano.map(t => t.terminal).filter((obj, index, array) => { return array.indexOf(obj) == index });
-            createOptions(valuesCombo);
-            prepareDataBarras(valuesCombo);
-            prepareTerminal(valuesRadioButton);
-            $("input:radio[name=terminales]").on("change", function() {
-                prepareDataTable(this.value);
-            });
+            prepareData(this.value);
         });
 
         createHighCharts();
@@ -118,6 +110,42 @@ require([
             console.log(this.value);
         });
         //$("#idPuertos").on("change");
+        function prepareData(ano) {
+            puertoxano = puerto.data.filter(t => t.ano == ano);
+            let terminalxpuerto = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
+            let terminalesxano = puerto.data2.filter(t => t.ano == ano);
+
+            const valuesRadioButton = terminalxpuerto.map(t => {
+                let valor = '';
+                let isValues = terminalesxano
+                    .find(t3 => t3.puerto == t);
+                if (!isValues) return valor;
+                valor = terminalesxano
+                    .filter(t2 => t2.puerto == t)
+                    .map(t3 => t3.terminal)
+                    .filter((obj, index, array) => { return array.indexOf(obj) == index })
+                return valor;
+            }).filter(t => t != '');
+
+
+
+            const valuesCombo = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
+            const fecha = terminalesxano.map(t => {
+                    return { fecha1: new Date(t.fecha), date: t.sdate }
+                })
+                .sort((a, b) => b.fecha1 - a.fecha1);
+            if (fecha.length > 0) {
+                let fechalast = fecha[0].date;
+                terminalxanolast = terminalesxano.filter(t => t.sdate == fechalast);
+            }
+            createOptions(valuesCombo);
+            prepareDataBarras(valuesCombo);
+            prepareTerminal(valuesRadioButton);
+            $("input:radio[name=terminales]").on("change", function() {
+                prepareDataTable(this.value, terminalxanolast);
+            });
+        }
+
         function prepareTerminal(valuesRadioButton) {
             let values = valuesRadioButton.map((t, index) => `<input type='radio' id='combo${index}' name='terminales' value='${t}'><label for='combo${index}'>${t}</label><br>`);
             $("#idTerminal").html(values);
@@ -129,29 +157,21 @@ require([
             $("#idanos").html(values);
         }
 
-        function prepareDataTable(_terminal) {
-            const terminal = terminalesxano
-                .filter(t => t.terminal == _terminal);
-            const productos = terminal.map(t => t.producto)
-                .filter((obj, index, array) => { return array.indexOf(obj) == index });
-            console.log(productos);
-            const data = productos.map(t => {
-                    let valor = terminal
-                        .filter(t2 => t2.producto == t)
-                        .map(t3 => t3.diasDespacho)
-                        .reduce((a, b) => Number(a) + Number(b), 0);
-                    return { nombre: t, diasAcumulados: valor };
-                }).sort((a, b) => b[1] - a[1])
-                .map(t => `<tr><td>${t.nombre}</td><td>${t.diasAcumulados}</td></tr>`);
-
-            $("#idtable").html(data);
-            return data
+        function prepareDataTable(_terminal, terminalxanolast) {
+            debugger;
+            const terminal = terminalxanolast
+                .filter(t => t.terminal == _terminal)
+                .map(t => `<tr><td>${t.producto}</td><td>${Math.ceil(Number(t.diasDespacho))}</td></tr>`);
+            $("#idtable").html(terminal);
         }
 
         function prepareDataBarras(valuesCombo) {
             const data = valuesCombo.map(t => {
-                    let acumulado = puertoxano.filter(t2 => t2.puerto == t).map(t => t.díasDeCierre).reduce((a, b) => Number(a) + Number(b), 0)
-                    return [t, acumulado]
+                    let acumulado = puertoxano
+                        .filter(t2 => t2.instalaciónPortuariaEstándar == t)
+                        .map(t3 => t3.díasDeCierre)
+                        .reduce((a, b) => Number(a) + Number(b), 0)
+                    return [t, Number(acumulado.toFixed(2))]
                 })
                 .sort((a, b) => b[1] - a[1]);
             createChartMonth(data);
@@ -159,6 +179,7 @@ require([
 
         function createChartMonth(datas) {
             if (this.chartsMonth != null) {
+                this.chartsMonth.xAxis[0].categories = datas.map(t => t[0]);
                 this.chartsMonth.series[0].setData(datas);
                 this.chartsMonth.redraw();
             } else
@@ -191,7 +212,12 @@ require([
                     series: [{
                         type: 'bar',
                         name: 'Puertos',
-                        data: datas
+                        data: datas,
+                        events: {
+                            click: function(event) {
+                                console.log(event.point.category)
+                            }
+                        }
                     }],
                     legend: {
                         itemStyle: {
