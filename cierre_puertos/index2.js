@@ -349,7 +349,14 @@ require([
                         column: {
                             pointPadding: 0.2,
                             borderWidth: 0
+                        },
+                        bar: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.y}</b>'
+                            }
                         }
+
                     },
                     series: [{
                         type: 'bar',
