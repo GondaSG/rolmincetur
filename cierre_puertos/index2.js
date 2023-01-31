@@ -166,7 +166,7 @@ require([
         }
 
         function prepareTerminal(valuesRadioButton) {
-            let values = valuesRadioButton.map((t, index) => `<div class="form-check"><input class="form-check-input" type="radio" name="terminales" value='${t}' id="combo${index}"><label class="form-check-label" for="combo${index}">${t}</label></div>`);
+            let values = valuesRadioButton.map((t, index) => `<div class="form-check"><input class="form-check-input" type="radio" name="terminales" value='${t}' ${index == 0 ? 'checked':''} id="combo${index}"><label class="form-check-label" for="combo${index}">${t}</label></div>`);
             $("#idTerminal").html(values);
 
         }
@@ -211,6 +211,7 @@ require([
             const valuesRadioButton = getValuesRadioButton([terminal])
             prepareTerminal(valuesRadioButton);
             prepareRadioEventClick();
+            prepareDataTable(terminal, terminalxanolast);
         }
 
         function createChartMonth(datas) {
@@ -283,7 +284,7 @@ require([
 
         }
 
-        function zoomToLayer2(results, _zoom){
+        function zoomToLayer2(results, _zoom) {
             var sourceGraphics = results.features.map(e => { return e.geometry });
             view.goTo(sourceGraphics);
             if (_zoom)
