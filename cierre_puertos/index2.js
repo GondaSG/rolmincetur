@@ -64,26 +64,26 @@ require([
         map = new Map({
             basemap: "osm"
         });
-        
+
         view = new MapView({
             container: "map",
             map: map,
             center: [-74.049, -8.185],
             zoom: 5
         });
-        
 
-        
+
+
         $("#map").css("height", "100%");
-        
+
         var layer_Feature1 = createFeatureLayer(layer1, "1=1");
         var layer_Feature2 = createFeatureLayer(layer2, "1=1");
         var layer_Feature3 = createFeatureLayer(layer3, "1=1");
         map.add(layer_Feature1, 0);
         map.add(layer_Feature2, 0);
-        map.add(layer_Feature3, 0);        
+        map.add(layer_Feature3, 0);
 
-        
+
         let highlight, statesLyrView, citiesLayerView;
 
         //view.whenLayerView(layer_Feature2).then(function(layerView) {
@@ -146,36 +146,37 @@ require([
         //});
 
 
-        
-        view.whenLayerView(layer_Feature3).then(function (featureLayerView) {
-            console.log('layer_Feature3');
-            view.on("click", function (event) {
-              view.hitTest(event).then(function (response) {
-                if (highlight) {
-                    highlight.remove();
-                }
-                if (response.results.length) {
-                    var feature2 = response.results.filter(function (result) {
-                        return result.graphic.layer === layer_Feature3;
-                    });
-                    if (feature2.length > 0) {
-                        var feature = feature2[0].graphic;
-                        highlight = featureLayerView.highlight(feature);
+
+        view.whenLayerView(layer_Feature3).then(function(featureLayerView) {
+            let valor;
+            view.on("click", function(event) {
+                view.hitTest(event).then(function(response) {
+                    if (highlight) {
+                        highlight.remove();
                     }
-                    else {
-                        view.whenLayerView(layer_Feature2).then(function (featureLayerView2) {
-                            console.log('layer_Feature2');
-                            var feature3 = response.results.filter(function (result) {
-                                return result.graphic.layer === layer_Feature2;
-                            });
-                            if (feature3.length > 0) {
-                                var feature4 = feature3[0].graphic;
-                                highlight = featureLayerView2.highlight(feature4);
-                            } 
+                    if (response.results.length) {
+                        var feature2 = response.results.filter(function(result) {
+                            return result.graphic.layer === layer_Feature3;
                         });
+                        if (feature2.length > 0) {
+                            var feature = feature2[0].graphic;
+                            prepareDataBarras([feature.attributes.NOMINS])
+                            prepareDataClick([feature.attributes.NOMINS]);
+                            highlight = featureLayerView.highlight(feature);
+                        } else {
+                            view.whenLayerView(layer_Feature2).then(function(featureLayerView2) {
+                                var feature3 = response.results.filter(function(result) {
+                                    return result.graphic.layer === layer_Feature2;
+                                });
+                                if (feature3.length > 0) {
+                                    var feature4 = feature3[0].graphic;
+                                    prepareDataClick(feature.attributes.NOMINS)
+                                    highlight = featureLayerView2.highlight(feature4);
+                                }
+                            });
+                        }
                     }
-                }                
-              });
+                });
             });
         });
 
@@ -262,6 +263,8 @@ require([
                 $("#idanos>button").removeClass("active");
                 $(this).addClass("active");
                 prepareData($(this).attr("value"));
+                let terminal = $("input:radio[name=terminales]:checked").attr('value')
+                prepareDataTable(terminal, terminalxanolast);
             });
             $('#idanos>button.active').trigger("click");
         }
@@ -275,6 +278,7 @@ require([
                     return `<tr><td>${t.producto}</td><td class='text-center ${status}'>${_diasDespacho}</td></tr>`
                 });
             $("#idtable").html(terminal);
+            $(".etiquetatabla").html(' AUTONOMIA DEL TERMINAL ' + _terminal + ' AL ' + terminalxanolast[0].sdate)
         }
 
         function prepareDataBarras(valuesCombo) {
@@ -289,11 +293,19 @@ require([
             createChartMonth(data);
         }
 
-        function prepareDataClick(terminal) {
-            const valuesRadioButton = getValuesRadioButton([terminal])
+        function prepareDataClick(puerto) {
+            debugger;
+            const valuesRadioButton = getValuesRadioButton([puerto])
             prepareTerminal(valuesRadioButton);
             prepareRadioEventClick();
-            prepareDataTable(terminal, terminalxanolast);
+            let texto = '';
+            if (valuesRadioButton.length) {
+                prepareDataTable(valuesRadioButton[0], terminalxanolast);
+                texto = valuesRadioButton[0];
+            } else {
+                $("#idtable").html(`<tr><td colspan="2" class="text-center">Sin información</td></tr>`);
+                $(".etiquetatabla").html(' AUTONOMIA DEL TERMINAL ')
+            }
         }
 
         function createChartMonth(datas) {
