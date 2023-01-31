@@ -1,16 +1,14 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-//let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
-let urlServicePuertos = "http://localhost:27185/puerto";
+let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
+//let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
 let terminalesxano;
 let terminalxanolast;
-let arrCapa = [{
-    D_Cierre: 44.75,
-
-}]
+let terminalxpuerto;
+let ano;
 require([
     "esri/core/urlUtils",
     "esri/Map",
@@ -112,10 +110,44 @@ require([
 
         function prepareData(ano) {
             puertoxano = getPuertoxAnos(ano);
-            let terminalxpuerto = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
-            let terminalesxano = getTerminalesxAno(ano);
+            terminalxpuerto = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
+            terminalesxano = getTerminalesxAno(ano);
+            const valuesRadioButton = getValuesRadioButton(terminalxpuerto);
+            const valuesCombo = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
+            terminalxanolast = getTerminalxanolast()
+            prepareDataBarras(valuesCombo);
+            prepareTerminal(valuesRadioButton);
+            $("input:radio[name=terminales]").on("change", function() {
+                prepareDataTable(this.value, terminalxanolast);
+            });
+        }
 
-            const valuesRadioButton = terminalxpuerto.map(t => {
+        function getTerminalxanolast() {
+            const fecha = terminalesxano.map(t => {
+                    return { fecha1: new Date(t.fecha), date: t.sdate }
+                })
+                .sort((a, b) => b.fecha1 - a.fecha1);
+            if (fecha.length > 0) {
+                let fechalast = fecha[0].date;
+                terminalxanolast = terminalesxano.filter(t => t.sdate == fechalast);
+            }
+            return terminalxanolast;
+        }
+
+        function getPuertoxAnos(ano) {
+            return puerto.data.filter(t => t.ano == ano);
+        }
+
+        function getTerminalesxAno(ano) {
+            return puerto.data2.filter(t => t.ano == ano);
+        }
+
+        function getAno() {
+            return $("#idanos>button.active").attr("value")
+        }
+
+        function getValuesRadioButton(arrayPuertos) {
+            return arrayPuertos.map(t => {
                 let valor = '';
                 let isValues = terminalesxano
                     .find(t3 => t3.puerto == t);
@@ -126,33 +158,6 @@ require([
                     .filter((obj, index, array) => { return array.indexOf(obj) == index })
                 return valor;
             }).filter(t => t != '');
-            const valuesCombo = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
-            const fecha = terminalesxano.map(t => {
-                    return { fecha1: new Date(t.fecha), date: t.sdate }
-                })
-                .sort((a, b) => b.fecha1 - a.fecha1);
-            if (fecha.length > 0) {
-                let fechalast = fecha[0].date;
-                terminalxanolast = terminalesxano.filter(t => t.sdate == fechalast);
-            }
-            //createOptions(valuesCombo);
-            prepareDataBarras(valuesCombo);
-            prepareTerminal(valuesRadioButton);
-            $("input:radio[name=terminales]").on("change", function() {
-                prepareDataTable(this.value, terminalxanolast);
-            });
-        }
-
-        function arrayOrganice(array) {
-            return array.filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index })
-        }
-
-        function getPuertoxAnos(ano) {
-            return puerto.data.filter(t => t.ano == ano);
-        }
-
-        function getTerminalesxAno(ano) {
-            return puerto.data2.filter(t => t.ano == ano);
         }
 
         function prepareTerminal(valuesRadioButton) {
@@ -164,15 +169,17 @@ require([
         function prepareComboAnos() {
             let values = anos.map(t => `<button type="button" value='${t}' class="btn btn-primary-light text-primary">${t}</button>`).reverse();
             $("#idanos").html(values);
+            let lastano = anos[0];
+            $('#idanos>button[value=' + lastano + ']').addClass("active");
             $("#idanos>button").on("click", function() {
                 $("#idanos>button").removeClass("active");
                 $(this).addClass("active");
                 prepareData($(this).attr("value"));
             });
+            $('#idanos>button.active').trigger("click");
         }
 
         function prepareDataTable(_terminal, terminalxanolast) {
-            debugger;
             const terminal = terminalxanolast
                 .filter(t => t.terminal == _terminal)
                 .map(t => {
@@ -193,6 +200,12 @@ require([
                 })
                 .sort((a, b) => b[1] - a[1]);
             createChartMonth(data);
+        }
+
+        function prepareDataClick() {
+            const valuesRadioButton = getValuesRadioButton([event.point.category])
+            prepareTerminal(valuesRadioButton);
+
         }
 
         function createChartMonth(datas) {
@@ -231,13 +244,11 @@ require([
                         type: 'bar',
                         name: 'Puertos',
                         data: datas,
+                        allowPointSelect: true,
                         events: {
                             click: function(event) {
                                 console.log(event.point.category)
-                                layer_Feature3 = null;
-                                map.remove(layer_Feature3);
-                                layer_Feature3 = createFeatureLayer(layer3, "NOMINS='" + event.point.category + "'");
-                                map.add(layer_Feature3)
+                                prepareDataClick(event.point.category)
                             }
                         }
                     }],
