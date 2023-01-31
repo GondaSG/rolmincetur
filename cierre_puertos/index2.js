@@ -117,6 +117,11 @@ require([
             terminalxanolast = getTerminalxanolast()
             prepareDataBarras(valuesCombo);
             prepareTerminal(valuesRadioButton);
+            prepareRadioEventClick();
+
+        }
+
+        function prepareRadioEventClick() {
             $("input:radio[name=terminales]").on("change", function() {
                 prepareDataTable(this.value, terminalxanolast);
             });
@@ -202,10 +207,10 @@ require([
             createChartMonth(data);
         }
 
-        function prepareDataClick() {
-            const valuesRadioButton = getValuesRadioButton([event.point.category])
+        function prepareDataClick(terminal) {
+            const valuesRadioButton = getValuesRadioButton([terminal])
             prepareTerminal(valuesRadioButton);
-
+            prepareRadioEventClick();
         }
 
         function createChartMonth(datas) {
