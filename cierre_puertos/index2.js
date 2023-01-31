@@ -277,6 +277,7 @@ require([
                 prepareData($(this).attr("value"));
                 let terminal = $("input:radio[name=terminales]:checked").attr('value')
                 prepareDataTable(terminal, terminalxanolast);
+                resetLayer();
             });
             $('#idanos>button.active').trigger("click");
         }
@@ -370,6 +371,13 @@ require([
                     },
                 });
 
+        }
+
+        function resetLayer() {
+            layer_Feature3.definitionExpression = "1 = 1";
+            layer_Feature2.definitionExpression = "1 = 1";
+            view.center = [-74.049, -8.185];
+            view.zoom = 5;
         }
 
         function graficarPuntoPuerto(puerto) {
