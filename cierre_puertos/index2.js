@@ -207,7 +207,17 @@ require([
         function prepareRadioEventClick() {
             $("input:radio[name=terminales]").on("change", function() {
                 prepareDataTable(this.value, terminalxanolast);
+                getPuertoxTerminal(this.value)
             });
+        }
+
+        function getPuertoxTerminal(_terminal) {
+            let array = terminalxanolast.filter(t => t.terminal == _terminal)
+            if (array.length) {
+                prepareDataBarras([array[0].puerto])
+                graficarPuntoPuerto(array[0].puerto)
+            }
+            return null
         }
 
         function getTerminalxanolast() {
@@ -294,7 +304,6 @@ require([
         }
 
         function prepareDataClick(puerto) {
-            debugger;
             const valuesRadioButton = getValuesRadioButton([puerto])
             prepareTerminal(valuesRadioButton);
             prepareRadioEventClick();
@@ -347,24 +356,7 @@ require([
                         allowPointSelect: true,
                         events: {
                             click: function(event) {
-                                console.log(event.point.category);
-                                layer_Feature3.definitionExpression = "NOMINS = '" + event.point.category + "'";
-                                var query = layer_Feature3.createQuery();
-                                query.where = "NOMINS = '" + event.point.category + "'";
-                                query.spatialRelationship = "intersects";
-                                layer_Feature3.queryFeatures(query).then(response => {
-                                    console.log(response);
-                                    zoomToLayer2(response, 10);
-                                });
-
-                                layer_Feature2.definitionExpression = "TERMINAL = '" + event.point.category + "'";
-                                var query = layer_Feature2.createQuery();
-                                query.where = "TERMINAL = '" + event.point.category + "'";
-                                query.spatialRelationship = "intersects";
-                                layer_Feature2.queryFeatures(query).then(response => {
-                                    console.log(response);
-                                    zoomToLayer2(response, 10);
-                                });
+                                graficarPuntoPuerto(event.point.category)
                                 prepareDataClick(event.point.category)
                             }
                         }
@@ -376,6 +368,29 @@ require([
                     },
                 });
 
+        }
+
+        function graficarPuntoPuerto(puerto) {
+            console.log(puerto);
+            layer_Feature3.definitionExpression = "NOMINS = '" + puerto + "'";
+            var query = layer_Feature3.createQuery();
+            query.where = "NOMINS = '" + puerto + "'";
+            query.spatialRelationship = "intersects";
+            layer_Feature3.queryFeatures(query).then(response => {
+                console.log(response);
+                zoomToLayer2(response, 10);
+            });
+        }
+
+        function graficarPuntoTerminal(terminal) {
+            layer_Feature2.definitionExpression = "TERMINAL = '" + terminal + "'";
+            var query = layer_Feature2.createQuery();
+            query.where = "TERMINAL = '" + terminal + "'";
+            query.spatialRelationship = "intersects";
+            layer_Feature2.queryFeatures(query).then(response => {
+                console.log(response);
+                zoomToLayer2(response, 10);
+            });
         }
 
         function zoomToLayer2(results, _zoom) {
