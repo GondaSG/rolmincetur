@@ -77,7 +77,7 @@ require([
         $("#map").css("height", "100%");
 
         var layer_Feature1 = createFeatureLayer(layer1, "1=1");
-        var layer_Feature2 = createFeatureLayer(layer3, "1=1");
+        var layer_Feature2 = createFeatureLayer(layer2, "1=1");
         var layer_Feature3 = createFeatureLayer(layer3, "1=1");
         map.add(layer_Feature1, 0);
         map.add(layer_Feature2, 0);
@@ -252,18 +252,42 @@ require([
                         allowPointSelect: true,
                         events: {
                             click: function(event) {
-                                console.log(event.point.category)
+                                console.log(event.point.category);
+                                layer_Feature3.definitionExpression = "NOMINS = '" + event.point.category + "'";
+                                var query = layer_Feature3.createQuery();
+                                query.where = "NOMINS = '" + event.point.category + "'";
+                                query.spatialRelationship = "intersects";
+                                layer_Feature3.queryFeatures(query).then(response => {
+                                    console.log(response);
+                                    zoomToLayer2(response, 10);
+                                });
+
+                                layer_Feature2.definitionExpression = "TERMINAL = '" + event.point.category + "'";
+                                var query = layer_Feature2.createQuery();
+                                query.where = "TERMINAL = '" + event.point.category + "'";
+                                query.spatialRelationship = "intersects";
+                                layer_Feature2.queryFeatures(query).then(response => {
+                                    console.log(response);
+                                    zoomToLayer2(response, 10);
+                                });
                                 prepareDataClick(event.point.category)
                             }
                         }
                     }],
                     legend: {
                         itemStyle: {
-                            color: 'white'
+                            color: 'black'
                         }
                     },
                 });
 
+        }
+
+        function zoomToLayer2(results, _zoom){
+            var sourceGraphics = results.features.map(e => { return e.geometry });
+            view.goTo(sourceGraphics);
+            if (_zoom)
+                view.zoom = 10;
         }
 
         //function createOptions(valuesCombo) {
