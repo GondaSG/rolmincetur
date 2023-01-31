@@ -64,25 +64,35 @@ require([
         map = new Map({
             basemap: "osm"
         });
-
+        
         view = new MapView({
             container: "map",
             map: map,
             center: [-74.049, -8.185],
             zoom: 5
         });
+        
 
-
-
+        
         $("#map").css("height", "100%");
-
+        
         var layer_Feature1 = createFeatureLayer(layer1, "1=1");
         var layer_Feature2 = createFeatureLayer(layer2, "1=1");
         var layer_Feature3 = createFeatureLayer(layer3, "1=1");
         map.add(layer_Feature1, 0);
         map.add(layer_Feature2, 0);
-        map.add(layer_Feature3, 0);
+        map.add(layer_Feature3, 0);        
 
+        
+        let highlight, statesLyrView, citiesLayerView;
+
+        //view.whenLayerView(layer_Feature2).then(function(layerView) {
+        //   statesLyrView = layerView;
+        //});
+        //
+        //view.whenLayerView(layer_Feature3).then(function(layerView) {
+        //   citiesLayerView = layerView;
+        //});
 
         function createFeatureLayer(layer, where) {
             let featureLayer = new FeatureLayer({
@@ -96,6 +106,78 @@ require([
             return featureLayer;
         }
 
+        //view.on("click", (event) => {
+        //    console.log(event);
+        //    const query = {
+        //        geometry: event.mapPoint,
+        //        returnGeometry: true
+        //    };
+        //    statesLyrView.queryFeatures(query).then((results) => {
+        //        console.log(results);
+        //        if (results.features.length > 0) {
+        //            if (highlight) {
+        //                highlight.remove();
+        //            }
+        //            // highlight query results
+        //            highlight = statesLyrView.highlight(results.features);
+        //
+        //            citiesLayerView.filter = {
+        //                geometry: results.features[0].geometry
+        //            };
+        //        }
+        //        else {
+        //            citiesLayerView.queryFeatures(query).then((results) => {
+        //                console.log(results);
+        //                if (results.features.length > 0) {
+        //                    if (highlight) {
+        //                        highlight.remove();
+        //                    }
+        //                    // highlight query results
+        //                    highlight = citiesLayerView.highlight(results.features);
+        //
+        //                    layer_Feature3.filter = {
+        //                        geometry: results.features[0].geometry
+        //                    };
+        //                }
+        //            });
+        //        }               
+        //
+        //    });
+        //});
+
+
+        
+        view.whenLayerView(layer_Feature3).then(function (featureLayerView) {
+            console.log('layer_Feature3');
+            view.on("click", function (event) {
+              view.hitTest(event).then(function (response) {
+                if (highlight) {
+                    highlight.remove();
+                }
+                if (response.results.length) {
+                    var feature2 = response.results.filter(function (result) {
+                        return result.graphic.layer === layer_Feature3;
+                    });
+                    if (feature2.length > 0) {
+                        var feature = feature2[0].graphic;
+                        highlight = featureLayerView.highlight(feature);
+                    }
+                    else {
+                        view.whenLayerView(layer_Feature2).then(function (featureLayerView2) {
+                            console.log('layer_Feature2');
+                            var feature3 = response.results.filter(function (result) {
+                                return result.graphic.layer === layer_Feature2;
+                            });
+                            if (feature3.length > 0) {
+                                var feature4 = feature3[0].graphic;
+                                highlight = featureLayerView2.highlight(feature4);
+                            } 
+                        });
+                    }
+                }                
+              });
+            });
+        });
 
 
         await $.getJSON(urlServicePuertos, function(response) {
