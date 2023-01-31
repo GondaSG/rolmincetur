@@ -7,6 +7,10 @@ let puerto;
 let puertoxano;
 let terminalesxano;
 let terminalxanolast;
+let arrCapa = [{
+    D_Cierre: 44.75,
+
+}]
 require([
     "esri/core/urlUtils",
     "esri/Map",
@@ -101,19 +105,15 @@ require([
         })
         const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
         prepareComboAnos()
-        $("#idanos").on("change", function() {
-            prepareData(this.value);
-        });
-
         createHighCharts();
         $("#idPuertos").on("change", function() {
             console.log(this.value);
         });
-        //$("#idPuertos").on("change");
+
         function prepareData(ano) {
-            puertoxano = puerto.data.filter(t => t.ano == ano);
+            puertoxano = getPuertoxAnos(ano);
             let terminalxpuerto = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
-            let terminalesxano = puerto.data2.filter(t => t.ano == ano);
+            let terminalesxano = getTerminalesxAno(ano);
 
             const valuesRadioButton = terminalxpuerto.map(t => {
                 let valor = '';
@@ -126,9 +126,6 @@ require([
                     .filter((obj, index, array) => { return array.indexOf(obj) == index })
                 return valor;
             }).filter(t => t != '');
-
-
-
             const valuesCombo = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
             const fecha = terminalesxano.map(t => {
                     return { fecha1: new Date(t.fecha), date: t.sdate }
@@ -138,7 +135,7 @@ require([
                 let fechalast = fecha[0].date;
                 terminalxanolast = terminalesxano.filter(t => t.sdate == fechalast);
             }
-            createOptions(valuesCombo);
+            //createOptions(valuesCombo);
             prepareDataBarras(valuesCombo);
             prepareTerminal(valuesRadioButton);
             $("input:radio[name=terminales]").on("change", function() {
@@ -146,22 +143,43 @@ require([
             });
         }
 
+        function arrayOrganice(array) {
+            return array.filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index })
+        }
+
+        function getPuertoxAnos(ano) {
+            return puerto.data.filter(t => t.ano == ano);
+        }
+
+        function getTerminalesxAno(ano) {
+            return puerto.data2.filter(t => t.ano == ano);
+        }
+
         function prepareTerminal(valuesRadioButton) {
-            let values = valuesRadioButton.map((t, index) => `<input type='radio' id='combo${index}' name='terminales' value='${t}'><label for='combo${index}'>${t}</label><br>`);
+            let values = valuesRadioButton.map((t, index) => `<div class="form-check"><input class="form-check-input" type="radio" name="terminales" value='${t}' id="combo${index}"><label class="form-check-label" for="combo${index}">${t}</label></div>`);
             $("#idTerminal").html(values);
 
         }
 
         function prepareComboAnos() {
-            let values = anos.map((t, index) => `<option id='${index}'> ${t} </option>`);
+            let values = anos.map(t => `<button type="button" value='${t}' class="btn btn-primary-light text-primary">${t}</button>`).reverse();
             $("#idanos").html(values);
+            $("#idanos>button").on("click", function() {
+                $("#idanos>button").removeClass("active");
+                $(this).addClass("active");
+                prepareData($(this).attr("value"));
+            });
         }
 
         function prepareDataTable(_terminal, terminalxanolast) {
             debugger;
             const terminal = terminalxanolast
                 .filter(t => t.terminal == _terminal)
-                .map(t => `<tr><td>${t.producto}</td><td>${Math.ceil(Number(t.diasDespacho))}</td></tr>`);
+                .map(t => {
+                    let _diasDespacho = Math.ceil(Number(t.diasDespacho))
+                    let status = _diasDespacho < 6 ? 'bg-danger' : _diasDespacho < 16 ? 'bg-warning' : 'bg-success';
+                    return `<tr><td>${t.producto}</td><td class='text-center ${status}'>${_diasDespacho}</td></tr>`
+                });
             $("#idtable").html(terminal);
         }
 
@@ -216,6 +234,10 @@ require([
                         events: {
                             click: function(event) {
                                 console.log(event.point.category)
+                                layer_Feature3 = null;
+                                map.remove(layer_Feature3);
+                                layer_Feature3 = createFeatureLayer(layer3, "NOMINS='" + event.point.category + "'");
+                                map.add(layer_Feature3)
                             }
                         }
                     }],
@@ -228,10 +250,10 @@ require([
 
         }
 
-        function createOptions(valuesCombo) {
-            let values = valuesCombo.map((t, index) => `<option id='${index}'> ${t} </option>`);
-            $("#idPuertos").html(values);
-        }
+        //function createOptions(valuesCombo) {
+        //    let values = valuesCombo.map((t, index) => `<option id='${index}'> ${t} </option>`);
+        //    $("#idPuertos").html(values);
+        //}
 
         function createHighCharts() {
             const textBright = '#F0F0F3';
