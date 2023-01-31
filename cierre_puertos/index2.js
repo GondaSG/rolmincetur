@@ -73,8 +73,9 @@ require([
         });
 
 
-
+        
         $("#map").css("height", "100%");
+        $("#containerBarra").css("height", window.innerHeight - 160 + "px");
 
         var layer_Feature1 = createFeatureLayer(layer1, "1=1");
         var layer_Feature2 = createFeatureLayer(layer2, "1=1");
