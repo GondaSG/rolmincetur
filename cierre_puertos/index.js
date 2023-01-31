@@ -1,7 +1,7 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
+let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/puerto/apipuertos/puerto";
 //let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
@@ -73,7 +73,7 @@ require([
         });
 
 
-        
+
         $("#map").css("height", "100%");
         $("#containerBarra").css("height", window.innerHeight - 160 + "px");
 
@@ -186,6 +186,7 @@ require([
 
         await $.getJSON(urlServicePuertos, function(response) {
             puerto = response;
+            $(".loading").hide()
         })
         const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
         prepareComboAnos()
