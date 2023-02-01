@@ -108,8 +108,8 @@ require([
         $("#containerBarra").css("height", window.innerHeight - 160 + "px");
 
         var layer_Feature1 = createFeatureLayer(layer1, "1=1");
-        var layer_Feature2 = createFeatureLayer(layer2, "1=1");
-        var layer_Feature3 = createFeatureLayer(layer3, "1=1");
+        var layer_Feature2 = createFeatureLayer1(layer2, "1=1");
+        var layer_Feature3 = createFeatureLayer2(layer3, "1=1");
         map.add(layer_Feature1, 0);
         map.add(layer_Feature2, 0);
         map.add(layer_Feature3, 0);
@@ -124,7 +124,6 @@ require([
         //view.whenLayerView(layer_Feature3).then(function(layerView) {
         //   citiesLayerView = layerView;
         //});
-
         function createFeatureLayer(layer, where) {
             let featureLayer = new FeatureLayer({
                 url: layer.url,
@@ -132,7 +131,61 @@ require([
                 //index: layer.index,
                 //uurl: layer.url,
                 outFields: ["*"],
-                definitionExpression: where
+                definitionExpression: where            
+            });
+            return featureLayer;
+        }
+
+        function createFeatureLayer1(layer, where) {
+            let featureLayer = new FeatureLayer({
+                url: layer.url,
+                title: layer.title,
+                //index: layer.index,
+                //uurl: layer.url,
+                outFields: ["*"],
+                definitionExpression: where,
+                popupTemplate: {
+                  title: layer.title,
+                  content: [
+                    {
+                        type: "fields",
+                        fieldInfos: [
+                            { fieldName: "FECHA_ACTUALIZA", label: "fecha de actualizacion" },
+                            { fieldName: "OPERADOR", label: "Operador" },
+                            { fieldName: "FECHA_ACT_TXT", label: "Fecha Actualización" },
+                            { fieldName: "TERMINAL", label: "Terminal" }
+                        ]
+                    }
+                  ]
+                }
+            
+            });
+            return featureLayer;
+        }
+
+        function createFeatureLayer2(layer, where) {
+            let featureLayer = new FeatureLayer({
+                url: layer.url,
+                title: layer.title,
+                //index: layer.index,
+                //uurl: layer.url,
+                outFields: ["*"],
+                definitionExpression: where,
+                popupTemplate: {
+                  title: layer.title,
+                  content: [
+                    {
+                        type: "fields",
+                        fieldInfos: [
+                            { fieldName: "ESTADO", label: "Estado" },
+                            { fieldName: "NOMINS", label: "Instalación Portuaria" },
+                            { fieldName: "F_Apertura", label: "Última Apertura" },
+                            { fieldName: "F_Cierre", label: "Último Cierre" }
+                        ]
+                    }
+                  ]
+                }
+            
             });
             return featureLayer;
         }
