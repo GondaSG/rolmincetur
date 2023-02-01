@@ -22,7 +22,9 @@ require([
     "esri/widgets/BasemapGallery",
     "esri/widgets/Editor",
     "esri/widgets/Search",
-    "esri/widgets/Home"
+    "esri/widgets/Home",
+    "esri/widgets/Legend",
+    "esri/widgets/LayerList"
 ], (
     urlUtils,
     Map,
@@ -36,7 +38,9 @@ require([
     BasemapGallery,
     Editor,
     Search,
-    Home
+    Home,
+    Legend,
+    LayerList
 ) => {
 
     _proxyurl = "http://gisem.osinergmin.gob.pe/proxy_developer/proxy.ashx";
@@ -47,17 +51,17 @@ require([
         var urlPuertos3 = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/DISPONIBILIDAD_PUERTOS_Capa_vista/FeatureServer/2";
         var layer1 = {
             url: urlPuertos1,
-            title: "",
+            title: "Límite Departamental",
             index: 0
         }
         var layer2 = {
             url: urlPuertos2,
-            title: "",
+            title: "Terminales",
             index: 0
         }
         var layer3 = {
             url: urlPuertos3,
-            title: "",
+            title: "Puertos",
             index: 0
         }
 
@@ -72,8 +76,34 @@ require([
             zoom: 5
         });
 
+        var homeWidget = new Home({
+            view: view
+        });
 
-
+        let layerList = new LayerList({
+            view: view,            
+            listItemCreatedFunction: (event) => {
+                const item = event.item;
+                if (item.layer.type != "group") {
+                    // don't show legend twice
+                    item.panel = {
+                        content: "legend",
+                        open: true
+                    };
+                }
+            }
+        });
+        layerListExpand = new Expand({
+            expandIconClass: "esri-icon-layer-list",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
+            view: view,
+            content: layerList
+        });
+        // Adds widget below other elements in the top left corner of the view
+        
+        
+        //view.ui.add(homeWidget, "top-left");
+        view.ui.add(layerListExpand, "top-left");
         $("#map").css("height", "100%");
         $("#containerBarra").css("height", window.innerHeight - 160 + "px");
 
@@ -99,8 +129,8 @@ require([
             let featureLayer = new FeatureLayer({
                 url: layer.url,
                 title: layer.title,
-                index: layer.index,
-                uurl: layer.url,
+                //index: layer.index,
+                //uurl: layer.url,
                 outFields: ["*"],
                 definitionExpression: where
             });
@@ -191,7 +221,7 @@ require([
         })
         const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
         prepareComboAnos()
-        createHighCharts();
+        //createHighCharts();
         $("#idPuertos").on("change", function() {
             console.log(this.value);
         });
@@ -343,7 +373,7 @@ require([
                     yAxis: {
                         title: {
                             useHTML: true,
-                            text: 'dias acumulados'
+                            text: 'días acumulados'
                         }
                     },
                     credits: {
