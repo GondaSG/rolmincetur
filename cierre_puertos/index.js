@@ -170,11 +170,12 @@ require([
                                     return result.graphic.layer === layer_Feature2;
                                 });
                                 if (feature3.length > 0) {
-                                    debugger;
                                     var feature4 = feature3[0].graphic;
                                     prepareDataBarras([feature4.attributes.TERMINAL])
                                     prepareDataClick([feature4.attributes.TERMINAL.replace("CALLAO", "CALLAO (MUELLE 7)")]);
                                     highlight = featureLayerView2.highlight(feature4);
+                                } else {
+                                    prepareData(getAno());
                                 }
                             });
                         }
