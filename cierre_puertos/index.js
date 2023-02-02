@@ -103,17 +103,17 @@ require([
         });
 
         let layerList = new LayerList({
-            view: view,
-            listItemCreatedFunction: (event) => {
-                const item = event.item;
-                if (item.layer.title == "Puerto Cerrado" || item.layer.title == "Puerto Abierto") {
-                    // don't show legend twice
-                    item.panel = {
-                        content: "legend",
-                        open: true
-                    };
-                }
-            }
+            view: view
+            //listItemCreatedFunction: (event) => {
+            //    const item = event.item;
+            //    if (item.layer.title == "Puerto Cerrado" || item.layer.title == "Puerto Abierto") {
+            //        // don't show legend twice
+            //        item.panel = {
+            //            content: "legend",
+            //            open: true
+            //        };
+            //    }
+            //}
         });
         layerListExpand = new Expand({
             expandIconClass: "esri-icon-layer-list", // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
@@ -525,7 +525,7 @@ require([
                             t.estado == "ABIERTO" ? symBlue : symRed,
                             t, {
                                 title: "Puertos",
-                                content: "<strong>Puerto</strong> : {puerto}<br><strong>Zona</strong> : {zona}<br><strong>Instalación Portuaria</strong> : {instalaciónPortuaria}<br><strong>Fecha cierre</strong> : {fechaHoraCierre}<br><strong>Fecha Apertura</strong> : {fechaHoraApertura}<br><strong>Tiempo Puerto Cerrado</strong> : {tiempoPuertoCerrado}<br><strong>Motivo</strong> : {motivo}<br><strong>Instalacion Portuaria Estándar</strong> : {instalaciónPortuariaEstándar}<br><strong>Días Cierre</strong> : {díasDeCierre}<br><strong>Año</strong> : {ano}<br><strong>Mes</strong> : {mes}<br><strong>Comentarios</strong> : {comentarios}<br><strong>Estado</strong> : {estado}"
+                                content: "<strong>Estado</strong> : {estado}<br><strong>Instalacion Portuaria</strong> : {instalaciónPortuariaEstándar}<br><strong>Motivo</strong> : {motivo}<br><strong>Últimó Cierre</strong> : {fechaHoraCierre}<br><strong>Última Apertura</strong> : {fechaHoraApertura}"
                             }
                         )
                     }
