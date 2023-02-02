@@ -1,8 +1,8 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-//let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/puerto/apipuertos/puerto";
-let urlServicePuertos = "http://localhost:27185/puerto";
+let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/puerto/apipuertos/puerto";
+//let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
 let terminalesxano;
@@ -106,8 +106,7 @@ require([
             view: view,
             listItemCreatedFunction: (event) => {
                 const item = event.item;
-                debugger;
-                if (item.layer.type != "group") {
+                if (item.layer.title == "Puerto Cerrado" || item.layer.title == "Puerto Abierto") {
                     // don't show legend twice
                     item.panel = {
                         content: "legend",
@@ -249,44 +248,43 @@ require([
         //});
 
 
-        /*
-                view.whenLayerView(layer_Feature3).then(function(featureLayerView) {
-                    let valor;
-                    view.on("click", function(event) {
-                        view.hitTest(event).then(function(response) {
-                            if (highlight) {
-                                highlight.remove();
-                            }
-                            if (response.results.length) {
-                                var feature2 = response.results.filter(function(result) {
-                                    return result.graphic.layer === layer_Feature3;
-                                });
-                                if (feature2.length > 0) {
-                                    var feature = feature2[0].graphic;
-                                    prepareDataBarras([feature.attributes.NOMINS])
-                                    prepareDataClick([feature.attributes.NOMINS]);
-                                    highlight = featureLayerView.highlight(feature);
-                                } else {
-                                    view.whenLayerView(layer_Feature2).then(function(featureLayerView2) {
-                                        var feature3 = response.results.filter(function(result) {
-                                            return result.graphic.layer === layer_Feature2;
-                                        });
-                                        if (feature3.length > 0) {
-                                            var feature4 = feature3[0].graphic;
-                                            prepareDataBarras([feature4.attributes.TERMINAL])
-                                            prepareDataClick([feature4.attributes.TERMINAL.replace("CALLAO", "CALLAO (MUELLE 7)")]);
-                                            highlight = featureLayerView2.highlight(feature4);
-                                        } else {
-                                            prepareData(getAno());
-                                        }
-                                    });
-                                }
+
+        //view.whenLayerView(layer_Feature3).then(function(featureLayerView) {
+        view.on("click", function(event) {
+            view.hitTest(event).then(function(response) {
+                if (highlight) {
+                    highlight.remove();
+                }
+                if (response.results.length) {
+                    var feature2 = response.results.filter(function(result) {
+                        return result.graphic.layer.title === "Puerto Abierto" || result.graphic.layer.title === "Puerto Cerrado";
+                    });
+                    if (feature2.length > 0) {
+                        var feature = feature2[0].graphic;
+                        prepareDataBarras([feature.attributes.instalaciónPortuariaEstándar])
+                        prepareDataClick([feature.attributes.instalaciónPortuariaEstándar]);
+                        //highlight = featureLayerView.highlight(feature);
+                    } else {
+                        view.whenLayerView(layer_Feature2).then(function(featureLayerView2) {
+                            var feature3 = response.results.filter(function(result) {
+                                return result.graphic.layer === layer_Feature2;
+                            });
+                            if (feature3.length > 0) {
+                                var feature4 = feature3[0].graphic;
+                                prepareDataBarras([feature4.attributes.TERMINAL])
+                                prepareDataClick([feature4.attributes.TERMINAL.replace("CALLAO", "CALLAO (MUELLE 7)")]);
+                                highlight = featureLayerView2.highlight(feature4);
+                            } else {
+                                prepareData(getAno());
                             }
                         });
-                    });
-                });
+                    }
+                }
+            });
+        });
+        //});
 
-        */
+
         await $.getJSON(urlServicePuertos, function(response) {
             puerto = response;
             $(".loading").hide()
@@ -548,6 +546,8 @@ require([
                 let layer2 = new GraphicsLayer({
                     graphics: grapishtt.filter(t => t.attributes.estado == "CERRADO")
                 });
+                layer.title = "Puerto Abierto"
+                layer2.title = "Puerto Cerrado"
                 map.add(layer);
                 map.add(layer2);
             });
