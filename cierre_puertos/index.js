@@ -132,8 +132,8 @@ require([
         var layer_Feature1 = await createFeatureLayer(layer1, "1=1");
         var layer_Feature2 = await createFeatureLayer1(layer2, "1=1");
         var layer_Feature3 = await createFeatureLayer2(layer3, "1=1");
-        //map.add(layer_Feature1, 0);
-        //map.add(layer_Feature2, 0);
+        map.add(layer_Feature1, 0);
+        map.add(layer_Feature2, 0);
         //map.add(layer_Feature3, 0);
 
 
@@ -165,20 +165,7 @@ require([
                 //index: layer.index,
                 //uurl: layer.url,
                 outFields: ["*"],
-                definitionExpression: where,
-                popupTemplate: {
-                    title: layer.title,
-                    content: [{
-                        type: "fields",
-                        fieldInfos: [
-                            { fieldName: "FECHA_ACTUALIZA", label: "fecha de actualizacion" },
-                            { fieldName: "OPERADOR", label: "Operador" },
-                            { fieldName: "FECHA_ACT_TXT", label: "Fecha Actualización" },
-                            { fieldName: "TERMINAL", label: "Terminal" }
-                        ]
-                    }]
-                }
-
+                definitionExpression: where
             });
             return featureLayer;
         }
@@ -298,6 +285,7 @@ require([
 
         function prepareData(ano) {
             puertoxano = getPuertoxAnos(ano);
+            createFeatureLayers()
             terminalxpuerto = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
             terminalesxano = getTerminalesxAno(ano);
             const valuesRadioButton = getValuesRadioButton(terminalxpuerto);
@@ -519,9 +507,11 @@ require([
             if (_zoom)
                 view.zoom = 10;
         }
-        createFeatureLayers()
 
         function createFeatureLayers() {
+            map.remove(map.findLayerById("blue"))
+            map.remove(map.findLayerById("red"))
+            debugger
             let query = new Query();
             query.where = "1=1";
             query.outFields = ["*"];
@@ -548,6 +538,9 @@ require([
                 });
                 layer.title = "Puerto Abierto"
                 layer2.title = "Puerto Cerrado"
+                layer.id = "blue"
+                layer2.id = "red"
+                debugger
                 map.add(layer);
                 map.add(layer2);
             });
