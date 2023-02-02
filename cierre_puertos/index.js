@@ -104,16 +104,16 @@ require([
 
         let layerList = new LayerList({
             view: view
-            //listItemCreatedFunction: (event) => {
-            //    const item = event.item;
-            //    if (item.layer.title == "Puerto Cerrado" || item.layer.title == "Puerto Abierto") {
-            //        // don't show legend twice
-            //        item.panel = {
-            //            content: "legend",
-            //            open: true
-            //        };
-            //    }
-            //}
+                //listItemCreatedFunction: (event) => {
+                //    const item = event.item;
+                //    if (item.layer.title == "Puerto Cerrado" || item.layer.title == "Puerto Abierto") {
+                //        // don't show legend twice
+                //        item.panel = {
+                //            content: "legend",
+                //            open: true
+                //        };
+                //    }
+                //}
         });
         layerListExpand = new Expand({
             expandIconClass: "esri-icon-layer-list", // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
@@ -274,6 +274,7 @@ require([
 
         await $.getJSON(urlServicePuertos, function(response) {
             puerto = response;
+            $(".header__right__date").html("Fecha de Actualización: " + puerto.lastModificationDate);
             $(".loading").hide()
         })
         const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
@@ -511,19 +512,30 @@ require([
         function createFeatureLayers() {
             map.remove(map.findLayerById("blue"))
             map.remove(map.findLayerById("red"))
-            debugger
             let query = new Query();
             query.where = "1=1";
             query.outFields = ["*"];
             query.returnGeometry = true;
             layer_Feature3.queryFeatures(query).then(function(results) {
-                let grapishtt = puertoxano.map(t => {
-                    let valores = results.features.filter(fea => fea.attributes.NOMINS == t.instalaciónPortuariaEstándar)
+                let puertoxanoxmajorDate = puertoxano
+                    .map(t => t.instalaciónPortuariaEstándar)
+                    .filter((obj, index, array) => { return array.indexOf(obj) == index })
+                    .map(t => {
+                        let data = puertoxano
+                            .filter(filter => filter.instalaciónPortuariaEstándar == t)
+                            .filter(filter => filter.fechaHoraApertura != null)
+                            .map(_map => {
+                                return { date: new Date(_map.fechaHoraApertura), content: _map }
+                            }).sort((a, b) => a.date + b.date)
+                        return data[0]
+                    });
+                let grapishtt = puertoxanoxmajorDate.map(t => {
+                    let valores = results.features.filter(fea => fea.attributes.NOMINS == t.content.instalaciónPortuariaEstándar)
                     if (valores.length) {
                         return new Graphic(
                             valores[0].geometry,
-                            t.estado == "ABIERTO" ? symBlue : symRed,
-                            t, {
+                            t.content.estado == "ABIERTO" ? symBlue : symRed,
+                            t.content, {
                                 title: "Puertos",
                                 content: "<strong>Estado</strong> : {estado}<br><strong>Instalacion Portuaria</strong> : {instalaciónPortuariaEstándar}<br><strong>Motivo</strong> : {motivo}<br><strong>Últimó Cierre</strong> : {fechaHoraCierre}<br><strong>Última Apertura</strong> : {fechaHoraApertura}"
                             }
@@ -540,7 +552,6 @@ require([
                 layer2.title = "Puerto Cerrado"
                 layer.id = "blue"
                 layer2.id = "red"
-                debugger
                 map.add(layer);
                 map.add(layer2);
             });
