@@ -1,7 +1,7 @@
 let map, view;
 let isOffice = true;
 let codeUbigeo = "";
-let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/apipuertos/puerto";
+let urlServicePuertos = "https://gisem.osinergmin.gob.pe/validar/puerto/apipuertos/puerto";
 //let urlServicePuertos = "http://localhost:27185/puerto";
 let puerto;
 let puertoxano;
@@ -9,12 +9,29 @@ let terminalesxano;
 let terminalxanolast;
 let terminalxpuerto;
 let ano;
+const symBlue = {
+    type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+    color: "blue",
+    outline: { // autocasts as new SimpleLineSymbol()
+        color: [74, 33, 255, 0.5],
+        width: 5
+    }
+};
+const symRed = {
+    type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+    color: "red",
+    outline: { // autocasts as new SimpleLineSymbol()
+        color: [250, 0, 35, 0.5],
+        width: 5
+    }
+};
 require([
     "esri/core/urlUtils",
     "esri/Map",
     "esri/config",
     "esri/views/MapView",
     "esri/WebMap",
+    "esri/Graphic",
     "esri/layers/FeatureLayer",
     "esri/tasks/QueryTask",
     "esri/tasks/support/Query",
@@ -22,13 +39,18 @@ require([
     "esri/widgets/BasemapGallery",
     "esri/widgets/Editor",
     "esri/widgets/Search",
-    "esri/widgets/Home"
+    "esri/widgets/Home",
+    "esri/widgets/Legend",
+    "esri/widgets/LayerList",
+    "esri/symbols/SimpleMarkerSymbol",
+    "esri/layers/GraphicsLayer"
 ], (
     urlUtils,
     Map,
     esriConfig,
     MapView,
     WebMap,
+    Graphic,
     FeatureLayer,
     QueryTask,
     Query,
@@ -36,7 +58,11 @@ require([
     BasemapGallery,
     Editor,
     Search,
-    Home
+    Home,
+    Legend,
+    LayerList,
+    SimpleMarkerSymbol,
+    GraphicsLayer
 ) => {
 
     _proxyurl = "http://gisem.osinergmin.gob.pe/proxy_developer/proxy.ashx";
@@ -47,17 +73,17 @@ require([
         var urlPuertos3 = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/DISPONIBILIDAD_PUERTOS_Capa_vista/FeatureServer/2";
         var layer1 = {
             url: urlPuertos1,
-            title: "",
+            title: "Límite Departamental",
             index: 0
         }
         var layer2 = {
             url: urlPuertos2,
-            title: "",
+            title: "Terminales",
             index: 0
         }
         var layer3 = {
             url: urlPuertos3,
-            title: "",
+            title: "Puertos",
             index: 0
         }
 
@@ -72,17 +98,43 @@ require([
             zoom: 5
         });
 
+        var homeWidget = new Home({
+            view: view
+        });
 
-        
+        let layerList = new LayerList({
+            view: view
+                //listItemCreatedFunction: (event) => {
+                //    const item = event.item;
+                //    if (item.layer.title == "Puerto Cerrado" || item.layer.title == "Puerto Abierto") {
+                //        // don't show legend twice
+                //        item.panel = {
+                //            content: "legend",
+                //            open: true
+                //        };
+                //    }
+                //}
+        });
+        layerListExpand = new Expand({
+            expandIconClass: "esri-icon-layer-list", // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
+            view: view,
+            content: layerList
+        });
+        // Adds widget below other elements in the top left corner of the view
+
+
+        //view.ui.add(homeWidget, "top-left");
+        view.ui.add(layerListExpand, "top-left");
         $("#map").css("height", "100%");
         $("#containerBarra").css("height", window.innerHeight - 160 + "px");
 
-        var layer_Feature1 = createFeatureLayer(layer1, "1=1");
-        var layer_Feature2 = createFeatureLayer(layer2, "1=1");
-        var layer_Feature3 = createFeatureLayer(layer3, "1=1");
+        var layer_Feature1 = await createFeatureLayer(layer1, "1=1");
+        var layer_Feature2 = await createFeatureLayer1(layer2, "1=1");
+        var layer_Feature3 = await createFeatureLayer2(layer3, "1=1");
         map.add(layer_Feature1, 0);
         map.add(layer_Feature2, 0);
-        map.add(layer_Feature3, 0);
+        //map.add(layer_Feature3, 0);
 
 
         let highlight, statesLyrView, citiesLayerView;
@@ -94,15 +146,51 @@ require([
         //view.whenLayerView(layer_Feature3).then(function(layerView) {
         //   citiesLayerView = layerView;
         //});
-
         function createFeatureLayer(layer, where) {
             let featureLayer = new FeatureLayer({
                 url: layer.url,
                 title: layer.title,
-                index: layer.index,
-                uurl: layer.url,
+                //index: layer.index,
+                //uurl: layer.url,
                 outFields: ["*"],
                 definitionExpression: where
+            });
+            return featureLayer;
+        }
+
+        function createFeatureLayer1(layer, where) {
+            let featureLayer = new FeatureLayer({
+                url: layer.url,
+                title: layer.title,
+                //index: layer.index,
+                //uurl: layer.url,
+                outFields: ["*"],
+                definitionExpression: where
+            });
+            return featureLayer;
+        }
+
+        function createFeatureLayer2(layer, where) {
+            let featureLayer = new FeatureLayer({
+                url: layer.url,
+                title: layer.title,
+                //index: layer.index,
+                //uurl: layer.url,
+                outFields: ["*"],
+                definitionExpression: where,
+                popupTemplate: {
+                    title: layer.title,
+                    content: [{
+                        type: "fields",
+                        fieldInfos: [
+                            { fieldName: "ESTADO", label: "Estado" },
+                            { fieldName: "NOMINS", label: "Instalación Portuaria" },
+                            { fieldName: "F_Apertura", label: "Última Apertura" },
+                            { fieldName: "F_Cierre", label: "Último Cierre" }
+                        ]
+                    }]
+                }
+
             });
             return featureLayer;
         }
@@ -148,54 +236,57 @@ require([
 
 
 
-        view.whenLayerView(layer_Feature3).then(function(featureLayerView) {
-            let valor;
-            view.on("click", function(event) {
-                view.hitTest(event).then(function(response) {
-                    if (highlight) {
-                        highlight.remove();
-                    }
-                    if (response.results.length) {
-                        var feature2 = response.results.filter(function(result) {
-                            return result.graphic.layer === layer_Feature3;
-                        });
-                        if (feature2.length > 0) {
-                            var feature = feature2[0].graphic;
-                            prepareDataBarras([feature.attributes.NOMINS])
-                            prepareDataClick([feature.attributes.NOMINS]);
-                            highlight = featureLayerView.highlight(feature);
-                        } else {
-                            view.whenLayerView(layer_Feature2).then(function(featureLayerView2) {
-                                var feature3 = response.results.filter(function(result) {
-                                    return result.graphic.layer === layer_Feature2;
-                                });
-                                if (feature3.length > 0) {
-                                    debugger;
-                                    var feature4 = feature3[0].graphic;
-                                    prepareDataBarras([feature4.attributes.TERMINAL])
-                                    prepareDataClick([feature4.attributes.TERMINAL.replace("CALLAO", "CALLAO (MUELLE 7)")]);
-                                    highlight = featureLayerView2.highlight(feature4);
-                                }
+        //view.whenLayerView(layer_Feature3).then(function(featureLayerView) {
+        view.on("click", function(event) {
+            view.hitTest(event).then(function(response) {
+                if (highlight) {
+                    highlight.remove();
+                }
+                if (response.results.length) {
+                    var feature2 = response.results.filter(function(result) {
+                        return result.graphic.layer.title === "Puerto Abierto" || result.graphic.layer.title === "Puerto Cerrado";
+                    });
+                    if (feature2.length > 0) {
+                        var feature = feature2[0].graphic;
+                        prepareDataBarras([feature.attributes.instalaciónPortuariaEstándar])
+                        prepareDataClick([feature.attributes.instalaciónPortuariaEstándar]);
+                        //highlight = featureLayerView.highlight(feature);
+                    } else {
+                        view.whenLayerView(layer_Feature2).then(function(featureLayerView2) {
+                            var feature3 = response.results.filter(function(result) {
+                                return result.graphic.layer === layer_Feature2;
                             });
-                        }
+                            if (feature3.length > 0) {
+                                var feature4 = feature3[0].graphic;
+                                prepareDataBarras([feature4.attributes.TERMINAL])
+                                prepareDataClick([feature4.attributes.TERMINAL.replace("CALLAO", "CALLAO (MUELLE 7)")]);
+                                highlight = featureLayerView2.highlight(feature4);
+                            } else {
+                                prepareData(getAno());
+                            }
+                        });
                     }
-                });
+                }
             });
         });
+        //});
 
 
         await $.getJSON(urlServicePuertos, function(response) {
             puerto = response;
+            $(".header__right__date").html("Fecha de Actualización: " + puerto.lastModificationDate);
+            $(".loading").hide()
         })
         const anos = puerto.data.map(t => t.ano).filter((obj, index, array) => { return array.indexOf(obj) == index });
         prepareComboAnos()
-        createHighCharts();
+            //createHighCharts();
         $("#idPuertos").on("change", function() {
             console.log(this.value);
         });
 
         function prepareData(ano) {
             puertoxano = getPuertoxAnos(ano);
+            createFeatureLayers()
             terminalxpuerto = puertoxano.map(t => t.instalaciónPortuariaEstándar).filter(t => t != '-').filter((obj, index, array) => { return array.indexOf(obj) == index });
             terminalesxano = getTerminalesxAno(ano);
             const valuesRadioButton = getValuesRadioButton(terminalxpuerto);
@@ -341,7 +432,7 @@ require([
                     yAxis: {
                         title: {
                             useHTML: true,
-                            text: 'dias acumulados'
+                            text: 'días acumulados'
                         }
                     },
                     credits: {
@@ -418,10 +509,53 @@ require([
                 view.zoom = 10;
         }
 
-        //function createOptions(valuesCombo) {
-        //    let values = valuesCombo.map((t, index) => `<option id='${index}'> ${t} </option>`);
-        //    $("#idPuertos").html(values);
-        //}
+        function createFeatureLayers() {
+            map.remove(map.findLayerById("blue"))
+            map.remove(map.findLayerById("red"))
+            let query = new Query();
+            query.where = "1=1";
+            query.outFields = ["*"];
+            query.returnGeometry = true;
+            layer_Feature3.queryFeatures(query).then(function(results) {
+                let puertoxanoxmajorDate = puertoxano
+                    .map(t => t.instalaciónPortuariaEstándar)
+                    .filter((obj, index, array) => { return array.indexOf(obj) == index })
+                    .map(t => {
+                        let data = puertoxano
+                            .filter(filter => filter.instalaciónPortuariaEstándar == t)
+                            .filter(filter => filter.fechaHoraApertura != null)
+                            .map(_map => {
+                                return { date: new Date(_map.fechaHoraApertura), content: _map }
+                            }).sort((a, b) => a.date + b.date)
+                        return data[0]
+                    });
+                let grapishtt = puertoxanoxmajorDate.map(t => {
+                    let valores = results.features.filter(fea => fea.attributes.NOMINS == t.content.instalaciónPortuariaEstándar)
+                    if (valores.length) {
+                        return new Graphic(
+                            valores[0].geometry,
+                            t.content.estado == "ABIERTO" ? symBlue : symRed,
+                            t.content, {
+                                title: "Puertos",
+                                content: "<strong>Estado</strong> : {estado}<br><strong>Instalacion Portuaria</strong> : {instalaciónPortuariaEstándar}<br><strong>Motivo</strong> : {motivo}<br><strong>Últimó Cierre</strong> : {fechaHoraCierre}<br><strong>Última Apertura</strong> : {fechaHoraApertura}"
+                            }
+                        )
+                    }
+                }).filter(t => t != undefined)
+                let layer = new GraphicsLayer({
+                    graphics: grapishtt.filter(t => t.attributes.estado == "ABIERTO")
+                });
+                let layer2 = new GraphicsLayer({
+                    graphics: grapishtt.filter(t => t.attributes.estado == "CERRADO")
+                });
+                layer.title = "Puerto Abierto"
+                layer2.title = "Puerto Cerrado"
+                layer.id = "blue"
+                layer2.id = "red"
+                map.add(layer);
+                map.add(layer2);
+            });
+        }
 
         function createHighCharts() {
             const textBright = '#F0F0F3';

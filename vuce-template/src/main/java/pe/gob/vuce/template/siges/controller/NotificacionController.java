@@ -1,10 +1,7 @@
 package pe.gob.vuce.template.siges.controller;
 
-import java.util.List;
-
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,57 +9,85 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.entity.PaginatorEntity;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.NotificacionService;
 
 @RestController
 @RequestMapping(value="notificacion")
-public class NotificacionController {
+public class NotificacionController extends BaseController {
 
 	@Autowired
-	NotificacionService notificacionService;
+	NotificacionService _service;
 	
 	@GetMapping
-	public ResponseEntity<List<Notificacion>> findAll(){
-		return ResponseEntity.ok(notificacionService.findAll());
+	public ResponseEntity<Notificacion> findAll(){
+		ResponseEntity<Notificacion> response = new ResponseEntity<>();
+		try {
+			response = this._service.findAll();
+		} catch (Exception ex) {
+			response.setMessage(ex);
+		}
+		return response;
 	}
 	
 	@PostMapping
-	public ResponseEntity<Notificacion> create(@RequestBody Notificacion notificacion){
-		Notificacion response = notificacionService.create(notificacion);
-		
-		return new ResponseEntity<Notificacion>(response, HttpStatus.CREATED);
+	public ResponseEntity<?> create(@RequestBody Notificacion item){
+		try {
+			ResponseEntity<?> response = this._service.create(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
 	}
 	
 	@PutMapping
-	public ResponseEntity<Notificacion> update(@RequestBody Notificacion notificacion){
-		
-		Notificacion notificacionExists = notificacionService.findById(notificacion.getId());
-		if (notificacionExists.getId()==0) {
-			
+	public ResponseEntity<?> update(@RequestBody Notificacion item){
+		try {
+			ResponseEntity<?> response = this._service.create(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-		
-		Notificacion response = notificacionService.update(notificacion);
-		return ResponseEntity.ok(response);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") int id){
-		Notificacion notificacion = notificacionService.findById(id);
-		if (notificacion.getId()==0) {
-			
+	public ResponseEntity<?> delete(@PathVariable("id") int id){
+		try {
+			ResponseEntity<?> response = this._service.delete(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-		notificacionService.delete(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Notificacion> findById(@PathVariable("id") int id){
-		Notificacion notificacion = notificacionService.findById(id);
-		if (notificacion.getId() ==0) {
-			
+		try {
+			ResponseEntity<Notificacion> response = this._service.findById(id);
+			return response;
+		} catch(Exception ex) {
+			return super.getJSON(ex);
 		}
-		return ResponseEntity.ok(notificacion);
-	}	
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<Notificacion> search(@RequestParam("item") String item) throws IOException {
+		try {
+			PaginatorEntity paginator = super.setPaginator();
+			NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
+			ResponseEntity<Notificacion> response = this._service.search(item2, paginator);
+			return response;
+		} catch (Exception ex) {	
+			return super.getJSON(ex);
+		}
+	}
 }
