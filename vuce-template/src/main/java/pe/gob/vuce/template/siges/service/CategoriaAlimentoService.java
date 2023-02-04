@@ -1,15 +1,14 @@
 package pe.gob.vuce.template.siges.service;
 
-import java.util.List;
-
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 
 public interface CategoriaAlimentoService {
-
-	CategoriaAlimento create(CategoriaAlimento categoriaAlimento);
-	CategoriaAlimento findById(int id);
-	CategoriaAlimento update(CategoriaAlimento categoriaAlimento);
-	List<CategoriaAlimento> findAll();
-	void delete(int id);
-
+	
+	ResponseEntity create(CategoriaAlimento item) throws Exception;
+	ResponseEntity<CategoriaAlimento> findById(int id) throws Exception;
+	CategoriaAlimento update(CategoriaAlimento notificacion);
+	ResponseEntity<CategoriaAlimento> findAll() throws Exception;
+	ResponseEntity delete(int id) throws Exception;
+	
 }
