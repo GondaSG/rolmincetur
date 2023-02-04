@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,8 +46,10 @@ public class Notificacion {
 	@Column
 	private Boolean flagSenasa;	
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaNotificacion;
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaEvento;	
 	@ManyToOne
     @JoinColumn(name = "tipo_notificacion_id", referencedColumnName = "id")
@@ -74,8 +78,10 @@ public class Notificacion {
     @JoinColumn(name = "tipo_alimento_id", referencedColumnName = "id")
 	private TipoAlimento tipoAlimento;	
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaProduccion;
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaVencimiento;	
 	@Column(length=250)
 	private String titulo;

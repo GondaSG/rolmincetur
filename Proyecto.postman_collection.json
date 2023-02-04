@@ -571,7 +571,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"tipoAlimento\": {\"id\": 2},\r\n        \"origenNotificacion\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"productor\": \"10Prod\",\r\n        \"datoImportador\": \"10Import\",\r\n        \"datoExportador\": \"10Export\",\r\n        \"nombreAlimento\": \"10Aliment\",\r\n        \"fechaProduccion\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-27T05:00:00.000+00:00\",\r\n        \"titulo\": \"10Titulo\",\r\n        \"codigoGenerado\": \"C0100\"\r\n    }"
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false\r\n    }"
 								},
 								"url": {
 									"raw": "http://localhost:8080/notificacion",
@@ -622,14 +622,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/notificacion/10",
+									"raw": "localhost:8080/notificacion/19",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"notificacion",
-										"10"
+										"19"
 									]
 								}
 							},
