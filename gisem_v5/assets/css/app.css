@@ -1,2 +1,101 @@
-:root{--ap-header-height: 53px;--ap-middle-height-left: 320px;--ap-middle-height-right: 380px}.main__section__title{padding-top:.25rem;padding-bottom:.25rem;min-height:var(--ap-header-height)}.main__section{padding-top:.25rem;padding-bottom:.25rem}.section__mapa{position:relative;height:75vh}@media(min-width: 576px){.section__mapa{height:calc(100vh - (var(--ap-header-height) + 35px))}}@media(min-width: 609px){.section__mapa{height:calc(100vh - (var(--ap-header-height) + 36px))}}@media(min-width: 662px){.section__mapa{height:calc(100vh - (var(--ap-header-height) + 9px))}}@media(min-width: 768px){.section__mapa{height:calc(100vh - (var(--ap-header-height) + 14px))}}.section__middle__left{height:var(--ap-middle-height-left);overflow:auto}.section__bottom__left{height:calc((100vh - (var(--ap-middle-height-left) + var(--ap-header-height) + 74px))/2)}.legend__mapa{position:absolute;bottom:1rem;left:1rem;max-width:220px;font-size:.9em}.section__middle__right{height:var(--ap-middle-height-right);overflow-y:auto}.login__layout{display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;max-width:25rem;margin-right:auto;margin-left:auto}.icon__container{min-width:2rem}.container_notification{max-height:50vh;overflow-y:auto}.esri-ui-corner .esri-component.esri-widget--panel{width:auto;max-width:400px}
+:root {
+    --ap-header-height: 68px;
+    --ap-middle-height-left: 320px;
+    --ap-middle-height-right: 380px;
+    --ap-top-tittles: 160px;
+}
+
+.main__section__title {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    min-height: var(--ap-header-height)
+}
+
+.main__section {
+    padding-top: .25rem;
+    padding-bottom: .25rem
+}
+
+.section__mapa {
+    position: relative;
+    height: 75vh
+}
+
+@media(min-width: 576px) {
+    .section__mapa {
+        height: calc(100vh - (var(--ap-header-height) + 72px))
+    }
+}
+
+@media(min-width: 609px) {
+    .section__mapa {
+        height: calc(100vh - (var(--ap-header-height) + 72px))
+    }
+}
+
+@media(min-width: 662px) {
+    .section__mapa {
+        height: calc(100vh - (var(--ap-header-height) + 9px))
+    }
+}
+
+@media(min-width: 768px) {
+    .section__mapa {
+        height: calc(100vh - (var(--ap-header-height) + 14px + var(--ap-top-tittles)))
+    }
+}
+
+.section__tittles__top {
+    height: var(--ap-top-tittles);
+    overflow: auto
+}
+
+.section__middle__left {
+    height: var(--ap-middle-height-left);
+    overflow: auto
+}
+
+.section__bottom__left {
+    height: calc((100vh - (var(--ap-middle-height-left) + var(--ap-header-height) + 74px))/2)
+}
+
+.legend__mapa {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    max-width: 220px;
+    font-size: .9em
+}
+
+.section__middle__right {
+    height: var(--ap-middle-height-right);
+    overflow-y: auto
+}
+
+.login__layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    max-width: 25rem;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.icon__container {
+    min-width: 2rem
+}
+
+.container_notification {
+    max-height: 50vh;
+    overflow-y: auto
+}
+
+.esri-ui-corner .esri-component.esri-widget--panel {
+    width: auto;
+    max-width: 400px
+}
+
+
 /*# sourceMappingURL=app.css.map */
