@@ -1,6 +1,7 @@
 package pe.gob.vuce.template.siges.domain;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
@@ -82,7 +85,8 @@ public class Notificacion {
 	@Column(length=250)
 	private String codigoGenerado;
 	
-	
+	@ManyToMany
+	Set<Estado> estado;
 	
 	
 	public Boolean getFlagDigesa() {
@@ -222,5 +226,11 @@ public class Notificacion {
 	}
 	public void setCodigoGenerado(String codigoGenerado) {
 		this.codigoGenerado = codigoGenerado;
+	}
+	public Set<Estado> getEstado() {
+		return estado;
+	}
+	public void setEstado(Set<Estado> estado) {
+		this.estado = estado;
 	}
 }

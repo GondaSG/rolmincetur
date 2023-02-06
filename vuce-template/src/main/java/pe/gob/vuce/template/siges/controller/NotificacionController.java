@@ -47,6 +47,17 @@ public class NotificacionController extends BaseController {
 		}
 	}
 	
+	@RequestMapping(value = "/updatestatus")
+	@PostMapping
+	public ResponseEntity<?> estados(@RequestBody Notificacion item){
+		try {
+			ResponseEntity<?> response = this._service.updateStatus(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Notificacion item){
 		try {
