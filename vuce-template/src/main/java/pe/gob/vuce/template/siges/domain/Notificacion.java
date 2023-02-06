@@ -1,6 +1,7 @@
 package pe.gob.vuce.template.siges.domain;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,8 +49,10 @@ public class Notificacion {
 	@Column
 	private Boolean flagSenasa;	
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaNotificacion;
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaEvento;	
 	@ManyToOne
     @JoinColumn(name = "tipo_notificacion_id", referencedColumnName = "id")
@@ -74,15 +81,18 @@ public class Notificacion {
     @JoinColumn(name = "tipo_alimento_id", referencedColumnName = "id")
 	private TipoAlimento tipoAlimento;	
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaProduccion;
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaVencimiento;	
 	@Column(length=250)
 	private String titulo;
 	@Column(length=250)
 	private String codigoGenerado;
 	
-	
+	@ManyToMany
+	Set<Estado> estado;
 	
 	
 	public Boolean getFlagDigesa() {
@@ -222,5 +232,11 @@ public class Notificacion {
 	}
 	public void setCodigoGenerado(String codigoGenerado) {
 		this.codigoGenerado = codigoGenerado;
+	}
+	public Set<Estado> getEstado() {
+		return estado;
+	}
+	public void setEstado(Set<Estado> estado) {
+		this.estado = estado;
 	}
 }

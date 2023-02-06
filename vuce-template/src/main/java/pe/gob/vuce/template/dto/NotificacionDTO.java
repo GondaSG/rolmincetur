@@ -24,6 +24,16 @@ public class NotificacionDTO {
 	private Date fechaNotificacion;
 	
 	private Date fechaEvento;
+	
+	private String codigoGenerado;
+
+	public String getCodigoGenerado() {
+		return codigoGenerado;
+	}
+
+	public void setCodigoGenerado(String codigoGenerado) {
+		this.codigoGenerado = codigoGenerado;
+	}
 
 	public int getId() {
 		return id;

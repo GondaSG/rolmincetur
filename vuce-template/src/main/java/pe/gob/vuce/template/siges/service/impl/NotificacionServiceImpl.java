@@ -45,6 +45,29 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity updateStatus(Notificacion item) throws Exception {
+		try {
+			Integer id = item.getId();
+			String message = "";
+			boolean success = false;
+			if (id != 0) {
+				message += "Se actualizaron sus datos de manera correcta";
+				Notificacion item2 = this._repository.findById(id).get();
+				item2.setEstado(item.getEstado());
+				this._repository.save(item2);
+			}
+			success = true;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 	@Override	
 	public ResponseEntity<Notificacion> findById(int id) throws Exception {
 		try {
@@ -98,7 +121,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		try {
 			ResponseEntity<Notificacion> response = new ResponseEntity<Notificacion>();
 			Pageable page = PageRequest.of(paginator.getOffset() - 1, paginator.getLimit());
-			Page<Notificacion> pag = this._repository.search(page);
+			Page<Notificacion> pag = this._repository.search(item.getCodigoGenerado() ,page);
 			List<Notificacion> items = pag.getContent();
 			paginator.setTotal((int) pag.getTotalElements());
 			response.setItems(items);

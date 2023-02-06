@@ -9,6 +9,7 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 public interface NotificacionService {
 	
 	ResponseEntity create(Notificacion item) throws Exception;
+	ResponseEntity updateStatus(Notificacion item) throws Exception;
 	ResponseEntity<Notificacion> findById(int id) throws Exception;
 	Notificacion update(Notificacion notificacion);
 	ResponseEntity<Notificacion> findAll() throws Exception;

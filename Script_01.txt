@@ -1,5 +1,39 @@
 
-SELECT * from entidad
+//CREACION DE TABLAS
+
+
+
+CREATE SEQUENCE IF NOT EXISTS siges.categoria_alimento_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;	
+	
+CREATE TABLE IF NOT EXISTS siges.categoria_alimento
+(
+    id integer NOT NULL DEFAULT nextval('siges.categoria_alimento_id_seq'::regclass),
+    descripcion character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default",
+    CONSTRAINT categoria_alimento_pk PRIMARY KEY (id)
+);
+
+CREATE INDEX categoria_alimento_id_i
+ON siges.categoria_alimento(id);
+CREATE INDEX categoria_alimento_nombre_i
+ON siges.categoria_alimento(nombre);
+
+
+
+
+no notificacion -- solo id
+
+	
+	
+	
+
+
+INSERT TABLA entidad
 INSERT INTO public.entidad(abreviatura, nombre)VALUES ('COMPIAL', 'Comisión Multisectorial Permanente de Inocuidad Alimentaria');
 INSERT INTO public.entidad(abreviatura, nombre)VALUES ('DIGESA', 'Dirección General de Salud Ambiental e Inocuidad Alimentaria del Perú');
 INSERT INTO public.entidad(abreviatura, nombre)VALUES ('SENASA', 'Servicio Nacional de Sanidad Agraria del Perú');
@@ -8,7 +42,7 @@ INSERT INTO public.entidad(abreviatura, nombre)VALUES ('MINCETUR', 'Ministerio d
 INSERT INTO public.entidad(abreviatura, nombre)VALUES ('RREE', 'Ministerio de Relaciones Exteriores');
 	
 
-SELECT * from unidad_medida	
+INSERT TABLA unidad_medida	
 INSERT INTO public.unidad_medida(nombre)VALUES ('Tonelada');
 INSERT INTO public.unidad_medida(nombre)VALUES ('Kilos');
 INSERT INTO public.unidad_medida(nombre)VALUES ('Litros');	
@@ -123,3 +157,12 @@ INSERT INTO public.origen_notificacion(nombre)VALUES ('Internacional');
 
 INSERT INTO public.ciudad(nombre,descripcion)VALUES ('Lima', 'ciudad01');
 INSERT INTO public.ciudad(nombre,descripcion)VALUES ('Arequipa', 'ciudad02');
+
+INSERT INTO public.pais(nombre,descripcion)VALUES ('Perú', 'país01');
+INSERT INTO public.pais(nombre,descripcion)VALUES ('Brasil', 'país02');
+
+
+INSERT INTO public.tipo_peligro(nombre,descripcion)VALUES ('Físico','descr01');
+INSERT INTO public.tipo_peligro(nombre,descripcion)VALUES ('Químico','descr02');
+INSERT INTO public.tipo_peligro(nombre,descripcion)VALUES ('Biológico','descr03');
+INSERT INTO public.tipo_peligro(nombre,descripcion)VALUES ('Otros tipos de peligro','descr04');
