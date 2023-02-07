@@ -64,7 +64,6 @@ public class NotificacionEstado implements Serializable{
 		this.estado = estado;
 	}
 
-
 	public boolean isActive() {
 		return isActive;
 	}
@@ -75,11 +74,11 @@ public class NotificacionEstado implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "idNotificacion", referencedColumnName = "id", insertable = false, updatable = false)
-	private  Notificacion notificacion;
+	private Notificacion notificacion;
 	
 	@ManyToOne
 	@JoinColumn(name = "idEstado", referencedColumnName = "id", insertable = false, updatable = false)
-	private  Estado estado;
+	private Estado estado;
 	
 	private boolean isActive;
 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gob.vuce.template.dto.NotificacionDTO;
+import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
@@ -49,7 +50,7 @@ public class NotificacionController extends BaseController {
 	
 	@RequestMapping(value = "/updatestatus")
 	@PostMapping
-	public ResponseEntity<?> estados(@RequestBody Notificacion item){
+	public ResponseEntity<?> estados(@RequestBody NotificacionEstadoDTO item){
 		try {
 			ResponseEntity<?> response = this._service.updateStatus(item);
 			return response;

@@ -8,9 +8,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pe.gob.vuce.template.dto.NotificacionDTO;
+import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
+import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
+import pe.gob.vuce.template.siges.repository.NotificacionEstadoRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionRepository;
 import pe.gob.vuce.template.siges.service.NotificacionService;
 
@@ -20,7 +24,11 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Autowired
 	NotificacionRepository _repository;
 	
+	@Autowired
+	NotificacionEstadoRepository _repositoryEstado;
+	
 	@SuppressWarnings("rawtypes")
+	@Transactional
 	public ResponseEntity create(Notificacion item) throws Exception {
 		try {
 			Integer id = item.getId();
@@ -30,6 +38,12 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				Notificacion item2 = this._repository.save(item);
 				id = item2.getId();
 				message += "Se guardaron sus datos de manera correcta";
+				NotificacionEstadoDTO itemNE = new NotificacionEstadoDTO();
+				itemNE.setIdNotificacion(id);
+				int idEstadoDefault = 1;
+				itemNE.setFlagActive(true);
+				itemNE.setIdEstado(idEstadoDefault);
+				this.updateStatus(itemNE);
 			} else {
 				message += "Se actualizaron sus datos de manera correcta";
 				this._repository.save(item);
@@ -46,16 +60,20 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public ResponseEntity updateStatus(Notificacion item) throws Exception {
+	@Transactional
+	public ResponseEntity updateStatus(NotificacionEstadoDTO item) throws Exception {
 		try {
-			Integer id = item.getId();
+			Integer id = item.getIdNotificacion();
 			String message = "";
 			boolean success = false;
 			if (id != 0) {
 				message += "Se actualizaron sus datos de manera correcta";
-				Notificacion item2 = this._repository.findById(id).get();
-				item2.setNotificacionEstado(item.getNotificacionEstado());
-				this._repository.save(item2);
+				this._repositoryEstado.updateActive(item.getIdNotificacion());
+				NotificacionEstado entity = new NotificacionEstado();
+				entity.setIdEstado(item.getIdEstado());
+				entity.setIdNotificacion(item.getIdNotificacion());
+				entity.setActive(item.getFlagActive());
+				this._repositoryEstado.save(entity);
 			}
 			success = true;
 			ResponseEntity response = new ResponseEntity();
