@@ -11,7 +11,7 @@ import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 public interface NotificacionEstadoRepository extends JpaRepository<NotificacionEstado, Integer>{
 	
 	@Modifying
-	@Query(value="update notificacion_estado set is_active = false where id_notificacion = ?1", nativeQuery=true)
+	@Query(value="update notificacion_estado set flag_active = false where notificacion_id = ?1", nativeQuery=true)
 	int updateActive(int id);	
 	
 	//@Query(value="update simrac.t_acuerdo_conservacion set bol_flg = false where srl_id = :psrl_id", nativeQuery=true)

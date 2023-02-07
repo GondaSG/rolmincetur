@@ -42,6 +42,6 @@ public class NotificacionEstadoId implements Serializable{
 
     @Override
     public String toString() {
-        return "NotificacionEstado [IdEstado=" + IdEstado + ", IdNotificacion=" + IdNotificacion + "]";
+        return "NotificacionEstado [EstadoId=" + IdEstado + ", NotificacionId=" + IdNotificacion + "]";
     }
 }
