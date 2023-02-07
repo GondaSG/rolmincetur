@@ -54,7 +54,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			if (id != 0) {
 				message += "Se actualizaron sus datos de manera correcta";
 				Notificacion item2 = this._repository.findById(id).get();
-				item2.setEstado(item.getEstado());
+				item2.setNotificacionEstado(item.getNotificacionEstado());
 				this._repository.save(item2);
 			}
 			success = true;

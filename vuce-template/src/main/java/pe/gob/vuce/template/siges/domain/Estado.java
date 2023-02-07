@@ -1,10 +1,14 @@
 package pe.gob.vuce.template.siges.domain;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,4 +41,13 @@ public class Estado {
 		this.nombre = nombre;
 	}
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "estado")
+	private Set<Estado> estado;
+	
+	public Set<Estado> getEstado() {
+		return estado;
+	}
+	public void setEstado(Set<Estado> estado) {
+		this.estado = estado;
+	}
 }

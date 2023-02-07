@@ -1,10 +1,13 @@
 package pe.gob.vuce.template.siges.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -91,8 +97,11 @@ public class Notificacion {
 	@Column(length=250)
 	private String codigoGenerado;
 	
-	@ManyToMany
-	Set<Estado> estado;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "notificacion")  
+	//@NotFound(action = NotFoundAction.IGNORE)
+    private List<NotificacionEstado> notificacionEstado = new ArrayList<>();
+	//@ManyToMany
+	//Set<Estado> estado;
 	
 	
 	public Boolean getFlagDigesa() {
@@ -233,10 +242,10 @@ public class Notificacion {
 	public void setCodigoGenerado(String codigoGenerado) {
 		this.codigoGenerado = codigoGenerado;
 	}
-	public Set<Estado> getEstado() {
-		return estado;
+	public List<NotificacionEstado> getNotificacionEstado() {
+		return notificacionEstado;
 	}
-	public void setEstado(Set<Estado> estado) {
-		this.estado = estado;
+	public void setNotificacionEstado(List<NotificacionEstado> notificacionEstado) {
+		this.notificacionEstado = notificacionEstado;
 	}
 }

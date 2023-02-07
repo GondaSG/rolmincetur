@@ -2,7 +2,7 @@
     --ap-header-height: 68px;
     --ap-middle-height-left: 320px;
     --ap-middle-height-right: 380px;
-    --ap-top-tittles: 160px;
+    --ap-top-tittles: 110px;
 }
 
 .main__section__title {
@@ -41,7 +41,8 @@
 
 @media(min-width: 768px) {
     .section__mapa {
-        height: calc(100vh - (var(--ap-header-height) + 14px + var(--ap-top-tittles)))
+        margin-top: .5rem;
+        height: calc(100vh - (var(--ap-header-height) + 35px + var(--ap-top-tittles)))
     }
 }
 
@@ -55,8 +56,22 @@
     overflow: auto
 }
 
-.section__bottom__left {
-    height: calc((100vh - (var(--ap-middle-height-left) + var(--ap-header-height) + 74px))/2)
+.section__middle__content {
+    height: calc((100vh - (var(--ap-header-height) + 200px))/3);
+    overflow: auto
+}
+
+.section__left__content {
+    height: calc((100vh - (var(--ap-header-height) + 205px))/2);
+    overflow: auto
+}
+
+.section__bottom__2 {
+    height: calc((100vh - (var(--ap-header-height) + 33px))/2)
+}
+
+.section__bottom__3 {
+    height: calc((100vh - (var(--ap-header-height) + 36px))/3)
 }
 
 .legend__mapa {
@@ -95,6 +110,10 @@
 .esri-ui-corner .esri-component.esri-widget--panel {
     width: auto;
     max-width: 400px
+}
+
+.ajuste-padding {
+    padding-right: 0px !important;
 }
 
 
