@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -25,11 +28,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(NotificacionEstadoId.class)
-@Table(name = "notificacion_estado")
+@Table(name = "notificacion_estado", uniqueConstraints= {
+		@UniqueConstraint(name = "notificacion_estado_pk", columnNames = {"notificacionId", "estadoId"})
+})
 public class NotificacionEstado implements Serializable{
-	@Id
+	@Id()
+	@Column(name = "notificacionId")
 	private int IdNotificacion;
 	@Id
+	@Column(name = "estadoId")
 	private int IdEstado;
 
 	public int getIdNotificacion() {
@@ -64,23 +71,35 @@ public class NotificacionEstado implements Serializable{
 		this.estado = estado;
 	}
 
-	public boolean isActive() {
-		return isActive;
+	public boolean getFlagActive() {
+		return FlagActive;
 	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setFlagActive(boolean flagActive) {
+		this.FlagActive = flagActive;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "idNotificacion", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(
+			name = "notificacionId", 
+			referencedColumnName = "id", 
+			insertable = false, 
+			updatable = false,
+			foreignKey = @ForeignKey(name = "notificacion_fk"))
+	
 	private Notificacion notificacion;
 	
 	@ManyToOne
-	@JoinColumn(name = "idEstado", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(
+			name = "estadoId", 
+			referencedColumnName = "id", 
+			insertable = false, 
+			updatable = false, 
+			foreignKey = @ForeignKey(name = "estado_fk"))
+	
 	private Estado estado;
 	
-	private boolean isActive;
+	private boolean FlagActive;
 	
 	@Override
     public boolean equals(Object o) {

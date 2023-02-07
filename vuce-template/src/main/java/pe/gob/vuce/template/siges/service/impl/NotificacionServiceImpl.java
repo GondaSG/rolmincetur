@@ -72,7 +72,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				NotificacionEstado entity = new NotificacionEstado();
 				entity.setIdEstado(item.getIdEstado());
 				entity.setIdNotificacion(item.getIdNotificacion());
-				entity.setActive(item.getFlagActive());
+				entity.setFlagActive(item.getFlagActive());
 				this._repositoryEstado.save(entity);
 			}
 			success = true;
