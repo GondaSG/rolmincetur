@@ -65,9 +65,6 @@ public class Notificacion implements Serializable {
     @JoinColumn(name = "tipo_notificacion_id", referencedColumnName = "id")
 	private TipoNotificacion tipoNotificacion;
 	@ManyToOne
-    @JoinColumn(name = "tipo_peligro_id", referencedColumnName = "id")
-	private TipoPeligro tipoPeligro;
-	@ManyToOne
     @JoinColumn(name = "pais_id", referencedColumnName = "id")
 	private Pais pais;
 	@ManyToOne
@@ -80,7 +77,7 @@ public class Notificacion implements Serializable {
 	@Column(length=250)
 	private String datoExportador;
 	@Column(length=250)
-	private String nombreAlimento;	
+	private String nombreAlimento;
 	@ManyToOne
     @JoinColumn(name = "categoria_alimento_id", referencedColumnName = "id")
 	private CategoriaAlimento categoriaAlimento;
@@ -98,13 +95,45 @@ public class Notificacion implements Serializable {
 	@Column(length=250)
 	private String codigoGenerado;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "notificacion")  
+	//@OneToMany(fetch = FetchType.EAGER, mappedBy = "notificacion")
 	//@NotFound(action = NotFoundAction.IGNORE)
-    private List<NotificacionEstado> notificacionEstado = new ArrayList<>();
+    //private List<NotificacionEstado> notificacionEstado = new ArrayList<>();
 	//@ManyToMany
 	//Set<Estado> estado;
 	
+	@Column
+	private Boolean flagQuimico;
+	@Column
+	private Boolean flagFisico;
+	@Column
+	private Boolean flagBiologico;
+	@Column
+	private Boolean flagOtro;
 	
+	public Boolean getFlagQuimico() {
+		return flagQuimico;
+	}
+	public void setFlagQuimico(Boolean flagQuimico) {
+		this.flagQuimico = flagQuimico;
+	}
+	public Boolean getFlagFisico() {
+		return flagFisico;
+	}
+	public void setFlagFisico(Boolean flagFisico) {
+		this.flagFisico = flagFisico;
+	}
+	public Boolean getFlagBiologico() {
+		return flagBiologico;
+	}
+	public void setFlagBiologico(Boolean flagBiologico) {
+		this.flagBiologico = flagBiologico;
+	}
+	public Boolean getFlagOtro() {
+		return flagOtro;
+	}
+	public void setFlagOtro(Boolean flagOtro) {
+		this.flagOtro = flagOtro;
+	}
 	public Boolean getFlagDigesa() {
 		return flagDigesa;
 	}
@@ -140,12 +169,6 @@ public class Notificacion implements Serializable {
 	}
 	public void setPais(Pais pais) {
 		this.pais = pais;
-	}
-	public TipoPeligro getTipoPeligro() {
-		return tipoPeligro;
-	}
-	public void setTipoPeligro(TipoPeligro tipoPeligro) {
-		this.tipoPeligro = tipoPeligro;
 	}
 	public TipoNotificacion getTipoNotificacion() {
 		return tipoNotificacion;
@@ -243,10 +266,10 @@ public class Notificacion implements Serializable {
 	public void setCodigoGenerado(String codigoGenerado) {
 		this.codigoGenerado = codigoGenerado;
 	}
-	public List<NotificacionEstado> getNotificacionEstado() {
-		return notificacionEstado;
-	}
-	public void setNotificacionEstado(List<NotificacionEstado> notificacionEstado) {
-		this.notificacionEstado = notificacionEstado;
-	}
+	//public List<NotificacionEstado> getNotificacionEstado() {
+	//	return notificacionEstado;
+	//}
+	//public void setNotificacionEstado(List<NotificacionEstado> notificacionEstado) {
+	//	this.notificacionEstado = notificacionEstado;
+	//}
 }

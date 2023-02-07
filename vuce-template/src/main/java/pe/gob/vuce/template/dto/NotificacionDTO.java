@@ -13,7 +13,6 @@ import pe.gob.vuce.template.siges.domain.OrigenNotificacion;
 import pe.gob.vuce.template.siges.domain.Pais;
 import pe.gob.vuce.template.siges.domain.TipoAlimento;
 import pe.gob.vuce.template.siges.domain.TipoNotificacion;
-import pe.gob.vuce.template.siges.domain.TipoPeligro;
 
 public class NotificacionDTO {
 	
@@ -38,8 +37,6 @@ public class NotificacionDTO {
 	private Date fechaEvento;
 
 	private TipoNotificacion tipoNotificacion;
-	
-	private TipoPeligro tipoPeligro;
 	
 	private Pais pais;
 	
@@ -67,9 +64,49 @@ public class NotificacionDTO {
 	
 	private String codigoGenerado;
 	
+	private Boolean flagQuimico;
+	
+	private Boolean flagFisico;
+	
+	private Boolean flagBiologico;
+	
+	private Boolean flagOtro;
+
 	private List<NotificacionPresentacion> notificacionPresentacion = new ArrayList<>();
 	
 	private List<NotificacionLote> notificacionLote = new ArrayList<>();
+	
+	public Boolean getFlagQuimico() {
+		return flagQuimico;
+	}
+
+	public void setFlagQuimico(Boolean flagQuimico) {
+		this.flagQuimico = flagQuimico;
+	}
+
+	public Boolean getFlagFisico() {
+		return flagFisico;
+	}
+
+	public void setFlagFisico(Boolean flagFisico) {
+		this.flagFisico = flagFisico;
+	}
+
+	public Boolean getFlagBiologico() {
+		return flagBiologico;
+	}
+
+	public void setFlagBiologico(Boolean flagBiologico) {
+		this.flagBiologico = flagBiologico;
+	}
+
+	public Boolean getFlagOtro() {
+		return flagOtro;
+	}
+
+	public void setFlagOtro(Boolean flagOtro) {
+		this.flagOtro = flagOtro;
+	}
 
 	public List<NotificacionLote> getNotificacionLote() {
 		return notificacionLote;
@@ -85,14 +122,6 @@ public class NotificacionDTO {
 
 	public void setTipoNotificacion(TipoNotificacion tipoNotificacion) {
 		this.tipoNotificacion = tipoNotificacion;
-	}
-
-	public TipoPeligro getTipoPeligro() {
-		return tipoPeligro;
-	}
-
-	public void setTipoPeligro(TipoPeligro tipoPeligro) {
-		this.tipoPeligro = tipoPeligro;
 	}
 
 	public Pais getPais() {
