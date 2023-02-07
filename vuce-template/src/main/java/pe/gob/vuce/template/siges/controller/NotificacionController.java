@@ -24,7 +24,7 @@ import pe.gob.vuce.template.siges.service.NotificacionService;
 @RequestMapping(value="notificacion")
 public class NotificacionController extends BaseController {
 
-	@Autowired
+	@Autowired(required=true)
 	NotificacionService _service;
 	
 	@GetMapping
@@ -38,16 +38,6 @@ public class NotificacionController extends BaseController {
 		return response;
 	}
 	
-	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Notificacion item){
-		try {
-			ResponseEntity<?> response = this._service.create(item);
-			return response;
-		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}
-	}
-	
 	@RequestMapping(value = "/updatestatus")
 	@PostMapping
 	public ResponseEntity<?> estados(@RequestBody NotificacionEstadoDTO item){
@@ -59,8 +49,18 @@ public class NotificacionController extends BaseController {
 		}
 	}
 	
+	@PostMapping
+	public ResponseEntity<?> create(@RequestBody NotificacionDTO item){
+		try {
+			ResponseEntity<?> response = this._service.create(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody Notificacion item){
+	public ResponseEntity<?> update(@RequestBody NotificacionDTO item){
 		try {
 			ResponseEntity<?> response = this._service.create(item);
 			return response;

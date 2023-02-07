@@ -1,15 +1,14 @@
 package pe.gob.vuce.template.siges.service;
 
-import java.util.List;
-
+import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
 import pe.gob.vuce.template.siges.domain.UnidadMedida;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 
 public interface UnidadMedidaService {
-
-	UnidadMedida create(UnidadMedida unidadMedida);
-	UnidadMedida findById(int id);
-	void delete(int id);
-	UnidadMedida update(UnidadMedida unidadMedida);
-	List<UnidadMedida> findAll();
 	
+	ResponseEntity create(UnidadMedida item) throws Exception;
+	ResponseEntity<UnidadMedida> findById(int id) throws Exception;
+	UnidadMedida update(UnidadMedida notificacion);
+	ResponseEntity<UnidadMedida> findAll() throws Exception;
+	ResponseEntity delete(int id) throws Exception;
 }

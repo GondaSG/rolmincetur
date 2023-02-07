@@ -15,7 +15,8 @@ public class TipoPeligroController extends BaseController {
 	@Autowired
 	TipoPeligroService _service ;
 	
-	@GetMapping ResponseEntity<TipoPeligro> findAll(){
+	@GetMapping
+	ResponseEntity<TipoPeligro> findAll(){
 		ResponseEntity<TipoPeligro> response = new ResponseEntity<>();
 		try {
 			response = this._service.findAll();
