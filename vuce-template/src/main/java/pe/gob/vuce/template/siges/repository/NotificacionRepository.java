@@ -12,7 +12,8 @@ import pe.gob.vuce.template.siges.domain.Notificacion;
 @Repository
 public interface NotificacionRepository extends JpaRepository<Notificacion, Integer>{
 	
-	@Query(value="select n.* FROM notificacion n ",	nativeQuery=true)
-	Page<Notificacion> search(Pageable page);
+	@Query(value="select n.* FROM notificacion n "
+			+ "	where n.codigo_generado ilike %?1% ",	nativeQuery=true)
+	Page<Notificacion> search(String code, Pageable page);
 	
 }
