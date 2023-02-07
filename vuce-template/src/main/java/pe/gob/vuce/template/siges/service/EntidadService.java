@@ -1,15 +1,14 @@
 package pe.gob.vuce.template.siges.service;
 
-import java.util.List;
-
 import pe.gob.vuce.template.siges.domain.Entidad;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 
 public interface EntidadService {
 	
-	List<Entidad> findAll();
-	Entidad create(Entidad entidad);
-	Entidad findById(int id);
-	Entidad update(Entidad entidad);
-	void delete(int id);
+	ResponseEntity<Entidad> findAll() throws Exception;
+	ResponseEntity create(Entidad entidad) throws Exception;
+	ResponseEntity<Entidad> findById(int id) throws Exception;
+	Entidad update(Entidad notificacion);
+	ResponseEntity delete(int id) throws Exception;
 
 }

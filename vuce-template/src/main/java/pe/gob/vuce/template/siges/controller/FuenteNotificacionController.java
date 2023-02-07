@@ -1,10 +1,6 @@
 package pe.gob.vuce.template.siges.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,57 +9,66 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.FuenteNotificacionService;
 
 @RestController
 @RequestMapping(value="fuenteNotificacion")
-public class FuenteNotificacionController {
+public class FuenteNotificacionController extends BaseController {
 	
 	@Autowired
-	FuenteNotificacionService fuenteNotificacionService;
+	FuenteNotificacionService _service;
 
 	@GetMapping
-	public ResponseEntity<List<FuenteNotificacion>> findAll(){
-		return ResponseEntity.ok(fuenteNotificacionService.findAll());
+	public ResponseEntity<FuenteNotificacion> findAll(){
+		ResponseEntity<FuenteNotificacion> response = new ResponseEntity<>();		
+		try {
+			response = this._service.findAll();
+		} catch (Exception ex) {
+			response.setMessage(ex);
+		}
+		return response;
 	}
 	
 	@PostMapping
-	public ResponseEntity<FuenteNotificacion> create(@RequestBody FuenteNotificacion fuentesNotificacion){
-		FuenteNotificacion response = fuenteNotificacionService.create(fuentesNotificacion);
-		
-		return new ResponseEntity<FuenteNotificacion>(response, HttpStatus.CREATED);
+	public ResponseEntity<?> create(@RequestBody FuenteNotificacion item){
+		try {
+			ResponseEntity<?> response = this._service.create(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
 	}
 	
 	@PutMapping
-	public ResponseEntity<FuenteNotificacion> update(@RequestBody FuenteNotificacion fuenteNotificacion){
-		FuenteNotificacion fuenteNotificacionExists = fuenteNotificacionService.findById(fuenteNotificacion.getId());
-		if (fuenteNotificacionExists.getId()==0) {
-			
+	public ResponseEntity<?> update(@RequestBody FuenteNotificacion item){
+		try {
+			ResponseEntity<?> response = this._service.create(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-		
-		FuenteNotificacion response = fuenteNotificacionService.update(fuenteNotificacion);
-		return ResponseEntity.ok(response);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") int id){
-		FuenteNotificacion fuenteNotificacion = fuenteNotificacionService.findById(id);
-		if (fuenteNotificacion.getId()==0) {
-			
+	public ResponseEntity<?> delete(@PathVariable("id") int id){
+		try {
+			ResponseEntity<?> response = this._service.delete(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-		fuenteNotificacionService.delete(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<FuenteNotificacion> findById(@PathVariable("id") int id){
-		FuenteNotificacion fuenteNotificacion = fuenteNotificacionService.findById(id);
-		if(fuenteNotificacion.getId()==0) {
-			
+		try {
+			ResponseEntity<FuenteNotificacion> response = this._service.findById(id);
+			return response;
+		} catch(Exception ex) {
+			return super.getJSON(ex);
 		}
-		return ResponseEntity.ok(fuenteNotificacion);
 	}
 	
 }

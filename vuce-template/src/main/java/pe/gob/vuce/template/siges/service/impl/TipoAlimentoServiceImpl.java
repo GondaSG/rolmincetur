@@ -1,10 +1,11 @@
 package pe.gob.vuce.template.siges.service.impl;
 
 import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.gob.vuce.template.siges.domain.TipoAlimento;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.TipoAlimentoRepository;
 import pe.gob.vuce.template.siges.service.TipoAlimentoService;
 
@@ -12,31 +13,77 @@ import pe.gob.vuce.template.siges.service.TipoAlimentoService;
 public class TipoAlimentoServiceImpl implements TipoAlimentoService{
 
 	@Autowired
-	TipoAlimentoRepository tipoAlimentoRepository;
+	TipoAlimentoRepository _repository;
 	
-	@Override
-	public TipoAlimento create(TipoAlimento tipoAlimento) {
-		return tipoAlimentoRepository.save(tipoAlimento);
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity create(TipoAlimento item) throws Exception {
+		try {
+			Integer id = item.getId();
+			String message ="";
+			boolean success = false;
+			if (id == 0) {
+				TipoAlimento item2 = this._repository.save(item);
+				id = item2.getId();
+				message += "Se guardarón sus datos de manera correcta";
+			}else {
+				message += "Se actualizarón sus datos de manera correcta";
+				this._repository.save(item);
+			}
+			success = true;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		}catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+		
+	public ResponseEntity<TipoAlimento> findById(int id) throws Exception {
+		try {
+			if (id ==0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<TipoAlimento> response = new ResponseEntity<TipoAlimento>();
+			TipoAlimento item = _repository.findById(id).get();
+			response.setSuccess(success);
+			response.setItem(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
 	}
 	
 	@Override
-	public TipoAlimento findById(int id) {
-		Optional<TipoAlimento> tipoAlimento = tipoAlimentoRepository.findById(id);
-		return tipoAlimento.isPresent()	? tipoAlimento.get()	: new TipoAlimento();
+	public TipoAlimento update(TipoAlimento notificacion) {
+		return _repository.save(notificacion);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Transactional
+	public ResponseEntity delete(int id) throws Exception{
+		try {
+			this._repository.deleteById(id);
+			ResponseEntity response = new ResponseEntity<>();
+			response.setMessage("Se ha eliminado correctamente");
+			response.setSuccess(true);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
 	}
 	
 	@Override
-	public TipoAlimento update(TipoAlimento tipoAlimento) {
-		return tipoAlimentoRepository.save(tipoAlimento);
-	}
-	
-	@Override
-	public void delete(int id) {
-		tipoAlimentoRepository.deleteById(id);		
-	}
-	
-	@Override
-	public List<TipoAlimento> findAll(){
-		return tipoAlimentoRepository.findAll();
+	public ResponseEntity<TipoAlimento> findAll() throws Exception {
+		try {
+			ResponseEntity<TipoAlimento> response = new ResponseEntity<TipoAlimento>();
+			List<TipoAlimento> items = _repository.findAll();
+			response.setItems(items);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}		
 	}
 }
