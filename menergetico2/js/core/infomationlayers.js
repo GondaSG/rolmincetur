@@ -27,7 +27,7 @@ define([
     domConstruct
 
 ) {
-
+    const dominio = getDomain();
     var $divmenu = $('#div_menu');
 
     var __layersectors = {};
@@ -398,9 +398,9 @@ define([
                         // Popup por defecto para las capas
                         sublayer.createFeatureLayer().then((featureLayer) => featureLayer.load())
                             .then((featureLayer) => {
-                                if (featureLayer.title === "Centrales Hidroelectricas") {
+                                if (featureLayer.url == url_electricidad && dominio.domain.filter(t => t.id == featureLayer.layerId).length > 0) {
                                     sublayer.popupTemplate = {
-                                        title: "Centrales Hidroelectricas :{NOMBRE}",
+                                        title: featureLayer.title + " :{NOMBRE}",
                                         content: populationChange,
                                         outFields: "*"
                                     };
@@ -426,13 +426,16 @@ define([
     }]
 
     function populationChange(feature) {
+        debugger;
+        let _domain = dominio.domain.find(t => t.id == feature.graphic.sourceLayer.id)
+        let properties = dominio.propertie
         let ini = `<div class="esri-feature__fields esri-feature__content-element"><table class="esri-widget__table" summary="Lista de atributos y valores"><tbody>`;
         let fin = `</tbody></table></div>`;
         let content = Object.entries(feature.graphic.attributes)
             .map(t => {
-                debugger
-                if (t[0] == "ESTADO") return `<tr><th class="esri-feature__field-header">${t[0]}</th><td class="esri-feature__field-data">${atributos.find(t2 => t2.id == t[1]).value}</td></tr>`
-
+                for (var i = 0; i < _domain.properties.length; i++)
+                    if (t[0] == _domain.properties[i])
+                        return `<tr><th class="esri-feature__field-header">${t[0]}</th><td class="esri-feature__field-data">${ dominio.propertie.find(t2=>t2.id ==_domain.properties[i]).values.map(t2 => t2[t[1]])}</td></tr>`
                 return `<tr><th class="esri-feature__field-header">${t[0]}</th><td class="esri-feature__field-data">${t[1]}</td></tr>`
             });
         console.log(content)
