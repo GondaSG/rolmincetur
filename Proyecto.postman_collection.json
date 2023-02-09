@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a12ec1dc-0a29-41aa-9263-54f7a92cab89",
+		"_postman_id": "8100cc7a-b46e-4181-88cf-de54c08eedca",
 		"name": "API Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16915442"
@@ -114,16 +114,17 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.\"\r\n}"
+									"raw": "{\r\n    \"nombre\" : \"administrador01\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.\"\r\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/rol",
+									"raw": "http://localhost:8080/api/rol",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"rol"
 									]
 								}
@@ -184,13 +185,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/rol",
+									"raw": "http://localhost:8080/api/rol",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"rol"
 									]
 								}
@@ -330,12 +332,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/entidad/1",
+									"raw": "localhost:8080/api/entidad/1",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"entidad",
 										"1"
 									]
@@ -406,7 +409,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\"\r\n}"
+									"raw": "{\r\n    \"nombre\" : \"usuario03\",\r\n    \"correo\" : \"usuario03@prueba.com\",\r\n    \"telefono\" : \"933365431\",\r\n    \"rol\": {\"id\": 1},\r\n    \"entidad\": {\"id\": 1}\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8080/api/usuario",
