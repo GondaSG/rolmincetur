@@ -12,8 +12,21 @@ import pe.gob.vuce.template.siges.domain.Notificacion;
 @Repository
 public interface NotificacionRepository extends JpaRepository<Notificacion, Integer>{
 	
-	@Query(value="select n.* FROM notificacion n "
-			+ "	where n.codigo_generado ilike %?1% ",	nativeQuery=true)
-	Page<Notificacion> search(String code, Pageable page);
-	
+	@Query(value="select n.* from notificacion n "
+			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_active = true "
+			+ "	where n.codigo_generado ilike %?1% "
+			+ "	and case when ?2 is not null then n.isnacional = ?2 else 1 = 1 end "
+			+ "	and case when ?3 is not null then n.flag_digesa = ?3 else 1 = 1 end "
+			+ "	and case when ?4 is not null then n.flag_senasa = ?4 else 1 = 1 end "
+			+ "	and case when ?7 > 0 then n.fecha_creacion >= ?5 else 1 = 1 end "
+			+ "	and case when ?7 > 0 then n.fecha_creacion <= ?6 else 1 = 1 end "
+			+ "	and n.tipo_notificacion_id in (?8) "
+			//+ "	and case when ?9 = 0 then 1 = 1 else n.tipo_notificacion_id in (?8) end "
+			//+ "	and case when ?11 > 0 then ne.estado_id in (?10) else 1 = 1  end "
+			+ " order by id",	nativeQuery=true)
+	Page<Notificacion> search(String code,	Boolean isNacional, Boolean flagDigesa, Boolean flagSenasa,
+	Date fechaCreacion, Date fechaCreacionFinal, int value,	
+	List<Integer> tipoNotificacionId, int value2,
+	List<Integer> estadoId, int value3,
+	Pageable page);
 }

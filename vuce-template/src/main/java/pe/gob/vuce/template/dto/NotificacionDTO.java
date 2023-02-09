@@ -3,10 +3,14 @@ package pe.gob.vuce.template.dto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
 import pe.gob.vuce.template.siges.domain.Ciudad;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
 import pe.gob.vuce.template.siges.domain.NotificacionPresentacion;
 import pe.gob.vuce.template.siges.domain.OrigenNotificacion;
@@ -71,11 +75,83 @@ public class NotificacionDTO {
 	private Boolean flagBiologico;
 	
 	private Boolean flagOtro;
-
+	
 	private List<NotificacionPresentacion> notificacionPresentacion = new ArrayList<>();
 	
 	private List<NotificacionLote> notificacionLote = new ArrayList<>();
 	
+	private List<NotificacionEstado> estados = new ArrayList<>();
+
+	private List<Integer> tipoNotificacionId;
+	
+	private List<Integer> estadoId;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date fechaCreacion = new Date();
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date fechaCreacionFinal = new Date();
+	
+	private Boolean isnacional;
+	
+	private String comentario;
+		
+	public List<NotificacionEstado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<NotificacionEstado> estados) {
+		this.estados = estados;
+	}
+	
+	public Boolean getIsnacional() {
+		return isnacional;
+	}
+
+	public void setIsnacional(Boolean isnacional) {
+		this.isnacional = isnacional;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public List<Integer> getTipoNotificacionId() {
+		return tipoNotificacionId;
+	}
+
+	public void setTipoNotificacionId(List<Integer> tipoNotificacionId) {
+		this.tipoNotificacionId = tipoNotificacionId;
+	}
+
+	public List<Integer> getEstadoId() {
+		return estadoId;
+	}
+	
+	public void setEstadoId(List<Integer> estadoId) {
+		this.estadoId = estadoId;
+	}
+	
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+	
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+	
+	public Date getFechaCreacionFinal() {
+		return fechaCreacionFinal;
+	}
+	
+	public void setFechaCreacionFinal(Date fechaCreacionFinal) {
+		this.fechaCreacionFinal = fechaCreacionFinal;
+	}
+
 	public Boolean getFlagQuimico() {
 		return flagQuimico;
 	}

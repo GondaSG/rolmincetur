@@ -1,5 +1,7 @@
 package pe.gob.vuce.template.siges.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.transaction.Transactional;
 
@@ -131,16 +133,20 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	}
 	
 	@Override	
-	public ResponseEntity<Notificacion> findById(int id) throws Exception {
+	public ResponseEntity<NotificacionDTO> findById(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<Notificacion> response = new ResponseEntity<Notificacion>();
+			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
 			Notificacion item = _repository.findById(id).get();
+			NotificacionDTO item2 = modelMapper.map(item, NotificacionDTO.class);
+			item2.setNotificacionPresentacion(this._repositoryPresentacion.searchByNotificacion(id));
+			item2.setNotificacionLote(this._repositoryLote.searchByNotificacion(id));
+			item2.setEstados(this._repositoryEstado.searchByNotificacion(id));
 			response.setSuccess(success);
-			response.setItem(item);
+			response.setItem(item2);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
@@ -184,7 +190,22 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		try {
 			ResponseEntity<Notificacion> response = new ResponseEntity<Notificacion>();
 			Pageable page = PageRequest.of(paginator.getOffset() - 1, paginator.getLimit());
-			Page<Notificacion> pag = this._repository.search(item.getCodigoGenerado() ,page);
+			int value = item.getFechaCreacion() == null ? 0 : 1;
+			if (item.getFechaCreacion() == null)
+				item.setFechaCreacion(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFechaCreacionFinal() == null)
+				item.setFechaCreacionFinal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			int value2 = 0;
+			if (item.getTipoNotificacionId() != null)
+				value2 = 1;
+			int value3 = 0;
+			if (item.getEstadoId() != null)
+				value3 = 1;
+			Page<Notificacion> pag = this._repository.search(item.getCodigoGenerado(), item.getIsnacional(), item.getFlagDigesa(), item.getFlagSenasa(),
+					item.getFechaCreacion(), item.getFechaCreacionFinal(), value,
+					item.getTipoNotificacionId(), value2,
+					item.getEstadoId(), value3,
+					page);
 			List<Notificacion> items = pag.getContent();
 			paginator.setTotal((int) pag.getTotalElements());
 			response.setItems(items);

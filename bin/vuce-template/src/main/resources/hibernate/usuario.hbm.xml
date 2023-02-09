@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="pe.gob.vuce.template.authorize.domain.entity">
+	<class name="Usuario" table="usuario">
+        <id name="id" column="usuario_id">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+			    <param name="optimizer">none</param>
+			    <param name="increment_size">1</param>
+			    <param name="sequence_name">usuario_id_seq</param>
+			</generator>
+        </id>
+        <property name="usuario" column="usuario"/>
+        <property name="usuarioSol" column="usuario_sol"/>
+        <property name="entidad" column="entidad"/>
+        <property name="area" column="area"/>
+        <property name="fechaIniVigencia" column="fecha_inicio_vigencia"/>
+        <property name="fechaFinVigencia" column="fecha_fin_vigencia"/>
+        <property name="estado" column="estado"/>
+    </class> 
+</hibernate-mapping>

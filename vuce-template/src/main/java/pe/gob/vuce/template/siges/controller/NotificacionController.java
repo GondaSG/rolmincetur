@@ -80,9 +80,9 @@ public class NotificacionController extends BaseController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Notificacion> findById(@PathVariable("id") int id){
+	public ResponseEntity<NotificacionDTO> findById(@PathVariable("id") int id){
 		try {
-			ResponseEntity<Notificacion> response = this._service.findById(id);
+			ResponseEntity<NotificacionDTO> response = this._service.findById(id);
 			return response;
 		} catch(Exception ex) {
 			return super.getJSON(ex);

@@ -24,5 +24,4 @@ public class CiudadServiceImpl implements CiudadService{
 			throw new Exception(ex.getMessage());
 		}
 	}
-
 }
