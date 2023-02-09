@@ -1,5 +1,8 @@
 package pe.gob.vuce.template.siges.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pe.gob.vuce.template.dto.NotificacionDocumentoDTO;
 import pe.gob.vuce.template.siges.domain.Documento;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
@@ -25,9 +29,14 @@ public class DocumentoController {
 	@Autowired
 	DocumentoService documentoService;
 	@PostMapping("uploadFile")
-	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file){
+	public ResponseEntity<?> uploadFile(
+			@RequestParam("file") List<MultipartFile> files , 
+			@RequestParam("notificacionId") int notificacionId,
+			@RequestParam("detalle") String detalle,
+			@RequestParam("fechaCreacion") Date fechaCreacion
+			){
 		try {
-			documentoService.save(file);
+			documentoService.save(files,notificacionId,detalle,fechaCreacion);
 			return null;
 		} catch (Exception ex) {
 			return null;

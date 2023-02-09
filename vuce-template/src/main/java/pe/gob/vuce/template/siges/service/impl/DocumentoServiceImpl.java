@@ -1,6 +1,8 @@
 package pe.gob.vuce.template.siges.service.impl;
 
 import java.sql.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -32,6 +34,19 @@ public class DocumentoServiceImpl implements DocumentoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		
+	}
+	@Override
+	public void save(List<MultipartFile> files, int notificacionId, String detalle, java.util.Date fechaCreacion) {
+		for (MultipartFile multipartFile : files) {
+			Documento documento = new Documento();
+			documento.setName(StringUtils.cleanPath(multipartFile.getOriginalFilename()));
+			//documento.setContent(multipartFile.getBytes());
+			documento.setSize(multipartFile.getSize());
+			//documento.setUploadTime(new Date());
+			documentoRepository.save(documento);
+		}
+		
 		
 	}
 	@Override
