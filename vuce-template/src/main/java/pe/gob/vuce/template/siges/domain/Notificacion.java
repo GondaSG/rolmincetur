@@ -109,7 +109,33 @@ public class Notificacion implements Serializable {
 	private Boolean flagBiologico;
 	@Column
 	private Boolean flagOtro;
-	
+	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date fechaCreacion = new Date();
+	@Column	
+	private Boolean isnacional;
+
+	@Column (columnDefinition="TEXT")
+	private String comentario;
+		
+	public Boolean getIsnacional() {
+		return isnacional;
+	}
+	public void setIsnacional(Boolean isnacional) {
+		this.isnacional = isnacional;
+	}
+	public String getComentario() {
+		return comentario;
+	}
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}	
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
 	public Boolean getFlagQuimico() {
 		return flagQuimico;
 	}

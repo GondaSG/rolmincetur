@@ -101,6 +101,15 @@ public class NotificacionEstado implements Serializable{
 	
 	private boolean FlagActive;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date fechaCreacion = new Date();
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;

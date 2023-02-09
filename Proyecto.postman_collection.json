@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a12ec1dc-0a29-41aa-9263-54f7a92cab89",
-		"name": "API Copy",
+		"_postman_id": "b5d5e184-2bfe-4877-a266-36e238240031",
+		"name": "Servicios SIGESNOT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16915442"
+		"_exporter_id": "3924554"
 	},
 	"item": [
 		{
@@ -228,14 +228,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/entidad",
+									"raw": "http://localhost:8080/entidad",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"api",
 										"entidad"
 									]
 								}
@@ -330,144 +329,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/entidad/1",
+									"raw": "localhost:8080/entidad/7",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"entidad",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Usuario",
-					"item": [
-						{
-							"name": "list Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete Usuario",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create Usuario",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update Usuario",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\" : \"usuariooooo\",\r\n    \"correo\" : \"usuariooo@prueba.com\",\r\n    \"telefono\" : \"998765oooooo\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/usuario/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario",
-										"1"
+										"7"
 									]
 								}
 							},
@@ -500,30 +369,6 @@
 					]
 				},
 				{
-					"name": "TipoNotificacion",
-					"item": [
-						{
-							"name": "list TipoNotificacion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/tipoNotificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"tipoNotificacion"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "TipoAlimento",
 					"item": [
 						{
@@ -548,103 +393,7 @@
 					]
 				},
 				{
-					"name": "OrigenNotificacion",
-					"item": [
-						{
-							"name": "list origen",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/origenNotificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"origenNotificacion"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Ciudad",
-					"item": [
-						{
-							"name": "list ciudad",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/ciudad",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"ciudad"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Pais",
-					"item": [
-						{
-							"name": "list pais",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/pais",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"pais"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "TipoPeligro",
-					"item": [
-						{
-							"name": "list TipoPeligro",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/tipoPeligro",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"tipoPeligro"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "NOTIFICACION",
+					"name": "Notificacion",
 					"item": [
 						{
 							"name": "list Notificacion",
@@ -652,13 +401,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/notificacion",
+									"raw": "http://localhost:8080/api/notificacion",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"notificacion"
 									]
 								}
@@ -702,17 +452,91 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-19T05:00:00.000+00:00\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false\r\n    }"
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false,\r\n        \"notificacionLote\":[{\"lote\":\"CD01\", \"cantidad\":10.00}],\r\n        \"notificacionPresentacion\":[{\"tipoPresentacion\":{\"id\":1}, \"unidadMedida\":{\"id\":1}, \"volumen\":10.05}]\r\n    }"
 								},
 								"url": {
-									"raw": "http://localhost:8080/notificacion",
+									"raw": "http://localhost:8080/api/notificacion",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idNotificacion\": 8,\r\n    \"idEstado\":2,\r\n    \"flagActive\": true\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/updatestatus",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"updatestatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer 26f9c2f3-00b4-4103-b5c4-df96697d5314",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1,2], \"estadoId\":[1,2], \"isnacional\":true, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-10\", \"flagDigesa\":true, \"flagSenasa\":true}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"1\",\"limit\":\"12\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/search",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"search"
 									]
 								}
 							},
@@ -753,14 +577,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/notificacion/19",
+									"raw": "localhost:8080/api/notificacion/25",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"notificacion",
-										"19"
+										"25"
 									]
 								}
 							},
@@ -902,13 +727,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/fuenteNotificacion",
+									"raw": "http://localhost:8080/api/fuenteNotificacion",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"api",
 										"fuenteNotificacion"
 									]
 								}
@@ -1136,6 +962,485 @@
 									"path": [
 										"categoriaAlimento",
 										"21"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DocumentoAccion",
+					"item": [
+						{
+							"name": "getID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionaccion/11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionaccion",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionaccion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionaccion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"notificacion\": {\"id\":24},\r\n    \"detalle\" : \"texto prueba 2\",\r\n    \"fechaCreacion\" : \"2023-02-08\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionaccion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionaccion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "save",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":13,\r\n    \"notificacion\": {\"id\":24},\r\n    \"detalle\" : \"texto prueba 3\",\r\n    \"fechaCreacion\" : \"2023-02-08\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionaccion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionaccion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findByNotificacionId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionaccion/findByNotificacionId/13",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionaccion",
+										"findByNotificacionId",
+										"13"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuario",
+					"item": [
+						{
+							"name": "list Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete Usuario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Usuario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Usuario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\" : \"usuariooooo\",\r\n    \"correo\" : \"usuariooo@prueba.com\",\r\n    \"telefono\" : \"998765oooooo\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/usuario/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoNotificacion",
+					"item": [
+						{
+							"name": "list TipoNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tipoNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tipoNotificacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrigenNotificacion",
+					"item": [
+						{
+							"name": "list origen",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/origenNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"origenNotificacion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ciudad",
+					"item": [
+						{
+							"name": "list ciudad",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ciudad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ciudad"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pais",
+					"item": [
+						{
+							"name": "list pais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/pais",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"pais"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UnidadMedida",
+					"item": [
+						{
+							"name": "LIST UnidadMedida",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE UnidadMedida",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE UnidadMedida",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"administradorB\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.B\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE UnidadMedida",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nombre\": \"xx\",\r\n    \"descripcion\": \" \"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/unidadMedida",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DETAIL   UnidadMedida",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/unidadMedida/4",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"unidadMedida",
+										"4"
 									]
 								}
 							},
