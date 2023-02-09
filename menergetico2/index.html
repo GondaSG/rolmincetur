@@ -76,7 +76,7 @@
             <!--label class="btnswitch-2d3d align-middle" data-toggle="tooltip" data-placement="bottom" title="Cambiar Vista 2D-3D"><input type="checkbox" id="btnswitch_2d3d" value="2D"></label-->
             <label class="align-middle"><input class="esri-component esri-widget--button esri-widget esri-interactive" type="button" id="btnswitch_2d3d" value="3D" style="margin-top:0px;padding-top:2px" /></label>
         </div>
-        <div><img src="img/logo.png" alt="osinergmin" class="tamanio_imagen"></div>
+        <div><img src="img/logo.png" alt="osinergmin" class="logo tamanio_imagen"></div>
     </nav>
 
     <!-- ##### VISOR MAP -->
@@ -1154,6 +1154,12 @@
                 $("#div_msjwelcome").modal("show");
                 sessionStorage.setItem('isModal', 'SI');
             }
+            $("nav>div>a.title").click(function() {
+                location.reload()
+            })
+            $("nav>div>img.logo").click(function() {
+                window.open('http://osinergmin.gob.pe/', '_blank');
+            })
             $("#close_msjwelcome").click(function() {
                 $("#div_msjwelcome").modal("hide");
             });
