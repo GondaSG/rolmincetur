@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
@@ -32,8 +34,32 @@ public class Usuario {
 	@Column(length=20)
 	private String telefono;
 	
+	@ManyToOne
+    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+	private Rol rol;
+	
+	@ManyToOne
+    @JoinColumn(name = "entidad_id", referencedColumnName = "id")
+	private Entidad entidad;
+		
 	
 	
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
+	public Entidad getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(Entidad entidad) {
+		this.entidad = entidad;
+	}
+
 	public int getId() {
 		return id;
 	}
