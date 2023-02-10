@@ -7,33 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.gob.vuce.template.siges.domain.Notificacion;
-import pe.gob.vuce.template.siges.domain.NotificacionAccion;
-import pe.gob.vuce.template.siges.domain.OrigenNotificacion;
-import pe.gob.vuce.template.siges.domain.TipoAlimento;
+import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
-import pe.gob.vuce.template.siges.repository.NotificacionAccionRepository;
+import pe.gob.vuce.template.siges.repository.NotificacionDiscrepanciaRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionRepository;
-import pe.gob.vuce.template.siges.service.NotificacionAccionService;
+import pe.gob.vuce.template.siges.service.NotificacionDiscrepanciaService;
+
 @Service
-public class NotificacionAccionServiceImpl implements NotificacionAccionService {
+public class NotificacionDiscrepanciaServiceImpl implements NotificacionDiscrepanciaService  {
+
+	@Autowired
+	NotificacionDiscrepanciaRepository _repository;
 	
 	@Autowired
-	NotificacionAccionRepository _repository;
-	@Autowired
 	NotificacionRepository _notificacionRepository;
+	
 	@Override
-	public ResponseEntity create(NotificacionAccion notificacionAccion) throws Exception {
+	public ResponseEntity create(NotificacionDiscrepancia item) throws Exception {
 		try {
-			Integer id = notificacionAccion.getId();
+			Integer id = item.getId();
 			String message ="";
 			boolean success = false;
 			if (id == 0) {
-				NotificacionAccion item2 = this._repository.save(notificacionAccion);
+				NotificacionDiscrepancia item2 = this._repository.save(item);
 				id = item2.getId();
 				message += "Se guardarón sus datos de manera correcta";
 			}else {
 				message += "Se actualizarón sus datos de manera correcta";
-				this._repository.save(notificacionAccion);
+				this._repository.save(item);
 			}
 			success = true;
 			ResponseEntity response = new ResponseEntity();
@@ -47,14 +48,14 @@ public class NotificacionAccionServiceImpl implements NotificacionAccionService 
 	}
 
 	@Override
-	public ResponseEntity<NotificacionAccion> findById(int id) throws Exception {
+	public ResponseEntity<NotificacionDiscrepancia> findById(int id) throws Exception {
 		try {
 			if (id ==0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<NotificacionAccion> response = new ResponseEntity<NotificacionAccion>();
-			NotificacionAccion item = _repository.findById(id).get();
+			ResponseEntity<NotificacionDiscrepancia> response = new ResponseEntity<NotificacionDiscrepancia>();
+			NotificacionDiscrepancia item = _repository.findById(id).get();
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
@@ -64,8 +65,8 @@ public class NotificacionAccionServiceImpl implements NotificacionAccionService 
 	}
 
 	@Override
-	public NotificacionAccion update(NotificacionAccion notificacionAccion) {
-		_repository.save(notificacionAccion);
+	public NotificacionDiscrepancia update(NotificacionDiscrepancia notificacionDiscrepancia) {
+		_repository.save(notificacionDiscrepancia);
 		return null;
 	}
 
@@ -83,30 +84,31 @@ public class NotificacionAccionServiceImpl implements NotificacionAccionService 
 	}
 
 	@Override
-	public ResponseEntity<NotificacionAccion> findAll() throws Exception {
+	public ResponseEntity<NotificacionDiscrepancia> findAll() throws Exception {
 		try {
-			ResponseEntity<NotificacionAccion> response = new ResponseEntity<NotificacionAccion>();
-			List<NotificacionAccion> items = _repository.findAll();
+			ResponseEntity<NotificacionDiscrepancia> response = new ResponseEntity<NotificacionDiscrepancia>();
+			List<NotificacionDiscrepancia> items = _repository.findAll();
 			response.setItems(items);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	@Override
-	public ResponseEntity<NotificacionAccion> findByNotificacionId(int notificacionId) throws Exception {
+	public ResponseEntity<NotificacionDiscrepancia> findByNotificacionId(int notificacionId) throws Exception {
 		try {
 			Optional<Notificacion> result = _notificacionRepository.findById(notificacionId);
 			if(!result.isPresent()) {
 				throw new Exception("No se encuentra notificacion registrada.");
 			}
-			ResponseEntity<NotificacionAccion> response = new ResponseEntity<NotificacionAccion>();
-			List<NotificacionAccion> items = _repository.findByNotificacionId(notificacionId);
+			ResponseEntity<NotificacionDiscrepancia> response = new ResponseEntity<NotificacionDiscrepancia>();
+			List<NotificacionDiscrepancia> items = _repository.findByNotificacionId(notificacionId);
 			response.setItems(items);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
+
 }
