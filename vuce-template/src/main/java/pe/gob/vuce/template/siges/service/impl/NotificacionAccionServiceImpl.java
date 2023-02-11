@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionAccion;
-import pe.gob.vuce.template.siges.domain.OrigenNotificacion;
-import pe.gob.vuce.template.siges.domain.TipoAlimento;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.NotificacionAccionRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionRepository;
