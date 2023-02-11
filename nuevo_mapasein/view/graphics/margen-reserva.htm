@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Margen de Reserva</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+  <link rel="icon" type="image/png" href="../../img/osinerg.ico">
+  <style>
+    .p-0 {
+      padding: 0px !important
+    }
+
+    .m-0 {
+      margin: 0px !important;
+    }
+
+    .font-bold {
+      font-weight: 600;
+      padding: 7px;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="row m-0">
+      <div class="col-sm-12">
+        <table class="table">
+          <tr>
+            <td class="text-center p-0 m-0 bg-primary" colspan="4">
+              <h5 class="font-bold"> Margen de Reserva de Generación Aislada <span id="lbl_periodo"> </span></h5>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <div id="graphic" style="width:100%; height:450px;"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+  <script src="https://js.arcgis.com/4.14/"></script>
+
+  <script>
+
+    define([
+      "esri/tasks/QueryTask",
+      "esri/tasks/support/Query"
+    ], function (
+      QueryTask,
+      Query
+    ) {
+
+      let url_service = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/MapaSEIN_Alerta/MapServer/12';   
+
+      let anio = getURL('anio');
+      let trimestre = getURL('trimestre');
+      anio = atob(anio);
+      trimestre = atob(trimestre).substring(0,1);
+
+
+      if (anio == '' || trimestre == '') {
+        bootbox.alert({
+          message: "No se ha proporcionado información suficiente.",
+          callback: function () {
+            close();
+          }
+        });
+      }
+
+      $('#lbl_periodo').text(` - ${ anio } ${ trimestre }T` );
+
+      /*QUERY AL SERVICIO*/
+
+      let _queryt = new QueryTask({ url: url_service});
+      let _qparams = new Query();     
+
+      _qparams.where = `ANIO = '${anio}' and TRIMESTRE = '${trimestre}'`;
+      _qparams.outFields = ["*"]; 
+      _qparams.returnGeometry = false;
+
+      _queryt.execute(_qparams).then(function (response) {
+        let nreg = response.features.length;
+        let features = response.features;
+
+        if (features.length <= 0) bootbox.dialog({
+          title: "Margen de Reserva de Generaci&oacute;n Aislada - " + anio + " " + trimestre+"T",
+          message: "No existe informaci&oacute;n.",
+          size: "small"
+        }), !1;
+
+
+        let data = [];
+        let empresas = [];
+        for (let i = 0; i < nreg; i++) {
+          let feature = features[i].attributes;
+          data.push({
+            sistema: feature.NOM_SIST_ELECT,
+            maxima: Math.round(feature.MAX_DEMANDA),
+            potencia: Math.round(feature.POTENCIA_EFECTIVA),
+            margen: Math.max(0, Math.round((feature.POTENCIA_EFECTIVA - feature.MAX_DEMANDA) / feature.MAX_DEMANDA * 1e3) / 10),
+            limite: feature.LIMITE_PORC //Math.round(feature.limite * 100),
+          });
+
+          empresas[feature.NOM_SIST_ELECT] = feature.NOM_EMPRESA;
+
+        }
+        
+        data.sort(function (a, b) {
+          if (a.margen > b.margen) {
+            return -1;
+          }
+          if (a.margen < b.margen) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+
+        AmCharts.makeChart("graphic", {
+          type: "serial",
+          theme: "light",
+          autoMargins: !0,
+          dataProvider: data,
+          startDuration: .25,
+          mouseWheelZoomEnabled: !0,
+          plotAreaFillAlphas: .1,
+          categoryField: "sistema",
+          categoryAxis: {
+            gridPosition: "start",
+            labelRotation: 45
+          },
+          legend: {
+            horizontalGap: 10,
+            useGraphSettings: !0,
+            markerSize: 10,
+            align: "center",
+            // equalWidths: false
+          },
+          valueAxes: [{
+            id: "power",
+            logarithmic: !0,
+            title: "kW",
+            axisAlpha: .5,
+            position: "right",
+            // stackType:'3d',
+            balloon: {
+              enabled: !1
+            }
+          }, {
+            id: "percent",
+            unit: "%",
+            title: "Margen de Reserva (%)",
+            axisAlpha: .5,
+            position: "left"
+          }],
+          graphs: [{
+            id: "g1",
+            balloonText: "Margen de Reserva: [[value]]%",
+            legendValueText: "[[value]]%",
+            labelText: "[[value]]%",
+            // labelRotation: -90,
+            lineAlpha: 1,
+            fillAlphas: 1,
+            type: "column",
+            columnWidth: .8,
+            color: "#53609a",
+            lineColor: "#53609a",
+            fillColors: "#53609a",
+            clustered: !1,
+            valueField: "margen",
+            title: "Margen de Reserva",
+            valueAxis: "percent",
+
+          }, {
+            id: "g3",
+            balloonText: "Potencia Efectiva Total: [[value]] kW",
+            legendValueText: "[[value]] kW",
+            lineAlpha: 1,
+            fillAlphas: 1,
+            type: "column",
+            columnWidth: .5,
+            color: "#93cddd",
+            lineColor: "#93cddd",
+            fillColors: "#93cddd",
+            clustered: !1,
+            valueField: "potencia",
+            title: "Potencia Efectiva Total",
+            numberFormatter: {
+              precision: 2, 
+              decimalSeparator: '.', 
+              thousandsSeparator: ''
+            }
+          }, {
+            id: "g2",
+            balloonText: "Max. Demanda: [[value]] kW",
+            legendValueText: "[[value]] kW",
+            lineAlpha: 1,
+            fillAlphas: 1,
+            type: "column",
+            columnWidth: .35,
+            color: "#00b050",
+            lineColor: "#00b050",
+            fillColors: "#00b050",
+            // clustered: !1,
+            valueField: "maxima",
+            title: "Máxima Demanda",
+            numberFormatter: {
+              precision: 2, 
+              decimalSeparator: '.', 
+              thousandsSeparator: ''
+            }
+          },  {
+            id: "g4",
+            showBalloon: !1,
+            legendValueText: "[[value]]%",
+            bullet: "round",
+            bulletColor: "#ffc000",
+            bulletSize: 8,
+            lineAlpha: 1,
+            fillAlphas: 0,
+            lineColor: "#ff0000",
+            lineThickness: 3,
+            dashLength: 10,
+            valueField: "limite",
+            title: "Límite de Margen de Reserva",
+            valueAxis: "percent"
+          }],
+          chartCursor: {
+            cursorAlpha: .05,
+            cursorPosition: "middle",
+            valueLineEnabled: !0,
+            valueLineBalloonEnabled: !0,
+            valueLineAlpha: .5,
+            fullWidth: !0,
+            showNextAvailable: !0,
+            categoryBalloonFunction: function (e) {
+              return "<b>"+ e + "</b>"  + "<br />" + empresas[e]
+            }
+          },
+          
+          export: {
+            enabled: !0,
+            position: "bottom-left"
+          }
+        });
+
+      }).catch(function (error) {
+        console.log("Error al graficar: ", error);
+      });
+
+      // funciones de apoyo
+      function getURL(e, a) {
+        e = e.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var t = new RegExp("[\\?&]" + e + "=([^&#]*)").exec(location.search);
+        return null === t ? a : decodeURIComponent(t[1].replace(/\+/g, " "))
+      }
+
+    });
+
+  </script>

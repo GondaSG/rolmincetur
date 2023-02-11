@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa SEIN - DSE</title>
+  <link rel="icon" type="image/png" href="img/osinerg.ico">
+
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap-select/css/bootstrap-select.min.css">
+
+  <link rel="stylesheet" href="assets/DataTables/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="assets/DataTables/Buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="assets/jquery.datatimepicker/jquery.datetimepicker.min.css">
+
+  <link rel="stylesheet" href="assets/jquery-ui/themes/ui-lightness/jquery-ui.css">
+  <link rel="stylesheet" href="assets/alerts/alerts.css">
+  <link rel="stylesheet" href="assets/fonts-icon/style.css">
+  <link rel="stylesheet" href="assets/select2/select2.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://www.amcharts.com/lib/3/plugins/export/export.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/tooltipster@4.2.6/dist/css/tooltipster.bundle.min.css" />
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/widget.css">
+  <link rel="stylesheet" type="text/css" href="css/libs.css">
+</head>
+
+<body id="mibody" class="cargando">
+
+  <!-- ##### PRELOADER INICIO -->
+  <div class="preloader" id="div_preloadermain">
+    <button class="btn btn-preloader " type="button" disabled>
+      Bienvenido al Visor Mapa SEIN<br><small>Espere un momento por favor...</small> <br>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- ##### HEADER -->
+  <nav class="navbar justify-content-between">
+    <div>
+      <a class="navbar-brand nav-title">Mapa SEIN - DSE</a>  
+      <span id="mensaje_carga_lenta" class="notvisible message-header"> 
+        Algunas capas están ralentizando la carga. Por favor espere. 
+        <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
+      </span>
+    </div>    
+
+    <div>
+      <img src="img/logo.png" class="logotipo d-sm-block" alt="osinergmin">
+      <img src="img/isotipo.png" class="isotipo d-sm-none" alt="osinergmin">
+    </div>
+  </nav>
+
+  <!-- ##### VISOR MAP -->
+  <div id="div_view" class="desactive-click">
+
+    <!-- MAIN MENU (right side) -->
+    <div class="menu-main menu boxsombra boxradio" id="div_menu">
+      <ul class="list-inline text-center" id="ul_menu">
+        <!-- Item Capas -->
+        <li>
+          <a href="#" role="button" class="item-menu" data-subcontainer="#wg_lyl_sein">
+            <img src="img/menulayers.png" data-toggle="tooltip" data-placement="left" title='Capas de Información'>
+          </a>
+        </li>
+        <!-- Item Herramientas -->
+        <li class="dropdown" id="li_tools">
+          <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+            <img src="img/menutool.png">
+          </a>
+          <ul class="dropdown-menu ul-tools">
+            <li>
+              <a class="dropdown-item item-menu modo2d" data-subcontainer="#wg_medir2d" href="#">
+                <img src="img/widget/medir.png" alt="medir">
+                  Medir
+              </a>
+              </li>
+            <li>
+              <a class="dropdown-item item-menu" data-subcontainer="#wg_searchxy" href="#">
+                <img src="img/widget/buscarXY.png" alt="buscarxy"> 
+                Buscar Coordenada
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item item-menu" data-subcontainer="#wg_streetview" href="#" id="btn_menusv">
+                <img src="img/widget/pegman-md.png"> 
+                Street View
+              </a>
+             </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- USER MENU -->
+    <button class="esri-widget--button btn-user" id="btn_login" data-toggle="tooltip" data-placement="bottom" title='Iniciar Sesión'> <span class="icon-user"></span></button>
+    <div class="menu-logged btn-user menu notvisible" id="menu_logged">
+      <ul class="list-inline text-center ">
+        <!-- usuario -->
+        <li class="dropdown">
+          <span id="name_user" class="lbl-user"></span>
+          <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+            <span class="icon-user user-protected"></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-user">
+            <div class="item-user">
+              <label class="d-block item" id="btn_changepass"> <span class="icon-update-pass pl-1"></span> Cambiar contraseña </label>
+              <label class="d-block item mb-0" id="btn_exit"> <span class="icon-exit pl-1"></span> Cerrar Sesión</label>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- NAVEGATION TOOLS MENU  -->
+    <div class="menu-navegation" id="div_navegation">
+      <ul class="list-inline text-center">
+        <li class="esri-widget--button">
+          <a id="btn_home" data-toggle="tooltip" data-placement="right" title="Home" href="#">
+            <span class="esri-icon esri-icon-home"></span>
+          </a>
+        </li>
+        <li>
+          <a id="btn_location" data-toggle="tooltip" data-placement="right" title="Buscar mi Ubicación" href="#"></a>
+        </li>
+        <li class="esri-widget--button">
+          <a id="btn_zoom_add" data-toggle="tooltip" data-placement="right" title="Acercar" href="#">
+            <span class="icon-plus"></span>
+          </a>
+        </li>
+        <li class="esri-widget--button">
+          <a id="btn_zoom_minus" data-toggle="tooltip" data-placement="right" title="Alejar" href="#">
+            <span class="icon-minus"></span>
+          </a>
+        </li>
+        <li class="esri-widget--button display-flex">
+          <a id="btn_previous" class='disabled icon-arrow-left' data-toggle="tooltip" data-placement="right" title="Anterior" href="#"> </a>
+        </li>
+        <li class="esri-widget--button display-flex">
+          <a id="btn_next" class='disabled icon-arrow-right' data-toggle="tooltip" data-placement="right" title="Posterior" href="#"> </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SEARCH DIRECTIONS -->
+    <div class="card card-widget card-directionsearch boxradio boxsombra" id="wg_fieldsearch">
+      <div class="card-body p-0">
+        <div id="container_wgdirectionsearch"></div>
+      </div>
+    </div>
+
+    <!-- POINTER COORDINATES (footer)-->
+    <div class="container-coordenadas">
+      <div class="scale">
+        <span class="text-left" id="lbl_scale"></span>
+      </div>
+      <div class="coordenadas text-center">
+        <span id="lbl_coordgeografica"></span>
+        <span id="lbl_coordutm"></span>
+      </div>
+    </div>
+
+    <!-- LEYENDA -->
+    <div class="hidelegend container-legend" id='div_legend'>
+      <div class="card legend" id="wg_leyenda">
+        <div class="card-header-gis">
+          <div>
+            <img src="img/widget/leyenda.png" alt="leyenda">
+            <strong>Leyenda</strong>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div id="Legenda"></div>
+        </div>
+      </div>
+      <a href="#" class="btn-showlegend lbl-legend"> LEYENDA</a>
+      <a href="#" class="notvisible">
+        <i class="icon-caret-right"></i>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ##### WIDGETS -->
+  <div id="div_widgets">
+
+    <!-- LAYER LISTS -->
+    <div class="card card-widget card-layer boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_lyl_sein">
+      <div class="card-header-gis">
+        <div>
+          <img src="img/menulayers.png" alt="menu">
+          <strong>Capas de Información</strong>
+          <span id="preloader_layerlist" class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>    
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div id="lyl_sein"></div>
+      </div>
+    </div>
+
+    <!-- WG BASEMAP GALLERY-->
+    <div class="card card-widget boxradio boxsombra basemap notvisible" id="wg_basemap"></div>
+
+    <!-- WG AREA INFLUENCIA -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_buffer"></div>
+
+    <!-- WG DIBUJAR -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_draw">
+    </div>
+
+    <!-- WG MEDIR -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible scroll" id="wg_medir2d">
+      <div class="card-header-gis">
+        <div>
+          <img src="img/widget/medir.png">
+          <strong>Medir</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxmedir' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="container-btnmedir2d">
+          <button class="btn-medir2d esri-icon-measure-line" value="distancia2d" type="button" data-toggle="tooltip" data-placement="top" title="Medir Distancia"></button>
+          <button class="btn-medir2d esri-icon-measure-area" value="area2d" type="button" data-toggle="tooltip" data-placement="top" title="Medir Área"></button>
+          <button class="btn-medir2d icon-broom" value="clear" type="button" data-toggle="tooltip" data-placement="top" title="Limpiar Mediciones"></button>
+        </div>
+        <div class="container-wg-medir" id="container_wg_medir" >          
+        </div>
+      </div>
+    </div>
+
+    <!-- WG BUSCAR COORDENADAS -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_searchxy">
+      <div class="card-header-gis">
+        <div>
+          <img src="img/widget/buscarXY.png">
+          <strong>Buscar Coordenadas</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxsearchxy' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <div class="card-body card-body-sm">
+        <form id="form_searchXY">
+          <div class="row esri-widget">
+            <div class="col-4">
+              <label class="lbl-coodxy">Sistema de Coordenadas:</label>
+            </div>
+            <div class="col-8">
+              <select class="form-control form-control-sm" id="cmb_sistemacoord">
+                <option value="geografico">Geográficas</option>
+                <option value="proyectada">Proyectadas</option>
+              </select>
+            </div>
+            <div class="mb-2 col-12 row m-0 container-proyectada notvisible display-flex">
+              <div class="col-4 p-0">
+                <label class="lbl-coodxy">Datum:</label>
+              </div>
+              <div class="col-8 p-0 pl-2">
+                <select class="form-control form-control-sm" id="cmb_proyectada_zona">
+                  <option value="wgs84">WGS84</option>
+                  <option value="psad">PSAD56</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-2 col-12 row m-0 container-proyectada notvisible display-flex">
+              <div class="col-4 p-0">
+                <label class="lbl-coodxy">Proyección:</label>
+              </div>
+              <div class="col-8 p-0 pl-2">
+                <select class="form-control form-control-sm" id="cmb_proyectada_wgs84">
+                  <option value="sr_z17_wgs84">Zona 17</option>
+                  <option value="sr_z18_wgs84">Zona 18</option>
+                  <option value="sr_z19_wgs84">Zona 19</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-2 col-12 row m-0 container-proyectada notvisible display-flex">
+              <div class="col-4 p-0">
+                <label class="lbl-coodxy">Proyección:</label>
+              </div>
+              <div class="col-8 p-0 pl-2">
+                <select class="form-control form-control-sm" id="cmb_proyectada_psad56">
+                  <option value="sr_z17_psad56">Zona 17</option>
+                  <option value="sr_z18_psad56">Zona 18</option>
+                  <option value="sr_z19_psad56">Zona 19</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-2 col-4">
+              <label class="lbl-coodxy" id='lbl_coord'>Longitud:</label>
+            </div>
+            <div class="mb-2 col-8 ">
+              <input type="text" id="txt_coord1" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2 col-4">
+              <label class="lbl-coodxy" id="lbl_coord2">Latitud: </label>
+            </div>
+            <div class="mb-2 col-8 ">
+              <input type="text" id="txt_coord2" class="form-control form-control-sm" required>
+            </div>
+          </div>
+          <div class="mt-2 text-center">
+            <button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_searchXY">
+              <span class="icon-search"> Buscar</span>
+            </button>
+            <button type="reset" class="btn btn-sm btn-outline-secondary btn-limpiar" id="btn_clearxy">
+              <span class="icon-broom"> Limpiar</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- WG STREETVIEW -->
+    <div class="card card-widget streetview-card boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_streetview">
+      <div class="card-header-gis">
+        <div>
+          <img src="img/widget/pegman-md.png" alt="Street View">
+          <strong>Street View</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxstreetview' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div id="container_streetview"></div>
+        <div class="message-noresults-sv">Street View no disponible en esta ubicación</div>
+        <div class="foot-sv">
+          <div class="message-instruction-sv">Click en el mapa para visualizar un panorama </div>
+          <button id="btn_markstreet" class="desactive" data-toggle="tooltip" data-placement="top" title="Activar click en el mapa"><img src="img/widget/blueArrowNew.png"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WG AÑDIR CAPAS EXTERNAS -->
+    <div class="card boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_addlayer"></div>
+
+    <!-- WG IMPRIMIR -->
+    <div class="card card-widget card-top-center  boxradio boxsombra draggable-element fast fadeIn notvisible display-flex" id="wg_print"></div>
+
+    <!-- WG CONSULTA AVANZADA -->
+    <div class="card card-widget card-consulta card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible display-flex" id="wg_search_advanced"></div>
+
+    <!-- WG INFORMES -->
+    <div class="card card-widget card-top-center boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_reports"></div>
+
+    <!-- WG BUSCAR EN CAPA -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_searchinlayer"></div>
+
+    <!-- WG BUSCAR EN GRUPO -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_searchingroup"></div>
+
+    <!-- WG BUSQUEDA POR UBIGEO -->
+    <div class="card card-widget card-consulta card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible display-flex" id="wg_searchforubigeo"></div>
+
+    <!-- WG OTROS DOCUMENTOS E INDICADORES - SISTEMAS EN ALERTA -->
+    <div class="card card-widget card-reportseta card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible display-flex" id="wg_othersalert"></div>
+
+    <!-- WG FILTRAR POR EMPRESA -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterforcompany"></div>
+
+    <!-- WG FILTRAR POR PERIODO - SISTEMAS EN ALERTA -->
+    <div class="card-widget card card-top-left p-0 boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterperiodalert"></div>
+
+    <!-- WG FILTRAR POR PERIODO - PROYECTOS -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterperiodproyect"></div>
+
+    <!-- WG FILTRAR POR PERIODO - PLAN DE INVERSION -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterperiodpi"></div>
+
+    <!-- WG FILTRAR POR PERIODO - DESCARGAS ATMOSFERICAS -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterperiodda"></div>
+
+    <!-- WG FILTRAR POR PERIODO - EVENTOS REVELANTES -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterperioder"> </div>
+
+    <!-- WG EVENTOS RELEVANTES COES -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="title_eventoscoes" aria-hidden="true" id="wg_eventscoes"> </div>
+    
+    <!-- DETALLE EVENTOS RELEVANTES COES -->
+    <div id="mod_detalleevento" class="modal fade second-modal" role="dialog" aria-labelledby="title_detalleevento" aria-hidden="true"> </div>
+
+    <!-- WG FILTRAR POR TENSION - PE -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filtertensionpe"></div>
+
+    <!-- WG FILTRAR POR CLIENTE - PE -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible" id="wg_filterclientepe"> </div>
+
+    <!-- WG BUSQUEDA PUNTOS DE ENTREGA -->
+    <div class="card card-widget card-top-left boxradio boxsombra draggable-element fast fadeIn notvisible card-search-pe " id="wg_searchpe"> </div>
+
+
+  </div>
+
+
+  <!-- ##### RESULTS -->
+
+  <div id="div_results">
+
+    <!-- TABLA RESULTADOS CONSULTA AVANZADA  -->
+    <div class="card card-widget min-size grilla boxradio boxsombra notvisible" id="container_tblsearchadvanced">
+      <span class=" btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong><span class="lbl-titlereporte"></span> </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-exportar">
+          <input type="text" class="txt-dt-filtar " placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <table id="tbl_searchadvanced" class="tbl-result table table-striped table-bordered nowrap" style="width:100%">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS BUSCAR EN CAPA -->
+    <div class="card card-widget min-size grilla boxradio boxsombra notvisible" id="container_tblsearchinlayer">
+      <span class=" btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong><span class="lbl-titlereporte"></span> </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <input type="text" class="txt-dt-filtar" placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <table id="tbl_searchinlayer" class="tbl-result table table-striped table-bordered nowrap" style="width:100%">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS DE BUSCAR EN GRUPO -->
+    <div class="card card-widget min-size grilla boxradio boxsombra notvisible" id="container_tblsearchingroup">
+      <span class=" btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong>Resultado de Búsqueda en Grupo </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <input type="text" class="txt-dt-filtar notvisible" placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <div class="jcarousel" id="jcarousel_searchgroup">
+          <ul class="nav nav-tabs" id="tab_searchgroup" role="tablist"></ul>
+          <a class="jc-left"></a>
+          <a class="jc-right"></a>
+        </div>
+        <div class="tab-content" id="tab_content_searchgroup"></div>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS DE AREA INFLUENCIA -->
+    <div class="card card-widget min-size grilla boxradio boxsombra notvisible" id="container_tblbuffer">
+      <span class=" btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong>Resultado de Área de Influencia</strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <input type="text" class="txt-dt-filtar notvisible" placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <div class="jcarousel" id="jcarousel_buffer">
+          <ul class="nav nav-tabs" id="tab_buffer" role="tablist"></ul>
+          <a class="jc-left"></a>
+          <a class="jc-right"></a>
+        </div>
+        <div class="tab-content" id="tab_content_buffer"></div>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS DE BUSCAR POR UBIGEO -->
+    <div class="card card-widget min-size grilla boxradio boxsombra notvisible" id="container_tblsearchforubigeo">
+      <span class=" btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong>Resultado de Búsqueda por Ubigeo: <span id="title_tblsearchforubigeo"> </span> </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <input type="text" class="txt-dt-filtar notvisible" placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <div class="jcarousel" id="jcarousel_searchforubigeo">
+          <ul class="nav nav-tabs" id="tab_searchforubigeo" role="tablist"></ul>
+          <a class="jc-left"></a>
+          <a class="jc-right"></a>
+        </div>
+        <div class="tab-content" id="tab_content_searchforubigeo"></div>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS PUNTOS DE ENTREGA -->
+    <div class="card card-widget grilla min-size boxradio boxsombra notvisible" id="container_tblpe">
+      <span class="btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong><span class="lbl-titlereporte">Puntos de Entrega</span> </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <input type="text" class="txt-dt-filtar" placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <table id="tbl_pe" class="tbl-result table table-striped table-bordered nowrap tbl-pe" style="width:100%">
+          <thead id="thead_pe" class="text-center">
+            <tr>
+              <th rowspan="2">#</th>
+              <th rowspan="2">Suministrador</th>
+              <th rowspan="2">Cliente</th>
+              <th colspan="2"> Vigencia de contrato</th>
+              <th rowspan="2">Nivel de Tensión</th>
+              <th rowspan="2">Punto de Entrega</th>
+              <th rowspan="2">Titular de la Barra</th>
+              <th rowspan="2">Tension Nominal</th>
+            </tr>
+            <tr>
+              <th class="th-date-pe">Inicio</th>
+              <th class="th-date-pe">Fin</th>
+            </tr>
+          </thead>
+          <tbody id="tbody_pe"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS INDICADORES -->
+    <div class="card card-widget grilla min-size boxradio boxsombra notvisible" id="container_tblindicador">
+      <span class="btn-tbltoggle icon-caret-down"></span>
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong><span class="lbl-titlereporte"></span> </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <input type="text" class="txt-dt-filtar " placeholder="Buscar en la tabla">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <table id="tbl_indicador" class="tbl-result table table-striped table-bordered nowrap" style="width:100%">
+          <thead id="thead_indicador"></thead>
+          <tbody id="tbody_indicador"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLA RESULTADOS TRANSFORMADORES DE SUBESTACION -->
+    <div class="card card-widget card-tbltransf boxradio boxsombra notvisible draggable-element" id="container_tbltransf">
+      <div class="card-header-gis grilla-header">
+        <div class="grilla-header-title">
+          <span class="icon-table2"></span>
+          <strong><span class="lbl-titlereporte"></span> </strong>
+        </div>
+        <div class="container-dtbtns-dtfilter tbl-notexport">
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        </div>
+      </div>
+      <div class="grilla-body">
+        <table id="tbl_transf" class="tbl-result table table-striped table-bordered nowrap" style="width:100%">
+          <thead id="thead_transf"></thead>
+          <tbody id="tbody_transf"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RESULTADOS DE INFORMES / DOCUMENTS ENCONTRADOS -->
+    <div class="card card-widget card-iframes-doc boxradio boxsombra draggable-element fast fadeIn notvisible" id="container_reportfound">
+      <div class="card-header-gis">
+        <div>
+          <img src="img/menureports.png" alt="menu reportes ">
+          <strong><span id="lbl_title_report"></span></strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxreport' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <div class="card-body p-0" id="container_reports"></div>
+      <div class="card-footer p-1 text-center">
+        <a href="" target="_blank" class="btn btn-sm btn-outline-primary" id="btn_verdoc"> Abrir en otra pestaña </a>
+      </div>
+    </div>
+
+    <!-- RESULTADOS DE VIDEO -->
+    <div class="card card-widget card-video boxradio boxsombra draggable-element fast fadeIn notvisible" id="container_video">
+      <div class="card-header-gis">
+        <div>
+          <img src="img/widget/video.png" alt="video">
+          <strong>Video: <span id="lbl_titlevideo"></span></strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle" id="cerrarVideo" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" id="btn_minvideo" data-btnmax='#btn_maxvideo' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <div class="card-body p-0" id="container_videos">
+        <video id="video" controls> Lo sentimos, su navegador no soporta video HTML5. </video>
+      </div>
+    </div>
+
+    <!-- RESULTADOS DE GRÁFICOS (iframe) -->
+    <div class="card card-widget card-iframes card-iframes-indicadores boxradio boxsombra draggable-element fast fadeIn notvisible" id="container_graphic">
+      <div class="card-header-gis p-1">
+        <div>
+          <img src="img/chart.png" alt="" srcset="">
+          <strong>Indicadores</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxgrafico' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <iframe width="100%" height=100% frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="ifr_charts"></iframe>
+    </div>
+
+    <!-- RESULTADOS DE GRÁFICOS (iframe) OTROS INDICADORES - G. AISLADA - SISTEMAS ALERTA  -->
+    <div class="card card-widget card-iframes-indicadores-otroalerts boxradio boxsombra draggable-element fast fadeIn notvisible" id="container_graphic_interrupcion">
+      <div class="card-header-gis p-1">
+        <div>
+          <img src="img/chart.png" alt="" srcset="">
+          <strong>Indicadores</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle " data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxgrafico_interrupcion' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <iframe width="100%" height=100% frameborder="0" marginheight="0" marginwidth="0" id="ifr_charts_interrupciones"></iframe>
+    </div>
+
+    <div class="card card-widget card-iframes-indicadores-otroalerts boxradio boxsombra draggable-element fast fadeIn notvisible" id="container_graphic_interrupcion_time">
+      <div class="card-header-gis p-1">
+        <div>
+          <img src="img/chart.png" alt="" srcset="">
+          <strong>Indicadores</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle " data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxgrafico_interrupcion_time' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <iframe width="100%" height=100% frameborder="0" marginheight="0" marginwidth="0" id="ifr_charts_interrupciones_time"></iframe>
+    </div>
+    
+    <div class="card card-widget card-iframes-indicadores-otroalerts boxradio boxsombra draggable-element fast fadeIn notvisible" id="container_graphic_margenreserva">
+      <div class="card-header-gis p-1">
+        <div>
+          <img src="img/chart.png" alt="" srcset="">
+          <strong>Indicadores</strong>
+        </div>
+        <div>
+          <span class="icon-close icon-btn-circle " data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+          <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxgrafico_margenreserva' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+        </div>
+      </div>
+      <iframe width="100%" height=100% frameborder="0" marginheight="0" marginwidth="0" id="ifr_charts_margenreserva"></iframe>
+    </div>    
+
+    <!-- MODAL DE POPUP  PE-->
+    <div class="modal fade modal-pe modal-pe-c" id="modal_pe" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header-evt">
+            <h5 class="modal-title" id="title_pe_actionpopup"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body ">
+            <div class="head-form mb-1">
+              <div>
+                <label for="cmb_anio_pe" class="font-bold"> Año: </label>
+                <select id="cmb_anio_pe" class="form-control form-control-sm mr-2 "></select>
+              </div>
+              <div>
+                <label for="cmb_mes_pe" class="font-bold"> Mes: </label>
+                <select id="cmb_mes_pe" class="form-control form-control-sm mr-2 ">
+                  <option value="">-- Elija un mes --</option>
+                  <option value="01">Enero</option>
+                  <option value="02">Febrero</option>
+                  <option value="03">Marzo</option>
+                  <option value="04">Abril</option>
+                  <option value="05">Mayo</option>
+                  <option value="06">Junio</option>
+                  <option value="07">Julio</option>
+                  <option value="08">Agosto</option>
+                  <option value="09">Setiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
+                </select>
+              </div>
+              <div>
+                <button type="button" class="btn-outline-primary btn btn-sm display-inlineblock" id="btn_searchpe">
+                  <span class="icon-search pr-2"> Buscar</span>
+                </button>
+              </div>
+            </div>
+            <div class="response-form">
+              <table id="tbl_pe_actionpopup" class="tbl-result table table-striped table-bordered nowrap tbl-pe" width=100% >
+                <thead id="thead_pe_actionpopup" class="text-center">
+                  <tr>
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">Suministrador</th>
+                    <th rowspan="2">Cliente</th>
+                    <th colspan="2"> Vigencia de contrato</th>
+                    <th rowspan="2">Nivel de Tensión</th>
+                    <th rowspan="2">Punto de Entrega</th>
+                    <th rowspan="2">Titular de la Barra</th>
+                    <th rowspan="2">Tension Nominal</th>
+                  </tr>
+                  <tr>
+                    <th class="th-date-pe">Inicio</th>
+                    <th class="th-date-pe">Fin</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody_pe_actionpopup"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE POPUP  TENSION - PE-->
+    <div class="modal fade modal-pe modal-pe-tension" id="modal_tensionpe" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header-evt">
+            <h5 class="modal-title" id="title_tension_actionpopup"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="head-form mb-2">
+              <div>
+                <label for="cmb_anio_tensionpe" class="font-bold"> Año: </label>
+                <select id="cmb_anio_tensionpe" class="form-control form-control-sm mr-2"></select>
+              </div>
+              <div>
+                <label for="cmb_mes_tensionpe" class="font-bold"> Mes: </label>
+                <select id="cmb_mes_tensionpe" class="form-control form-control-sm mr-2">
+                  <option value="0">-- Elija un mes --</option>
+                  <option value="1">Enero</option>
+                  <option value="2">Febrero</option>
+                  <option value="3">Marzo</option>
+                  <option value="4">Abril</option>
+                  <option value="5">Mayo</option>
+                  <option value="6">Junio</option>
+                  <option value="7">Julio</option>
+                  <option value="8">Agosto</option>
+                  <option value="9">Setiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
+                </select>
+              </div>
+              <div>
+                <button type="button" class="btn-outline-primary btn btn-sm display-inlineblock" id="btn_searchtensionpe">
+                  <span class="icon-search pr-2"> Buscar</span>
+                </button>
+              </div>
+            </div>
+            <div class="response-form">
+              <div id="card_response"></div>
+              <iframe width="100%" height=100% frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="ifr_charts_pe"></iframe>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE POPUP  SUMINISTRO - PE -->
+    <div class="modal fade modal-pe" id="modal_suministrope" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header-evt">
+            <h5 class="modal-title" id="title_suministro_actionpopup"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="head-form mb-2">
+              <div>
+                <label for="cmb_anio_suministro" class="font-bold"> Año: </label>
+                <select id="cmb_anio_suministro" class="form-control form-control-sm mr-2"></select>
+              </div>
+              <div>
+                <label for="cmb_sementre_suministro" class="font-bold"> Semestre: </label>
+                <select id="cmb_sementre_suministro" class="form-control form-control-sm mr-2">
+                  <option value="1">1° Semestre</option>
+                  <option value="2">2° Semestre</option>
+                </select>
+              </div>
+              <div>
+                <button type="button" class="btn-outline-primary btn btn-sm display-inlineblock" id="btn_searchsuministro">
+                  <span class="icon-search pr-2"> Buscar</span>
+                </button>
+              </div>
+            </div>
+            <div class="response-form">
+              <table id="tbl_suministro_actionpopup" class="tbl-result table table-striped table-bordered nowrap" width=100%>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE POPUP EVENTOS RELEVANTES -->
+    <div class="modal fade " id="modal_er" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header-evt">
+            <h5 class="modal-title" id="title_er"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="box-tab">
+              <div class="jcarousel" id="jcarousel_er">
+                <ul class="nav nav-tabs" id="tab_er" role="tablist"></ul>
+                <a class="jc-left"></a>
+                <a class="jc-right"></a>
+              </div>
+              <div class="tab-content" id="tab_content_er"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE POPUP PROBLEMATICA Y SOLUCIONES - SISTEMAS ELECTRICOS CRITICOS  -->
+    <div class="modal fade modal-sec" id="modal_sec_pys" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header-evt">
+            <h5 class="modal-title" id="title_sec"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class=''>
+              <div class="jcarousel" id="jcarousel_sec">
+                <ul class="nav nav-tabs" id="tab_sec" role="tablist"></ul>
+                <a class="jc-left"></a>
+                <a class="jc-right"></a>
+              </div>
+              <div class="tab-content mt-1" id="tab_content_sec"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- ##### OTROS -->
+
+  <!-- LOGIN FORM -->
+  <div class="modal fade card-login" id="modal_login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body ">
+          <div class="text-center mb-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <span class="icon-user-circle-o img-user"></span>
+          </div>
+          <form class="col-12" method="post" id="form_login">
+            <div class="form-group user-group">
+              <input type="text" id="txt_user" class="form-control" placeholder="Usuario" required="" />
+            </div>
+            <div class="form-group contrasena-group">
+              <input type="password" id="txt_password" class="form-control" placeholder="Contraseña" required="" />
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary "> Iniciar sesión </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMBIAR CONTRASEÑA FORM -->
+  <div class="modal fade card-login" id="modal_changepass" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Cambiar contraseña</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <form class="col-12" method="post" id="form_changepass">
+            <div class="form-group contrasena-group">
+              <input type="password" id="txt_currentpass" class="form-control" placeholder="Actual contraseña"
+                required="" autofocus />
+            </div>
+            <div class="form-group contrasena-group">
+              <input type="password" id="txt_newpass" class="form-control" placeholder="Nueva contraseña" required="" />
+            </div>
+            <div class="form-group contrasena-group">
+              <input type="password" id="txt_confirmpass" class="form-control" placeholder="Confirme nueva contraseña"
+                required="" />
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary "> Guardar cambios </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AYUDA CALCULADORA -->
+  <div class="modal fade modal-helpcalculator second-modal" id="modalhelpcalculator" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Información Referencial</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span>Un arco eléctrico es una descarga disruptiva generada por la ionización de un medio gaseoso entre dos
+            superficies o elementos a diferente potencial. Se produce frecuentemente frente a falla o mala maniobra en
+            los equipos eléctricos. El riesgo de una falla de arco eléctrico con explosión es en sí, un riesgo de
+            quemadura. El riesgo de quemadura se mide con la energía calorífica disponible dentro del equipo, la energía
+            calorífica disponible se denomina comúnmente energía incidente y se mide en cal/cm2. Para ello se utilizó
+            normas internacionales como la IEEE 1584 y la NFPA 70E, haciendo un análisis comparativo para diferentes
+            condiciones.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BTNS MINIMIZADOS -->
+  <div class="container-btnminimizadoswg  max-size" id="div_btnmaximizadores">
+    <div id="container_btnswg">
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxbuffer" data-toggle="tooltip" data-placement="top" title='Consulta Avanzada' id="btn_maxsearchadvanced" data-subcontainer="#wg_search_advanced"> <span class="icon-search"></span></button>
+    </div>
+    <div id="container_btnstools">
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxprinter" data-toggle="tooltip" data-placement="top" title='Imprimir' id="btn_maxprinter" data-subcontainer="#wg_print"> <span class="icon-print"></span></button>
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxaddlayer" data-toggle="tooltip" data-placement="top" title='Cargar Capa Externa' id="btn_maxaddlayer" data-subcontainer="#wg_addlayer"> <span class="icon-add-data-line"></span></button>
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxstreetview" data-toggle="tooltip" data-placement="top" title='Street View' id="btn_maxstreetview" data-subcontainer="#wg_streetview"> <span class="icon-location2"></span></button>
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxsearchxy" data-toggle="tooltip" data-placement="top" title='Buscar Coordenadas' id="btn_maxsearchxy" data-subcontainer="#wg_searchxy"> <span class=""> XY</span></button>
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxmedir" data-toggle="tooltip" data-placement="top" title='Medir' id="btn_maxmedir" data-subcontainer="#wg_medir2d"> <span class="icon-medir2"></span></button>
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxdraw" data-toggle="tooltip" data-placement="top" title='Dibujar' id="btn_maxdraw" data-subcontainer="#wg_draw"> <span class="icon-pencil6"></span></button>
+      <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxbuffer" data-toggle="tooltip" data-placement="top" title='Área de Influencia' id="btn_maxbuffer" data-subcontainer="#wg_buffer"> <span class="icon-buffer-line"></span></button>
+    </div>
+  </div>
+  <div class="container-btnminimizadosresult  max-size" id="div_btnmaximizadoresresult">
+    <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxreport" data-toggle="tooltip" data-placement="top" title='Informes' id="btn_maxreport" data-subcontainer="#container_reportfound"> <span class="icon-file-text2"></span></button>
+    <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxgrafico" data-toggle="tooltip" data-placement="top" title='Gráfico' id="btn_maxgrafico" data-subcontainer="#container_graphic"> <span class="icon-bar-chart"></span></button>
+    <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxgrafico" data-toggle="tooltip" data-placement="top" title='Gráfico - Margen de Reserva' id="btn_maxgrafico_margenreserva" data-subcontainer="#container_graphic_margenreserva"> <span class="icon-bar-chart"></span></button>
+    <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxgrafico" data-toggle="tooltip" data-placement="top" title='Gráfico - Número de Interrupciones' id="btn_maxgrafico_interrupcion" data-subcontainer="#container_graphic_interrupcion"> <span class="icon-bar-chart"></span></button>
+    <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxgrafico" data-toggle="tooltip" data-placement="top" title='Gráfico - Duración de Interrupciones' id="btn_maxgrafico_interrupcion_time" data-subcontainer="#container_graphic_interrupcion_time"> <span class="icon-bar-chart"></span></button>
+    <button class="notvisibility display-inlineblock esri-widget--button btn-maximizar btn-maxvideo" data-toggle="tooltip" data-placement="top" title='Video' id="btn_maxvideo" data-subcontainer="#container_video"> <span class="esri-icon-play-circled"></span></button>
+  </div>
+
+  <!-- ALERTA AL CERRAR LAS HERRAMIENTAS -->
+  <div class="modal fade" id="modalcleartool" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="text-center">
+            <h5 class="modal-title">¿Está seguro de cerrar esta herramienta <span id="lbl_titletool"></span> ? <br> Se
+              limpiará lo realizado.</h5>
+          </div>
+          <div class="mt-3 text-center">
+            <button type="button" class="btn btn-sm btn-outline-primary mr-2 btn-cleartool"><span id="btn_yescleartool" class="btn-confirm">Aceptar<span></button>
+            <button type="button" class="btn btn-sm btn-outline-secondary btn-cleartool"><span id="btn_notcleartool" class="btn-confirm">Cancelar</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ALERTA AL LIMPIAR LA HERRAMIENTA DIBUJAR -->
+  <div class="modal fade" id="modalcleartooldraw" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="text-center">
+            <h5 class="modal-title">¿Está seguro de limpiar todos los gráficos dibujados?</h5>
+          </div>
+          <div class="mt-3 text-center">
+            <button type="button" class="btn btn-sm btn-outline-primary mr-2 btn-cleartool"><span id="btn_yescleartooldraw" class="btn-confirm">Sí, aceptar<span></button>
+            <button type="button" class="btn btn-sm btn-outline-secondary btn-cleartool"><span id="btn_notcleartooldraw" class="btn-confirm">No, cancelar</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ALERTA AL LIMPIAR LA HERRAMIENTA MEDIR -->
+  <div class="modal fade" id="modalcleartoolmeasure" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="text-center">
+            <h5 class="modal-title">¿Está seguro de limpiar todas las medidas realizadas? </h5>
+          </div>
+          <div class="mt-3 text-center">
+            <button type="button" class="btn btn-sm btn-outline-primary mr-2 btn-cleartool"><span id="btn_yescleartoolmeasure" class="btn-confirm">Sí, aceptar<span></button>
+            <button type="button" class="btn btn-sm btn-outline-secondary btn-cleartool"><span id="btn_notcleartoolmeasure" class="btn-confirm">No, cancelar</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLTIP MOUSE -->
+  <div id="tooltip_mouse" class='notvisible tooltip-mouse' role="tooltip">
+    <span></span>
+  </div>
+
+  <!-- PRELOADER GENERICO-->
+  <div class="preloader-none" id="div_preloader">
+    <button class="btn btn-preloader" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Cargando...
+    </button>
+  </div>
+
+
+  <script>
+    // redireccionar a https
+    if (window.location.protocol === 'http:') {
+      window.location.href = window.location.href.replace( 'http:', 'https:');
+    }
+
+    var locationPath = location.pathname.replace(/\/[^\/]+$/, "");
+    var host = location.host;
+    var ishtml = (-1 != location.pathname.toLowerCase().indexOf(".html"));
+    if (ishtml && host != '') {
+      locationPath = locationPath + '/'
+    }
+    if (host == '') {
+      locationPath = locationPath + '/';
+    }
+    window.dojoConfig = {
+      parseOnLoad: true,
+      packages: [{
+        name: "js",
+        location: locationPath + "js"
+      }]
+    };
+  </script>
+
+  <script src="assets/jquery/jquery.js"></script>
+  <script src="assets/jquery-ui/jquery-ui.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"> </script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/bootstrap-select/js/bootstrap-select.min.js"></script>
+  <script src="assets/jquery-jcarousel/jquery.jcarousel.min.js"></script>
+  <script src="assets/pdfobject/pdfobject.min.js"></script>
+  <script src="assets/alerts/alerts.js"></script>
+  <script src="assets/moment/moment.js"></script>
+  <script src="assets/select2/select2.min.js"></script>
+  <script src="assets/cookie/js.cookie.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tooltipster@4.2.6/dist/js/tooltipster.bundle.min.js"></script>
+  
+  <!-- Encritpación -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+
+  <!-- amcharts - graficos  -->
+  <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
+  <script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script type="text/javascript" src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+  <!-- DataTable -->
+  <script src="assets/DataTables/js/jquery.dataTables.min.js"></script>
+  <script src="assets/DataTables/js/dataTables.bootstrap4.min.js"></script>
+  <script src="assets/DataTables/Buttons/js/dataTables.buttons.min.js"></script>
+  <script src="assets/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="assets/DataTables/extern/jszip.min.js"></script>
+  <script src="assets/DataTables/extern/pdfmake/pdfmake.min.js"></script>
+  <script src="assets/DataTables/extern/pdfmake/fonts/Roboto.js"></script>
+  <script src="assets/DataTables/extern/vfs_fonts.js"></script>
+  <script src="assets/DataTables/Buttons/js/buttons.html5.min.js"></script>
+  <script src="assets/DataTables/Buttons/js/buttons.colVis.min.js"></script>
+  <script src="assets/jquery.datatimepicker/jquery.datetimepicker.full.min.js"></script>
+
+
+  <!-- Main -->
+  <script src="https://js.arcgis.com/4.13/"></script>
+  <script type="text/javascript" src="js/root.js"></script>
+  <script type="text/javascript" src="js/eventswindow/events.js"></script>
+
+  <!-- Key Google-api Osinergmin-->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmbMJmoWDy9TOS-cxOeCubUaIdNcSemk8"></script>
+
+  <script>
+    $.fn.selectpicker.Constructor.BootstrapVersion = '4';
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip({
+        trigger: "hover"
+      });
+    });
+  </script>
+</body>
+
+</html>
+
+
+<!-- REVISADO ♣ -->

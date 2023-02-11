@@ -1,61 +1,72 @@
 function getDomain() {
     return {
         "domain": [{
-            "id": 22,
+            "id": 5,
+            "name": "Tramo Media Tensión",
             "properties": [
                 "CODEMP",
                 "CODTIPORED"
             ]
         }, {
-            "id": 23,
+            "id": 6,
+            "name": "Estructuras MT",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 25,
+            "id": 8,
+            "name": "SED - Esc. hasta 1/30000",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 26,
+            "id": 9,
+            "name": "SED - Esc. hasta 1/9000",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 27,
+            "id": 10,
+            "name": "Estructuras BT",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 28,
+            "id": 11,
+            "name": "Tramo Baja Tensión",
             "properties": [
                 "CODEMP",
                 "CODTIPORED"
             ]
         }, {
-            "id": 29,
+            "id": 12,
+            "name": "Acometidas",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 30,
+            "id": 13,
+            "name": "Suministros",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 31,
+            "id": 14,
+            "name": "Tramo Alumbrado Público",
             "properties": [
                 "CODEMP",
                 "CODTIPORED",
                 "CODSOPORTE"
             ]
         }, {
-            "id": 32,
+            "id": 15,
+            "name": "Alumbrado Público",
             "properties": [
                 "CODEMP"
             ]
         }, {
-            "id": 33,
+            "id": 16,
+            "name": "Área de Concesión",
             "properties": [
                 "CODEMP"
             ]

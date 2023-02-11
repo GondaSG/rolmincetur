@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Evaluaci&oacute;n de Calidad de Tensi&oacute;n - Calidad en G&amp;T</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+  <link rel="icon" type="image/png" href="../../img/osinerg.ico">
+  <style>
+    .p-0 {
+      padding: 0px !important
+    }
+
+    .m-0 {
+      margin: 0px !important;
+    }
+
+    .font-bold {
+      font-weight: 600;
+      color: #212529cf;
+      padding: 7px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table">
+          <tr>
+            <td class="text-center p-0 m-0" colspan="4">
+              <h5 class=" font-bold">Perfil de Tensión</h5>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <div id="grafico" style="width:100%; height:300px;"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+ 
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+  
+  <script src="../../assets/moment/moment.js"></script>
+  <script src="https://js.arcgis.com/4.14/"></script> <!-- ADDED -->
+
+  <script>
+    define([
+      "esri/tasks/QueryTask",
+      "esri/tasks/support/Query"
+    ], function (
+      QueryTask,
+      Query
+    ) {
+      let url_service = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/MapaSEIN_Calidad/MapServer/3';
+      let id_pe_ten = getURL('id_pe_ten', '');
+      id_pe_ten = atob(id_pe_ten);
+      if (id_pe_ten == '') {
+        bootbox.alert({
+          message: "No se ha propordinado informacion suficiente.",
+          callback: function () {
+            close();
+          }
+        })
+      }
+
+      /*QUERY AL SERVICIO*/
+
+      let _queryt = new QueryTask({ url: url_service });
+      let _qparams = new Query();
+
+      _qparams.where = `ID_PE_TEN = '${id_pe_ten}'`;
+      _qparams.outFields = ['*'];
+      _qparams.orderByFields = `INTERVALOS`;
+      _qparams.returnGeometry = false;
+
+      _queryt.execute(_qparams).then(function (response) {
+        let nreg = response.features.length;
+        let features = response.features;
+
+        let datos = [];
+        let tmini = 500000;
+        let tmaxi = 0;
+        for (let i = 0; i < nreg; i++) {
+          let feature = features[i].attributes;
+
+          datos.push({
+            date: moment(feature.INTERVALOS).format('DD-MM-YYYY HH:mm:ss'),
+            valo1: Math.round(feature.TEN_FASE_1) / 1000,
+            valo2: Math.round(feature.TEN_FASE_2) / 1000,
+            valo3: Math.round(feature.TEN_FASE_3) / 1000
+          });
+          tmini = Math.min(tmini, feature.TOL_INFER, feature.TEN_FASE_1, feature.TEN_FASE_2,
+            feature.TEN_FASE_3);
+          tmaxi = Math.max(tmaxi, feature.TOL_SUPER, feature.TEN_FASE_1, feature.TEN_FASE_2,
+            feature.TEN_FASE_3);
+        }
+
+        tmini /= 1000;
+        tmaxi /= 1000;
+        tmini = Math.round(tmini * 1000) / 1000;
+        tmaxi = Math.round(tmaxi * 1000) / 1000;
+
+        let chart = AmCharts.makeChart("grafico", {
+          "type": "serial",
+          "theme": "light",
+          "autoMargins": false,
+          "marginLeft": 70,
+          "marginBottom": 25,
+          "marginTop": 10,
+          "marginRight": 17,
+          "dataProvider": datos,
+          "legend": {
+            "horizontalGap": 10,
+            "useGraphSettings": true,
+            "markerSize": 10
+          },
+          "valueAxes": [{
+            "unit": "kV",
+            "title": "Tensión [kV]",
+            "axisAlpha": 0.5,
+            "position": "left",
+            "minimum": tmini * 0.999,
+            "maximum": tmaxi * 1.001,
+            "guides": [{
+                "fillAlpha": 0.1,
+                "fillColor": "#FFF000",
+                "lineAlpha": 1,
+                "lineColor": "#FFF000",
+                "value": tmini,
+                "toValue": tmaxi
+              },
+              {
+                "value": tmini,
+                "label": tmini + " kV",
+                "color": "#cc0000",
+                "inside": true,
+                "position": "right"
+              },
+              {
+                "value": tmaxi,
+                "label": tmaxi + " kV",
+                "color": "#cc0000",
+                "inside": true,
+                "position": "right"
+              }
+            ]
+          }],
+          "graphs": [{
+              "id": "g1",
+              "balloonText": "Tensi&oacute;n L1<br><b><span style='font-size:14px;'>[[value]] kV</span></b>",
+              "bullet": "none",
+              "lineColor": "#ff0000",
+              "lineThickness": 2,
+              "type": "smoothedLine",
+              "valueField": "valo1",
+              "title": "Tensión L1"
+            },
+            {
+              "id": "g2",
+              "balloonText": "Tensi&oacute;n L2<br><b><span style='font-size:14px;'>[[value]] kV</span></b>",
+              "bullet": "none",
+              "lineColor": "#0000FF",
+              "lineThickness": 2,
+              "type": "smoothedLine",
+              "valueField": "valo2",
+              "title": "Tensión L2"
+            },
+            {
+              "id": "g3",
+              "balloonText": "Tensi&oacute;n L3<br><b><span style='font-size:14px;'>[[value]] kV</span></b>",
+              "bullet": "none",
+              "lineColor": "#00ff00",
+              "lineThickness": 2,
+              "type": "smoothedLine",
+              "valueField": "valo3",
+              "title": "Tensión L3"
+            }
+          ],
+          "chartScrollbar": {
+            "scrollbarHeight": 2,
+            "backgroundAlpha": 0.1,
+            "backgroundColor": "#868686",
+            "selectedBackgroundColor": "#888888",
+            "selectedBackgroundAlpha": 0.4
+          },
+          "chartCursor": {
+            "categoryBalloonDateFormat": "DD-MMM JJ:NN hr",
+            "cursorAlpha": 0.05,
+            "cursorPosition": "middle",
+            "valueLineEnabled": true,
+            "valueLineBalloonEnabled": true,
+            "valueLineAlpha": 0.5,
+            "fullWidth": true
+          },
+          "dataDateFormat": "DD-MM-YYYY JJ:NN:SS",
+          "categoryField": "date",
+          "categoryAxis": {
+            "minPeriod": "mm",
+            "parseDates": true,
+            "minorGridAlpha": 0.1,
+            "minorGridEnabled": true
+          },
+          "export": {
+            "enabled": true,
+            "position": "bottom-left"
+          }
+        });
+
+      })
+
+    });
+
+    // funciones de apoyo
+    function getURL(e, a) {
+      e = e.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var t = new RegExp("[\\?&]" + e + "=([^&#]*)").exec(location.search);
+      return null === t ? a : decodeURIComponent(t[1].replace(/\+/g, " "))
+    }
+
+  </script>
+
+</body>
+
+</html>

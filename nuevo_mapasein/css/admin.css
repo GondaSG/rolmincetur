@@ -1,0 +1,240 @@
+:root {
+    --osinerg-primary: #075daa;
+    --osinerg-primary-transparente: rgba(255, 255, 255, 0.33);
+    --osinerg-primary-transparente2: rgb(7 93 170 / 9%);
+    --location-menu-main: 20vh;
+    --height-grilla: 33vh;
+    --width-legenda: 300px;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+.div-admin{
+    overflow: auto;
+}
+
+.container{
+    font-size: 12px;
+}
+
+table {
+    border: var(--osinerg-primary) 1px solid;
+    font-size: 12px;
+    margin: 0;
+    background-color: white;
+}
+
+table tbody th, table tbody td {
+    padding: 4px 5px!important;
+}
+
+.font-bold {
+    font-weight: 500;
+    color: #212529;
+}
+
+.btn-editar{
+    padding: 0px 10px;
+}
+.btn-crud{
+    padding: 0;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    padding: 0 5px;
+    width: auto;
+    margin: 0px 3px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.visible {
+    display: block;    
+}
+.dflex{ 
+    display: flex;
+}
+.notvisible {
+    display: none;
+}
+
+
+/* HEADER */
+nav {
+    background-color: var(--osinerg-primary);
+    height: 70px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    color: white;
+}
+nav img {
+    height: 50px;
+}
+.nav-title {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* CARD */
+.box {
+    padding: 10px;
+    background-color: rgb(247, 245, 245);
+}
+.box-header .controls-left {
+    float: left;
+    
+}
+.box-header .controls-right {
+    float: right;
+    position: relative;
+    text-align: right;
+}
+.box-header button {
+    background-color:#075daa;
+    font-size: 16px;
+    border: 1px solid #D3D3D3;
+    color: #fff;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+.box-header button.btn-new-crud{
+    height: auto;
+    width: auto;
+}
+.box-body {
+    margin-top: 3.2em;
+}
+
+
+/* PESTAÑAS */
+.container-admin .nav-item {
+    display: inline-block;
+}
+.container-admin .nav-item .nav-link{
+    color: black;
+    border-radius: .7em .7em 0 0 !important;
+    margin-top: .24em;
+    padding: .5rem 1rem;
+}
+.container-admin .nav-item .active {
+    background-color: rgb(247, 245, 245);
+}
+
+/* PESTAÑA-PERMISOS */
+.title-permiso{
+    height: 30px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.box-permisos{
+    background-color: white;
+}
+.box-permisos .box-body-permisos{
+    overflow-y: scroll;
+    max-height: calc(100vh - 300px);
+    width: auto;
+    text-align: left;
+    padding: 10px 20px;
+}
+.lbl-grouppermiso .btn-toggle{
+    font-weight: bold;
+}
+.lbl-grouppermiso, .lbl-checkbox{
+    cursor: pointer;
+    display: block;
+}
+.lbl-checkbox .checkbox-permiso{
+    margin:4px 12px;
+}
+
+
+/* VALIDACIONES */
+.error input{
+    border: 1px solid red;
+}
+.error .lbl-error{
+    color: red;
+}
+.container-input{
+    display: inline-grid;
+}
+
+/* PRELOADER INICIAL */
+.preloader-none {
+    display: none;
+}
+.preloader {
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    align-items: center;
+    display: flex;
+}
+.btn-preloader:disabled {
+    color: #fff;
+    background-color: var(--osinerg-primary);
+    border-color: var(--osinerg-primary);
+    opacity: 1;
+}
+
+
+
+/************************** RESPONSIVE **************************/
+
+@media (max-width: 540px) {
+    nav {
+        height: 40px;
+    }
+    nav.navbar {
+        padding: 0px 10px;
+    }
+    nav img {
+        height: 30px;
+    }
+    nav .isotipo {
+        display: block;
+    }
+    nav .logotipo {
+        display: none;
+    }
+    .nav-title {
+        font-size: 20px;
+    }
+}
+
+@media (max-height: 800px) {
+    #div_view {
+        height: calc(100% - 40px);
+    }
+    nav {
+        height: 40px;
+    }
+    nav.navbar {
+        padding: 0px 10px;
+    }
+    nav img {
+        height: 30px;
+    }
+    .nav-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+}

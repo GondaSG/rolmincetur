@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa SEIN - DSE - Admin</title>
+  <link rel="icon" type="image/png" href="../img/osinerg.ico">
+
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="../assets/DataTables/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../assets/DataTables/Buttons/css/buttons.bootstrap4.min.css">
+
+  <link rel="stylesheet" href="../assets/jquery-ui/themes/ui-lightness/jquery-ui.css">
+  <link rel="stylesheet" href="../assets/alerts/alerts.css">
+  <link rel="stylesheet" href="../assets/fonts-icon/style.css">
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/themes/light/main.css">
+
+  <link rel="stylesheet" type="text/css" href="../css/libs.css">
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+
+</head>
+
+<body id="mibody" class="cargando div-admin notvisible">
+
+  <!-- ##### HEADER -->
+  <nav class="navbar justify-content-between">
+    <a class="navbar-brand nav-title">Mapa SEIN - DSE</a>
+    <div>
+      <img src="../img/logo.png" class="logotipo d-sm-block" alt="osinergmin">
+      <img src="../img/isotipo.png" class="isotipo d-sm-none" alt="osinergmin">
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <br>
+    <div class="container-admin">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" id="nav_itemuser" href="#container_user">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="nav_itemrol" href="#container_rol">Roles y Permisos</a>
+        </li>
+      </ul>
+      <div id="container_user" class="visible">
+        <div class="box">
+          <div class="box-header">
+            <div class="controls-left"></div>
+            <div class="controls-right">
+              <!-- boton registrar usuario -->
+              <button id="btn_adduser" class="btn-new-crud">
+                <span class="icon-user-plus"></span>  Registrar nuevo usuario
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <table class="table" id="tbl_users" width=100%>
+              <thead class="table-primary">
+                <tr>
+                  <th class="th-first text-center">#</th>
+                  <th>NOMBRES</th>
+                  <th>APELLIDOS</th>
+                  <th>CORREO</th>
+                  <th>TELÉFONO</th>
+                  <th>USUARIO</th>
+                  <th>ROL</th>
+                  <th class="text-center">ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody id="tbody_user"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div id="container_rol" class="notvisible">
+        <div class="box">
+          <div class="box-header">
+            <div class="controls-left">
+              <select class="form-control form-control-sm" name="" id="cbm_roles">
+                <option value="">-- Selecionar Rol --</option>
+              </select>
+            </div>
+            <div class="controls-right">
+              <!-- boton registrar rol -->
+              <button class="btn-new-crud" id="btn_addrol">
+                <span class="icon-clipboard-edit"></span> Mantenimiento de Roles
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="table-primary title-permiso"><strong>PERMISOS</strong></div>
+            <div class="box-permisos">
+              <div class="box-body-permisos" id="boxbody_permisos">
+                <label class="lbl-grouppermiso" data-containerpermiso='#box_permisocapa'>
+                  <span class="icon-chevron-up btn-toggle"> CAPAS DE INFORMACIÓN </span>
+                </label>
+                <div id="box_permisocapa" class="mb-3 pl-2">
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_so" checked disabled disabled data-public> Sistemas en Operación </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_sa"> Sistemas en Alerta </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_pr"> Proyectos </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_er"> Eventos Relevantes </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_da"> Descargas Atmoféricas </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_pi"> Plan de Inversiones </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_pe"> Puntos de Entrega </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_ce"> Concesiones Eléctricas</label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_ig"> Información Gráfica (Drones) </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_ca"> Cartografía </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="lyr_fe"> Fuentes Externas </label>
+                </div>
+                <label class="lbl-grouppermiso" data-containerpermiso='#box_permisoactioncapa'>
+                  <span class="icon-chevron-down btn-toggle"> ACCIONES DE GRUPO (DE CAPAS) </span>
+                </label>
+                <div id="box_permisoactioncapa" class="notvisible mb-3 pl-2">
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_femp"> Filtrar por Empesa </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_fper"> Filtrar por Periodo </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_bubi"> Búsqueda por Ubigeo </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_bgru"> Búsqueda en Grupo </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_bcap"> Búsqueda en Capa </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_bind"> Otros Documentos e Indicadores </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_ften"> Filtrar por Tensión (Puntos de Entrega) </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_fcli"> Filtrar por Cliente (Puntos de Entrega) </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="gru_bpe"> Búsqueda por Puntos de Entrega </label>
+                </div>
+                <label class="lbl-grouppermiso" data-containerpermiso='#box_permisotool'>
+                  <span class="icon-chevron-down btn-toggle"> HERRAMIENTAS </span>
+                </label>
+                <div id="box_permisotool" class="notvisible mb-3 pl-2">
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="tool_inf"> Área de Influencia </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="tool_dib"> Dibujar Figura </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="tool_pl"> Perfil Longitudinal </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="tool_lyr"> Conectar/Cargar Capa Externa </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="tool_imp"> Imprimir </label>
+                </div>
+                <label class="lbl-grouppermiso" data-containerpermiso='#box_permisomenu'>
+                  <span class="icon-chevron-down btn-toggle"> OPCIONES GENERALES DEL MENU </span>
+                </label>
+                <div id="box_permisomenu" class="notvisible mb-3 pl-2">
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="menu_evts"> Eventos SEIN </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="menu_cava"> Consulta Avanzada </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="menu_info"> Informes</label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="menu_base"> Mapa Base</label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="menu_manu"> Manual de Usuario </label>
+                </div>
+                <label class="lbl-grouppermiso" data-containerpermiso='#box_permisootro'>
+                  <span class="icon-chevron-down btn-toggle"> OTROS </span>
+                </label>
+                <div id="box_permisootro" class="notvisible mb-3 pl-2">
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="otro_exp"> Exportación de Resultados de Tabla </label>
+                  <label class="lbl-checkbox"> <input type="checkbox" class="checkbox-permiso" id="otro_aap"> Acceso a acciones de Popup (Ver más información) </label>
+                </div>
+              </div>
+            </div>
+            <div class="text-right mt-2">
+              <button class="btn btn-sm btn-outline-secondary mr-2">Cancelar</button>
+              <button class="btn btn-sm btn-outline-primary mr-2" id="btn_addrolpermiso">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- formulario para registrar o modificar rol -->
+    <div class="box notvisible" id="frm_rol">
+      <div class="box-header">
+        <!-- boton atras -->
+        <button class="btn col-sm-1 controls-left p-0" id="btn_previosrol" data-toggle="tooltip" data-placement="bottom" title='Atras'>
+          <span class="icon-arrow-left2"></span>
+        </button>
+        <label class="col-sm-11 controls-right"><strong>MANTENIMIENTO DE ROLES</strong></label>
+      </div>
+      <div class="box-body">
+        <div class="col-md-12 text-center">
+          <label class="mr-2 font-bold">Rol</label>
+          <div class="container-input">
+            <input type="text" class="form-control form-control-sm limpiar mr-2" id="txt_namerol" placeholder="Nuevo Rol">
+          </div>
+          <button class="btn btn-sm btn-outline-primary btn-guardar mr-2" id="brn_addrol">Guardar</button>
+          <button class="btn btn-sm btn-outline-secondary mr-2" id="btn_cancelrol">Cancelar</button>
+        </div>
+        <div class="mt-2">
+          <table class="table" id="tbl_permisos" width=100%>
+            <thead class="table-primary">
+              <tr>
+                <th class="th-first">#</th>
+                <th>NOMBRES</th>
+                <th>EDITAR</th>
+              </tr>
+            </thead>
+            <tbody id="tbody_permisos"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL ELIMINAR -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="text-center">
+              <h5 class="modal-title" id="mensaje_eliminar"></h5>
+            </div>
+            <div class="mt-3 text-center">
+              <button type="button" class="btn btn-sm btn-outline-primary mr-2" id="yes_btneliminar">Eliminar</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary mr-2" id="not_btneliminar">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal usuario -->
+    <div class="modal fade" id="modalusuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modaltitle_user"> REGISTRAR NUEVO USUARIO</h6>
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="">
+              <div class="form-group row justify-content-center">
+                <label for="txt_name" class="col-sm-3 col-form-label font-bold">Nombres * </label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control form-control-sm limpiar" id="txt_name" required>
+                </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                <label for="txt_lastname" class="col-sm-3 col-form-label font-bold">Apellidos * </label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control form-control-sm limpiar" id="txt_lastname" required>
+                </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                <label for="txt_email" class="col-sm-3 col-form-label font-bold">Correo</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control form-control-sm limpiar" id="txt_email">
+                </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                <label for="txt_phone" class="col-sm-3 col-form-label font-bold">Teléfono</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control form-control-sm limpiar" id="txt_phone">
+                </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                <label for="txt-rol" class="col-sm-3 col-form-label font-bold">Rol * </label>
+                <div class="col-sm-8">
+                  <select class="form-control form-control-sm limpiar" id="cmb_rol_user" required>
+                    <option value="">-- Seleccionar --</option>
+                  </select>
+                </div>
+              </div>
+              <hr>
+              <div class="form-group row justify-content-center">
+                <div class="col-sm-4"> 
+                  <button class="btn btn-sm btn-outline-success" id="btn_generateuser">Generar Usuario</button> 
+                </div>
+                <div class="col-sm-7"> </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                <label for="txt_user" class="col-sm-3 col-form-label font-bold">Usuario * </label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control form-control-sm limpiar" id="txt_user" disabled required>
+                </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                <label for="txt_pass" class="col-sm-3 col-form-label font-bold">Contraseña * </label>
+                <div class="col-sm-8 dflex">
+                  <input type="password" class="form-control form-control-sm limpiar" id="txt_pass" disabled required>
+                  <button class="btn btn-sm btn-outline-success ml-2" id="btn_generatepass" data-toggle="tooltip" data-placement="bottom" title="Generar nueva contraseña">
+                    <span class="icon-update-pass"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-sm btn-outline-secondary" id="btn_canceluser">Cancelar</button>
+              <button class="btn btn-sm btn-outline-primary btn-guardar" id="btn_saveuser" type="button">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRELOADER CONSULTAS-->
+    <div class="preloader" id="div_preloader">
+      <button class="btn btn-preloader" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // redireccionar a https
+    if (window.location.protocol === 'http:') {
+      // window.location.href = window.location.href.replace( 'http:', 'https:');
+    }
+
+    var locationPath = location.pathname.replace(/\/[^\/]+$/, "").replace(/\/[^\/]+$/, "");
+    var host = location.host;
+    var ishtml = (-1 != location.pathname.toLowerCase().indexOf(".html"));
+    if (ishtml && host != '') {
+      locationPath = locationPath + '/'
+    }
+    if (host == '') {
+      locationPath = locationPath + '/';
+    }
+    window.dojoConfig = {
+      parseOnLoad: true,
+      packages: [{
+        name: "js",
+        location: locationPath + "js"
+      }]
+    };
+  </script>
+
+  <script src="../assets/jquery/jquery.js"></script>
+  <script src="../assets/jquery-ui/jquery-ui.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../assets/bootstrap-select/js/bootstrap-select.min.js"></script>
+  <script src="../assets/alerts/alerts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+
+  <script src="../assets/cookie/js.cookie.js"></script> <!-- cookies -->
+
+  <!-- DataTable -->
+  <script src="../assets/DataTables/js/jquery.dataTables.min.js"></script>
+  <script src="../assets/DataTables/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Main -->
+  <script src="https://js.arcgis.com/4.17/"></script>
+  <script type="text/javascript" src="../js/root-admin.js"></script>
+
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip({
+        trigger: "hover"
+      });
+    });
+  </script>
+</body>
+
+</html>

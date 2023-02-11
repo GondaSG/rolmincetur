@@ -1,0 +1,199 @@
+<div>
+
+  <!-- WG AREA INFLUENCIA -->
+  <div id="wg_buffer_content">
+    <div class="card-header-gis">
+      <div>
+        <img src="img/widget/buffer.png" alt="widget area de influencia">
+        <strong>Área de Influencia</strong>
+      </div>
+      <div>
+        <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxbuffer' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+      </div>
+    </div>
+    <div class="card-body card-body-buffer p-2 card-body-sm">
+      <div class="text-center">
+        <button class="btn-dibujar esri-icon-map-pin" value="point" id="btn_drawpoint_buffer" type="button" data-toggle="tooltip" data-placement="top" title="Dibujar Punto"></button>
+        <button class="btn-dibujar esri-icon-polyline" value="polyline" id="btn_drawpolyline_buffer" type="button" data-toggle="tooltip" data-placement="top" title="Dibujar Línea"></button>
+        <button class="btn-dibujar esri-icon-polygon" value="polygon" id="btn_drawpolygon_buffer" type="button" data-toggle="tooltip" data-placement="top" title="Dibujar Polígono"></button>
+      </div>  
+      <div class="row m-0 mt-2 justify-content-center">
+        <div class="form-group col-3 pl-0 p-1 mb-2">
+          <label>Distancia:</label>
+        </div>
+        <div class="form-group col-5 p-1 mb-2">
+          <input type="number" class="form-control form-control-sm" placeholder="escriba" id="txt_distancia" value="100">
+        </div>
+        <div class="form-group col-3 p-1 mb-2">
+          <select id="cmb_bufferunidad" class="form-control form-control-sm">
+            <option value="meters">m</option>
+            <option value="kilometers">km</option>
+          </select>
+        </div>
+        <div class="form-group col-12 pl-0 mb-0">
+          <label id="info-buffer">Seleccione una figura para dibujar y especifique la distancia de influencia.</label>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-sm btn-outline-secondary btn-limpiar"><span class="icon-broom"> Limpiar </span></button>
+      </div>
+    </div>
+  </div> 
+
+  <!-- WG DIBUJAR -->
+  <div id="wg_draw_content">
+    <div class="card-header-gis">
+      <div>
+        <img src="img/widget/draw.png" alt="dibujar">
+        <strong>Dibujar Figura</strong>
+      </div>
+      <div>
+        <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxdraw' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="container-draw">
+        <div id='container_sketch' class="wg-sketch"></div>
+        <button class="btn-dibujar icon-broom btn-limpiar" value="clear" id="btn_cleardraw" type="button" data-toggle="tooltip" data-placement="top" title="Borrar Gráficos"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WG AÑDIR CAPAS EXTERNAS -->
+  <div  id="wg_addlayer_content">
+    <div class="card-header-gis">
+      <div>
+        <img src="img/widget/addData.ico" alt="" srcset="">
+        <strong>Conectar / Cargar capa de información externa</strong>
+      </div>
+      <div>
+        <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+        <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxaddlayer' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+      </div>
+    </div>
+    <div class="card-body ">
+      <div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item "><a class="nav-link active" data-toggle="tab" href="#tabpane_addlayer_url" role="tab">Vía Enlace Externo</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabpane_addlayer_shp" role="tab">Vía Archivo Shape</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabpane_addlayer_csv" role="tab">Vía Archivo Csv</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabpane_addlayer_kml" role="tab">Vía Archivo Kml</a></li>
+        </ul>
+        <div  class="tab-content">  
+          <div class="tab-pane active" role="tabpanel" id="tabpane_addlayer_url">      
+            <form>
+              <div class="form-group">
+                <label for="cmb_tiposervice">Tipo:</label>
+                <select id="cmb_tiposervice" class="form-control">
+                  <option value="shape">Servicio web de ArcGis for Server</option>
+                  <option value="wms">Servicio web de WMS - OGC</option>
+                  <option value="kml">Archivo KML</option>
+                  <option value="geojson">Archivo GeoJson</option>
+                  <option value="georss">Archivo GeoRss</option>
+                  <option value="csv">Archivo CSV</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="txt_urlservice">Dirección URL:</label>
+                <input type="text" class="form-control" id="txt_urlservice" autofocus>
+              </div>
+            </form>                     
+            <ul class="text-center list-inline">                  
+              <li class="list-inline-item">
+                <button  id="btn_preuploader" class="btn btn-outline-primary btn-sm notvisible" disabled>
+                  <div class="preuploader"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div>
+                </button>
+                <button  id="btn_addlayer" class="btn btn-outline-primary btn-sm">
+                  <span class="icon-plus pr-2"> Añadir Capa </span> 
+                </button>
+              </li>                
+              <li class="list-inline-item">
+                <button id="btn_clear_addlayer" class="btn btn-outline-secondary btn-sm">
+                  <span class="icon-broom pr-2">  Limpiar </span>
+                </button>
+              </li>
+            </ul>
+            <div class="tab-foot">
+              <span class="file-upload-status" id="sp_uploadstatus_url"></span>
+            </div>
+          </div>
+
+          <div class="tab-pane" role="tabpanel" id="tabpane_addlayer_shp" >
+              <div class="div-upfile">      
+                  <p class="instruction"> Añade datos al mapa desde un shapefile comprimido (.zip)</p>
+                  <form enctype="multipart/form-data" method="post" id="form_uploadshp">
+                    <div class="drop-zone" id="drop_zone">
+                      <div class="preuploader notvisible"><span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span></div>
+                      <span class="drop-zone-placeholder">Suelte el archivo .zip aquí</span>
+                      <input type="file" name="file" id="fil_upshp" class="infile" accept=".zip"/>
+                    </div>                            
+                  </form>
+              </div>
+              <div class="tab-foot">
+                <span class="file-upload-status" id="sp_uploadstatus_shp"></span>
+              </div>
+          </div> 
+
+          <div class="tab-pane" role="tabpanel" id="tabpane_addlayer_csv">
+            <div class="div-upfile">      
+                <p class="instruction"> 
+                  <span>Añade datos al mapa desde un archivo CSV </span><br>
+                  <span>El archivo debe contener sus campos de coordenadas con uno de los siguientes nombres: </span><br> 
+                  <span> - Latitud: lat, latitude, y, ycenter, latitud</span><br>
+                  <span> - Longitud: lon, long, longitude, x, xcenter, longitud</span>
+                </p>
+                <form enctype="multipart/form-data" method="post" id="form_uploadcsv">
+                  <div class="drop-zone" id="drop_zone">
+                    <div class="preuploader notvisible" id="div_preuploader_zip"><span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span></div>
+                    <span class="drop-zone-placeholder">Suelte el archivo .csv aquí</span>
+                    <input type="file" name="file" id="fil_upcsv" class="infile" accept=".csv"/>
+                  </div>                            
+                </form>
+            </div>
+            <div class="tab-foot">
+              <span class="file-upload-status" id="sp_uploadstatus_csv"></span>
+            </div>
+          </div> 
+
+          <div class="tab-pane" role="tabpanel" id="tabpane_addlayer_kml" >
+              <div class="div-upfile">      
+                  <p class="instruction"> Añade datos al mapa desde un archivo KML</p>
+                  <form enctype="multipart/form-data" method="post" id="form_uploadkml">
+                    <div class="drop-zone" id="drop_zone">
+                      <div class="preuploader notvisible"><span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span></div>
+                      <span class="drop-zone-placeholder">Suelte el archivo .kml aquí</span>
+                      <input type="file" name="file" id="fil_upkml" class="infile" accept=".kml, .kmz"/>
+                    </div>                            
+                  </form>
+              </div>
+              <div class="tab-foot">
+                <span class="file-upload-status" id="sp_uploadstatus_kml"></span>
+              </div>
+          </div> 
+        </div>       
+      </div>    
+    </div>    
+  </div>
+
+  <!-- WG IMPRIMIR -->
+  <div id="wg_print_content">
+    <div class="card-header-gis">
+      <div>
+        <img src="img/widget/printer.png" alt="imprimir">
+        <strong>Imprimir</strong>
+      </div>
+      <div>
+        <span class="icon-close btn-close"  data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxprinter' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+      </div>
+    </div>
+    <div class="card-body p-0 card-body-print">
+      <div id="container_printmap"></div>
+    </div>
+  </div>
+
+
+
+</div>

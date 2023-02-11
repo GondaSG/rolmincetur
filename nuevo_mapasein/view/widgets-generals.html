@@ -1,0 +1,283 @@
+<div>
+	
+	<!-- WG BASEMAP GALLERY-->
+	<div id="wg_basemap_content">
+	  <div class="card-body p-0">
+	    <div id="container_basemap"></div>  
+	  </div>
+	</div>
+
+	<!-- WG CONSULTA AVANZADA -->
+	<div id="wg_search_advanced_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/menusearch.png" alt="busqueda">
+	      <strong>Consulta Avanzada</strong>
+	    </div>
+	    <div>
+				<span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+        <span class="icon-minus btn-minimizar" data-btnmax='#btn_maxsearchadvanced' data-toggle="tooltip" data-placement="top" title="Minimizar"></span>
+	    </div>
+	  </div>
+	  <div class="card-body">
+	    <div class="row consulta-body">
+	      <div class="form-group col-12">
+	        <label> Grupo:</label>
+	        <select name="group" id="cmb_sector" class="form-control form-control-sm">
+	          <option value="">--Elija un grupo--</option>
+	          <option value="gruoperacion">Sistemas en Operación</option>
+	          <option value="grualerta">Sistemas en Alerta</option>
+	          <option value="gruproyectos">Proyectos</option>
+	        </select>
+	      </div>
+	      <div class="form-group col-12">
+	        <label> Capa:</label>
+	        <select name="capas" id="cmb_layer" class="form-control form-control-sm">
+	          <option value="">--Primero elija un grupo--</option>
+	        </select>
+	      </div>
+	      <div class="form-group col-12">
+	        <label>Campo:</label>
+	        <select name="campos" id="cmb_fields" class="form-control form-control-sm">
+	          <option value="">--Primero elija una capa --</option>
+	        </select>
+	      </div>
+
+	      <div class="form-group col-5">
+	        <label>Condicional:</label>
+	        <select name="condicion" id="cmb_condition" class="form-control form-control-sm">
+	          <option value="contiene"> Contiene </option>
+	          <option value="=" selected> = </option>
+	          <option value="<"> < </option>
+	          <option value=">"> > </option>
+	          <option value="<>"> Diferente </option>
+	          <option value=">="> >= </option>
+	          <option value="<="> <= </option>
+	        </select>
+	      </div>
+	      <div class="form-group col-5 p-0">
+	        <label>valor:</label>
+	        <select id="cmb_filter" class="form-control form-control-sm" disabled=true> </select>
+	      </div>
+	      <div class="form-group col-2">
+	        <label ><span></span></label>
+	        <button type="button" class="btn-primary btn btn-sm btn-addfilter" id="btn_addfilter" data-toggle="tooltip" data-placement="bottom" title="Añadir filtro" ><span class="icon-plus-circle" ></span></button>
+	      </div>
+	    </div>
+	    <div class="row consulta-footer ">
+	      <div class="col-12">
+	        <fieldset>
+	          <legend>Donde</legend>
+	          <div class="container-tbl-filter">
+	            <table id='tbl_filter' class="tbl-filter" width=100%>
+	              <tbody id="tbody_filter"></tbody>
+	            </table>
+	          </div>
+	        </fieldset>
+	      </div>
+	      <div class="col-12 text-right btn-toggleubigeo">
+	        <span class="icon-chevron-up"  id="btn_toggleubigeo" data-toggle="tooltip" data-placement="left" title="Ubigeo"></span>
+	      </div>
+	      <div class="col-12">
+	        <fieldset id="container_ubigeo" class="mb-2">
+	          <legend>Ubigeo:</legend>
+	          <div class="form-group row mb-1 ">
+	            <label for="colFormLabelSm" class=" pr-0 col-sm-3 col-form-label col-form-label-sm">Región</label>
+	            <div class="col-sm-9">
+	              <select name="region" id="cmb_ubigeoregion" class="form-control form-control-sm">
+	                <option value="">--Elija una región --</option>
+								</select>
+								<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-region">
+									<span class="visually-hidden"></span>
+								</div>
+	            </div>
+	          </div>
+	          <div class="form-group row mb-1">
+	            <label for="colFormLabelSm02" class=" pr-0 col-sm-3 col-form-label col-form-label-sm">Provincia</label>
+	            <div class="col-sm-9">
+	              <select name="prov" id="cmb_ubigeoprovincia" class="form-control form-control-sm">
+	                <option value="">-- Primero elija un región --</option>
+								</select>
+								<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-provincia">
+									<span class="visually-hidden"></span>
+								</div>
+	            </div>
+	          </div>
+	          <div class="form-group row mb-1">
+	            <label for="colFormLabelSm03" class=" pr-0 col-sm-3 col-form-label col-form-label-sm">Distrito</label>
+	            <div class="col-sm-9">
+	              <select name="distrito" id="cmb_ubigeodistrito" class="form-control form-control-sm">
+	                <option value="">--Primero elija una provincia --</option>
+								</select>
+								<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-distrito">
+									<span class="visually-hidden"></span>
+								</div>
+	            </div>
+	          </div>
+	        </fieldset>
+	        <div class="col-12 container-btnsearchadvanced text-center">
+	          <button type="button" class="btn-outline-primary btn btn-sm display-inlineblock notvisible " id="btn_searchadvanced"><span class="icon-search pr-2" > Consultar</span></button>
+	          <button type="button" class="btn-outline-secondary btn btn-sm btn-limpiar" id="btn_clearsearchadvanced"><span class="icon-broom pr-2" > Limpiar</span></button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- WG INFORMES -->
+	<div id="wg_reports_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/menureports.png" alt="" srcset="">
+	      <strong>Informes</strong>
+	    </div>
+	    <div>
+	      <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	    </div>
+	  </div>
+	  <div class="card-body card-body-sm">
+	    <form id="form_reports">
+	      <div class="mb-2 row display-flex">
+	        <div class="col-sm-3">
+	          <label class="font-bold">Grupo:</label>
+	        </div>
+	        <div class="col-sm-9">
+	          <select class="form-control form-control-sm" id="cmb_group_reports" >
+	            <option value="">-- Elija un grupo --</option>
+	            <option value="gruoperacion">Sistemas en Operación</option>
+	            <option value="grualerta">Sistemas en Alerta </option>
+	            <option value="gruproyectos">Proyectos</option>
+	          </select>
+	        </div>
+	      </div>
+	      <div class="mb-2 row display-flex notvisible" id="container_sistemalertlayer">
+	        <div class="col-sm-3">
+	          <label class="font-bold">En:</label>
+	        </div>
+	        <div class="col-sm-9">
+	          <select class="form-control form-control-sm" id="cmb_layersistalert_reports">
+	            <option value="">-- Elija un subgrupo --</option>
+	            <option value="transmision">Transmisión</option>
+	            <option value="generacion">Generación</option>
+	            <option value="sistcritico">Sistemas Críticos</option>
+	          </select>
+	        </div>
+	      </div>
+	      <div class="mb-2 row display-flex notvisible" id="container_proyectlayer">
+	        <div class="col-sm-3">
+	          <label class="font-bold">En:</label>
+	        </div>
+	        <div class="col-sm-9">
+	          <select class="form-control form-control-sm" id="cmb_layerproyect_reports">
+	            <option value="">-- Elija un subgrupo --</option>
+	            <option value="ejecucion">Ejecución</option>
+	            <option value="construccion">Construcción</option>
+	          </select>
+	        </div>
+	      </div>
+	      <div class="mb-2 row display-flex">
+	        <div class="col-sm-3">
+	          <label class="font-bold">Año:</label>
+	        </div>
+	        <div class="col-sm-9">
+	          <select class="form-control form-control-sm" id="cmb_anio_reports">                  
+	          </select>
+	        </div>
+	      </div>
+	      <div class="mb-2 row display-flex notvisible" id='container_meses'>
+	        <div class="col-sm-3">
+	          <label class="font-bold">Mes:</label>
+	        </div>
+	        <div class="col-sm-9">
+	          <select class="form-control form-control-sm" id="cmb_mes_reports">                  
+	          </select>
+	        </div>
+	      </div>
+	      <div class="mb-2 row display-flex notvisible" id='container_trimestre'>
+	        <div class="col-sm-3">
+	          <label class="font-bold">Trimestre:</label>
+	        </div>
+	        <div class="col-sm-9">
+	          <select class="form-control form-control-sm" id="cmb_trimestre_reports">                  
+	          </select>
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary mr-2 min-doc" id="btn_reports">
+	          <span class="icon-search"> Buscar Informe</span> 
+	        </button>
+	      </div>
+	    </form>
+		</div>
+		
+		<div class=" preloader-report " id="preloader_report">
+			<div class="spinner-border text-secondary " role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+			
+		</div>
+	</div>
+
+	<!-- WG - EVENTOS RELEVANTES COES-->
+	<div id="wg_eventscoes_content" >
+	  <div class="modal-dialog modal-xl" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="title_eventoscoes">EVENTOS RELEVANTES - COES</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-search" id="frmBusqueda" method="post" name="frmBusqueda">      
+	          <input type="hidden" name="Version" value="N">
+	          <input type="hidden" name="Turno" value="">
+	          <input type="hidden" name="IdTipoEvento" value="0">
+	          <input type="hidden" name="IndInterrupcion" value="-1">                
+	          <input type="hidden" id="FechaDesde" name="FechaInicio"  readonly="readonly">
+	          <input type="hidden" id="FechaHasta" name="FechaFin" readonly="readonly">
+
+	          <div class="head-form">
+	            <div>
+	              <label for="fec_er_inicio">Desde: </label>
+	              <input type="date" id="fec_er_inicio" class="fecha">
+	              <label for="fec_er_fin">Hasta: </label>
+	              <input type="date" id="fec_er_fin" class="fecha"> 
+	              <input type="button" id="btn_buscareventos" class="btn btn-sm btn-outline-primary" value="Buscar">
+	            </div>                  
+	            <div>                    
+	              <button type="button" id="btn_er_prepage" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="left" title="Página Anterior" disabled><span class="icon-caret-left"></button>
+	              <label id="lbl_er_currpage"> Pag 1 </label>
+	              <button type="button" id="btn_er_nextpage" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="left" title="Página Siguiente"><span class="icon-caret-right"></button>
+	            </div>
+	          </div>
+
+	          <input type="hidden" id="hfNroPagina" name="NroPagina" value="1">
+	        </form>
+
+	        <div id="div_lsteventos" class="lst-eventos-sein"> </div>
+	      </div>            
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Modal - Detalle Evento Relevante COES -->
+	<div id="mod_detalleevento_content">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title_detalleevento">Detalle del Evento</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="popup-text" id="div_detalleevento">
+              </div>
+            </div>
+          </div>
+        </div>       
+    </div>
+
+
+</div>

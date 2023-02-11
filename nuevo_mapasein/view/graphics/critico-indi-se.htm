@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Transformador Cr&iacute;tico - TFE y INDISE</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+  <link rel="icon" type="image/png" href="../../img/osinerg.ico">
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-bordered">
+          <tr>
+            <td class="bg-primary text-center" colspan="4">
+              <h4>Transformador Cr&iacute;tico</h4>
+            </td>
+          </tr>
+          <tr>
+            <td class="bg-success text-center" colspan="4"><span id="central_t"></span></td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <div id="grafico" style="width:100%; height:300px;"></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="info" width="25%">Empresa</td>
+            <td width="25%"><span id="empresa_t"></span></td>
+            <td class="info" width="25%">Transformador</td>
+            <td width="25%"><span id="unidad_t"></span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+  <script src="https://js.arcgis.com/4.14/"></script> <!-- ADDED -->
+
+  <script>
+    define([
+      "esri/tasks/QueryTask",
+      "esri/tasks/support/Query"
+    ], function (
+      QueryTask,
+      Query
+    ) {
+
+      let url_service = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/MapaSEIN_Alerta_Det/MapServer/6';
+      let cod_set = getURL('cod_set');
+      let cod_trf = getURL('cod_trf');
+      cod_set = atob(cod_set);
+      cod_trf = atob(cod_trf);
+
+
+      if (cod_set == '' || cod_trf == '') {
+        bootbox.alert({
+          message: "No se ha proporcionado información suficiente.",
+          callback: function () {
+            close();
+          }
+        });
+      }
+
+      /*QUERY AL SERVICIO*/
+      let _queryt = new QueryTask({ url: url_service });
+      let _qparams = new Query();
+
+      _qparams.where = `TRANSFORMADOR1 = '${ cod_trf }' and COD_SE = '${ cod_set }'`;
+      _qparams.outFields = `EMPRESA, NOMBRE, TRANSFORMADOR1, ANIO, TFE, INDISE, TOL_TFE, TOL_INDISE`;
+      _qparams.orderByFields = `ANIO`;
+      _qparams.returnDistinctValues = true;
+      _qparams.returnGeometry = false;
+      _queryt.execute(_qparams).then(function (response) {
+        let nreg = response.features.length;
+        let features = response.features;
+        let attributes = features[0].attributes;
+        let unidad = attributes.TRANSFORMADOR1;
+        let central = attributes.NOMBRE;
+        let empresa = attributes.EMPRESA;
+
+        let datos = [];
+        for (let i = 0; i < nreg; i++) {
+          let feature = features[i].attributes;
+          datos.push({
+            date: feature.ANIO,
+            saifi: Math.round(feature.TFE * 100) / 100,
+            saidi: Math.round(feature.INDISE * 100) / 100,
+            ftol: Math.round(feature.TOL_TFE * 100) / 100,
+            dtol: Math.round(feature.TOL_INDISE * 100) / 100,
+          });
+        }
+
+
+        let chart = AmCharts.makeChart("grafico", {
+          "type": "serial",
+          "theme": "light",
+          "autoMargins": false,
+          "marginLeft": 60,
+          "marginBottom": 25,
+          "marginTop": 10,
+          "marginRight": 17,
+          "dataProvider": datos,
+          "legend": {
+            "horizontalGap": 10,
+            "useGraphSettings": true,
+            "markerSize": 10
+          },
+          "valueAxes": [{
+            "stackType": "3d",
+            "title": "TFE y INDISE",
+            "axisAlpha": 0.5,
+            "position": "left",
+            "minimum": 0
+          }],
+          "graphs": [{
+              "id": "di",
+              "balloonText": "INDISE<br><b><span style='font-size:14px;'>[[value]]</span></b>",
+              "balloonColor": "#9966ff",
+              "lineAlpha": 1,
+              "fillAlphas": 1,
+              "type": "column",
+              "topRadius": 1,
+              "columnWidth": 0.25,
+              "valueField": "saidi",
+              "title": "INDISE"
+            },
+            {
+              "id": "fi",
+              "balloonText": "TFE<br><b><span style='font-size:14px;'>[[value]]</span></b>",
+              "balloonColor": "#ff9933",
+              "lineAlpha": 1,
+              "fillAlphas": 1,
+              "type": "column",
+              "topRadius": 1,
+              "columnWidth": 0.25,
+              "valueField": "saifi",
+              "title": "TFE"
+            },
+            {
+              "id": "tfi",
+              "balloonText": "Tol. TFE<br><b><span style='font-size:14px;'>[[value]]</span></b>",
+              "balloonColor": "#ff9933",
+              "bullet": "bubble",
+              "bulletColor": "#ff9933",
+              "bulletSize": 8,
+              "dashLength": 7,
+              "lineColor": "#FF0000",
+              "lineThickness": 3,
+              "type": "smoothedLine",
+              "valueField": "ftol",
+              "title": "Tole TFE"
+            },
+            {
+              "id": "tdi",
+              "balloonText": "Tol. INDISE<br><b><span style='font-size:14px;'>[[value]]</span></b>",
+              "balloonColor": "#9966ff",
+              "bullet": "bubble",
+              "bulletColor": "#9966ff",
+              "bulletSize": 8,
+              "dashLength": 7,
+              "lineColor": "#FF00BF",
+              "lineThickness": 3,
+              "type": "smoothedLine",
+              "valueField": "dtol",
+              "title": "Tole INDISE"
+            }
+          ],
+          "chartScrollbar": {
+            "scrollbarHeight": 2,
+            "backgroundAlpha": 0.1,
+            "backgroundColor": "#868686",
+            "selectedBackgroundColor": "#888888",
+            "selectedBackgroundAlpha": 0.4
+          },
+          "chartCursor": {
+            "categoryBalloonDateFormat": "MMM YYYY",
+            "cursorAlpha": 0.05,
+            "cursorPosition": "middle",
+            "valueLineEnabled": true,
+            "valueLineBalloonEnabled": true,
+            "valueLineAlpha": 0.5,
+            "fullWidth": true
+          },
+          "plotAreaFillAlphas": 0.1,
+          "depth3D": 40,
+          "angle": 25,
+          "categoryField": "date",
+          "categoryAxis": {
+            "minorGridAlpha": 0.1,
+            "minorGridEnabled": true
+          },
+          "export": {
+            "enabled": true,
+            "position": "bottom-left"
+          }
+        });
+
+        $(document).on("mouseenter mouseleave", function () {
+          $('a[href*="amcharts"]').remove();
+        });
+
+        $("#central_t").html('S.E. ' + central);
+        $("#empresa_t").html(empresa).parent();
+        $("#unidad_t").html(unidad).parent();
+
+      }).catch(function (error) {
+        console.log("Error al graficar: ", error);
+      });
+
+      // funciones de apoyo
+      function getURL(e, a) {
+        e = e.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var t = new RegExp("[\\?&]" + e + "=([^&#]*)").exec(location.search);
+        return null === t ? a : decodeURIComponent(t[1].replace(/\+/g, " "))
+      }
+
+    });
+  </script>
+</body>
+
+</html>

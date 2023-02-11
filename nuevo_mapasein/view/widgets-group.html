@@ -1,0 +1,535 @@
+<div>
+
+	<!-- WG - BUSCAR EN CAPA -->
+	<div id="wg_searchinlayer_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/search.png" alt="" srcset="">
+	      <strong>Búsqueda en Capa</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body pb-0 card-body-sm">
+	    <form id="form_searchinlayer">
+	      <label class="lbl-searchinlayer"><strong>GRUPO: </strong> <span id="lbl_sector_searchinlayer"></span> </label>
+	      <label class="lbl-searchinlayer"><strong>CAPA: </strong> <span id="lbl_layer_searchinlayer"></span> </label>
+	      <div class="form-group">
+	        <input type="text" class="form-control form-control-sm" id="txt_searchinlayer" aria-describedby="emailHelp" placeholder="Escribe el texto">
+	      </div>
+	      <div class="form-group text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary" id="btn_searchinlayer"> <span class="icon-search"> Buscar</span></button>
+	        <button type="button" class="btn btn-sm btn-outline-secondary btn-limpiar" id="btn_clearsearchinlayer"> <span class="icon-broom"> Limpiar</span></button>
+	      </div>
+	    </form>
+	  </div>
+	</div>   
+
+	<!-- WG - BUSCAR EN GRUPO -->
+	<div id="wg_searchingroup_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/search.png" alt="" srcset="">
+	      <strong>Búsqueda en Grupo</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body pb-0 card-body-sm">
+	    <form id="form_searchingroup">
+	      <label class="lbl-searchinlayer"><strong>GRUPO: </strong> <span id="lbl_sector_searchingroup"></span> </label>
+	      <label class="lbl-searchinlayer"><strong>SUBGRUPO: </strong> <span id="lbl_layer_searchingroup"></span> </label>
+	      <div class="form-group">
+	        <input type="text" class="form-control form-control-sm" id="txt_searchingroup" aria-describedby="emailHelp" placeholder="Escribe el texto">
+	      </div>
+	      <div class="form-group text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary" id="btn_searchingroup"> <span class="icon-search"> Buscar</span></button>
+	        <button type="button" class="btn btn-sm btn-outline-secondary btn-limpiar" id="btn_clearsearchingroup"> <span class="icon-broom"> Limpiar </span></button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+
+    <!-- WG BUSQUEDA POR UBIGEO -->	
+	<div id="wg_searchforubigeo_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/homeperu.png" alt="busqueda">
+	      <strong>Búsqueda por Ubigeo</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar"></span>
+	  </div>
+	  <div class="card-body p-0">
+	    <form id="form_searchforubigeo" method="POST">
+	      <div class="div-search-ubigeo">
+	        <div class="row form-group mb-2">
+	          <div class="col-sm-3 font-bold">
+	            <label class="font-bold">Grupo</label>
+	          </div>
+	          <div class="col-sm-9">
+	            <label id="lbl_sector_searchforubigeo"></label> 
+	          </div>
+	        </div>
+	        <div class="row form-group mb-2">
+	          <div class="col-sm-3 font-bold">
+	            <label for="">Región</label>
+	          </div>
+	          <div class="col-sm-9">
+	            <select id="cmb_dpto" class="form-control form-control-sm">
+	              <option value="">--Elija una región --</option>
+							</select>
+							<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-reg">
+								<span class="visually-hidden"></span>
+							</div>
+	          </div>
+	        </div>
+	        <div class="row form-group mb-2">
+	          <div class="col-sm-3 font-bold">
+	            <label for="">Provincia</label>
+	          </div>
+	          <div class="col-sm-9">
+	            <select id="cmb_provincia" class="form-control form-control-sm">
+								<option value="">-- Primero elija un región --</option>
+							</select>
+							<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-prov">
+								<span class="visually-hidden"></span>
+							</div>
+	          </div>
+	        </div>
+	        <div class="row form-group mb-2">
+	          <div class="col-sm-3 font-bold">
+	            <label for="">Distrito</label>
+	          </div>
+	          <div class="col-sm-9">
+	            <select id="cmb_distrito" class="form-control form-control-sm">
+								<option value="">--Primero elija una provincia --</option>
+							</select>
+							<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-dist">
+								<span class="visually-hidden"></span>
+							</div>
+	          </div>
+	        </div>
+	        <div class="col-sm-12 text-center">
+	          <button type="submit" class="btn-outline-primary btn btn-sm display-inlineblock" id="btn_searchforubigeo">
+	            <span class="icon-search pr-2" > Buscar</span>
+	          </button>
+	          <button type="button" class="btn-outline-secondary btn btn-sm btn-limpiar" id="btn_clearsearchforubigeo">
+	            <span class="icon-broom pr-2" > Limpiar</span>
+	          </button>
+	        </div>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+	
+
+	<!-- WG - FILTRAR POR EMPRESA -->
+	<div id="wg_filterforcompany_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/filter.png" alt="" srcset="">
+	      <strong >Filtrar por Empresa</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body pb-0 card-body-sm">
+	    <form id="form_searchforcompany">
+	      <input type="text" id="txt_aliassector" hidden>
+	      <label class="lbl-searchinlayer"><strong>GRUPO: </strong> <span id="lbl_sector_searchforcompany"></span> </label>
+	      <div class="form-group">
+	        <input type="text" class="form-control form-control-sm" id="txt_searchforcompany" aria-describedby="emailHelp" placeholder="Nombre de la empresa">
+	      </div>
+	      <div class="form-group text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary" id="btn_searchforcompany"><span class="icon-filter"> Filtrar </span></button>
+	        <button type="button" class="btn btn-sm btn-outline-secondary btn-limpiar" id="btn_clearsearchforcompany"><span class="icon-broom"> Limpiar Filtro</span></button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+	
+	<!-- WG OTROS INDICADORES - SISTEMAS EN ALERTA -->
+	<div id="wg_othersalert_content">
+	  <div class="card-header-gis">
+	    <div class="card-title-reportseta">            
+	      <strong>Otros indicadores - G. Aislada - Sistemas Alerta</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body">
+	    <fieldset class="mb-2">
+	      <legend class="font-bold mb-1">Generación</legend>
+	      <div class="mb-2 row display-flex">
+	        <div class="col-sm-3">
+	          <label>Año:</label>
+	        </div>
+	        <div class="col-sm-9 form-group">
+	          <select class="form-control form-control-sm" id="cmb_anio_generacion">                  
+	          </select>
+	        </div>
+	      </div>
+	      <div class="mb-2 row display-flex ">
+	        <div class="col-sm-3">
+	          <label>Trimestre:</label>
+	        </div>
+	        <div class="col-sm-9 form-group">
+	          <select class="form-control form-control-sm" id="cmb_trimestre_generacion">                  
+	          </select>
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="button" class="btn btn-sm btn-outline-primary mb-2" id="btn_generacion_margenreserva">
+	          Ver Margen de Reserva de Generación Aislada
+	        </button>
+	        <button type="button" class="btn btn-sm btn-outline-primary mb-2" id="btn_generacion_interrupcion">
+	          Ver Interrupciones en Sistemas Eléctricos Aislados
+	        </button>
+	        <button type="button" class="btn btn-sm btn-outline-primary" id="btn_generacion_interrupcion_time">
+	          Ver Duración de Interrupciones en Sistemas Eléctricos Aislados
+	        </button>
+	      </div>
+	    </fieldset>
+	    <!-- <fieldset class="mb-2">
+	      <legend class="font-bold mb-1">Generación</legend>
+	      <div class="text-center">
+	        <button type="button" class="btn btn-sm btn-outline-primary mb-2" id="btn_generacion_margenreserva">
+	          Ver Margen de Reserva de Generación Aislada
+	        </button>
+	        <button type="button" class="btn btn-sm btn-outline-primary" id="btn_generacion_interrupcion">
+	          Ver Interrupciones en Sistemas Eléctricos Aislados
+	        </button>
+	      </div>
+	    </fieldset> -->
+	  </div>
+	</div>
+	
+	<!-- WG FILTRAR POR PERIODO - SISTEMAS EN ALERTA -->
+	<div id="wg_filterperiodalert_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/filter.png" alt="" srcset="">
+	      <strong>Filtrar por Periodo - Sistemas en Alerta</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body">
+	    <form id="form_filterperiodalert">
+	      <div class="mb-2 display-flex">
+	        <div class="pr-2">
+	          <label class="font-bold">Año:</label>
+	        </div>
+	        <div>
+						<select class="form-control form-control-sm selectpicker " title="--Elija año(s)--" multiple id="cmb_anio_filterperiodalert" required></select>
+	        </div>
+	      </div>
+	      <div class="mb-2 display-flex">
+	        <div class="pr-2">
+	          <label class="font-bold">Trimestre: </label>
+	        </div>
+	        <div>
+	          <select class="form-control form-control-sm selectpicker" title="--Elija trimestre(s)--" multiple id="cmb_period_filterperiodalert" >                 
+	          </select>
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_filterperiodalert">
+	          <span class="icon-filter"> Filtrar</span> 
+	        </button>
+	        <button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfilterperiodalert>
+	          <span class="icon-broom pr-2" > Limpiar filtro</span>
+	        </button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+
+	<!-- WG FILTRAR POR PERIODO - PROYECTOS -->
+	<div id="wg_filterperiodproyect_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/filter.png" alt="" srcset="">
+	      <strong>Filtrar por Periodo - Proyectos</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body">
+	    <form id="form_filterperiodproyect">
+	      <div class="mb-2 display-flex">
+	        <div class="pr-2">
+	          <label class="font-bold">Año:</label>
+	        </div>
+	        <div>
+	          <select class="form-control form-control-sm selectpicker" title="--Elija año(s)--" multiple id="cmb_anio_filterperiodproyect" required></select>
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_filterperiodproyect">
+	          <span class="icon-filter"> Filtrar</span> 
+	        </button>
+	        <button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfilterperiodproyect>
+	          <span class="icon-broom pr-2" > Limpiar filtro</span>
+	        </button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+	
+	<!-- WG FILTRAR POR PERIODO - PLAN DE INVERSION -->
+	<div id="wg_filterperiodpi_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/filter.png" alt="" srcset="">
+	      <strong>Filtrar por Periodo - Plan de Inversión</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body">
+	    <form id="form_filterperiodpi">
+	      <div class="mb-2 display-flex">
+	        <div class="pr-2">
+	          <label class="font-bold">Año:</label>
+	        </div>
+	        <div>
+	          <select class="form-control form-control-sm selectpicker" title="--Elija año(s)--" multiple id="cmb_anio_filterperiodpi" required placeholder="año"></select>
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_filterperiodpi">
+	          <span class="icon-filter"> Filtrar</span> 
+	        </button>
+	        <button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfilterperiodpi>
+	          <span class="icon-broom pr-2" > Limpiar filtro</span>
+	        </button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+
+	<!-- WG FILTRAR POR PERIODO - DESCARGAS ATMOSFERICAS -->
+	<div id="wg_filterperiodda_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/filter.png" alt="" srcset="">
+	      <strong>Filtrar por Fecha - Descargas Atmosféricas</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body">
+	    <form id="form_filterperiodda">
+	      <div>
+	        <div class="form-group row">
+	          <label for="fec_da_inicio" class="col-sm-3 col-form-label font-bold">Desde</label>
+	          <div class="col-sm-9">
+	            <input type="date" class="form-control form-control-sm " id="fec_da_inicio" required >
+	          </div>
+	        </div>
+	        <div class="form-group row">
+	          <label for="fec_da_fin" class="col-sm-3 col-form-label font-bold">Hasta</label>
+	          <div class="col-sm-9">
+	            <input type="date" class="form-control form-control-sm " id="fec_da_fin" required>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary mr-2">
+	          <span class="icon-filter"> Filtrar</span> 
+	        </button>
+	        <button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfilterperiodda>
+	          <span class="icon-broom pr-2" > Limpiar filtro</span>
+	        </button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+	
+	<!-- WG FILTRAR POR PERIODO - EVENTOS REVELANTES -->
+	<div id="wg_filterperioder_content">
+	  <div class="card-header-gis">
+	    <div>
+	      <img src="img/widget/filter.png" alt="" srcset="">
+	      <strong>Filtrar por Periodo - Eventos Relevantes</strong>
+	    </div>
+	    <span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+	  </div>
+	  <div class="card-body">
+	    <form id="form_filterperiodevent">
+	      <div class="mb-2 display-flex">
+	        <div class="pr-2">
+	          <label class="font-bold">Semana:</label>
+	        </div>
+	        <div>
+	          <label for="selectweek" id="selectweek">Semana no seleccionada</label>
+	        </div>
+	      </div>
+	      <div class="mb-2 display-flex">
+	        <div class="pr-2">
+	          <label class="font-bold">Fecha de referencia: </label>
+	        </div>
+	        <div>
+	          <input class="form-control form-control-sm" type="text" id="evt_semana" name="evt_semana" placeholder="Elegir semana"  required/>
+	          <input type="hidden" id="week" name="week" />
+	          <input type="hidden" id="year" name="year" />
+	        </div>
+	      </div>
+	      <div class="text-center">
+	        <button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_filterperiodevent">
+	          <span class="icon-filter"> Filtrar</span> 
+	        </button>
+	        <button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfilterperiodevent>
+	          <span class="icon-broom pr-2" > Limpiar filtro</span>
+	        </button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+
+	<!-- WG FILTRAR POR TENSION - PE -->
+	<div id="wg_filterpetension_content">
+		<div class="card-header-gis">
+			<div>
+				<img src="img/widget/filter.png" alt="" srcset="">
+				<strong>Filtrar por Tensión - Punto de Entrega</strong>
+			</div>
+			<span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+		</div>
+		<div class="card-body">
+			<form id="form_filtertensionpe">
+				<div class="mb-2 display-flex">
+					<div class="pr-2">
+						<label class="font-bold">Tensión:</label>
+					</div>
+					<div class="form-group">
+						<select class="form-control form-control-sm " id="cmb_filtertensionpe" required>
+							<option value="">--Seleccione una opción--</option>
+							<option value="MT">MT</option>
+							<option value="AT">AT</option>
+							<option value="MAT">MAT</option>
+						</select>
+					</div>
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_filtertensionpe">
+						<span class="icon-filter"> Filtrar</span> 
+					</button>
+					<button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfiltertensionpe>
+						<span class="icon-broom pr-2" > Limpiar filtro</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- WG FILTRAR POR CLIENTE - PE -->
+	<div id="wg_filterclientepe_content">
+		<div class="card-header-gis">
+			<div>
+				<img src="img/widget/filter.png" alt="" srcset="">
+				<strong>Filtrar por Cliente - Punto de Entrega</strong>
+			</div>
+			<span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+		</div>
+		<div class="card-body">
+			<form id="form_filterclientepe">
+				<div class="mb-2 display-flex">
+					<div class="pr-2">
+						<label class="font-bold">Cliente:</label>
+					</div>
+					<div class="form-group">
+						<select class="form-control form-control-sm " id="cmb_filterclientepe" required>
+							<option value=""> Seleccione una opcion</option>
+						</select>
+					</div>
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-sm btn-outline-primary mr-2" id="btn_filterclientepe">
+						<span class="icon-filter"> Filtrar</span> 
+					</button>
+					<button type="button" class="btn-outline-secondary btn btn-sm" id=btn_clearfilterclientepe>
+						<span class="icon-broom pr-2" > Limpiar filtro</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- WG BUSQUEDA PUNTOS DE ENTREGA -->
+	<div id="wg_searchpe_content">
+		<div class="card-header-gis">
+			<div>
+				<img src="img/search.png" alt="" srcset="">
+				<strong>Búsqueda por Punto de Entrega</strong>
+			</div>
+			<div>
+				<span class="icon-close btn-close" data-toggle="tooltip" data-placement="top" title="Cerrar" ></span>
+			</div>
+		</div>
+		<div class="card-body card-body-sm">
+			<form id="form_seachpe">
+				<div class="row display-flex">
+					<div class="col-sm-5">
+						<label class="font-bold">Empresa Distribuidora:</label>
+					</div>
+					<div class="col-sm-7 form-group pl-0">
+						<select class="form-control form-control-sm" id="cmb_empresa">
+							<option value="">-- Elija Distribuidora --</option>
+						</select>
+						<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-empresape">
+							<span class="visually-hidden"></span>
+						</div>
+					</div>
+				</div>
+				<div class="row display-flex">
+					<div class="col-sm-5">
+						<label class="font-bold">Punto de Entrega:</label>
+					</div>
+					<div class="col-sm-7 form-group pl-0">
+						<select class="form-control form-control-sm" id="cmb_pe">
+							<option value="">-- Primero elija Distribuidora --</option>
+						</select>
+						<div class="spinner-border spinner-input text-secondary notvisible" role="status" id="spinner-clientepe">
+							<span class="visually-hidden"></span>
+						</div>
+					</div>
+				</div>
+				<div class="row display-flex" >
+					<div class="col-sm-5">
+						<label class="font-bold">Año de Vigencia:</label>
+					</div>
+					<div class="col-sm-7 form-group pl-0">
+						<select class="form-control form-control-sm" id="cmb_aniope">
+							<option value="">-- Elija Año --</option>
+						</select>
+					</div>
+				</div>
+				<div class="row display-flex">
+					<div class="col-sm-5">
+						<label class="font-bold">Mes de Vigencia:</label>
+					</div>
+					<div class="col-sm-7 form-group pl-0">
+						<select class="form-control form-control-sm" id="cmb_mespe">                  
+							<option value="">-- Elija Mes  --</option>
+							<option value="01">Enero</option>
+							<option value="02">Febrero</option>
+							<option value="03">Marzo</option>
+							<option value="04">Abril</option>
+							<option value="05">Mayo</option>
+							<option value="06">Junio</option>
+							<option value="07">Julio</option>
+							<option value="08">Agosto</option>
+							<option value="09">Setiembre</option>
+							<option value="10">Octubre</option>
+							<option value="11">Noviembre</option>
+							<option value="12">Diciembre</option>
+						</select>
+					</div>
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-sm btn-outline-primary mr-2 min-doc" id="btn_searchpe">
+						<span class="icon-search"> Buscar</span> 
+					</button>
+					<button type="reset" class="btn-outline-secondary btn btn-sm" id=btn_clearsearchpe>
+						<span class="icon-broom pr-2" > Limpiar</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>

@@ -1,4 +1,5 @@
-var url_electricidad = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD/MapServer';
+var url_electricidad = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD_TOTAL/MapServer';
+var url_electricidad_restr = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD_RESTR/MapServer';
 var url_gasnatural = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Gas_Natural/GAS_NATURAL/MapServer';
 var url_hidrocarburos = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Hidrocarburos_Liquidos/HIDROCARBUROS_LIQUIDOS/MapServer';
 var url_mineria = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Mineria/MINERIA_MEM/MapServer';
@@ -30,6 +31,13 @@ define([
         url: url_electricidad,
         title: 'ELECTRICIDAD',
         aux_alias: 'sectorelectricidad'
+    });
+
+    var _mil_electricidad_restr = new MapImageLayer({
+        url: url_electricidad_restr,
+        legendEnabled: false,
+        title: 'ELECTRICIDAD RESTR',
+        aux_alias: 'sectorelectricidadrestr'
     });
 
     var _mil_gasnatural = new MapImageLayer({
@@ -81,6 +89,11 @@ define([
             containerlyl: 'lyl_electricidad',
             aux_alias: 'sectorelectricidad',
             layers: [],
+        }, {
+            alias: '__mil_electricidad_restr',
+            containerlyl: 'lyl_electricidad_restr',
+            aux_alias: 'sectorelectricidadrestr',
+            layers: [],
         },
         {
             alias: '__mil_gasnatural',
@@ -116,6 +129,7 @@ define([
 
     return {
         getLayerElectricidad: function() { return _mil_electricidad },
+        getLayerElectricidadRestr: function() { return _mil_electricidad_restr },
         getLayerGasNatural: function() { return _mil_gasnatural },
         getLayerHidrocarburos: function() { return _mil_hidrocarburos },
         getLayerMineria: function() { return _mil_mineria },

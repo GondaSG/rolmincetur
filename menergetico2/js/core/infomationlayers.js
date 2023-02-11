@@ -34,6 +34,7 @@ define([
     var __pointclick = {};
     // LAYERS (SECTORES)
     var __mil_electricidad = Services.getLayerElectricidad();
+    var __mil_electricidad_restr = Services.getLayerElectricidadRestr();
     var __mil_gasnatural = Services.getLayerGasNatural();
     var __mil_hidrocarburos = Services.getLayerHidrocarburos();
     var __mil_mineria = Services.getLayerMineria();
@@ -43,7 +44,7 @@ define([
 
 
     /*********************** AÑADIR CAPAS DE INFORMACIÓN ***********************/
-    __globspace.map.addMany([__gru_aniadido, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
+    __globspace.map.addMany([__mil_electricidad_restr, __gru_aniadido, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
 
 
     // LAYERLISTS
@@ -53,6 +54,13 @@ define([
     });
 
     _lyl_electricidad.opacity = 0.75;
+
+    var _lyl_electricidad_restr = new LayerList({
+        view: __globspace.view,
+        container: 'lyl_electricidad_restr',
+    });
+
+    _lyl_electricidad_restr.opacity = 0.75;
 
     var _lyl_gasnatural = new LayerList({
         view: __globspace.view,
@@ -177,6 +185,7 @@ define([
         switch (itemchb) {
             case 'chb_sectorelectricidad':
                 __mil_electricidad.visible = isactive;
+                __mil_electricidad_restr.visible = isactive;
                 break;
             case 'chb_sectorgasnatural':
                 __mil_gasnatural.visible = isactive;
@@ -210,7 +219,9 @@ define([
         switch (itemchb) {
             case 'lbl_sectorelectricidad':
                 $("#chb_sectorelectricidad").addClass("active");
+                debugger;
                 __mil_electricidad.visible = isactive;
+                __mil_electricidad_restr.visible = isactive;
                 break;
             case 'lbl_sectorgasnatural':
                 $("#chb_sectorgasnatural").addClass("active");
@@ -398,12 +409,14 @@ define([
                         // Popup por defecto para las capas
                         sublayer.createFeatureLayer().then((featureLayer) => featureLayer.load())
                             .then((featureLayer) => {
-                                if (featureLayer.url == url_electricidad && dominio.domain.filter(t => t.id == featureLayer.layerId).length > 0) {
+                                if (featureLayer.url == url_electricidad && dominio.domain.filter(t => t.name == featureLayer.title).length > 0) {
                                     sublayer.popupTemplate = {
                                         title: featureLayer.title + " :{NOMBRE}",
                                         content: populationChange,
                                         outFields: "*"
                                     };
+                                } else if (featureLayer.url == url_electricidad_restr) {
+
                                 } else {
                                     sublayer.popupTemplate = featureLayer.createPopupTemplate(); //added popup;
                                 }
@@ -427,7 +440,7 @@ define([
 
     function populationChange(feature) {
         debugger;
-        let _domain = dominio.domain.find(t => t.id == feature.graphic.sourceLayer.id)
+        let _domain = dominio.domain.find(t => t.name == feature.graphic.sourceLayer.title)
         let properties = dominio.propertie
         let ini = `<div class="esri-feature__fields esri-feature__content-element"><table class="esri-widget__table" summary="Lista de atributos y valores"><tbody>`;
         let fin = `</tbody></table></div>`;
