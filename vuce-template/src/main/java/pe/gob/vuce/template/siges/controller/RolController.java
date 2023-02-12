@@ -41,6 +41,17 @@ public class RolController extends BaseController {
 		}
     }
     
+    @RequestMapping(value = "/asignacion")
+    @PostMapping
+    public ResponseEntity<?> crearAsignacion(@RequestBody Rol item) {
+    	try {
+			ResponseEntity<?> response = this._service.crearAsignacion(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+    }
+    
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Rol item) {
     	try {

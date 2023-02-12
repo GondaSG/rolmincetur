@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionAccion;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.FuenteNotificacionService;
 
@@ -71,4 +72,13 @@ public class FuenteNotificacionController extends BaseController {
 		}
 	}
 	
+	@GetMapping("findTipoId/{id}")
+	public ResponseEntity<FuenteNotificacion> findTipoId(@PathVariable("id") int id){
+		try {
+			ResponseEntity<FuenteNotificacion> response = this._service.findTipoId(id);
+			return response;
+		} catch(Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

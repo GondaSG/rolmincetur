@@ -99,127 +99,6 @@
 					]
 				},
 				{
-					"name": "Rol",
-					"item": [
-						{
-							"name": "create rol",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/rol",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rol"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update rol",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas 2.\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/rol",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rol"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail rol",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/rol/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rol",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list rol",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/rol",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rol"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete rol",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/rol/1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rol",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Entidad",
 					"item": [
 						{
@@ -510,132 +389,6 @@
 									"path": [
 										"unidadMedida",
 										"4"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "FuenteNotificacion",
-					"item": [
-						{
-							"name": "LIST FuenteNotificacion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/fuenteNotificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"fuenteNotificacion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DELETE FuenteNotificacion",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/fuenteNotificacion/13",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"fuenteNotificacion",
-										"13"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "CREATE FuenteNotificacion",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"Adm01\",\r\n    \"origen\" : \"Pais\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/fuenteNotificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"fuenteNotificacion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "UPDATE FuenteNotificacion",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 13,\r\n    \"nombre\": \"Adm02\",\r\n    \"origen\": \"Pais02\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/fuenteNotificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"fuenteNotificacion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DETAIL   FuenteNotificacion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/fuenteNotificacion/13",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"fuenteNotificacion",
-										"13"
 									]
 								}
 							},
@@ -1747,6 +1500,310 @@
 										"notificaciondeclaracion",
 										"findByNotificacionId",
 										"20"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rol",
+					"item": [
+						{
+							"name": "create rol",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas.\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/rol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"rol"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crearAsignacion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 1,\r\n    \"asignacion\" : [ {\"id\":1}]\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/rol/asignacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"rol",
+										"asignacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update rol",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\" : \"administrador\",\r\n    \"descripcion\" : \"se encarga en administrar el sistemas 2.\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/rol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"rol"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail rol",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/rol/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"rol",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list rol",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/rol",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"rol"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete rol",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rol/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rol",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "FuenteNotificacion",
+					"item": [
+						{
+							"name": "LIST FuenteNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/fuenteNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"fuenteNotificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find tipo Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/fuenteNotificacion/findTipoId/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"fuenteNotificacion",
+										"findTipoId",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE FuenteNotificacion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion/13",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion",
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE FuenteNotificacion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"Adm01\",\r\n    \"origen\" : \"Pais\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE FuenteNotificacion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 13,\r\n    \"nombre\": \"Adm02\",\r\n    \"origen\": \"Pais02\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/fuenteNotificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DETAIL   FuenteNotificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/fuenteNotificacion/13",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"fuenteNotificacion",
+										"13"
 									]
 								}
 							},

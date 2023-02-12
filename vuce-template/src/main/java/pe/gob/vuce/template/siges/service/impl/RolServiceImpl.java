@@ -17,6 +17,7 @@ public class RolServiceImpl implements RolService {
     @SuppressWarnings("rawtypes")
 	public ResponseEntity create(Rol item) throws Exception {
 		try {
+			
 			Integer id = item.getId();
 			String message = "";
 			boolean success = false;
@@ -29,6 +30,30 @@ public class RolServiceImpl implements RolService {
 				this._repository.save(item);
 			}
 			success = true;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+    
+    @SuppressWarnings("rawtypes")
+	public ResponseEntity crearAsignacion(Rol item) throws Exception {
+		try {			
+			Integer id = item.getId();
+			String message = "";
+			boolean success = false;
+			Rol item3 = this._repository.findById(id).get();
+			item3.setAsignacion(item.getAsignacion());
+			Rol item2 = this._repository.save(item3);			
+			if (item2.getId() != 0) {				
+				id = item2.getId();
+				message += "Se guardaron sus datos de manera correcta";
+				success = true;
+			}			
 			ResponseEntity response = new ResponseEntity();
 			response.setExtra(id.toString());
 			response.setMessage(message);

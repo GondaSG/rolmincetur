@@ -24,6 +24,22 @@ public class Asignacion {
 	@SequenceGenerator(name = "asignacion_id_seq", sequenceName="asignacion_id_seq", allocationSize=1)
 	private int id;
 	private String nombre;
+	@Column (nullable=true)
+	private int tipoId;
+	@Column (nullable=true)
+	private String tipoNombre;
+	public int getTipoId() {
+		return tipoId;
+	}
+	public void setTipoId(int tipoId) {
+		this.tipoId = tipoId;
+	}	
+	public String getTipoNombre() {
+		return tipoNombre;
+	}
+	public void setTipoNombre(String tipoNombre) {
+		this.tipoNombre = tipoNombre;
+	}
 	public int getId() {
 		return id;
 	}
@@ -35,6 +51,5 @@ public class Asignacion {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	
+	}	
 }

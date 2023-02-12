@@ -1,10 +1,14 @@
 package pe.gob.vuce.template.siges.service.impl;
 
 import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
+import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionAccion;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.FuenteNotificacionRepository;
 import pe.gob.vuce.template.siges.service.FuenteNotificacionService;
@@ -85,5 +89,15 @@ public class FuenteNotificacionServiceImpl  implements FuenteNotificacionService
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+	@Override
+	public ResponseEntity<FuenteNotificacion> findTipoId(int id) throws Exception {
+		try {			
+			ResponseEntity<FuenteNotificacion> response = new ResponseEntity<FuenteNotificacion>();
+			List<FuenteNotificacion> items = _repository.findTipoId(id);
+			response.setItems(items);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }
