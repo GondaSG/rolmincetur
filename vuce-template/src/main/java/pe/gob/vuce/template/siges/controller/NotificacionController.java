@@ -24,7 +24,7 @@ import pe.gob.vuce.template.siges.service.NotificacionService;
 @RequestMapping(value="notificacion")
 public class NotificacionController extends BaseController {
 
-	@Autowired(required=true)
+	@Autowired
 	NotificacionService _service;
 	
 	@GetMapping

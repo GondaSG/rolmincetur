@@ -15,7 +15,7 @@ import pe.gob.vuce.template.siges.service.NotificacionDiscrepanciaService;
 
 
 @RestController
-@RequestMapping(value="notificacionDiscrepancia")
+@RequestMapping(value="notificaciondiscrepancia")
 public class NotificacionDiscrepanciaController extends BaseController {
 
 	@Autowired

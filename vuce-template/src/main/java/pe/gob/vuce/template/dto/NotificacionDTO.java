@@ -95,6 +95,24 @@ public class NotificacionDTO {
 	private Boolean isnacional;
 	
 	private String comentario;
+	
+	private String peligroEspecifico;
+	
+	private Boolean flagActivo = true;
+	
+	public Boolean getFlagActivo() {
+		return flagActivo;
+	}
+	public void setFlagActivo(Boolean flagActivo) {
+		this.flagActivo = flagActivo;
+	}
+	
+	public String getPeligroEspecifico() {
+		return peligroEspecifico;
+	}
+	public void setPeligroEspecifico(String peligroEspecifico) {
+		this.peligroEspecifico = peligroEspecifico;
+	}
 		
 	public List<NotificacionEstado> getEstados() {
 		return estados;

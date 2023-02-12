@@ -19,6 +19,4 @@ public interface NotificacionEstadoRepository extends JpaRepository<Notificacion
 	
 	@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1", nativeQuery=true)
 	List<NotificacionEstado> searchByNotificacion(@Param("id") int id);
-	//@Query(value="update simrac.t_acuerdo_conservacion set bol_flg = false where srl_id = :psrl_id", nativeQuery=true)
-    //int updateState(@Param("psrl_id") int id);
 }

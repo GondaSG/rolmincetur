@@ -1,14 +1,13 @@
 package pe.gob.vuce.template.siges.service;
 
-import java.util.List;
-
 import pe.gob.vuce.template.siges.domain.Rol;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
 
 public interface RolService {
 
-	Rol create(Rol rol);
-	Rol findById(int id);
-	Rol update(Rol rol);
-	void delete(int id);
-	List<Rol> findAll();
+	ResponseEntity create(Rol item) throws Exception;
+	ResponseEntity<Rol> findById(int id) throws Exception;
+	Rol update(Rol notificacion);
+	ResponseEntity<Rol> findAll() throws Exception;
+	ResponseEntity delete(int id) throws Exception;
 }

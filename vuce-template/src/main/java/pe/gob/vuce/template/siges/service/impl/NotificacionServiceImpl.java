@@ -1,10 +1,8 @@
 package pe.gob.vuce.template.siges.service.impl;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
-import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
@@ -58,8 +55,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			String message = "";
 			boolean success = false;
 			Notificacion item3 = modelMapper.map(item, Notificacion.class);
-			if (id == 0) {
-				
+			if (id == 0) {				
 				Notificacion item2 = this._repository.save(item3);
 				id = item2.getId();
 				message += "Se guardaron sus datos de manera correcta";
@@ -154,6 +150,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	}
 	
 	@Override
+	@Transactional
 	public Notificacion update(NotificacionDTO notificacion) {
 		Notificacion item = modelMapper.map(notificacion, Notificacion.class);
 		return _repository.save(item);
@@ -163,7 +160,8 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Transactional
 	public ResponseEntity delete(int id) throws Exception {
 		try {			
-			this._repository.deleteById(id);
+			//this._repository.deleteById(id);
+			this._repository.updateActive(id);
 			ResponseEntity response = new ResponseEntity();
 			response.setMessage("Se ha eliminado correctamente");
 			response.setSuccess(true);
