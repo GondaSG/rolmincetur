@@ -873,209 +873,6 @@
 					]
 				},
 				{
-					"name": "Notificacion",
-					"item": [
-						{
-							"name": "list Notificacion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete Notificacion",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion/13",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion",
-										"13"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create Notificacion",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false,\r\n        \"notificacionLote\":[{\"lote\":\"CD01\", \"cantidad\":10.00}],\r\n        \"notificacionPresentacion\":[{\"tipoPresentacion\":{\"id\":1}, \"unidadMedida\":{\"id\":1}, \"volumen\":10.05}]\r\n    }"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update Status",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"idNotificacion\": 8,\r\n    \"idEstado\":2,\r\n    \"flagActive\": true\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion/updatestatus",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion",
-										"updatestatus"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Search",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer 26f9c2f3-00b4-4103-b5c4-df96697d5314",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "item",
-											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1,2], \"estadoId\":[1,2], \"isnacional\":true, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-10\", \"flagDigesa\":true, \"flagSenasa\":true}",
-											"type": "text"
-										},
-										{
-											"key": "paginator",
-											"value": "{\"offset\":\"1\",\"limit\":\"12\",\"sort\":\"name\",\"order\":\"asc\"}",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion/search",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion",
-										"search"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update Notificacion",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n        \"id\": 7,\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"productor\": \"07Prod\",\r\n        \"datoImportador\": \"07Import\",\r\n        \"datoExportador\": \"07Export\",\r\n        \"nombreAlimento\": \"07Aliment\",\r\n        \"fechaProduccion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"titulo\": \"07Titulo\",\r\n        \"codigoGenerado\": \"C0010\"\r\n    }"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail Notificacion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/notificacion/27",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion",
-										"27"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "NotificacionAccion",
 					"item": [
 						{
@@ -1804,6 +1601,261 @@
 									"path": [
 										"fuenteNotificacion",
 										"13"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notificacion",
+					"item": [
+						{
+							"name": "list Notificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtenerNoLeidos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/obtenerNoLeidos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"obtenerNoLeidos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete Notificacion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/13",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Notificacion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false,\r\n        \"notificacionLote\":[{\"lote\":\"CD01\", \"cantidad\":10.00}],\r\n        \"notificacionPresentacion\":[{\"tipoPresentacion\":{\"id\":1}, \"unidadMedida\":{\"id\":1}, \"volumen\":10.05}]\r\n    }"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idNotificacion\": 8,\r\n    \"idEstado\":2,\r\n    \"flagActive\": true\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/updatestatus",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"updatestatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateleido",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 22,\r\n    \"estado\": {\"id\":1}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/updateleido",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"updateleido"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer 26f9c2f3-00b4-4103-b5c4-df96697d5314",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1,2], \"estadoId\":[1,2], \"isnacional\":true, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-10\", \"flagDigesa\":true, \"flagSenasa\":true}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"1\",\"limit\":\"12\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/search",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Notificacion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 7,\r\n        \"fuenteNotificacion\": {\"id\": 2},\r\n        \"categoriaAlimento\": {\"id\": 2},\r\n        \"fechaNotificacion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaEvento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"productor\": \"07Prod\",\r\n        \"datoImportador\": \"07Import\",\r\n        \"datoExportador\": \"07Export\",\r\n        \"nombreAlimento\": \"07Aliment\",\r\n        \"fechaProduccion\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"fechaVencimiento\": \"2023-01-26T05:00:00.000+00:00\",\r\n        \"titulo\": \"07Titulo\",\r\n        \"codigoGenerado\": \"C0010\"\r\n    }"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail Notificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/notificacion/27",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"27"
 									]
 								}
 							},

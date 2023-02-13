@@ -69,7 +69,7 @@ public class ResponseEntity<T> {
 			return 0;
 		if (this._paginator != null)
 			return this._paginator.getTotal();
-		return this._items.size() - 1;
+		return this._items.size();
 	}
 
 	// @JsonInclude(JsonInclude.Include.NON_NULL)

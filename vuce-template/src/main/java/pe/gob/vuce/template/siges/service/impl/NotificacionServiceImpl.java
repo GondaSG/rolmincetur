@@ -1,5 +1,6 @@
 package pe.gob.vuce.template.siges.service.impl;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -62,7 +63,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				NotificacionEstadoDTO itemNE = new NotificacionEstadoDTO();
 				itemNE.setIdNotificacion(id);
 				int idEstadoDefault = 1;
-				itemNE.setFlagActive(true);
+				itemNE.setFlagActivo(true);
 				itemNE.setIdEstado(idEstadoDefault);
 				this.updateStatus(itemNE);
 			} else {
@@ -114,10 +115,11 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				NotificacionEstado entity = new NotificacionEstado();
 				entity.setIdEstado(item.getIdEstado());
 				entity.setIdNotificacion(item.getIdNotificacion());
-				entity.setFlagActive(item.getFlagActive());
+				entity.setFlagActivo(item.getFlagActivo());
+				entity.setFlagLeido(false);
 				this._repositoryEstado.save(entity);
-			}
-			success = true;
+				success = true;
+			}			
 			ResponseEntity response = new ResponseEntity();
 			response.setExtra(id.toString());
 			response.setMessage(message);
@@ -213,5 +215,46 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}	
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Transactional
+	public ResponseEntity updateLeido(NotificacionDTO item) throws Exception {
+		try {
+			Integer id = item.getId();
+			String message = "";
+			boolean success = false;
+			if (id != 0) {
+				message += "Se actualizaron sus datos de manera correcta";
+				NotificacionEstado item2 = this._repositoryEstado.findByState(id, item.getEstado().getId());
+				item2.setFlagLeido(true);
+				this._repositoryEstado.save(item2);
+				success = true;
+			}			
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public ResponseEntity<NotificacionDTO> getNoLeidos() throws Exception {
+		try {
+			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
+			List<Notificacion> items = this._repository.getNoLeidos();
+			
+			List<NotificacionDTO> postDtoList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
+			for (int i = 0; i < postDtoList.size(); i++) {
+				NotificacionDTO item = postDtoList.get(i);
+				item.setNotificacionEstado(this._repositoryEstado.findByNoti(item.getId()));
+			}
+			response.setItems(postDtoList);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

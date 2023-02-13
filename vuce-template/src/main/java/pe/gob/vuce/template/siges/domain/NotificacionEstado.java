@@ -71,14 +71,6 @@ public class NotificacionEstado implements Serializable{
 		this.estado = estado;
 	}
 
-	public boolean getFlagActive() {
-		return FlagActive;
-	}
-
-	public void setFlagActive(boolean flagActive) {
-		this.FlagActive = flagActive;
-	}
-
 	@ManyToOne
 	@JoinColumn(
 			name = "notificacionId", 
@@ -99,7 +91,27 @@ public class NotificacionEstado implements Serializable{
 	
 	private Estado estado;
 	
-	private boolean FlagActive;
+	@Column (nullable=true)
+	private boolean flagActivo;
+	
+	public boolean getFlagActivo() {
+		return flagActivo;
+	}
+
+	public void setFlagActivo(boolean flagActivo) {
+		this.flagActivo = flagActivo;
+	}
+
+	public boolean getFlagLeido() {
+		return flagLeido;
+	}
+
+	public void setFlagLeido(boolean flagLeido) {
+		this.flagLeido = flagLeido;
+	}
+	
+	@Column (nullable=true)
+	private boolean flagLeido;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCreacion = new Date();

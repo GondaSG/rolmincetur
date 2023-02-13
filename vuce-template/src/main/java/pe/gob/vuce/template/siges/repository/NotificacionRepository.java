@@ -7,14 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 
 @Repository
 public interface NotificacionRepository extends JpaRepository<Notificacion, Integer>{
 	
 	@Query(value="select n.* from notificacion n "
-			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_active = true "
+			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
 			+ "	where flag_activo = true and n.codigo_generado ilike %?1% "
 			+ "	and case when ?2 is not null then n.isnacional = ?2 else 1 = 1 end "
 			+ "	and case when ?3 is not null then n.flag_digesa = ?3 else 1 = 1 end "
@@ -34,4 +36,10 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	@Modifying
 	@Query(value="update notificacion set flag_activo = false where id = ?1", nativeQuery=true)
 	int updateActive(int id);
+	
+	@Query(value="select n.* from notificacion n "
+			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id "
+			+ " and ne.flag_activo = true "
+			+ " WHERE ne.flag_leido = false", nativeQuery=true)
+	List<Notificacion> getNoLeidos();
 }

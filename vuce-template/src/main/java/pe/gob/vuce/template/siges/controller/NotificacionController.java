@@ -102,4 +102,26 @@ public class NotificacionController extends BaseController {
 			return super.getJSON(ex);
 		}
 	}
+	
+	@RequestMapping(value = "/updateleido")
+	@PostMapping
+	public ResponseEntity<?> updateLeido(@RequestBody NotificacionDTO item){
+		try {
+			ResponseEntity<?> response = this._service.updateLeido(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@GetMapping("obtenerNoLeidos")
+	public ResponseEntity<NotificacionDTO> getNoLeidos(){
+		ResponseEntity<NotificacionDTO> response = new ResponseEntity<>();
+		try {
+			response = this._service.getNoLeidos();
+		} catch (Exception ex) {
+			response.setMessage(ex);
+		}
+		return response;
+	}
 }
