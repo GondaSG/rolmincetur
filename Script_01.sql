@@ -556,3 +556,25 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_presentacion
 
 CREATE INDEX notificacion_presentacion_id_i
 ON siges.notificacion_presentacion(id);
+
+
+--TABLA ASIGNACION
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Aprobar Notificaciones', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Notificar Discrepancias', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Listar notificaciones, visualiza las notificaciones de todas las entidades', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Ver acciones de las notificaciones', 'Menu', 1);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Comunicar cierre de notificaciones', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Gestión de Roles', 'Menu', 1);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Gestión de Usuarios', 'Menu', 1);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Mantenimiento de Entidades y Categoría de Alimentos', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Ver Dashboard del Sistema de todas las entidades', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Bandeja Alerta Sanitaria de todas las entidades', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Mi cuenta', 'Menu', 1);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Visualizar listado de Notificaciones de todas las entidades', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Ver detalle de notificaciones sin editar', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Ver detalle de notificaciones', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Listar notificaciones de su competencia', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Declarar competencias y No Competencias', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Registrar acciones sobre la notificación de su competencia', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Cerrar Notificaciones de su competencia', 'Boton', 2);
+INSERT INTO siges.asignacion(nombre, tipo_nombre, tipo_id)	VALUES ('Ver Dashboard del Sistema sobre notificaciones de su competencia', 'Boton', 2);
