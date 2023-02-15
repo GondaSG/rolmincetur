@@ -8,14 +8,24 @@ public class NotificacionEstadoDTO {
 	
 	private int IdEstado;
 	
-	private boolean flagActive;
+	private boolean flagActivo;
 
-	public boolean getFlagActive() {
-		return flagActive;
+	private boolean flagLeido;
+	
+	public boolean getFlagLeido() {
+		return flagLeido;
 	}
 
-	public void setFlagActive(boolean flagActive) {
-		this.flagActive = flagActive;
+	public void setFlagLeido(boolean flagLeido) {
+		this.flagLeido = flagLeido;
+	}
+
+	public boolean getFlagActivo() {
+		return flagActivo;
+	}
+
+	public void setFlagActivo(boolean flagActivo) {
+		this.flagActivo = flagActivo;
 	}
 
 	public int getIdNotificacion() {

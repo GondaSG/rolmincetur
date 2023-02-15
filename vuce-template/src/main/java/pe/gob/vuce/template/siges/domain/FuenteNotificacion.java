@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,10 +25,16 @@ public class FuenteNotificacion {
 	private int id;
 	@Column(length=200)
 	private String nombre;
-	@Column(length=200)
-	private String origen;
 	
+	@Column (nullable=true)
+	private int tipoId;
 	
+	public int getTipoId() {
+		return tipoId;
+	}
+	public void setTipoId(int tipoId) {
+		this.tipoId = tipoId;
+	}
 	public int getId() {
 		return id;
 	}
@@ -41,12 +46,5 @@ public class FuenteNotificacion {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getOrigen() {
-		return origen;
-	}
-	public void setOrigen(String origen) {
-		this.origen = origen;
 	}	
-	
 }

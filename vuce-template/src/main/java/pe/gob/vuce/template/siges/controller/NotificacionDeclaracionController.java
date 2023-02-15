@@ -9,32 +9,32 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
-import pe.gob.vuce.template.siges.entity.ResponseEntity;
-import pe.gob.vuce.template.siges.service.NotificacionDiscrepanciaService;
 
+import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
+import pe.gob.vuce.template.siges.entity.ResponseEntity;
+import pe.gob.vuce.template.siges.service.NotificacionDeclaracionService;
 
 @RestController
-@RequestMapping(value="notificaciondiscrepancia")
-public class NotificacionDiscrepanciaController extends BaseController {
+@RequestMapping(value="notificaciondeclaracion")
+public class NotificacionDeclaracionController extends BaseController{
 
 	@Autowired
-	NotificacionDiscrepanciaService _service; 
+	NotificacionDeclaracionService _service;
 	
 	@GetMapping
-	public ResponseEntity<NotificacionDiscrepancia> findAll(){
-		ResponseEntity<NotificacionDiscrepancia> response = new ResponseEntity<NotificacionDiscrepancia>();
+	public ResponseEntity<NotificacionDeclaracion> findAll(){
+		ResponseEntity<NotificacionDeclaracion> response = new ResponseEntity<NotificacionDeclaracion>();
 		try {
 			response = this._service.findAll();
 		} catch (Exception ex) {
 			response.setMessage(ex);
 		}
-		return response;		
+		return response;
 	}
 	
 	
 	@PostMapping
-	public ResponseEntity<?> create (@RequestBody NotificacionDiscrepancia item){
+	public ResponseEntity<?> create(@RequestBody NotificacionDeclaracion item){
 		try {
 			ResponseEntity<?> response = this._service.create(item);
 			return response;
@@ -45,7 +45,7 @@ public class NotificacionDiscrepanciaController extends BaseController {
 	
 	
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody NotificacionDiscrepancia item){
+	public ResponseEntity<?> update(@RequestBody NotificacionDeclaracion item){
 		try {
 			ResponseEntity<?> response = this._service.create(item);
 			return response;
@@ -67,9 +67,9 @@ public class NotificacionDiscrepanciaController extends BaseController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<NotificacionDiscrepancia> findById(@PathVariable("id") int id){
+	public ResponseEntity<NotificacionDeclaracion> findById(@PathVariable("id") int id){
 		try {
-			ResponseEntity<NotificacionDiscrepancia> response = this._service.findById(id);
+			ResponseEntity<NotificacionDeclaracion> response = this._service.findById(id);
 			return response;
 		} catch(Exception ex) {
 			return super.getJSON(ex);
@@ -78,12 +78,24 @@ public class NotificacionDiscrepanciaController extends BaseController {
 	
 	
 	@GetMapping("findByNotificacionId/{notificacionid}")
-	public ResponseEntity<NotificacionDiscrepancia> findByNotificacionId(@PathVariable("notificacionid") int notificacionid){
+	public ResponseEntity<NotificacionDeclaracion> findByNotificacionId(@PathVariable("notificacionid") int notificacionid){
 		try {
-			ResponseEntity<NotificacionDiscrepancia> response = this._service.findByNotificacionId(notificacionid);
+			ResponseEntity<NotificacionDeclaracion> response = this._service.findByNotificacionId(notificacionid);
 			return response;
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
 	}
+	
+	
+	@GetMapping("findByEntidadId/{entidadid}")
+	public ResponseEntity<NotificacionDeclaracion> findByEntidadId(@PathVariable("entidadid") int entidadid){
+		try {
+			ResponseEntity<NotificacionDeclaracion> response = this._service.findByEntidadId(entidadid);
+			return response;
+		} catch(Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
 }

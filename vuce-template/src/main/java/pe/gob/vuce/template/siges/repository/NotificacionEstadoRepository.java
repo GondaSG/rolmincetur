@@ -14,11 +14,15 @@ import pe.gob.vuce.template.siges.domain.NotificacionLote;
 public interface NotificacionEstadoRepository extends JpaRepository<NotificacionEstado, Integer>{
 	
 	@Modifying
-	@Query(value="update notificacion_estado set flag_active = false where notificacion_id = ?1", nativeQuery=true)
+	@Query(value="update notificacion_estado set flag_activo = false where notificacion_id = ?1", nativeQuery=true)
 	int updateActive(int id);
 	
 	@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1", nativeQuery=true)
 	List<NotificacionEstado> searchByNotificacion(@Param("id") int id);
-	//@Query(value="update simrac.t_acuerdo_conservacion set bol_flg = false where srl_id = :psrl_id", nativeQuery=true)
-    //int updateState(@Param("psrl_id") int id);
+	
+	@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1 and estado_id = ?2", nativeQuery=true)
+	NotificacionEstado findByState(@Param("id") int id, @Param("id2") int id2);
+	
+	@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1 and flag_activo = true", nativeQuery=true)
+	NotificacionEstado findByNoti(@Param("id") int id);
 }

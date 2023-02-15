@@ -11,5 +11,6 @@ public interface FuenteNotificacionService {
 	FuenteNotificacion update(FuenteNotificacion notificacion);
 	ResponseEntity delete(int id) throws Exception;
 	ResponseEntity<FuenteNotificacion> findAll() throws Exception;
+	ResponseEntity<FuenteNotificacion> findTipoId(int id) throws Exception;
 
 }

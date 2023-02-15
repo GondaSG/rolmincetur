@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,29 +16,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Asignacion {
+public class TipoUsuario {
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-	@SequenceGenerator(name = "asignacion_id_seq", sequenceName="asignacion_id_seq", allocationSize=1)
+	@Column(name = "id", unique = true, nullable = false)
+	@SequenceGenerator(name = "tipo_usuario_id_seq", sequenceName="tipo_usuario_id_seq", allocationSize=1)
 	private int id;
-	private String nombre;
-	@Column (nullable=true)
-	private int tipoId;
-	@Column (nullable=true)
-	private String tipoNombre;
-	public int getTipoId() {
-		return tipoId;
-	}
-	public void setTipoId(int tipoId) {
-		this.tipoId = tipoId;
-	}	
-	public String getTipoNombre() {
-		return tipoNombre;
-	}
-	public void setTipoNombre(String tipoNombre) {
-		this.tipoNombre = tipoNombre;
-	}
+	@Column(length=200)
+	private String nombre;	
+	
 	public int getId() {
 		return id;
 	}

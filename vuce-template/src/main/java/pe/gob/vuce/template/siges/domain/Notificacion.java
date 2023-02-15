@@ -117,7 +117,25 @@ public class Notificacion implements Serializable {
 
 	@Column (columnDefinition="TEXT")
 	private String comentario;
+	
+	@Column (columnDefinition="TEXT")
+	private String peligroEspecifico;
+	
+	@Column
+	private Boolean flagActivo = true;
 		
+	public Boolean getFlagActivo() {
+		return flagActivo;
+	}
+	public void setFlagActivo(Boolean flagActivo) {
+		this.flagActivo = flagActivo;
+	}
+	public String getPeligroEspecifico() {
+		return peligroEspecifico;
+	}
+	public void setPeligroEspecifico(String peligroEspecifico) {
+		this.peligroEspecifico = peligroEspecifico;
+	}
 	public Boolean getIsnacional() {
 		return isnacional;
 	}

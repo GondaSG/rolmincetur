@@ -1,10 +1,9 @@
 package pe.gob.vuce.template.siges.service.impl;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
-import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
@@ -58,15 +58,14 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			String message = "";
 			boolean success = false;
 			Notificacion item3 = modelMapper.map(item, Notificacion.class);
-			if (id == 0) {
-				
+			if (id == 0) {				
 				Notificacion item2 = this._repository.save(item3);
 				id = item2.getId();
 				message += "Se guardaron sus datos de manera correcta";
 				NotificacionEstadoDTO itemNE = new NotificacionEstadoDTO();
 				itemNE.setIdNotificacion(id);
 				int idEstadoDefault = 1;
-				itemNE.setFlagActive(true);
+				itemNE.setFlagActivo(true);
 				itemNE.setIdEstado(idEstadoDefault);
 				this.updateStatus(itemNE);
 			} else {
@@ -118,10 +117,11 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				NotificacionEstado entity = new NotificacionEstado();
 				entity.setIdEstado(item.getIdEstado());
 				entity.setIdNotificacion(item.getIdNotificacion());
-				entity.setFlagActive(item.getFlagActive());
+				entity.setFlagActivo(item.getFlagActivo());
+				entity.setFlagLeido(false);
 				this._repositoryEstado.save(entity);
-			}
-			success = true;
+				success = true;
+			}			
 			ResponseEntity response = new ResponseEntity();
 			response.setExtra(id.toString());
 			response.setMessage(message);
@@ -154,6 +154,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	}
 	
 	@Override
+	@Transactional
 	public Notificacion update(NotificacionDTO notificacion) {
 		Notificacion item = modelMapper.map(notificacion, Notificacion.class);
 		return _repository.save(item);
@@ -163,7 +164,8 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Transactional
 	public ResponseEntity delete(int id) throws Exception {
 		try {			
-			this._repository.deleteById(id);
+			//this._repository.deleteById(id);
+			this._repository.updateActive(id);
 			ResponseEntity response = new ResponseEntity();
 			response.setMessage("Se ha eliminado correctamente");
 			response.setSuccess(true);
@@ -215,5 +217,45 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}	
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Transactional
+	public ResponseEntity updateLeido(NotificacionDTO item) throws Exception {
+		try {
+			Integer id = item.getId();
+			String message = "";
+			boolean success = false;
+			if (id != 0) {
+				message += "Se actualizaron sus datos de manera correcta";
+				NotificacionEstado item2 = this._repositoryEstado.findByState(id, item.getEstado().getId());
+				item2.setFlagLeido(true);
+				this._repositoryEstado.save(item2);
+				success = true;
+			}			
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception {
+		try {
+			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
+			List<Notificacion> items = this._repository.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);			
+			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
+			for (int i = 0; i < notiList.size(); i++) {
+				NotificacionDTO item = notiList.get(i);
+				item.setNotificacionEstado(this._repositoryEstado.findByNoti(item.getId()));
+			}
+			response.setItems(notiList);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

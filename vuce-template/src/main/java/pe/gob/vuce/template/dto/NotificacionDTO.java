@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
 import pe.gob.vuce.template.siges.domain.Ciudad;
+import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
@@ -95,6 +96,40 @@ public class NotificacionDTO {
 	private Boolean isnacional;
 	
 	private String comentario;
+	
+	private String peligroEspecifico;
+	
+	private Boolean flagActivo = true;
+	
+	private Estado estado;
+	
+	private NotificacionEstado notificacionEstado;
+	
+	public NotificacionEstado getNotificacionEstado() {
+		return notificacionEstado;
+	}
+	public void setNotificacionEstado(NotificacionEstado notificacionEstado) {
+		this.notificacionEstado = notificacionEstado;
+	}
+	public Estado getEstado() {
+		return estado;
+	}
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+	public Boolean getFlagActivo() {
+		return flagActivo;
+	}
+	public void setFlagActivo(Boolean flagActivo) {
+		this.flagActivo = flagActivo;
+	}
+	
+	public String getPeligroEspecifico() {
+		return peligroEspecifico;
+	}
+	public void setPeligroEspecifico(String peligroEspecifico) {
+		this.peligroEspecifico = peligroEspecifico;
+	}
 		
 	public List<NotificacionEstado> getEstados() {
 		return estados;

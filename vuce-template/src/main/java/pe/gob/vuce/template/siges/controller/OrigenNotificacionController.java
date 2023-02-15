@@ -9,7 +9,7 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.OrigenNotificacionService;
 
 @RestController
-@RequestMapping(value="origenNotificacion")
+@RequestMapping(value="origennotificacion")
 public class OrigenNotificacionController extends BaseController {
 	
 	@Autowired

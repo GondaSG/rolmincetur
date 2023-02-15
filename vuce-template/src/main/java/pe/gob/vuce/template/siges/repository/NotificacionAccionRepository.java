@@ -11,10 +11,7 @@ import pe.gob.vuce.template.siges.domain.NotificacionAccion;
 
 @Repository
 public interface NotificacionAccionRepository extends JpaRepository<NotificacionAccion, Integer> {
-
-	/*@Query("SELECT ")
-	List<NotificacionAccion> findByNotificacionId(int notificacionId);*/
-	@Modifying
-	@Query(value="SELECT id, detalle, fecha_creacion, notificacion_id FROM siges.notificacion_accion where notificacion_id = ?1", nativeQuery=true)
+	
+	@Query(value="SELECT * FROM notificacion_accion where notificacion_id = ?1", nativeQuery=true)
 	List<NotificacionAccion> findByNotificacionId(int notificacionId);
 } 

@@ -24,7 +24,7 @@ import pe.gob.vuce.template.siges.service.NotificacionService;
 @RequestMapping(value="notificacion")
 public class NotificacionController extends BaseController {
 
-	@Autowired(required=true)
+	@Autowired
 	NotificacionService _service;
 	
 	@GetMapping
@@ -101,5 +101,28 @@ public class NotificacionController extends BaseController {
 		} catch (Exception ex) {	
 			return super.getJSON(ex);
 		}
+	}
+	
+	@RequestMapping(value = "/updateleido")
+	@PostMapping
+	public ResponseEntity<?> updateLeido(@RequestBody NotificacionDTO item){
+		try {
+			ResponseEntity<?> response = this._service.updateLeido(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@GetMapping("obtenerNoLeidos/{flagDigesa}/{flagSanipes}/{flagSenasa}")
+	public ResponseEntity<NotificacionDTO> getNoLeidos(@PathVariable("flagDigesa") boolean flagDigesa,
+			@PathVariable("flagSanipes") boolean flagSanipes, @PathVariable("flagSenasa") boolean flagSenasa){
+		ResponseEntity<NotificacionDTO> response = new ResponseEntity<>();
+		try {
+			response = this._service.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);
+		} catch (Exception ex) {
+			response.setMessage(ex);
+		}
+		return response;
 	}
 }
