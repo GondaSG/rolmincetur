@@ -1,0 +1,594 @@
+/* CSS Document */
+ html, body, #map {
+        height: 100%;
+        margin: 0;
+        font-family: Tahoma;
+	    font-size: 0.27cm;      
+	    overflow: hidden;  
+      }
+
+ 
+
+.zoominIcon {background-image:url(../images/nav_zoomin.png); width:20px; height:20px; }
+.zoomoutIcon { background-image:url(../images/nav_zoomout.png); width:20px; height:20px; }
+.zoomfullextIcon { background-image:url(../images/nav_fullextent.png); width:20px; height:20px; }
+.zoomprevIcon { background-image:url(../images/nav_previous.png); width:20px; height:20px; }
+.zoomnextIcon { background-image:url(../images/nav_next.png); width:20px; height:20px; }
+.panIcon { background-image:url(../images/nav_pan.png); width:20px; height:20px; }
+.deactivateIcon { background-image:url(../images/nav_decline.png); width:20px; height:20px; }
+.identidad { background-image:url(../images/identidad.png); width:20px; height:20px; }
+.clear { background-image:url(../images/clear.png); width:20px; height:20px; }
+.tools { background-image:url(../images/tools.png); width:20px; height:20px; }
+.login { background-image:url(../images/login.png); width:24px; height:24px; position: absolute; top: 8px; right: 7px; cursor: pointer;}
+
+.search { background-image:url(../images/search.png); width:20px; height:20px; }
+.buffer { background-image:url(../images/buffer.png); width:20px; height:20px; }
+
+.measure { background-image:url(../images/measure.png); width:20px; height:20px; }
+.measure_area { background-image:url(../images/measure_area.png); width:20px; height:20px; }
+
+.upload_shape { background-image:url(../images/shape.png); width:20px; height:20px; }
+.gridData { background-image:url(../images/grid.png); width:20px; height:20px; }
+.legend { background-image:url(../images/legend.png); width:20px; height:20px; }
+
+.ayuda { background-image:url(../images/ayuda.png); width:20px; height:20px; }
+ 
+
+.nonModal_underlay {
+	display:none
+}
+.esriPopup .titleButton.maximize {
+	display: none;
+}	
+
+.esriLargeSliderTicks { 
+	display: block; 
+}
+
+.dnd{ 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	line-height: 15px;
+/*	cursor: pointer;*/
+	width: 700px;
+	height: 28px;
+	position: absolute; 
+	top: 0px; 
+	right:0px;
+	z-index: 35; 	
+}
+
+.border{ 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	line-height: 18px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+#map_zoom_slider {
+	top:210px;
+}
+
+.punteado{
+	border-bottom-style: dashed; border-width: 1px;
+}
+
+.logo{
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 2px solid #ccc;
+	padding: 2px;
+	background: #A89D9A;
+}
+
+#grid { height:230px; }
+#grid .field-col1 {	width: 100px; cursor:pointer;}
+#grid .field-col2 {	width: 400px; }
+
+#grid1 { height:230px; }
+#grid1 .field-col1 {	width: 100px; cursor:pointer;}
+#grid1 .field-col2 {	width: 400px; }
+
+#grid2 { height:230px; }
+#grid2 .field-col1 {	width: 100px; cursor:pointer;}
+#grid2 .field-col2 {	width: 400px; }
+
+#grid3 { height:230px; }
+#grid3 .field-col1 {	width: 100px; cursor:pointer;}
+#grid3 .field-col2 {	width: 400px; }
+
+#grid4 { height:230px; }
+#grid4 .field-col1 {	width: 100px; cursor:pointer;}
+#grid4 .field-col2 {	width: 400px; }
+
+
+#grid5 { height:230px; }
+#grid5 .field-col1 {	width: 100px; cursor:pointer;}
+#grid5 .field-col2 {	width: 400px; }
+
+
+.dgrid { border: none; }
+.field-id { cursor: pointer; }
+
+.medir {
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 5px;
+    border: 1px solid #FF0000;
+	background: #FFFFFF;
+	position:absolute; 
+	height:30px;
+	width:350px;
+	padding: 10px;
+	word-spacing:normal;
+	text-align:justify;
+	left: 50%;
+	bottom: 10px; 
+	z-Index:999;
+	visibility:hidden;
+}
+
+.custom-input-file {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    font-family: verdana;
+    font-size: 12pt;
+    width: 200px;
+    min-height: 40px;
+}
+.custom-input-file:hover {
+    background-color: #000;
+    color: #fff;
+}
+.custom-input-file .input-file {
+    margin: 0;
+    padding: 0;outline:0;
+    font-size: 10000px;
+    border: 10000px solid transparent;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    position: absolute;
+    right: -1000px;
+    top: -1000px;
+    cursor: pointer;
+}
+.custom-input-file .archivo {
+    background-color: #000;
+    color: #fff;
+    font-size: 7pt;
+    overflow: hidden;
+}
+.custom-input-file:hover .archivo {
+    background-color: #fff;
+    color: #000;   
+}
+
+
+div.upload {
+    width: 241px;
+    height: 41px;
+    background: url(../images/upload.png);
+    overflow: hidden;
+}
+
+div.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+	text-align:center;
+}
+
+.esriLegendLayerLabel{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+}
+.esriLegendServiceLabel{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+}
+.esriLegendService{
+	color:orange;
+	font-weight:normal;
+}
+
+.esriLegendService img{
+	width:24px;
+	height:24px;
+}
+
+.esriControlsBR{
+/*	background:#FF0000;*/
+}
+
+.esriAttributionLastItem{
+}
+
+a.menus:link {text-decoration:none; color: #ffffff; background: #990000; border:#FFFFFF 1px solid;} /* Link no visitado*/
+a.menus:visited {text-decoration:none; color:#cccccc} /*Link visitado*/
+a.menus:active {text-decoration:none; color: #003399; background: #993333; border:#FFFFFF 1px solid;} /*Link activo*/
+a.menus:hover {text-decoration:underline; color: #003399; background: #993333; border:#FFFFFF 1px solid;} /*Mause sobre el link*/
+
+
+/*barra escalas*/
+#map_zoom_slider{
+    display:none;
+    top: 300px;
+	height:200px;
+	left:52px;
+}
+
+
+/*
+.dijitSliderDecrementIconV{
+	background-image:url(../images/nav_zoomin.png); width:32px; height:32px;
+}
+
+.dijitSliderImageHandleV{
+}
+*/
+
+.negrita
+{
+    font-weight: bold; 
+    /*font-family: Arial; font-size: 12px;*/
+}
+
+input[type=text]
+{
+    padding: 3px;
+	border: 1px solid #d4d4d4;
+	
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 4px;
+
+	
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 4px;
+	
+	line-height: 1.5em;
+	
+	/* some box shadow sauce :D */
+	box-shadow: inset 0px 2px 2px #ececec;
+        
+}
+
+ 
+input[type=password]
+{
+    padding: 3px;
+	border: 1px solid #d4d4d4;
+	
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 4px;
+
+	
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 4px;
+	
+	line-height: 1.5em;
+	
+	/* some box shadow sauce :D */
+	box-shadow: inset 0px 2px 2px #ececec;
+        
+}
+
+textarea
+{
+    padding: 3px;
+	border: 1px solid #d4d4d4;
+	
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 4px;
+
+	
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 4px;
+	
+	line-height: 1.5em;
+	
+	/* some box shadow sauce :D */
+	box-shadow: inset 0px 2px 2px #ececec;
+        
+}
+
+.lnkinactive
+{
+    text-decoration: none;
+    
+}
+ 
+ 
+.esriPopup a 
+{
+    color: #336699; 
+    text-decoration: none;
+}
+
+.esriPopup .pointer, .esriPopup .outerPointer {
+    position: absolute;
+    background: url("../images/popup.png") no-repeat;
+    border: none;
+}
+
+.zooom_in{
+   cursor: URL(../images/tools/zoom_cur.png), auto;
+}
+
+.zooom_ou{
+    cursor: URL(../images/tools/zoom_out_cur.png), auto;
+}
+
+.pan_cur{
+    cursor: url(../images/tools/pan_cur.png), auto;
+}
+
+.default_cur{
+    cursor: default;
+}
+
+.ruler_cur{
+    cursor: url(../images/tools/ruler_cur.png), auto;
+}
+
+.info_cur{
+    cursor: url(../images/tools/info_cur.png), auto;
+}
+
+.init
+{
+
+    background: #ffffff;
+background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, , color-stop(0%, #ffffff), color-stop(47%, #f6f6f6), color-stop(100%, #ededed));
+background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+background: -o-radial-gradient(center, ellipse cover, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+background: -ms-radial-gradient(center, ellipse cover, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+background: radial-gradient(ellipse at center, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+height: 100%;
+width: 100%;
+z-index: 1000000000000000; 
+position: absolute
+}
+
+.inicio
+{       
+position: absolute; 
+left: 43%; 
+top: 45%; 
+height: 150px; 
+width: 350px;
+}
+
+.iconTitle
+{
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    width: 20px;    
+    height: 10px;
+    display: block;
+}
+/*
+.iconTitle img
+{
+    position: absolute;
+    top: 5px;
+    left: 0px;
+}
+*/
+
+.divImgClose{
+    position: absolute;
+    top: -10px;        
+    right: 0px;
+    z-index: 1000000000000000001;    
+    cursor: pointer;
+}
+
+.divImg{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 210px;
+    width: 100%;
+    z-index: 1000000000000000000;    
+    background-color: #FFF;
+}
+
+#owl-gallery .item{
+    margin: 5px;
+}
+
+#owl-gallery .itemDocs{
+    -webkit-background-size: cover; 
+    -moz-background-size: cover; 
+    -o-background-size: cover; 
+    background-image: url("../images/PDFico.png");
+    background-size: cover; 
+    width: 90%;
+    height: 200px;
+    margin: 5px;
+        
+    padding-top: 15px;
+    padding-left: 15px;
+    font-family: Arial;
+    font-size: 12pt;
+    font-style: italic; 
+    
+  /*  
+    filter:alpha(opacity=40);
+    opacity:.40;
+    */
+    
+}
+
+#owl-gallery .itemDocs a
+{
+    
+    font-size: 11pt;    
+    position: absolute;
+    left: 20px;
+    bottom: 20px;    
+    color: Blue;
+    text-decoration: none;
+    border-bottom-style: dashed; border-width: 1px;    
+}
+
+
+.itemsLI li 
+{
+    list-style:none; 
+    margin: 10px;
+}
+
+.divContentDiv{
+    width: 100%;
+    height: auto;    
+}
+
+
+.divContentDiv div:first-child{
+    float: left;
+    width: 25%;
+    height: 25px;
+    min-height: 20px;
+    max-height: 120px;
+    word-wrap: break-word;
+    margin: 2px;
+    padding: 3px;    
+    font-weight: bold;
+}
+
+.divContentDiv div:nth-child(2){
+    text-align: left;
+    float: left;
+    width: 70%;
+    height: 25px;
+    min-height: 20px;
+    max-height: 120px;
+    word-wrap: break-word;
+    margin: 2px;
+    padding: 3px;
+}
+
+.divContentDivBody{
+    width: 100%;
+    height: 25px;    
+    max-height: 120px;
+}
+
+.divContentDivLeft{
+    float: left;
+    width: 23%;
+    height: 25px;
+    min-height: 20px;
+    max-height: 120px;
+    word-wrap: break-word;
+    margin: 2px;
+    padding: 3px;    
+    font-weight: bold;
+}
+
+.divContentDivRight{
+    text-align: left;
+    float: left;
+    width: 70%;
+    height: 25px;
+    min-height: 20px;
+    max-height: 120px;
+    word-wrap: break-word;
+    margin: 2px;
+    padding: 3px;
+}
+
+
+.divContentDivLeftFull{
+    float: left;
+    width: 48%;
+    height: 25px;
+    min-height: 20px;
+    max-height: 120px;
+    word-wrap: break-word;
+    margin: 2px;
+    padding: 3px;    
+    font-weight: bold;
+}
+
+.tableEdit{
+    border-spacing: 0px;
+    width: 100%;
+    padding: 10px;
+    /*margin: 10px;*/
+    /*background-color: #edeff1;*/
+}
+
+.tableEdit tr{
+    height: 40px;
+    min-height: 40px;
+    max-height: 50px;
+}
+
+.tableEdit td{
+    width: auto;
+    line-height: 10px;
+    word-wrap: break-word;
+    padding: 10px;
+    vertical-align: middle;
+    /*border-top: 1px solid #f1f1f1;*/
+    /*background-color: #edeff1;*/
+    background-color: #f6f7f8;
+    border-bottom: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+}
+
+.tableEdit tr:first-child td:last-child{    
+    border-top: 1px solid #f1f1f1;    
+    border-top-right-radius: 5px;
+    padding: 5px;
+}
+
+.tableEdit tr:last-child td:last-child{    
+    border-top: 1px solid #f1f1f1;    
+    border-bottom-right-radius: 5px;
+    padding: 5px;
+}
+
+.tableEdit th{
+    vertical-align: middle;
+    padding-left: 5px;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    width: 30%;
+    line-height: 10px;
+    word-wrap: break-word;
+
+    border-left: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+}
+
+.tableEdit tr:first-child th{
+    border-top: 1px solid #ededed;
+    border-top-left-radius: 5px;
+}
+
+.tableEdit tr:last-child th{
+    border-bottom-left-radius: 5px;
+}

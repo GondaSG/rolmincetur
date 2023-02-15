@@ -23,7 +23,7 @@ define([
     esriConfig
 ) {
 
-    esriConfig.request.proxyUrl = "https://gisem.osinergmin.gob.pe/proxy_esri_corsgral/proxy.ashx"; //oficial
+    esriConfig.request.proxyUrl = ""; //"https://gisem.osinergmin.gob.pe/proxy_esri_corsgral/proxy.ashx"; //oficial
 
 
 

@@ -1,0 +1,381 @@
+/* CSS Document */
+ html, body, #map {
+        height: 100%;
+        margin: 0;
+        
+      }
+
+
+ /*background-image: url(../images/nav_zoomin.png);*/
+
+.zoominIcon {
+    background-image: url(../images/nav_zoomin.png);
+    width: 24px;
+    height: 24px;
+}
+.zoomoutIcon { background-image:url(../images/nav_zoomout.png); width:24px; height:24px; }
+.zoomfullextIcon { background-image:url(../images/nav_fullextent.png); width:24px; height:24px; }
+.zoomprevIcon { background-image:url(../images/nav_previous.png); width:24px; height:24px; }
+.zoomnextIcon { background-image:url(../images/nav_next.png); width:24px; height:24px; }
+.panIcon { background-image:url(../images/nav_pan.png); width:24px; height:24px; }
+.deactivateIcon { background-image:url(../images/nav_decline.png); width:32px; height:32px; }
+.identidad { background-image:url(../images/identidad.png); width:24px; height:24px; }
+.clear { background-image:url(../images/clear.png); width:24px; height:24px; }
+.tools { background-image:url(../images/tools.png); width:24px; height:24px; }
+.login { background-image:url(../images/login.png); width:24px; height:24px; position: absolute; top: 8px; right: 7px; cursor: pointer;}
+
+.search { background-image:url(../images/search.png); width:32px; height:32px; }
+.buffer { background-image:url(../images/buffer.png); width:32px; height:32px; }
+.measure { background-image:url(../images/measure.png); width:32px; height:32px; }
+.measure_area { background-image:url(../images/measure_area.png); width:32px; height:32px; }
+.upload_shape { background-image:url(../images/shape.png); width:32px; height:32px; }
+.gridData { background-image:url(../images/grid.png); width:32px; height:32px; }
+.legend { background-image:url(../images/legend.png); width:32px; height:32px; }
+ 
+
+.nonModal_underlay {
+	display:none
+}
+.esriPopup .titleButton.maximize {
+	display: none;
+}	
+
+.esriLargeSliderTicks { 
+	display: block; 
+}
+
+/*.dnd{ 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	line-height: 18px;
+	width: 650px;
+	height: 32px;
+	position: absolute; 
+	top: 0px; 
+	right:0px;
+	z-index: 35; 	
+}*/
+.dnd{ 
+text-align:center;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 0px;
+border: 1px solid #ccc;
+line-height: 18px;
+padding: 2px;
+margin-bottom: 2px;
+cursor: pointer;
+text-align: center;
+width: 50px;
+height: 420px;
+position: absolute;
+top: 90px;
+left: 10px;
+z-index: 35;
+background-color:#fff
+
+}
+
+.border{ 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	line-height: 18px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+/*#map_zoom_slider {
+	top:210px;
+
+}*/
+
+.punteado{
+	border-bottom-style: dashed; border-width: 1px;
+}
+
+.logo{
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 2px solid #ccc;
+	padding: 2px;
+	background: #A89D9A;
+}
+
+#grid { height:230px; }
+#grid .field-col1 {	width: 100px; cursor:pointer;}
+#grid .field-col2 {	width: 400px; }
+
+#grid1 { height:230px; }
+#grid1 .field-col1 {	width: 100px; cursor:pointer;}
+#grid1 .field-col2 {	width: 400px; }
+
+#grid2 { height:230px; }
+#grid2 .field-col1 {	width: 100px; cursor:pointer;}
+#grid2 .field-col2 {	width: 400px; }
+
+#grid3 { height:230px; }
+#grid3 .field-col1 {	width: 100px; cursor:pointer;}
+#grid3 .field-col2 {	width: 400px; }
+
+#grid4 { height:230px; }
+#grid4 .field-col1 {	width: 100px; cursor:pointer;}
+#grid4 .field-col2 {	width: 400px; }
+
+
+#grid5 { height:230px; }
+#grid5 .field-col1 {	width: 100px; cursor:pointer;}
+#grid5 .field-col2 {	width: 400px; }
+
+
+.dgrid { border: none; }
+.field-id { cursor: pointer; }
+
+.medir {
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 5px;
+    border: 1px solid #FF0000;
+	background: #FFFFFF;
+	position:absolute; 
+	height:30px;
+	width:350px;
+	padding: 10px;
+	word-spacing:normal;
+	text-align:justify;
+	left: 50%;
+	bottom: 10px; 
+	z-Index:999;
+	visibility:hidden;
+}
+
+.custom-input-file {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    font-family: verdana;
+    font-size: 12pt;
+    width: 200px;
+    min-height: 40px;
+}
+.custom-input-file:hover {
+    background-color: #000;
+    color: #fff;
+}
+.custom-input-file .input-file {
+    margin: 0;
+    padding: 0;outline:0;
+    font-size: 10000px;
+    border: 10000px solid transparent;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    position: absolute;
+    right: -1000px;
+    top: -1000px;
+    cursor: pointer;
+}
+.custom-input-file .archivo {
+    background-color: #000;
+    color: #fff;
+    font-size: 7pt;
+    overflow: hidden;
+}
+.custom-input-file:hover .archivo {
+    background-color: #fff;
+    color: #000;   
+}
+
+
+div.upload {
+    width: 241px;
+    height: 41px;
+    background: url(../images/upload.png);
+    overflow: hidden;
+}
+
+div.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+	text-align:center;
+}
+
+.esriLegendLayerLabel{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+}
+.esriLegendServiceLabel{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+}
+.esriLegendService{
+	color:orange;
+	font-weight:normal;
+}
+
+.esriLegendService img{
+	width:24px;
+	height:24px;
+}
+
+.esriControlsBR{
+/*	background:#FF0000;*/
+}
+
+.esriAttributionLastItem{
+}
+
+a.menus:link {text-decoration:none; color: #ffffff; background: #990000; border:#FFFFFF 1px solid;} /* Link no visitado*/
+a.menus:visited {text-decoration:none; color:#cccccc} /*Link visitado*/
+a.menus:active {text-decoration:none; color: #003399; background: #993333; border:#FFFFFF 1px solid;} /*Link activo*/
+a.menus:hover {text-decoration:underline; color: #003399; background: #993333; border:#FFFFFF 1px solid;} /*Mause sobre el link*/
+
+
+/*barra escalas*/
+#map_zoom_slider {
+    /*	display:none*/
+    top: 10px;
+    height: 65px;
+}
+
+#search {
+    display: block;
+    width:auto;
+    /*position: absolute;*/
+    z-index: 2;
+    /*top: 20px;
+    left: 74px;*/
+}
+
+#leyenda {
+    position: absolute;
+    left: 15px;
+    top: 100px;
+    z-index: 998;
+    padding:0px;
+}
+
+
+/*
+.dijitSliderDecrementIconV{
+	background-image:url(../images/nav_zoomin.png); width:32px; height:32px;
+}
+
+.dijitSliderImageHandleV{
+}
+*/
+.negrita {
+    font-weight: bold;
+    /*font-family: Arial; font-size: 12px;*/
+}
+
+/**complemento para el visor******/
+
+table {
+    border-spacing: 0;
+   /* display: flex; Se ajuste dinamicamente al tamano del dispositivo**/
+    max-height: 40vh; /*El alto que necesitemos**/
+    overflow-y: auto; /**El scroll verticalmente cuando sea necesario*/
+    /*overflow-x: hidden; Sin scroll horizontal*/
+    table-layout: fixed; /**Forzamos a que las filas tenga el mismo ancho**/
+}
+
+thead {
+    background-color: #f1eee9;
+}
+
+th {
+    font-weight: normal;
+    margin: 0;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+    height: 3.2vh !important; /*El mismo alto para todas las celdas**/
+    padding: 3px;    
+    border-right: 1px solid #c4c0c9;
+    background-color: #4390df; 
+    color: white!important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
+    text-align: center !important;
+    vertical-align:middle!important;    
+}
+
+.sorting_asc, .sorting_desc{
+    color:#000!important;
+}
+.sorting:after, .sorting_asc:after, .sorting_desc:after {
+    margin-left: -0.8rem !important;
+}
+
+td {
+    font-weight: normal;
+    margin: 0;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+    color: black;
+    height: 3.2vh !important; /*El mismo alto para todas las celdas**/
+    padding: 3px;
+    border-right: 1px solid #c4c0c9;
+}
+
+tr {
+    border-bottom: 1px solid #c4c0c9;
+}
+
+
+.marco {
+    padding: .625rem .25rem .25rem 2.5rem;
+    border: 2px solid #eee;
+    position: relative;
+    margin: 0 0 .625rem 0;
+    background-color: #ffffff;
+}
+
+    .marco:before,
+    .marco:after {
+        display: table;
+        content: "";
+    }
+
+    .marco:after {
+        clear: both;
+    }
+
+    .marco:before {
+        position: absolute;
+        content: attr(data-text);
+        text-transform: uppercase;
+        left: 1.5rem;
+        top: 11.875rem;
+        color: gray;
+        display: block;
+        font-size: 0.7rem;
+        line-height: 1rem;
+        height: 1rem;
+        text-align: right;
+        white-space: nowrap;
+        direction: ltr;
+        width: 12.5rem;
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+
+    .window{
+        z-index:2000 !important;
+    }
+
+   

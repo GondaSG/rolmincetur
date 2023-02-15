@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/css/metro-all20180403.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+
+        <div class="grid">
+            <div class="row">
+                <div class="cell-4">
+
+                </div><div class="cell-4">
+                    <fieldset>
+                        <h2 class="fg-cyan">Usuario PÚBLICO</h2>
+                        <hr class="bg-cyan">
+                        <form action="default.aspx?p=pub" method="post">
+                            <input class="button success" type="submit" value="Ingresar">
+                        </form>
+                    </fieldset>
+                    <p></p>
+                          <br />
+                    <fieldset>
+                        <h2 class="fg-cyan">Usuario EMPRESA</h2>
+                        <hr class="bg-cyan">
+                        <form class="inline-form" action="ValidarUsuarioPVO.aspx" method="post">
+                            Usuario: <input type="text" name="p_usuario" value="OSIHID3179@HID">
+                            <input class="button success" type="submit" value="Ingresar">
+                        </form>
+                    </fieldset>
+                    <p></p>
+                     <br />
+                    <fieldset>
+                        <h2 class="fg-cyan">Usuario OSINERGMIN</h2>
+                        <hr class="bg-cyan">
+                        <form class="inline-form" action="ValidarUsuarioOSINERGMIN.aspx" method="post">
+                            Usuario: <input type="text" name="p_usuario" value="Osinergmin">
+                            <input class="button success" type="submit" value="Ingresar">
+                        </form>
+                    </fieldset>
+                </div><div class="cell-4">
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
