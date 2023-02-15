@@ -114,11 +114,12 @@ public class NotificacionController extends BaseController {
 		}
 	}
 	
-	@GetMapping("obtenerNoLeidos")
-	public ResponseEntity<NotificacionDTO> getNoLeidos(){
+	@GetMapping("obtenerNoLeidos/{flagDigesa}/{flagSanipes}/{flagSenasa}")
+	public ResponseEntity<NotificacionDTO> getNoLeidos(@PathVariable("flagDigesa") boolean flagDigesa,
+			@PathVariable("flagSanipes") boolean flagSanipes, @PathVariable("flagSenasa") boolean flagSenasa){
 		ResponseEntity<NotificacionDTO> response = new ResponseEntity<>();
 		try {
-			response = this._service.getNoLeidos();
+			response = this._service.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);
 		} catch (Exception ex) {
 			response.setMessage(ex);
 		}

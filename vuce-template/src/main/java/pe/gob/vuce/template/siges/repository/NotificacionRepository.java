@@ -17,7 +17,7 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	
 	@Query(value="select n.* from notificacion n "
 			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
-			+ "	where flag_activo = true and n.codigo_generado ilike %?1% "
+			+ "	where n.flag_activo = true and n.codigo_generado ilike %?1% "
 			+ "	and case when ?2 is not null then n.isnacional = ?2 else 1 = 1 end "
 			+ "	and case when ?3 is not null then n.flag_digesa = ?3 else 1 = 1 end "
 			+ "	and case when ?4 is not null then n.flag_senasa = ?4 else 1 = 1 end "
@@ -38,8 +38,10 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	int updateActive(int id);
 	
 	@Query(value="select n.* from notificacion n "
-			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id "
-			+ " and ne.flag_activo = true "
-			+ " WHERE ne.flag_leido = false", nativeQuery=true)
-	List<Notificacion> getNoLeidos();
+			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
+			+ " where ne.flag_leido = false "
+			+ "	and case when ?1 is not null then n.flag_digesa = ?1 else 1 = 1 end "
+			+ "	and case when ?2 is not null then n.flag_sanipes = ?2 else 1 = 1 end "
+			+ " and case when ?3 is not null then n.flag_senasa = ?3 else 1 = 1 end ", nativeQuery=true)
+	List<Notificacion> getNoLeidos(Boolean flagDigesa, Boolean flagSanipes, Boolean flagSenasa);
 }

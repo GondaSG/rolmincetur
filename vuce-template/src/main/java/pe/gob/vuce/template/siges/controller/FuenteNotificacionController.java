@@ -15,7 +15,7 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.FuenteNotificacionService;
 
 @RestController
-@RequestMapping(value="fuenteNotificacion")
+@RequestMapping(value="fuentenotificacion")
 public class FuenteNotificacionController extends BaseController {
 	
 	@Autowired

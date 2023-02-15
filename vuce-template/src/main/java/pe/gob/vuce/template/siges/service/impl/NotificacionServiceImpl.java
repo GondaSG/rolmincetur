@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
@@ -241,17 +243,16 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}
 	}
 	
-	public ResponseEntity<NotificacionDTO> getNoLeidos() throws Exception {
+	public ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception {
 		try {
 			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
-			List<Notificacion> items = this._repository.getNoLeidos();
-			
-			List<NotificacionDTO> postDtoList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
-			for (int i = 0; i < postDtoList.size(); i++) {
-				NotificacionDTO item = postDtoList.get(i);
+			List<Notificacion> items = this._repository.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);			
+			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
+			for (int i = 0; i < notiList.size(); i++) {
+				NotificacionDTO item = notiList.get(i);
 				item.setNotificacionEstado(this._repositoryEstado.findByNoti(item.getId()));
 			}
-			response.setItems(postDtoList);
+			response.setItems(notiList);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

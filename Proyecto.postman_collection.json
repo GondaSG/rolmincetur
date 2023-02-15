@@ -522,136 +522,6 @@
 					]
 				},
 				{
-					"name": "Usuario",
-					"item": [
-						{
-							"name": "list Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete Usuario",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create Usuario",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update Usuario",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\" : \"usuariooooo\",\r\n    \"correo\" : \"usuariooo@prueba.com\",\r\n    \"telefono\" : \"998765oooooo\"\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/usuario/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "TipoNotificacion",
 					"item": [
 						{
@@ -1632,12 +1502,19 @@
 							"response": []
 						},
 						{
-							"name": "obtenerNoLeidos",
+							"name": "obtenerNoLeidosflagDigesa",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
-									"raw": "http://localhost:8080/api/notificacion/obtenerNoLeidos",
+									"raw": "http://localhost:8080/api/notificacion/obtenerNoLeidos/true/false/false",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1646,7 +1523,72 @@
 									"path": [
 										"api",
 										"notificacion",
-										"obtenerNoLeidos"
+										"obtenerNoLeidos",
+										"true",
+										"false",
+										"false"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtenerNoLeidosflagSanipes",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/obtenerNoLeidos/false/true/false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"obtenerNoLeidos",
+										"false",
+										"true",
+										"false"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtenerNoLeidosflagSenasa",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/obtenerNoLeidos/false/false/true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"obtenerNoLeidos",
+										"false",
+										"false",
+										"true"
 									]
 								}
 							},
@@ -1856,6 +1798,161 @@
 										"api",
 										"notificacion",
 										"27"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoUsuario",
+					"item": [
+						{
+							"name": "list Tipo Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/tipousuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"tipousuario"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuario",
+					"item": [
+						{
+							"name": "list Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete Usuario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Usuario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\",\r\n    \"ruc\":\"20202020201\",\r\n    \"tipoUsuario\":{\"id\" : 1}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Usuario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\" : \"usuariooooo\",\r\n    \"correo\" : \"usuariooo@prueba.com\",\r\n    \"telefono\" : \"998765oooooo\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/usuario/7",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario",
+										"7"
 									]
 								}
 							},

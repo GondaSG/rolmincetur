@@ -16,5 +16,5 @@ public interface NotificacionService {
 	ResponseEntity delete(int id) throws Exception;
 	ResponseEntity<Notificacion> search(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 	ResponseEntity updateLeido(NotificacionDTO item) throws Exception;
-	ResponseEntity<NotificacionDTO> getNoLeidos() throws Exception;
+	ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception;
 }

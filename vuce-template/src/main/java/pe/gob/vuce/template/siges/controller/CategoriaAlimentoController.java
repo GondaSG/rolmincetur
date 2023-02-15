@@ -14,7 +14,7 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.CategoriaAlimentoService;
 
 @RestController
-@RequestMapping(value="categoriaAlimento")
+@RequestMapping(value="categoriaalimento")
 public class CategoriaAlimentoController extends BaseController {
 	
 	@Autowired

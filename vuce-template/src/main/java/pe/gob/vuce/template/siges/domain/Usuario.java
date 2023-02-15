@@ -33,7 +33,9 @@ public class Usuario {
 	private String correo;
 	@Column(length=20)
 	private String telefono;
-	
+	@Column(length=20)
+	private String ruc;
+
 	@ManyToOne
     @JoinColumn(name = "rol_id", referencedColumnName = "id")
 	private Rol rol;
@@ -41,9 +43,11 @@ public class Usuario {
 	@ManyToOne
     @JoinColumn(name = "entidad_id", referencedColumnName = "id")
 	private Entidad entidad;
-		
 	
-	
+	@ManyToOne
+    @JoinColumn(name = "tipo_usuario_id", referencedColumnName = "id")
+	private TipoUsuario tipoUsuario;
+
 	public Rol getRol() {
 		return rol;
 	}
@@ -90,5 +94,21 @@ public class Usuario {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}	
+	}
+	
+	public String getRuc() {
+		return ruc;
+	}
+
+	public void setRuc(String ruc) {
+		this.ruc = ruc;
+	}
+	
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
 }
