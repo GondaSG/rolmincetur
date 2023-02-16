@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
+import pe.gob.vuce.template.dto.NotificacionFaseDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
+import pe.gob.vuce.template.siges.domain.NotificacionFase;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.NotificacionService;
@@ -124,5 +127,26 @@ public class NotificacionController extends BaseController {
 			response.setMessage(ex);
 		}
 		return response;
+	}
+	
+	@RequestMapping(value = "/updatefase")
+	@PostMapping
+	public ResponseEntity<?> fase(@RequestBody NotificacionFaseDTO item){
+		try {
+			ResponseEntity<?> response = this._service.updateFase(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@GetMapping("findFase/{id}")
+	public ResponseEntity<NotificacionFase> findFase(@PathVariable("id") int id){
+		try {
+			ResponseEntity<NotificacionFase> response = this._service.findFase(id);
+			return response;
+		} catch(Exception ex) {
+			return super.getJSON(ex);
+		}
 	}
 }

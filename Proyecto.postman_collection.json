@@ -1479,6 +1479,161 @@
 					]
 				},
 				{
+					"name": "TipoUsuario",
+					"item": [
+						{
+							"name": "list Tipo Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/tipousuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"tipousuario"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuario",
+					"item": [
+						{
+							"name": "list Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete Usuario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create Usuario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\",\r\n    \"ruc\":\"20202020201\",\r\n    \"tipoUsuario\":{\"id\" : 1}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Usuario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\" : \"usuariooooo\",\r\n    \"correo\" : \"usuariooo@prueba.com\",\r\n    \"telefono\" : \"998765oooooo\"\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/usuario",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail Usuario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/usuario/7",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"usuario",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Notificacion",
 					"item": [
 						{
@@ -1650,37 +1805,6 @@
 							"response": []
 						},
 						{
-							"name": "update Status",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"idNotificacion\": 8,\r\n    \"idEstado\":2,\r\n    \"flagActive\": true\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacion/updatestatus",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacion",
-										"updatestatus"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "updateleido",
 							"request": {
 								"method": "POST",
@@ -1802,84 +1926,9 @@
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "TipoUsuario",
-					"item": [
-						{
-							"name": "list Tipo Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/tipousuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"tipousuario"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Usuario",
-					"item": [
-						{
-							"name": "list Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/usuario",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
 						},
 						{
-							"name": "delete Usuario",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/usuario/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create Usuario",
+							"name": "update Fase",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -1891,10 +1940,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"usuario02\",\r\n    \"correo\" : \"usuario02@prueba.com\",\r\n    \"telefono\" : \"988865431\",\r\n    \"ruc\":\"20202020201\",\r\n    \"tipoUsuario\":{\"id\" : 1}\r\n}"
+									"raw": "{\r\n    \"idNotificacion\": 31,\r\n    \"idFase\": 3,\r\n    \"flagActivo\":true,\r\n    \"mensaje\": \"Cierre\"\r\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/usuario",
+									"raw": "http://localhost:8080/api/notificacion/updatefase",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1902,16 +1951,39 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"usuario"
+										"notificacion",
+										"updatefase"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "update Usuario",
+							"name": "list Fases",
 							"request": {
-								"method": "PUT",
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/findFase/31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"findFase",
+										"31"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Status",
+							"request": {
+								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
@@ -1921,10 +1993,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"nombre\" : \"usuariooooo\",\r\n    \"correo\" : \"usuariooo@prueba.com\",\r\n    \"telefono\" : \"998765oooooo\"\r\n}"
+									"raw": "{\r\n    \"idNotificacion\": 31,\r\n    \"idEstado\":3,\r\n    \"flagActivo\": true,\r\n    \"mensaje\": \"Cierre\"\r\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/usuario",
+									"raw": "http://localhost:8080/api/notificacion/updatestatus",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1932,27 +2004,8 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"usuario"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail Usuario",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/usuario/7",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"usuario",
-										"7"
+										"notificacion",
+										"updatestatus"
 									]
 								}
 							},

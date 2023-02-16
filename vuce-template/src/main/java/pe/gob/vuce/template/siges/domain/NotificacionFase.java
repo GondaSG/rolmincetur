@@ -63,7 +63,7 @@ public class NotificacionFase implements Serializable{
 		IdNotificacion = idNotificacion;
 	}
 
-	public int getIdEstado() {
+	public int getIdFase() {
 		return IdFase;
 	}
 
@@ -102,4 +102,35 @@ public class NotificacionFase implements Serializable{
     public int hashCode() {
         return Objects.hash(notificacion, fase);
     }
+        
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date fechaCreacion = new Date();
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+	
+	@Column (nullable=true)
+	private boolean flagActivo;
+	
+	public boolean getFlagActivo() {
+		return flagActivo;
+	}
+
+	public void setFlagActivo(boolean flagActivo) {
+		this.flagActivo = flagActivo;
+	}
+	
+	@Column (nullable=true, columnDefinition="TEXT")
+	private String mensaje;
+	
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
 }

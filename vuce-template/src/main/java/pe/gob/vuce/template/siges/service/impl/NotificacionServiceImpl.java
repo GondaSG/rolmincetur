@@ -3,6 +3,8 @@ package pe.gob.vuce.template.siges.service.impl;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +13,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
+import pe.gob.vuce.template.dto.NotificacionFaseDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
+import pe.gob.vuce.template.siges.domain.NotificacionFase;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
 import pe.gob.vuce.template.siges.domain.NotificacionPresentacion;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.NotificacionEstadoRepository;
+import pe.gob.vuce.template.siges.repository.NotificacionFaseRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionLoteRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionPresentacionRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionRepository;
@@ -41,6 +45,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	
 	@Autowired
 	NotificacionLoteRepository _repositoryLote;
+	
+	@Autowired
+	NotificacionFaseRepository _repositoryFase;
 	
 	@Autowired(required=true)
     ModelMapper modelMapper;
@@ -68,6 +75,12 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				itemNE.setFlagActivo(true);
 				itemNE.setIdEstado(idEstadoDefault);
 				this.updateStatus(itemNE);
+				NotificacionFaseDTO itemNF = new NotificacionFaseDTO();
+				itemNF.setIdNotificacion(id);
+				int idFaseDefault = 1;
+				itemNF.setFlagActivo(true);
+				itemNF.setIdFase(idFaseDefault);
+				this.updateFase(itemNF);
 			} else {
 				message += "Se actualizaron sus datos de manera correcta";
 				this._repository.save(item3);
@@ -119,7 +132,36 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				entity.setIdNotificacion(item.getIdNotificacion());
 				entity.setFlagActivo(item.getFlagActivo());
 				entity.setFlagLeido(false);
+				entity.setMensaje(item.getMensaje());
 				this._repositoryEstado.save(entity);
+				success = true;
+			}			
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Transactional
+	public ResponseEntity updateFase(NotificacionFaseDTO item) throws Exception {
+		try {
+			Integer id = item.getIdNotificacion();
+			String message = "";
+			boolean success = false;
+			if (id != 0) {
+				message += "Se actualizaron sus datos de manera correcta";
+				this._repositoryFase.updateActive(item.getIdNotificacion());
+				NotificacionFase entity = new NotificacionFase();
+				entity.setIdFase(item.getIdFase());
+				entity.setIdNotificacion(item.getIdNotificacion());
+				entity.setFlagActivo(item.getFlagActivo());
+				entity.setMensaje(item.getMensaje());
+				this._repositoryFase.save(entity);
 				success = true;
 			}			
 			ResponseEntity response = new ResponseEntity();
@@ -145,6 +187,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			item2.setNotificacionPresentacion(this._repositoryPresentacion.searchByNotificacion(id));
 			item2.setNotificacionLote(this._repositoryLote.searchByNotificacion(id));
 			item2.setEstados(this._repositoryEstado.searchByNotificacion(id));
+			//item2.setFase(this._repositoryFase.searchByNotificacion(id));
 			response.setSuccess(success);
 			response.setItem(item2);
 			return response;
@@ -253,6 +296,22 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				item.setNotificacionEstado(this._repositoryEstado.findByNoti(item.getId()));
 			}
 			response.setItems(notiList);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@Override
+	public ResponseEntity<NotificacionFase> findFase(int id) throws Exception {
+		try {
+			Optional<Notificacion> result = this._repository.findById(id);
+			if(!result.isPresent()) {
+				throw new Exception("No se encuentra notificacion registrada.");
+			}
+			ResponseEntity<NotificacionFase> response = new ResponseEntity<NotificacionFase>();
+			List<NotificacionFase> items = this._repositoryFase.searchByNotificacion(id);
+			response.setItems(items);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

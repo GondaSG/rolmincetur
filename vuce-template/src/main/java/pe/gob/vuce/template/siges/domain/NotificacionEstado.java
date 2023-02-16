@@ -138,4 +138,15 @@ public class NotificacionEstado implements Serializable{
     public int hashCode() {
         return Objects.hash(notificacion, estado);
     }
+    
+    @Column (nullable=true, columnDefinition="TEXT")
+	private String mensaje;
+	
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
 }
