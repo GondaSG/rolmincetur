@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreApiPostgreSQL.Data\NetCoreApiPostgreSQL.Data.csproj" />
+    <ProjectReference Include="..\NetCoreApiPostgreSQL.Model\NetCoreApiPostgreSQL.Model.csproj" />
+  </ItemGroup>
+
+</Project>
