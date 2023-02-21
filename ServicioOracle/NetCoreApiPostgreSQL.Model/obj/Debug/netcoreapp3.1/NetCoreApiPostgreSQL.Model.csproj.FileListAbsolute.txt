@@ -1,0 +1,10 @@
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.deps.json
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.dll
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.pdb
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.csproj.AssemblyReference.cache
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.GeneratedMSBuildEditorConfig.editorconfig
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.AssemblyInfoInputs.cache
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.AssemblyInfo.cs
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.csproj.CoreCompileInputs.cache
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.dll
+E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.pdb

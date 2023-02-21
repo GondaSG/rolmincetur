@@ -2,7 +2,9 @@ package pe.gob.vuce.template.siges.service;
 
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
+import pe.gob.vuce.template.dto.NotificacionFaseDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionFase;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 
@@ -17,4 +19,6 @@ public interface NotificacionService {
 	ResponseEntity<Notificacion> search(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 	ResponseEntity updateLeido(NotificacionDTO item) throws Exception;
 	ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception;
+	ResponseEntity updateFase(NotificacionFaseDTO item) throws Exception;
+	ResponseEntity<NotificacionFase> findFase(int id) throws Exception;
 }
