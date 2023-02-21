@@ -74,6 +74,42 @@
     height: calc((100vh - (var(--ap-header-height) + 36px))/3)
 }
 
+.section__bottom__3>div {
+    height: 100%;
+}
+
+.section__bottom__3>div>div {
+    height: 15%;
+}
+
+.section__bottom__3>div>div>p {
+    margin-bottom: 0;
+}
+
+.section__bottom__3>div>article {
+    overflow-x: auto;
+    display: flex;
+    height: 85%;
+}
+
+.section__bottom__2>div {
+    height: 100%;
+}
+
+.section__bottom__2>div>div {
+    height: 18%;
+}
+
+.section__bottom__2>div>div>p {
+    margin-bottom: 0;
+}
+
+.section__bottom__2>div>article {
+    overflow-x: auto;
+    display: flex;
+    height: 82%;
+}
+
 .legend__mapa {
     position: absolute;
     bottom: 1rem;
