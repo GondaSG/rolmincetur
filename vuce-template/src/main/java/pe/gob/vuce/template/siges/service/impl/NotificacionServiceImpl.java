@@ -1,5 +1,6 @@
 package pe.gob.vuce.template.siges.service.impl;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -65,7 +66,19 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			String message = "";
 			boolean success = false;
 			Notificacion item3 = modelMapper.map(item, Notificacion.class);
-			if (id == 0) {				
+			if (id == 0) {
+				if (item.getIsnacional()==true) {
+					LocalDate current_date = LocalDate.now();
+					String num = String.format("%04d", this._repository.count());
+					String tipo = "R";
+					if (item.getTipoNotificacion().getId() == 1)
+						tipo = "A";
+					else if (item.getTipoNotificacion().getId() == 2)
+						tipo = "I";
+					else if (item.getTipoNotificacion().getId() == 3)
+						tipo = "R";
+					item3.setCodigoGenerado(current_date.getYear()+". "+ tipo+".PE."+ num);
+				}
 				Notificacion item2 = this._repository.save(item3);
 				id = item2.getId();
 				message += "Se guardaron sus datos de manera correcta";
