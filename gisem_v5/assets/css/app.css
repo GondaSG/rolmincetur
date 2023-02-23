@@ -67,29 +67,25 @@
 }
 
 .section__bottom__2 {
-    height: calc((100vh - (var(--ap-header-height) + 33px))/2)
+    height: calc((100vh - (var(--ap-header-height) + 68px))/2)
 }
 
 .section__bottom__3 {
-    height: calc((100vh - (var(--ap-header-height) + 36px))/3)
+    height: calc((100vh - (var(--ap-header-height) + 28px)))
 }
 
 .section__bottom__3>div {
     height: 100%;
 }
 
-.section__bottom__3>div>div {
-    height: 15%;
-}
-
-.section__bottom__3>div>div>p {
+.section__bottom__3>div>p {
+    height: 30px;
     margin-bottom: 0;
 }
 
 .section__bottom__3>div>article {
     overflow-x: auto;
-    display: flex;
-    height: 85%;
+    height: calc((100% - 30px))
 }
 
 .section__bottom__2>div {
@@ -97,7 +93,12 @@
 }
 
 .section__bottom__2>div>div {
-    height: 18%;
+    height: 55px;
+}
+
+.subtitle {
+    padding: .5rem 0;
+    margin-bottom: 0;
 }
 
 .section__bottom__2>div>div>p {
@@ -106,8 +107,7 @@
 
 .section__bottom__2>div>article {
     overflow-x: auto;
-    display: flex;
-    height: 82%;
+    height: calc((100% - 55px))
 }
 
 .legend__mapa {
@@ -150,6 +150,26 @@
 
 .ajuste-padding {
     padding-right: 0px !important;
+}
+
+.listEmpEquip>li {
+    padding: 0 1.5rem;
+    cursor: pointer;
+}
+
+.listEmpEquip>li>p {
+    color: black;
+    padding: 0 2.5rem;
+}
+
+.listEmpEquip>li>label {
+    color: black;
+    padding: 1rem 0;
+}
+
+.hiddenLi {
+    visibility: hidden;
+    position: absolute;
 }
 
 
