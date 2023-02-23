@@ -157,11 +157,30 @@
     cursor: pointer;
 }
 
+.listEmpEquip>li:hover {
+    background-color: #004c73;
+}
+
+.listEmpEquip>li:hover>p,
+.listEmpEquip>li:hover>h3 {
+    color: #fff !important
+}
+
+.listEmpEquip>li.active {
+    background-color: #D0DADB;
+}
+
+.listEmpEquip>li.active>h3 {
+    color: orange !important
+}
+
+.listEmpEquipafectados>li>p,
 .listEmpEquip>li>p {
     color: black;
     padding: 0 2.5rem;
 }
 
+.listEmpEquipafectados>li>label,
 .listEmpEquip>li>label {
     color: black;
     padding: 1rem 0;

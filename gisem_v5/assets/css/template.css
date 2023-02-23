@@ -8817,6 +8817,11 @@ fieldset:disabled .btn {
     color: rgba(var(--bs-accent-dark-rgb), var(--bs-text-opacity)) !important
 }
 
+.text-accent-app {
+    --bs-text-opacity: 1;
+    color: var(--bs-body-color-v3) !important
+}
+
 .text-accent {
     --bs-text-opacity: 1;
     color: rgba(var(--bs-accent-rgb), var(--bs-text-opacity)) !important

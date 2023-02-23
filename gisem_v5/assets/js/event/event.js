@@ -3,13 +3,46 @@ require([
 ], (
     Queryjs
 ) => {
-    $("#ulEmpresas").on("click", "li", function() {
-        var obj = {
-            empresa: $(this).attr("value"),
+
+    let diccionarioEquipos = [{
             cop_tip: "SC",
             idPanel: 1
+        },
+        {
+            cop_tip: "RE",
+            idPanel: 2
         }
-        Queryjs.getQueryLayerGetEquipo(obj);
+    ]
+    let diccionarioCountEquipos = [{
+            cop_tip: "RE",
+            idPanel: 3
+        },
+        {
+            cop_tip: "SE",
+            idPanel: 4
+        },
+        {
+            cop_tip: "SF",
+            idPanel: 5
+        }
+    ]
+    $("#ulEmpresas").on("click", "li", function() {
+        diccionarioEquipos.forEach(t => {
+            var obj = {
+                empresa: $(this).attr("value"),
+                cop_tip: t.cop_tip,
+                idPanel: t.idPanel
+            }
+            Queryjs.getQueryLayerGetEquipo(obj);
+        })
+        diccionarioCountEquipos.forEach(t => {
+            var obj = {
+                empresa: $(this).attr("value"),
+                cop_tip: t.cop_tip,
+                idPanel: t.idPanel
+            }
+            Queryjs.getQueryLayerGetCountEquipo(obj);
+        })
     });
     $("#imputEmpresas").on("keyup", function() {
         $("#ulEmpresas li").filter((index, elemento) => {
@@ -27,4 +60,8 @@ require([
             }
         })
     })
+    $("#ulEquipos").on("click", "li", function() {
+        let obj = "";
+        Queryjs.getQueryLayerUbigeos(obj);
+    });
 })
