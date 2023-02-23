@@ -26,7 +26,8 @@ public class Usuario {
     @Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "usuario_id_seq", sequenceName="usuario_id_seq", allocationSize=1)
 	private int id;
-	
+	@Column(length=50)
+	private String codigo;
 	@Column(length=400)
 	private String nombre;
 	@Column(length=400)
@@ -47,6 +48,14 @@ public class Usuario {
 	@ManyToOne
     @JoinColumn(name = "tipo_usuario_id", referencedColumnName = "id")
 	private TipoUsuario tipoUsuario;
+	
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
 	public Rol getRol() {
 		return rol;

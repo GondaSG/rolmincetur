@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreApiPostgreSQL", "NetCoreApiPostgreSQL\NetCoreApiPostgreSQL.csproj", "{E4418578-AEB0-4471-86CB-C74D7B06A0A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreApiPostgreSQL.Data", "NetCoreApiPostgreSQL.Data\NetCoreApiPostgreSQL.Data.csproj", "{D1934A97-0DE7-4635-8ADB-C7E9E5897167}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreApiPostgreSQL.Model", "NetCoreApiPostgreSQL.Model\NetCoreApiPostgreSQL.Model.csproj", "{CDC75FA4-915B-4B22-BAA7-1D821C561FED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4418578-AEB0-4471-86CB-C74D7B06A0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4418578-AEB0-4471-86CB-C74D7B06A0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4418578-AEB0-4471-86CB-C74D7B06A0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4418578-AEB0-4471-86CB-C74D7B06A0A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1934A97-0DE7-4635-8ADB-C7E9E5897167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1934A97-0DE7-4635-8ADB-C7E9E5897167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1934A97-0DE7-4635-8ADB-C7E9E5897167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1934A97-0DE7-4635-8ADB-C7E9E5897167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDC75FA4-915B-4B22-BAA7-1D821C561FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDC75FA4-915B-4B22-BAA7-1D821C561FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDC75FA4-915B-4B22-BAA7-1D821C561FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDC75FA4-915B-4B22-BAA7-1D821C561FED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A002BF3-22BC-4F0A-ADB8-C8F361E5918F}
+	EndGlobalSection
+EndGlobal

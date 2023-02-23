@@ -20,6 +20,9 @@ public interface NotificacionEstadoRepository extends JpaRepository<Notificacion
 	@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1", nativeQuery=true)
 	List<NotificacionEstado> searchByNotificacion(@Param("id") int id);
 	
+	//@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1 and flag_activo = true", nativeQuery=true)
+	//NotificacionEstado searchByNotificacionActive(@Param("id") int id);
+	
 	@Query(value="select * from notificacion_estado WHERE notificacion_id = ?1 and estado_id = ?2", nativeQuery=true)
 	NotificacionEstado findByState(@Param("id") int id, @Param("id2") int id2);
 	

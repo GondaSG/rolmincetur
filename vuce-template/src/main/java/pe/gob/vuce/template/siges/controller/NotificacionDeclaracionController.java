@@ -66,6 +66,7 @@ public class NotificacionDeclaracionController extends BaseController{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/{id}")
 	public ResponseEntity<NotificacionDeclaracion> findById(@PathVariable("id") int id){
 		try {
@@ -77,6 +78,7 @@ public class NotificacionDeclaracionController extends BaseController{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("findByNotificacionId/{notificacionid}")
 	public ResponseEntity<NotificacionDeclaracion> findByNotificacionId(@PathVariable("notificacionid") int notificacionid){
 		try {
@@ -88,6 +90,7 @@ public class NotificacionDeclaracionController extends BaseController{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("findByEntidadId/{entidadid}")
 	public ResponseEntity<NotificacionDeclaracion> findByEntidadId(@PathVariable("entidadid") int entidadid){
 		try {
@@ -96,6 +99,5 @@ public class NotificacionDeclaracionController extends BaseController{
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
-	}
-	
+	}	
 }

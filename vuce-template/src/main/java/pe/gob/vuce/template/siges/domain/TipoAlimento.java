@@ -27,8 +27,7 @@ public class TipoAlimento {
 	@Column(length=200)
 	private String nombre;
 	@Column(length=400)
-	private String descripcion;
-	
+	private String descripcion;	
 	
 	public int getId() {
 		return id;
