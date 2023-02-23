@@ -103,7 +103,7 @@ public class NotificacionFase implements Serializable{
         return Objects.hash(notificacion, fase);
     }
         
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date fechaCreacion = new Date();
 	public Date getFechaCreacion() {
 		return fechaCreacion;

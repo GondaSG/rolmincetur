@@ -71,7 +71,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			boolean success = false;
 			Notificacion item3 = modelMapper.map(item, Notificacion.class);
 			if (id == 0) {
-				if (item.getIsnacional()==true) {
+				if (item.getIsnacional() != null && item.getIsnacional() == true) {
 					LocalDate current_date = LocalDate.now();
 					String num = String.format("%04d", this._repository.count());
 					String tipo = "R";
@@ -258,16 +258,19 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				item.setFechaCreacion(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			if (item.getFechaCreacionFinal() == null)
 				item.setFechaCreacionFinal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-			int value2 = 0;
-			if (item.getTipoNotificacionId() != null)
-				value2 = 1;
-			int value3 = 0;
-			if (item.getEstadoId() != null)
-				value3 = 1;
+			int value2 = item.getTipoNotificacionId() == null ? 0 : 1;
+			//if (item.getTipoNotificacionId() != null)
+			//	value2 = 1;
+			int value3 = item.getEstadoId() == null ? 0 : 1;
+			//if (item.getEstadoId() != null)
+			//	value3 = 1;
+			int booleanDato = item.getIsnacional() == null ? null : 1;
+							
 			Page<Notificacion> pag = this._repository.search(item.getCodigoGenerado(), item.getIsnacional(), item.getFlagDigesa(), item.getFlagSenasa(),
 					item.getFechaCreacion(), item.getFechaCreacionFinal(), value,
-					item.getTipoNotificacionId(), value2,
-					item.getEstadoId(), value3,
+					item.getTipoNotificacionId(), //value2,
+					//item.getEstadoId(), value3, 
+					booleanDato,
 					page);
 			List<Notificacion> items = pag.getContent();
 			
