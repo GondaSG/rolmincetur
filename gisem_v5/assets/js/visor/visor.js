@@ -34,6 +34,7 @@ define(["esri/Map",
     });
     return {
         getInitParams: function() { return initParams; },
+        getView: function() { return __globspace.view; },
         getMap: function() { return __globspace.map; }
     }
 });

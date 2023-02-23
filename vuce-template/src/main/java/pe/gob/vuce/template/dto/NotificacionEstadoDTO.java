@@ -1,7 +1,5 @@
 package pe.gob.vuce.template.dto;
 
-import java.util.Date;
-
 public class NotificacionEstadoDTO {
 	
 	private int IdNotificacion;
@@ -11,6 +9,8 @@ public class NotificacionEstadoDTO {
 	private boolean flagActivo;
 
 	private boolean flagLeido;
+	
+	private String mensaje;
 	
 	public boolean getFlagLeido() {
 		return flagLeido;
@@ -43,8 +43,6 @@ public class NotificacionEstadoDTO {
 	public void setIdEstado(int idEstado) {
 		IdEstado = idEstado;
 	}
-	
-	private String mensaje;
 	
 	public String getMensaje() {
 		return mensaje;

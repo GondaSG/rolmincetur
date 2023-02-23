@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj": {}
+    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj": {}
   },
   "projects": {
-    "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj": {
+    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj",
+        "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj",
         "projectName": "NetCoreApiPostgreSQL.Data",
-        "projectPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj",
+        "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj",
         "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\obj\\",
+        "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -32,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
-                "projectPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj"
+              "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
+                "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj"
               }
             }
           }
@@ -68,30 +64,40 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
+    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
+        "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
         "projectName": "NetCoreApiPostgreSQL.Model",
-        "projectPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
+        "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
         "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\obj\\",
+        "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -133,12 +139,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

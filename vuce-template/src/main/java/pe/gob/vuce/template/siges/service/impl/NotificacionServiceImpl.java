@@ -25,6 +25,7 @@ import pe.gob.vuce.template.siges.domain.NotificacionLote;
 import pe.gob.vuce.template.siges.domain.NotificacionPresentacion;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
+import pe.gob.vuce.template.siges.repository.NotificacionDiscrepanciaRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionEstadoRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionFaseRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionLoteRepository;
@@ -50,6 +51,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Autowired
 	NotificacionFaseRepository _repositoryFase;
 	
+	@Autowired
+	NotificacionDiscrepanciaRepository _repositoryDiscrepancia;
+	
 	@Autowired(required=true)
     ModelMapper modelMapper;
 	
@@ -67,7 +71,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			boolean success = false;
 			Notificacion item3 = modelMapper.map(item, Notificacion.class);
 			if (id == 0) {
-				if (item.getIsnacional()==true) {
+				if (item.getIsnacional() != null && item.getIsnacional() == true) {
 					LocalDate current_date = LocalDate.now();
 					String num = String.format("%04d", this._repository.count());
 					String tipo = "R";
@@ -105,6 +109,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				NotificacionLote nl = new NotificacionLote();				
 				nl.setLote(item.getNotificacionLote().get(i).getLote());
 				nl.setCantidad(item.getNotificacionLote().get(i).getCantidad());
+				nl.setUnidadMedida(item.getNotificacionLote().get(i).getUnidadMedida());
 				nl.setNotificacion(noti);
 				this._repositoryLote.save(nl);
 			}
@@ -243,33 +248,42 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	}
 	
 	@Override		
-	public ResponseEntity<Notificacion> search(NotificacionDTO item, PaginatorEntity paginator)
+	public ResponseEntity<NotificacionDTO> search(NotificacionDTO item, PaginatorEntity paginator)
 			throws Exception {
 		try {
-			ResponseEntity<Notificacion> response = new ResponseEntity<Notificacion>();
+			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
 			Pageable page = PageRequest.of(paginator.getOffset() - 1, paginator.getLimit());
 			int value = item.getFechaCreacion() == null ? 0 : 1;
 			if (item.getFechaCreacion() == null)
 				item.setFechaCreacion(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			if (item.getFechaCreacionFinal() == null)
 				item.setFechaCreacionFinal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-			int value2 = 0;
-			if (item.getTipoNotificacionId() != null)
-				value2 = 1;
-			int value3 = 0;
-			if (item.getEstadoId() != null)
-				value3 = 1;
+			int value2 = item.getTipoNotificacionId() == null ? 0 : 1;
+			//if (item.getTipoNotificacionId() != null)
+			//	value2 = 1;
+			int value3 = item.getEstadoId() == null ? 0 : 1;
+			//if (item.getEstadoId() != null)
+			//	value3 = 1;
+			int booleanDato = item.getIsnacional() == null ? null : 1;
+							
 			Page<Notificacion> pag = this._repository.search(item.getCodigoGenerado(), item.getIsnacional(), item.getFlagDigesa(), item.getFlagSenasa(),
 					item.getFechaCreacion(), item.getFechaCreacionFinal(), value,
-					item.getTipoNotificacionId(), value2,
-					item.getEstadoId(), value3,
+					item.getTipoNotificacionId(), //value2,
+					//item.getEstadoId(), value3, 
+					booleanDato,
 					page);
 			List<Notificacion> items = pag.getContent();
+			
+			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
+			for (int i = 0; i < notiList.size(); i++) {
+				NotificacionDTO ntdo = notiList.get(i);
+				ntdo.setNotificacionEstado(this._repositoryEstado.findByNoti(ntdo.getId()));
+				ntdo.setDiscrepancias(this._repositoryDiscrepancia.findByNotificacionId(ntdo.getId()));
+			}
 			paginator.setTotal((int) pag.getTotalElements());
-			response.setItems(items);
+			response.setItems(notiList);
 			response.setPaginator(paginator);
 			return response;
-
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
@@ -325,6 +339,30 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			ResponseEntity<NotificacionFase> response = new ResponseEntity<NotificacionFase>();
 			List<NotificacionFase> items = this._repositoryFase.searchByNotificacion(id);
 			response.setItems(items);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Transactional
+	public ResponseEntity updateNoCompetencia(NotificacionDTO item) throws Exception {
+		try {
+			Integer id = item.getId();
+			String message = "";
+			boolean success = false;
+			if (id != 0) {
+				Notificacion item2 = this._repository.findById(id).get();
+				item2.setFlagNoCompetencia(item.getFlagNoCompetencia());
+				this._repository.save(item2);
+				message += "Se actualizaron sus datos de manera correcta";
+				success = true;
+			}			
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

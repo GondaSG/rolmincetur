@@ -5,12 +5,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
 import pe.gob.vuce.template.siges.domain.Ciudad;
+import pe.gob.vuce.template.siges.domain.Entidad;
 import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
 import pe.gob.vuce.template.siges.domain.NotificacionPresentacion;
@@ -82,6 +86,15 @@ public class NotificacionDTO {
 	private List<NotificacionLote> notificacionLote = new ArrayList<>();
 	
 	private List<NotificacionEstado> estados = new ArrayList<>();
+	
+	private List<NotificacionDiscrepancia> discrepancias = new ArrayList<>();
+
+	public List<NotificacionDiscrepancia> getDiscrepancias() {
+		return discrepancias;
+	}
+	public void setDiscrepancias(List<NotificacionDiscrepancia> discrepancias) {
+		this.discrepancias = discrepancias;
+	}
 
 	private List<Integer> tipoNotificacionId;
 	
@@ -104,6 +117,24 @@ public class NotificacionDTO {
 	private Estado estado;
 	
 	private NotificacionEstado notificacionEstado;
+	
+	private Boolean flagNoCompetencia;
+	
+	private Entidad entidad;
+		
+	public Boolean getFlagNoCompetencia() {
+		return flagNoCompetencia;
+	}
+	public void setFlagNoCompetencia(Boolean flagNoCompetencia) {
+		this.flagNoCompetencia = flagNoCompetencia;
+	}
+	
+	public Entidad getEntidad() {
+		return entidad;
+	}
+	public void setEntidad(Entidad entidad) {
+		this.entidad = entidad;
+	}
 	
 	public NotificacionEstado getNotificacionEstado() {
 		return notificacionEstado;

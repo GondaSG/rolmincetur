@@ -51,7 +51,7 @@ public class TipoAlimentoController extends BaseController {
 		}	
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") int id){
 		try {
 			ResponseEntity<?> response = this._service.delete(id);
