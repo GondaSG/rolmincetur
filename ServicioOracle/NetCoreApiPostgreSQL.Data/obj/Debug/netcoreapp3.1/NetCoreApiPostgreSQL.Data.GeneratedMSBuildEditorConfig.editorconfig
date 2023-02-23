@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = NetCoreApiPostgreSQL.Data
+build_property.ProjectDir = C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\
