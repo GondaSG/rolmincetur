@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "E:\\EBIZ\\C#\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {}
+    "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {}
   },
   "projects": {
-    "E:\\EBIZ\\C#\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
+    "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\EBIZ\\C#\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
+        "projectUniqueName": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
         "projectName": "NetCoreApiPostgreSQL.Model",
-        "projectPath": "E:\\EBIZ\\C#\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
-        "packagesPath": "C:\\Users\\Alessandra\\.nuget\\packages\\",
-        "outputPath": "E:\\EBIZ\\C#\\NetCoreApiPostgreSQL.Model\\obj\\",
+        "projectPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
+        "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\github\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Alessandra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
