@@ -2010,6 +2010,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "update No Declarado",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 39,\r\n    \"flagNoCompetencia\": true\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/updatenocompetencia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"updatenocompetencia"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}

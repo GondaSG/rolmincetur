@@ -82,6 +82,7 @@ public class NotificacionController extends BaseController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/{id}")
 	public ResponseEntity<NotificacionDTO> findById(@PathVariable("id") int id){
 		try {
@@ -95,11 +96,11 @@ public class NotificacionController extends BaseController {
 	@SuppressWarnings({ "unchecked" })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody()
-	public ResponseEntity<Notificacion> search(@RequestParam("item") String item) throws IOException {
+	public ResponseEntity<NotificacionDTO> search(@RequestParam("item") String item) throws IOException {
 		try {
 			PaginatorEntity paginator = super.setPaginator();
 			NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
-			ResponseEntity<Notificacion> response = this._service.search(item2, paginator);
+			ResponseEntity<NotificacionDTO> response = this._service.search(item2, paginator);
 			return response;
 		} catch (Exception ex) {	
 			return super.getJSON(ex);
@@ -140,12 +141,24 @@ public class NotificacionController extends BaseController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("findFase/{id}")
 	public ResponseEntity<NotificacionFase> findFase(@PathVariable("id") int id){
 		try {
 			ResponseEntity<NotificacionFase> response = this._service.findFase(id);
 			return response;
 		} catch(Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@PostMapping
+	@RequestMapping(value = "/updatenocompetencia")
+	public ResponseEntity<?> updatenocompetencia(@RequestBody NotificacionDTO item){
+		try {
+			ResponseEntity<?> response = this._service.updateNoCompetencia(item);
+			return response;
+		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
 	}

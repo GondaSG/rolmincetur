@@ -27,13 +27,17 @@ public class NotificacionLote {
 	private int id;
 	
 	@ManyToOne
+    @JoinColumn(name = "unidad_medida_id", referencedColumnName = "id")
+	private UnidadMedida unidadMedida;
+
+	@ManyToOne
     @JoinColumn(name = "notificacion_id", referencedColumnName = "id")
 	private Notificacion notificacion;
 	
 	@Column
 	private String lote;
 	
-	@Column
+	@Column(columnDefinition="NUMERIC (12,2)")
 	private Double cantidad;
 
 	public int getId() {
@@ -67,4 +71,12 @@ public class NotificacionLote {
 	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}	
+	
+	public UnidadMedida getUnidadMedida() {
+		return unidadMedida;
+	}
+
+	public void setUnidadMedida(UnidadMedida unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
 }

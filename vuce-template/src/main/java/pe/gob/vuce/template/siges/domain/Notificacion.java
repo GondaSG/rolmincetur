@@ -95,12 +95,6 @@ public class Notificacion implements Serializable {
 	@Column(length=250)
 	private String codigoGenerado;
 	
-	//@OneToMany(fetch = FetchType.EAGER, mappedBy = "notificacion")
-	//@NotFound(action = NotFoundAction.IGNORE)
-    //private List<NotificacionEstado> notificacionEstado = new ArrayList<>();
-	//@ManyToMany
-	//Set<Estado> estado;
-	
 	@Column
 	private Boolean flagQuimico;
 	@Column
@@ -123,7 +117,26 @@ public class Notificacion implements Serializable {
 	
 	@Column
 	private Boolean flagActivo = true;
+	
+	@Column
+	private Boolean flagNoCompetencia;
+	
+	@ManyToOne
+    @JoinColumn(name = "entidad_id", referencedColumnName = "id")
+	private Entidad entidad;
 		
+	public Boolean getFlagNoCompetencia() {
+		return flagNoCompetencia;
+	}
+	public void setFlagNoCompetencia(Boolean flagNoCompetencia) {
+		this.flagNoCompetencia = flagNoCompetencia;
+	}
+	public Entidad getEntidad() {
+		return entidad;
+	}
+	public void setEntidad(Entidad entidad) {
+		this.entidad = entidad;
+	}
 	public Boolean getFlagActivo() {
 		return flagActivo;
 	}
@@ -310,10 +323,4 @@ public class Notificacion implements Serializable {
 	public void setCodigoGenerado(String codigoGenerado) {
 		this.codigoGenerado = codigoGenerado;
 	}
-	//public List<NotificacionEstado> getNotificacionEstado() {
-	//	return notificacionEstado;
-	//}
-	//public void setNotificacionEstado(List<NotificacionEstado> notificacionEstado) {
-	//	this.notificacionEstado = notificacionEstado;
-	//}
 }

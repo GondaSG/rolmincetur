@@ -38,7 +38,7 @@ public class NotificacionPresentacion {
     @JoinColumn(name = "notificacion_id", referencedColumnName = "id")
 	private Notificacion notificacion;
 	
-	@Column
+	@Column(columnDefinition="NUMERIC (12,2)")
 	private Double volumen;
 
 	public int getId() {
