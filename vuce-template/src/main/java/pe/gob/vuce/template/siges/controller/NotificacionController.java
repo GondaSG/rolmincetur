@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.dto.NotificacionFaseDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
-import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
 import pe.gob.vuce.template.siges.domain.NotificacionFase;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
@@ -152,13 +152,27 @@ public class NotificacionController extends BaseController {
 		}
 	}
 	
-	@PostMapping
-	@RequestMapping(value = "/updatenocompetencia")
-	public ResponseEntity<?> updatenocompetencia(@RequestBody NotificacionDTO item){
+	//@PostMapping
+	//@RequestMapping(value = "/updatenocompetencia")
+	//public ResponseEntity<?> updatenocompetencia(@RequestBody NotificacionDTO item){
+	//	try {
+	//		ResponseEntity<?> response = this._service.updateNoCompetencia(item);
+	//		return response;
+	//	} catch (Exception ex) {
+	//		return super.getJSON(ex);
+	//	}
+	//}
+	
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping(value = "/indicadores", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<IndicadorDTO> indicadores(@RequestBody IndicadorDTO item) throws IOException {
 		try {
-			ResponseEntity<?> response = this._service.updateNoCompetencia(item);
+			//PaginatorEntity paginator = super.setPaginator();
+			//NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
+			ResponseEntity<IndicadorDTO> response = this._service.indicadores(item);
 			return response;
-		} catch (Exception ex) {
+		} catch (Exception ex) {	
 			return super.getJSON(ex);
 		}
 	}

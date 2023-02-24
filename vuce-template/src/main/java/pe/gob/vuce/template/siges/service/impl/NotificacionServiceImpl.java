@@ -1,6 +1,7 @@
 package pe.gob.vuce.template.siges.service.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -14,15 +15,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.dto.NotificacionFaseDTO;
+import pe.gob.vuce.template.dto.ObjectDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionFase;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
 import pe.gob.vuce.template.siges.domain.NotificacionPresentacion;
+import pe.gob.vuce.template.siges.domain.Pais;
+import pe.gob.vuce.template.siges.domain.TipoNotificacion;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.NotificacionDiscrepanciaRepository;
@@ -31,6 +37,8 @@ import pe.gob.vuce.template.siges.repository.NotificacionFaseRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionLoteRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionPresentacionRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionRepository;
+import pe.gob.vuce.template.siges.repository.PaisRepository;
+import pe.gob.vuce.template.siges.repository.TipoNotificacionRepository;
 import pe.gob.vuce.template.siges.service.NotificacionService;
 
 @Service
@@ -54,6 +62,12 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Autowired
 	NotificacionDiscrepanciaRepository _repositoryDiscrepancia;
 	
+	@Autowired
+	TipoNotificacionRepository _repositoryTipoNotificacion;
+	
+	@Autowired
+	PaisRepository _repositoryPais;
+	
 	@Autowired(required=true)
     ModelMapper modelMapper;
 	
@@ -71,7 +85,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			boolean success = false;
 			Notificacion item3 = modelMapper.map(item, Notificacion.class);
 			if (id == 0) {
-				if (item.getIsnacional() != null && item.getIsnacional() == true) {
+				if (item.getFlagNacional() != null && item.getFlagNacional() == true) {
 					LocalDate current_date = LocalDate.now();
 					String num = String.format("%04d", this._repository.count());
 					String tipo = "R";
@@ -102,7 +116,10 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				message += "Se actualizaron sus datos de manera correcta";
 				this._repository.save(item3);
 			}
-			this._repositoryLote.deleteNotificacionLote(id);
+			if (item.getNotificacionLote().size() > 0)
+			{
+				this._repositoryLote.deleteNotificacionLote(id);
+			}			
 			for (int i = 0; i < item.getNotificacionLote().size(); i++) {
 				Notificacion noti = new Notificacion();
 				noti.setId(id);
@@ -113,7 +130,10 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				nl.setNotificacion(noti);
 				this._repositoryLote.save(nl);
 			}
-			this._repositoryPresentacion.deleteNotificacionPresentacion(id);
+			if (item.getNotificacionPresentacion().size() > 0)
+			{
+				this._repositoryPresentacion.deleteNotificacionPresentacion(id);
+			}			
 			for (int i = 0; i < item.getNotificacionPresentacion().size(); i++) {
 				Notificacion noti = new Notificacion();
 				noti.setId(id);
@@ -205,6 +225,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			item2.setNotificacionPresentacion(this._repositoryPresentacion.searchByNotificacion(id));
 			item2.setNotificacionLote(this._repositoryLote.searchByNotificacion(id));
 			item2.setEstados(this._repositoryEstado.searchByNotificacion(id));
+			item2.setNotificacionEstado(this._repositoryEstado.findByNoti(id));
 			//item2.setFase(this._repositoryFase.searchByNotificacion(id));
 			response.setSuccess(success);
 			response.setItem(item2);
@@ -264,23 +285,26 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			int value3 = item.getEstadoId() == null ? 0 : 1;
 			//if (item.getEstadoId() != null)
 			//	value3 = 1;
-			int booleanDato = item.getIsnacional() == null ? null : 1;
+			int booleanDato = item.getFlagNacional() == null ? null : 1;
 							
-			Page<Notificacion> pag = this._repository.search(item.getCodigoGenerado(), item.getIsnacional(), item.getFlagDigesa(), item.getFlagSenasa(),
+			//Page<Notificacion> pag = this._repository.search2("n.flag_activo = true",	page);
+			//List<Notificacion> items = pag.getContent();
+			
+			Page<Notificacion> pag1 = this._repository.search(item.getCodigoGenerado(), item.getFlagNacional(), item.getFlagDigesa(), item.getFlagSenasa(),
 					item.getFechaCreacion(), item.getFechaCreacionFinal(), value,
 					item.getTipoNotificacionId(), //value2,
 					//item.getEstadoId(), value3, 
 					booleanDato,
 					page);
-			List<Notificacion> items = pag.getContent();
+			List<Notificacion> items2 = pag1.getContent();
 			
-			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
+			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items2, NotificacionDTO[].class));
 			for (int i = 0; i < notiList.size(); i++) {
 				NotificacionDTO ntdo = notiList.get(i);
 				ntdo.setNotificacionEstado(this._repositoryEstado.findByNoti(ntdo.getId()));
 				ntdo.setDiscrepancias(this._repositoryDiscrepancia.findByNotificacionId(ntdo.getId()));
 			}
-			paginator.setTotal((int) pag.getTotalElements());
+			paginator.setTotal((int) pag1.getTotalElements());
 			response.setItems(notiList);
 			response.setPaginator(paginator);
 			return response;
@@ -354,7 +378,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			boolean success = false;
 			if (id != 0) {
 				Notificacion item2 = this._repository.findById(id).get();
-				item2.setFlagNoCompetencia(item.getFlagNoCompetencia());
+				//item2.setFlagNoCompetencia(item.getFlagNoCompetencia());
 				this._repository.save(item2);
 				message += "Se actualizaron sus datos de manera correcta";
 				success = true;
@@ -363,6 +387,67 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			response.setExtra(id.toString());
 			response.setMessage(message);
 			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception {
+		try {
+			ResponseEntity<IndicadorDTO> response = new ResponseEntity<IndicadorDTO>();
+			IndicadorDTO indicador = new IndicadorDTO();
+			int value = item.getFechaCreacion() == null ? 0 : 1;
+			if (item.getFechaCreacion() == null)
+				item.setFechaCreacion(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFechaCreacionFinal() == null)
+				item.setFechaCreacionFinal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+									
+			List<Notificacion> items = this._repository.indicadores();
+						
+			//TipoNotificacion
+			List<TipoNotificacion> tipos = this._repositoryTipoNotificacion.findAll();
+			List<ObjectDTO> tiposDTO = Arrays.asList(modelMapper.map(tipos, ObjectDTO[].class));						
+			for (int i = 0; i < tiposDTO.size(); i++) {
+				ObjectDTO object = tiposDTO.get(i);
+				object.setCantidad(items.stream().filter(p -> p.getTipoNotificacion().getId() == object.getId()).toArray().length);
+			}
+			indicador.setTipos(tiposDTO);
+			//Pais
+			List<Pais> pais = this._repositoryPais.findAll();
+			List<ObjectDTO> paisDTO = Arrays.asList(modelMapper.map(pais, ObjectDTO[].class));						
+			for (int i = 0; i < paisDTO.size(); i++) {
+				ObjectDTO object = tiposDTO.get(i);
+				object.setCantidad(items.stream().filter(p -> p.getTipoNotificacion().getId() == object.getId()).toArray().length);
+			}
+			indicador.setPaises(paisDTO);
+			
+			//Peligros			
+			List<ObjectDTO> peligrosDTO = new ArrayList<ObjectDTO>();
+			ObjectDTO peligrosDTO1 = new ObjectDTO();
+			peligrosDTO1.setNombre("Biológico");
+			peligrosDTO1.setCantidad(items.stream().filter(p -> p.getFlagBiologico() == true).toArray().length);
+			peligrosDTO.add(peligrosDTO1);
+			ObjectDTO peligrosDTO2 = new ObjectDTO();
+			peligrosDTO2.setNombre("Químico");
+			peligrosDTO2.setCantidad(items.stream().filter(p -> p.getFlagQuimico() == true).toArray().length);
+			peligrosDTO.add(peligrosDTO2);
+			ObjectDTO peligrosDTO3 = new ObjectDTO();
+			peligrosDTO3.setNombre("Otros");
+			peligrosDTO3.setCantidad(items.stream().filter(p -> p.getFlagOtro() == true).toArray().length);
+			peligrosDTO.add(peligrosDTO3);
+			ObjectDTO peligrosDTO4 = new ObjectDTO();
+			peligrosDTO4.setNombre("Físico");
+			peligrosDTO4.setCantidad(items.stream().filter(p -> p.getFlagFisico() == true).toArray().length);
+			peligrosDTO.add(peligrosDTO4);
+			indicador.setPeligros(peligrosDTO);
+			
+			
+			//Alimentos
+			
+			indicador.setTotal(items.size());
+			response.setItem(indicador);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

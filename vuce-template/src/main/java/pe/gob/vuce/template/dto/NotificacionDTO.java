@@ -106,7 +106,7 @@ public class NotificacionDTO {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCreacionFinal = new Date();
 	
-	private Boolean isnacional;
+	private Boolean flagNacional;
 	
 	private String comentario;
 	
@@ -118,16 +118,7 @@ public class NotificacionDTO {
 	
 	private NotificacionEstado notificacionEstado;
 	
-	private Boolean flagNoCompetencia;
-	
 	private Entidad entidad;
-		
-	public Boolean getFlagNoCompetencia() {
-		return flagNoCompetencia;
-	}
-	public void setFlagNoCompetencia(Boolean flagNoCompetencia) {
-		this.flagNoCompetencia = flagNoCompetencia;
-	}
 	
 	public Entidad getEntidad() {
 		return entidad;
@@ -170,12 +161,12 @@ public class NotificacionDTO {
 		this.estados = estados;
 	}
 	
-	public Boolean getIsnacional() {
-		return isnacional;
+	public Boolean getFlagNacional() {
+		return flagNacional;
 	}
 
-	public void setIsnacional(Boolean isnacional) {
-		this.isnacional = isnacional;
+	public void setFlagNacional(Boolean flagNacional) {
+		this.flagNacional = flagNacional;
 	}
 
 	public String getComentario() {
