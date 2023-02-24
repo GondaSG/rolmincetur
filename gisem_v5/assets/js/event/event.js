@@ -61,7 +61,7 @@ require([
         })
     })
     $("#ulEquipos").on("click", "li", function() {
-        let obj = "";
-        Queryjs.getQueryLayerUbigeos(obj);
+        let obj = ['002H01ST1MT2', '059HOOST0MT1'];
+        Queryjs.getQueryLayerUbigeo(obj);
     });
 })

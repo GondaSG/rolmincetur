@@ -123,24 +123,14 @@ define([
         dom.html(p);
     }
 
-    async function QueryLayerUbigeos(value) {
+    async function QueryLayerUbigeos(array) {
         const query = new Query();
-        query.where = `EMPRESA = '${obj.empresa}' and COD_TIP = '${obj.cop_tip}'`;
-        query.returnGeometry = false;
-        query.outFields = ["COD"];
-        query.returnDistinctValues = false;
+        let cadena = array.map(t => { return `'${t.toString()}'` }).join(",")
+        query.where = `CODSALIDAMT in (${cadena})`;
+        query.returnGeometry = true;
+        query.outFields = "*";
         await __equipo_secc.queryFeatures(query).then(function(results) {
-            switch (obj.idPanel) {
-                case 3:
-                    setValueCount(results.features, $("#idSecAfec"))
-                    break;
-                case 4:
-                    setValueCount(results.features, $("#idSubAfec"))
-                    break;
-                case 5:
-                    setValueCount(results.features, $("#idSumAfec"))
-                    break;
-            }
+            console.log(results)
         });
     }
     return {
