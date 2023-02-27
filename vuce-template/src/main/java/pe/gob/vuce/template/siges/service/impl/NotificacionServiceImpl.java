@@ -448,34 +448,34 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			List<ObjectDTO> peligrosDTO = new ArrayList<ObjectDTO>();
 			ObjectDTO peligrosDTO1 = new ObjectDTO();
 			peligrosDTO1.setNombre("Biológico");
-			peligrosDTO1.setCantidad(items.stream().filter(p -> p.getFlagBiologico() == true).toArray().length);
+			peligrosDTO1.setCantidad(items.stream().filter(p -> p.getFlagBiologico() != null && p.getFlagBiologico() == true).toArray().length);
 			peligrosDTO.add(peligrosDTO1);
 			ObjectDTO peligrosDTO2 = new ObjectDTO();
 			peligrosDTO2.setNombre("Químico");
-			peligrosDTO2.setCantidad(items.stream().filter(p -> p.getFlagQuimico() == true).toArray().length);
+			peligrosDTO2.setCantidad(items.stream().filter(p -> p.getFlagQuimico() != null && p.getFlagQuimico() == true).toArray().length);
 			peligrosDTO.add(peligrosDTO2);			
 			ObjectDTO peligrosDTO4 = new ObjectDTO();
 			peligrosDTO4.setNombre("Físico");
-			peligrosDTO4.setCantidad(items.stream().filter(p -> p.getFlagFisico() == true).toArray().length);
+			peligrosDTO4.setCantidad(items.stream().filter(p -> p.getFlagFisico() != null && p.getFlagFisico() == true).toArray().length);
 			peligrosDTO.add(peligrosDTO4);
 			indicador.setPeligros(peligrosDTO);
 			ObjectDTO peligrosDTO3 = new ObjectDTO();
 			peligrosDTO3.setNombre("Otros");
-			peligrosDTO3.setCantidad(items.stream().filter(p -> p.getFlagOtro() == true).toArray().length);
+			peligrosDTO3.setCantidad(items.stream().filter(p -> p.getFlagOtro() != null && p.getFlagOtro() == true).toArray().length);
 			peligrosDTO.add(peligrosDTO3);
 			indicador.setPeligros(peligrosDTO);
 			
 			//Nacional
 			ObjectDTO nacionalDTO = new ObjectDTO();
 			nacionalDTO.setNombre("Nacional");
-			nacionalDTO.setCantidad(items.stream().filter(p -> p.getFlagNacional() == true).toArray().length);
+			nacionalDTO.setCantidad(items.stream().filter(p -> p.getFlagNacional() != null && p.getFlagNacional() == true).toArray().length);
 			indicador.setNacional(nacionalDTO);
 			
 			//Internacional
 			ObjectDTO internacionalDTO = new ObjectDTO();
 			internacionalDTO.setNombre("Internacional");
-			internacionalDTO.setCantidad(items.stream().filter(p -> p.getFlagNacional() == false).toArray().length);
-			indicador.setNacional(internacionalDTO);
+			internacionalDTO.setCantidad(items.stream().filter(p -> p.getFlagNacional() != null && p.getFlagNacional() == false).toArray().length);
+			indicador.setInternacional(internacionalDTO);
 			
 			//Alimentos
 			List<CategoriaAlimento> categoria = this._repositoryCategoriaAlimento.findAll();
