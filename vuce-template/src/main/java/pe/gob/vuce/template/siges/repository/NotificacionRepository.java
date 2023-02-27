@@ -18,7 +18,7 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	@Query(value="select n.* from notificacion n "
 			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
 			+ "	where n.flag_activo = true and n.codigo_generado ilike %?1% "
-			+ "	and case when ?9 is not null then n.flag_nacional = ?2 else 1 = 1 end "
+			+ "	and case when ?9 > 0 then n.flag_nacional = ?2 else 1 = 1 end "
 			+ "	and case when ?3 is not null then n.flag_digesa = ?3 else 1 = 1 end "
 			+ "	and case when ?4 is not null then n.flag_senasa = ?4 else 1 = 1 end "
 			+ "	and case when ?7 > 0 then n.fecha_creacion >= ?5 else 1 = 1 end "

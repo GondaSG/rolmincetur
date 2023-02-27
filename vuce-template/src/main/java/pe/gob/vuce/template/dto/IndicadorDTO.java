@@ -25,6 +25,26 @@ public class IndicadorDTO {
 	
 	private List<ObjectDTO> peligros;
 	
+	private ObjectDTO nacional;
+	
+	private ObjectDTO internacional;
+	
+	public ObjectDTO getNacional() {
+		return nacional;
+	}
+
+	public void setNacional(ObjectDTO nacional) {
+		this.nacional = nacional;
+	}
+
+	public ObjectDTO getInternacional() {
+		return internacional;
+	}
+
+	public void setInternacional(ObjectDTO internacional) {
+		this.internacional = internacional;
+	}
+
 	public int getTipoFiltro() {
 		return tipoFiltro;
 	}
