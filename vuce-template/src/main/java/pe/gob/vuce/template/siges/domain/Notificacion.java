@@ -107,7 +107,7 @@ public class Notificacion implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCreacion = new Date();
 	@Column	
-	private Boolean isnacional;
+	private Boolean flagNacional;
 
 	@Column (columnDefinition="TEXT")
 	private String comentario;
@@ -118,19 +118,10 @@ public class Notificacion implements Serializable {
 	@Column
 	private Boolean flagActivo = true;
 	
-	@Column
-	private Boolean flagNoCompetencia;
-	
 	@ManyToOne
     @JoinColumn(name = "entidad_id", referencedColumnName = "id")
 	private Entidad entidad;
-		
-	public Boolean getFlagNoCompetencia() {
-		return flagNoCompetencia;
-	}
-	public void setFlagNoCompetencia(Boolean flagNoCompetencia) {
-		this.flagNoCompetencia = flagNoCompetencia;
-	}
+	
 	public Entidad getEntidad() {
 		return entidad;
 	}
@@ -149,11 +140,11 @@ public class Notificacion implements Serializable {
 	public void setPeligroEspecifico(String peligroEspecifico) {
 		this.peligroEspecifico = peligroEspecifico;
 	}
-	public Boolean getIsnacional() {
-		return isnacional;
+	public Boolean getFlagNacional() {
+		return flagNacional;
 	}
-	public void setIsnacional(Boolean isnacional) {
-		this.isnacional = isnacional;
+	public void setFlagNacional(Boolean flagNacional) {
+		this.flagNacional = flagNacional;
 	}
 	public String getComentario() {
 		return comentario;

@@ -1,0 +1,10 @@
+E:\EBIZ\C#\OracleConexion\WindowsForms\bin\Debug\WindowsForms.exe.config
+E:\EBIZ\C#\OracleConexion\WindowsForms\bin\Debug\WindowsForms.exe
+E:\EBIZ\C#\OracleConexion\WindowsForms\bin\Debug\WindowsForms.pdb
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.csproj.AssemblyReference.cache
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.csproj.SuggestedBindingRedirects.cache
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.Properties.Resources.resources
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.csproj.GenerateResource.cache
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.csproj.CoreCompileInputs.cache
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.exe
+E:\EBIZ\C#\OracleConexion\WindowsForms\obj\Debug\WindowsForms.pdb

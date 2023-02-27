@@ -1,5 +1,6 @@
 package pe.gob.vuce.template.siges.service;
 
+import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.dto.NotificacionFaseDTO;
@@ -28,4 +29,5 @@ public interface NotificacionService {
 	ResponseEntity<NotificacionFase> findFase(int id) throws Exception;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateNoCompetencia(NotificacionDTO item) throws Exception;
+	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception;
 }
