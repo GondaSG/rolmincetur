@@ -4,97 +4,14 @@
     "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj": {}
   },
   "projects": {
-    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj": {
+    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj",
-        "projectName": "NetCoreApiPostgreSQL.Data",
-        "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj",
+        "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
+        "projectName": "NetCoreApiPostgreSQL",
+        "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
         "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
-        "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
-            "projectReferences": {
-              "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
-                "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
-          "dependencies": {
-            "Dapper": {
-              "target": "Package",
-              "version": "[2.0.123, )"
-            },
-            "Npgsql": {
-              "target": "Package",
-              "version": "[7.0.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
-        "projectName": "NetCoreApiPostgreSQL.Model",
-        "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj",
-        "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
-        "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\obj\\",
+        "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -123,91 +40,13 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
-            "Npgsql": {
+            "Oracle.ManagedDataAccess.Core": {
               "target": "Package",
-              "version": "[7.0.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
+              "version": "[3.21.90, )"
             },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
-        "projectName": "NetCoreApiPostgreSQL",
-        "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
-        "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
-        "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
-            "projectReferences": {
-              "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj": {
-                "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Data\\NetCoreApiPostgreSQL.Data.csproj"
-              },
-              "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj": {
-                "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL.Model\\NetCoreApiPostgreSQL.Model.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
-          "dependencies": {
-            "Npgsql": {
+            "System.Configuration.ConfigurationManager": {
               "target": "Package",
-              "version": "[7.0.2, )"
+              "version": "[7.0.0, )"
             }
           },
           "imports": [

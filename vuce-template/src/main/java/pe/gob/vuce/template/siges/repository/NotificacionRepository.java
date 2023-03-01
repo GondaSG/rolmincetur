@@ -26,7 +26,7 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 			+ "	and n.tipo_notificacion_id in (?8) "
 			//+ "	and case when ?9 = 0 then 1 = 1 else n.tipo_notificacion_id in (?8) end "
 			//+ "	and case when ?11 > 0 then ne.estado_id in (?10) else 1 = 1  end "
-			+ " order by id",	nativeQuery=true)
+			+ " order by fecha_creacion desc",	nativeQuery=true)
 	Page<Notificacion> search(String code,	Boolean isNacional, Boolean flagDigesa, Boolean flagSenasa,
 	Date fechaCreacion, Date fechaCreacionFinal, int value,	
 	List<Integer> tipoNotificacionId, //int value2,
@@ -54,6 +54,8 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	List<Notificacion> getNoLeidos(Boolean flagDigesa, Boolean flagSanipes, Boolean flagSenasa);
 	
 	@Query(value="select n.* from notificacion n "
-			+ " where n.flag_activo = true ", nativeQuery=true)
-	List<Notificacion> indicadores();
+			+ " where n.flag_activo = true "
+			+ "	and case when ?3 > 0 then n.fecha_creacion >= ?1 else 1 = 1 end "
+			+ "	and case when ?3 > 0 then n.fecha_creacion <= ?2 else 1 = 1 end ", nativeQuery=true)
+	List<Notificacion> indicadores(Date fechaCreacion, Date fechaCreacionFinal, int value);
 }

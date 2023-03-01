@@ -14,6 +14,7 @@ import pe.gob.vuce.template.siges.domain.Ciudad;
 import pe.gob.vuce.template.siges.domain.Entidad;
 import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
+import pe.gob.vuce.template.siges.domain.NotificacionCerrada;
 import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
@@ -88,13 +89,8 @@ public class NotificacionDTO {
 	private List<NotificacionEstado> estados = new ArrayList<>();
 	
 	private List<NotificacionDiscrepancia> discrepancias = new ArrayList<>();
-
-	public List<NotificacionDiscrepancia> getDiscrepancias() {
-		return discrepancias;
-	}
-	public void setDiscrepancias(List<NotificacionDiscrepancia> discrepancias) {
-		this.discrepancias = discrepancias;
-	}
+	
+	private List<NotificacionCerrada> cerradas = new ArrayList<>();
 
 	private List<Integer> tipoNotificacionId;
 	
@@ -133,6 +129,19 @@ public class NotificacionDTO {
 	public void setNotificacionEstado(NotificacionEstado notificacionEstado) {
 		this.notificacionEstado = notificacionEstado;
 	}
+	public List<NotificacionCerrada> getCerradas() {
+		return cerradas;
+	}
+	public void setCerradas(List<NotificacionCerrada> cerradas) {
+		this.cerradas = cerradas;
+	}	
+	public List<NotificacionDiscrepancia> getDiscrepancias() {
+		return discrepancias;
+	}
+	public void setDiscrepancias(List<NotificacionDiscrepancia> discrepancias) {
+		this.discrepancias = discrepancias;
+	}
+	
 	public Estado getEstado() {
 		return estado;
 	}

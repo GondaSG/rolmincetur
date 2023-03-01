@@ -37,6 +37,7 @@ import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.CategoriaAlimentoRepository;
 import pe.gob.vuce.template.siges.repository.EstadoRepository;
+import pe.gob.vuce.template.siges.repository.NotificacionCerradaRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionDiscrepanciaRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionEstadoRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionFaseRepository;
@@ -79,6 +80,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	
 	@Autowired
 	CategoriaAlimentoRepository _repositoryCategoriaAlimento;
+	
+	@Autowired
+	NotificacionCerradaRepository _repositoryCerrada;
 	
 	@Autowired(required=true)
     ModelMapper modelMapper;
@@ -238,7 +242,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			item2.setNotificacionLote(this._repositoryLote.searchByNotificacion(id));
 			item2.setEstados(this._repositoryEstado.searchByNotificacion(id));
 			item2.setNotificacionEstado(this._repositoryEstado.findByNoti(id));
-			//item2.setFase(this._repositoryFase.searchByNotificacion(id));
+			item2.setCerradas(this._repositoryCerrada.findByNotificacionId(id));
 			response.setSuccess(success);
 			response.setItem(item2);
 			return response;
@@ -423,7 +427,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			if (item.getFechaCreacionFinal() == null)
 				item.setFechaCreacionFinal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 									
-			List<Notificacion> items = this._repository.indicadores();
+			List<Notificacion> items = this._repository.indicadores(item.getFechaCreacion(), item.getFechaCreacionFinal(), value);
 						
 			//TipoNotificacion
 			List<TipoNotificacion> tipos = this._repositoryTipoNotificacion.findAll();

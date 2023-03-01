@@ -11,7 +11,4 @@ public interface NotificacionDeclaracionRepository extends JpaRepository<Notific
 	
 	@Query(value="SELECT * FROM notificacion_declaracion where notificacion_id = ?1", nativeQuery=true)
 	List<NotificacionDeclaracion> findByNotificacionId(int notificacionId);
-	
-	//@Query(value="SELECT * FROM notificacion_declaracion where entidad_id = ?1", nativeQuery=true)
-	//List<NotificacionDeclaracion> findByEntidadId(int entidadId);
 }
