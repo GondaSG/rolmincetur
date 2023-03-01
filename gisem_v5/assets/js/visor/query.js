@@ -7,8 +7,8 @@ define([
     visorjs,
     Query,
 ) => {
-    var _equipo_secc_equipo = Servicejs.getLayerSeccionamientoEquipo();
-    var _equipo_secc_tramo = Servicejs.getLayerSeccionamientoTramo();
+    var _equipo_secc_equipo = Servicejs.getLayerEquipo();
+    var _equipo_secc_tramo = Servicejs.getLayerTramo();
     var View = visorjs.getView();
     async function QueryLayerGetEmpresa() {
         const query = new Query();
@@ -18,6 +18,7 @@ define([
         query.returnDistinctValues = true;
         await _equipo_secc_equipo.queryFeatures(query).then(function(results) {
             createList(results.features, $("#ulEmpresas"), "EMPRESA"); // prints the array of features to the console
+            $(".loading").hide()
         });
     }
     async function QueryLayerGetEquipo(obj) {
