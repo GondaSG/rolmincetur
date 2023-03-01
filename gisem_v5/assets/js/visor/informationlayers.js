@@ -31,11 +31,12 @@ define([
     Search,
     domConstruct
 ) => {
-    var _equipo_secc_equipo = Services.getLayerSeccionamientoEquipo();
-    var _equipo_secc_tramo = Services.getLayerSeccionamientoTramo();
+    var _equipo_secc_equipo = Services.getLayerEquipo();
+    var _equipo_secc_tramo = Services.getLayerTramo();
+    var _equipo_secc_Subestacion = Services.getLayerSubEstacion();
     var Map = visor.getMap();
     var View = visor.getView();
-    Map.addMany([_equipo_secc_equipo, _equipo_secc_tramo]);
+    Map.addMany([_equipo_secc_equipo, _equipo_secc_tramo, _equipo_secc_Subestacion]);
     layerList = new LayerList({
         container: document.createElement("div"),
         view: View
@@ -83,4 +84,7 @@ define([
     layerList.when(async() => {
         await Queryjs.getQueryLayerGetEmpresa();
     })
+    Map.on("update-end", function(layer) {
+        $(".loading").hide()
+    });
 });
