@@ -29,7 +29,7 @@ define([
     }
     async function QueryLayerGetEquipo(obj) {
         const query = new Query();
-        query.where = `EMPRESA = '${obj.empresa}' and COD_TIP = '${obj.cop_tip}'`;
+        query.where = `EMPRESA = '${obj.empresa}'`;
         query.returnGeometry = false;
         query.outFields = ["COD"];
         query.returnDistinctValues = true;

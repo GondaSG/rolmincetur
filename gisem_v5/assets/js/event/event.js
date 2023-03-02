@@ -13,7 +13,6 @@ require([
         diccionarioEquipos.forEach(t => {
             var obj = {
                 empresa: $(this).attr("value"),
-                cop_tip: t.cop_tip,
                 idPanel: t.idPanel
             }
             Queryjs.getQueryLayerGetEquipo(obj);
