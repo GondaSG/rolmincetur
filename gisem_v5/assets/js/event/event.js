@@ -19,6 +19,7 @@ require([
         })
         Queryjs.getQueryLayerSeccionamientCount($(this).attr("value"));
         Queryjs.getQueryLayerSubEstacionCount($(this).attr("value"));
+        Queryjs.getQuerySuministroCount($(this).attr("value"));
         $("#imputEquipos").val('')
     });
     $("#imputEmpresas").on("keyup", function() {
@@ -42,5 +43,15 @@ require([
         let codEquipo = $(this).attr("value")
         let codEmpresa = $("#ulEmpresas>li.active").attr("value")
         Queryjs.getQueryLayerUbigeo(codEquipo, codEmpresa);
+    });
+    $("#ulSeccionamientosAfectados").on("click", "li", function() {
+        $(".loading").show()
+        let codSeccionamiento = $(this).attr("value")
+        Queryjs.getExtendLayerSeccionamiento(codSeccionamiento);
+    });
+    $("#ulSedAfectados").on("click", "li", function() {
+        $(".loading").show()
+        let codSED = $(this).attr("value")
+        Queryjs.getExtendLayerSED(codSED);
     });
 })

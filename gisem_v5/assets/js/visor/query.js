@@ -3,16 +3,18 @@ define([
     "assets/js/visor/visor.js",
     "esri/rest/support/Query",
     "esri/layers/FeatureLayer",
-    "esri/PopupTemplate"
+    "esri/PopupTemplate",
+    "esri/rest/support/StatisticDefinition"
 ], (
     Servicejs,
     visorjs,
     Query,
     FeatureLayer,
-    PopupTemplate
+    PopupTemplate,
+    StatisticDefinition
 ) => {
     var _equipo_secc_equipo = Servicejs.getLayerEquipo();
-    var _equipo_secc_Subestacion = Servicejs.getLayerSubEstacion();
+    var _equipo_secc_SED = Servicejs.getLayerSubEstacion();
     var View = visorjs.getView();
     var Map = visorjs.getMap();
     async function QueryLayerGetEmpresa() {
@@ -31,6 +33,7 @@ define([
         query.where = `EMPRESA = '${obj.empresa}'`;
         query.returnGeometry = false;
         query.outFields = ["COD"];
+        query.orderByFields = ["COD ASC"];
         query.returnDistinctValues = true;
         await _equipo_secc_equipo.queryFeatures(query).then(function(results) {
             switch (obj.idPanel) {
@@ -139,9 +142,11 @@ define([
             getQueryService(response.seccionadorAfectado, Servicejs.getLayerEquipoSymbol(), 1);
             createList(response.seccionadorAfectado, $("#ulSeccionamientosAfectados"), "")
             setValueCount(response.seccionadorAfectado.length, $("#idSecAfec"))
+
             getQueryService(response.sed, Servicejs.getLayerSubEstacionSymbol(), 2);
             createList(response.sed, $("#ulSedAfectados"), "")
             setValueCount(response.sed.length, $("#idSubAfec"))
+
             getQueryService(response.tramos, Servicejs.getLayerTramoSymbol(), 3);
         });
         $(".loading").hide()
@@ -150,8 +155,11 @@ define([
 
     function getQueryService(obj, Layer, id) {
         let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",")
+        let where = `COD in (${cadena})`;
+        if (id == 2)
+            QuerySuministroCount(null, obj)
         if (obj.length == 0) return;
-        Layer.definitionExpression = `COD in (${cadena})`;
+        Layer.definitionExpression = where;
         Layer.visible = true;
         Layer.popupTemplate = Layer.createPopupTemplate()
         if (id == 3)
@@ -170,16 +178,16 @@ define([
         // Map.add(feature)
     }
 
-    function QueryLayerSubEstacionCount(CodEmpresa) {
+    function QueryLayerSubEstacionCount(CodEmpresa, ) {
         if (CodEmpresa) {
             var query = new Query({
                 where: `EMPRESA = '${CodEmpresa}'`
             })
-            _equipo_secc_Subestacion.queryFeatureCount(query).then(count => {
+            _equipo_secc_SED.queryFeatureCount(query).then(count => {
                 setValueCount(count, $("#idSubAfec"))
             });
         } else
-            _equipo_secc_Subestacion.queryFeatureCount().then(count => {
+            _equipo_secc_SED.queryFeatureCount().then(count => {
                 setValueCount(count, $("#idSubAfec"))
             });
     }
@@ -197,12 +205,56 @@ define([
                 setValueCount(count, $("#idSecAfec"))
             });
     }
+
+    async function ExtendLayerSeccionamiento(cod) {
+        let query = new Query();
+        query.where = `COD = '${cod}'`;
+        await Servicejs.getLayerEquipoSymbol().queryExtent(query).then(response => {
+            View.goTo(response.extent);
+        })
+        $(".loading").hide()
+    }
+
+    async function ExtendLayerSED(cod) {
+        let query = new Query();
+        query.where = `COD = '${cod}'`;
+        await Servicejs.getLayerSubEstacionSymbol().queryExtent(query).then(response => {
+            View.goTo(response.extent);
+        })
+        $(".loading").hide()
+    }
+
+    function QuerySuministroCount(CodEmpresa, obj) {
+        let totalSUm = new StatisticDefinition({
+            statisticType: "sum",
+            onStatisticField: "NUM_SUMIN",
+            outStatisticFieldName: "NUM_SUMIN_TOTAL"
+        });
+        var query = new Query();
+        if (CodEmpresa)
+            query.where = `EMPRESA = '${CodEmpresa}'`;
+        if (obj) {
+            if (obj.length > 0) {
+                let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",");
+                query.where = `COD in (${cadena})`;
+            } else { setValueCount(0, $("#idSumAfec")); return }
+        }
+        query.outStatistics = [totalSUm];
+
+        Servicejs.getLayerSubEstacionSymbol().queryFeatures(query).then(count => {
+
+            setValueCount(count.features[0].attributes.NUM_SUMIN_TOTAL, $("#idSumAfec"))
+        });
+    }
     return {
         getQueryLayerGetEmpresa: QueryLayerGetEmpresa,
         getQueryLayerGetEquipo: QueryLayerGetEquipo,
         getQueryLayerGetCountEquipo: QueryLayerGetCountEquipo,
         getQueryLayerUbigeo: QueryLayerUbigeos,
         getQueryLayerSeccionamientCount: QuerySeccionamientCount,
-        getQueryLayerSubEstacionCount: QueryLayerSubEstacionCount
+        getQueryLayerSubEstacionCount: QueryLayerSubEstacionCount,
+        getQuerySuministroCount: QuerySuministroCount,
+        getExtendLayerSeccionamiento: ExtendLayerSeccionamiento,
+        getExtendLayerSED: ExtendLayerSED,
     }
 });

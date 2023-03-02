@@ -88,6 +88,7 @@ define([
         await Queryjs.getQueryLayerGetEmpresa();
         await Queryjs.getQueryLayerSeccionamientCount();
         await Queryjs.getQueryLayerSubEstacionCount();
+        await Queryjs.getQuerySuministroCount();
 
     })
     Map.on("update-end", function(layer) {

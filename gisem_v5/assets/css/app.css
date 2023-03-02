@@ -152,26 +152,35 @@
     padding-right: 0px !important;
 }
 
+.listEmpEquipafectados>li,
 .listEmpEquip>li {
     padding: 0 1.5rem;
     cursor: pointer;
 }
 
+.listEmpEquipafectados>li:hover,
 .listEmpEquip>li:hover {
     background-color: #004c73;
 }
 
+.listEmpEquipafectados>li:hover>p,
+.listEmpEquipafectados>li:hover>h3,
 .listEmpEquip>li:hover>p,
 .listEmpEquip>li:hover>h3 {
     color: #fff !important
 }
 
+.listEmpEquipafectados>li.active,
 .listEmpEquip>li.active {
     background-color: #D0DADB;
 }
 
 .listEmpEquip>li.active>h3 {
     color: orange !important
+}
+
+.listEmpEquipafectados>li.active>h3 {
+    color: red !important
 }
 
 .listEmpEquipafectados>li>p,
