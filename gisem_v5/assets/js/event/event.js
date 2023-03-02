@@ -5,27 +5,9 @@ require([
 ) => {
 
     let diccionarioEquipos = [{
-            cop_tip: "SC",
-            idPanel: 1
-        },
-        {
-            cop_tip: "RE",
-            idPanel: 2
-        }
-    ]
-    let diccionarioCountEquipos = [{
-            cop_tip: "RE",
-            idPanel: 3
-        },
-        {
-            cop_tip: "SE",
-            idPanel: 4
-        },
-        {
-            cop_tip: "SF",
-            idPanel: 5
-        }
-    ]
+        cop_tip: "SC",
+        idPanel: 1
+    }]
     $("#ulEmpresas").on("click", "li", function() {
         diccionarioEquipos.forEach(t => {
             var obj = {
@@ -34,14 +16,6 @@ require([
                 idPanel: t.idPanel
             }
             Queryjs.getQueryLayerGetEquipo(obj);
-        })
-        diccionarioCountEquipos.forEach(t => {
-            var obj = {
-                empresa: $(this).attr("value"),
-                cop_tip: t.cop_tip,
-                idPanel: t.idPanel
-            }
-            Queryjs.getQueryLayerGetCountEquipo(obj);
         })
     });
     $("#imputEmpresas").on("keyup", function() {
@@ -61,7 +35,8 @@ require([
         })
     })
     $("#ulEquipos").on("click", "li", function() {
-        let obj = ['002H01ST1MT2', '059HOOST0MT1'];
-        Queryjs.getQueryLayerUbigeo(obj);
+        let codEquipo = $(this).attr("value")
+        let codEmpresa = $("#ulEmpresas>li.active").attr("value")
+        Queryjs.getQueryLayerUbigeo(codEquipo, codEmpresa);
     });
 })

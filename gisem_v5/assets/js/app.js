@@ -6,7 +6,6 @@ addEventListener('DOMContentLoaded', function(event) {
         var listArray = Array.from(listGroup);
         listArray.forEach(function(item) {
             item.addEventListener('click', function(evt) {
-                console.log('evt', evt);
                 var listItemsLi = item.querySelectorAll('.list-group-item');
                 var arrayItemsLi = Array.from(listItemsLi);
                 arrayItemsLi.forEach(function(itemLi) {
@@ -19,7 +18,7 @@ addEventListener('DOMContentLoaded', function(event) {
                     if (itemLi) {
                         var _itemLi$classList2;
                         (_itemLi$classList2 = itemLi.classList) === null || _itemLi$classList2 === void 0 ? void 0 : _itemLi$classList2.add('active');
-                        console.log('item li', itemLi);
+
                     }
                 }
             });

@@ -21,6 +21,22 @@ define([
     var _equipo_secc_subEstacion = new FeatureLayer({
         url: url_equipo_seccionamiento_SubEstacion
     });
+
+    var _equipo_secc_equipo_symbol = new FeatureLayer({
+        url: url_equipo_seccionamiento_equipos_simbologia,
+        visible: false,
+        definitionExpression: "COD = -1"
+    });
+    var _equipo_secc_tramo_symbol = new FeatureLayer({
+        url: url_equipo_seccionamiento_Tramo_simbologia,
+        visible: false,
+        definitionExpression: "COD = -1"
+    });
+    var _equipo_secc_subEstacion_symbol = new FeatureLayer({
+        url: url_equipo_seccionamiento_SubEstacion_simbologia,
+        visible: false,
+        definitionExpression: "COD = -1"
+    });
     /*__globspace.infolayers = [{
         alias: '__equipo_secc',
         containerlyl: 'lyl_equipo_secc',
@@ -37,6 +53,9 @@ define([
 
         getUrlTramoSimbologia: function() { return url_equipo_seccionamiento_Tramo_simbologia },
         getUrlSubEstacionSimbolia: function() { return url_equipo_seccionamiento_SubEstacion_simbologia },
-        getUrlEquipoSimbologia: function() { return url_equipo_seccionamiento_equipos_simbologia }
+        getUrlEquipoSimbologia: function() { return url_equipo_seccionamiento_equipos_simbologia },
+        getLayerEquipoSymbol: function() { return _equipo_secc_equipo_symbol },
+        getLayerTramoSymbol: function() { return _equipo_secc_tramo_symbol },
+        getLayerSubEstacionSymbol: function() { return _equipo_secc_subEstacion_symbol },
     }
 });
