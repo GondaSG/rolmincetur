@@ -87,6 +87,9 @@ define([
 
     layerList.when(async() => {
         await Queryjs.getQueryLayerGetEmpresa();
+        await Queryjs.getQueryLayerSeccionamientCount();
+        await Queryjs.getQueryLayerSubEstacionCount();
+
     })
     Map.on("update-end", function(layer) {
         $(".loading").hide()

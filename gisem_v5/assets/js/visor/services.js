@@ -6,11 +6,20 @@ const url_equipo_seccionamiento_SubEstacion_simbologia = "https://gisem.osinergm
 const url_equipo_seccionamiento_equipos_simbologia = "https://gisem.osinergmin.gob.pe/serverch/rest/services/TEST_ELEC_DIST/TEST_ELEC_DIST/MapServer/5";
 define([
     "esri/layers/FeatureLayer",
-    "esri/config"
+    "esri/config",
+    "esri/PopupTemplate"
 ], (
     FeatureLayer,
-    esriConfig
+    esriConfig,
+    PopupTemplate
 ) => {
+    esriConfig.request.interceptors.push({
+        urls: /FeatureServer\/\d+$/,
+        after: function(response) {
+            response.data.supportedQueryFormats = "JSON";
+        }
+    })
+
     //esriConfig.request.proxyUrl = "https://gisem.osinergmin.gob.pe/proxy_esri_corsgral/proxy.ashx"; //oficial
     var _equipo_secc_equipo = new FeatureLayer({
         url: url_equipo_seccionamiento_Equipos
@@ -19,7 +28,8 @@ define([
         url: url_equipo_seccionamiento_Tramo
     });
     var _equipo_secc_subEstacion = new FeatureLayer({
-        url: url_equipo_seccionamiento_SubEstacion
+        url: url_equipo_seccionamiento_SubEstacion,
+        listMode: "hide"
     });
 
     var _equipo_secc_equipo_symbol = new FeatureLayer({

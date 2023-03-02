@@ -18,6 +18,9 @@ require([
             }
             Queryjs.getQueryLayerGetEquipo(obj);
         })
+        Queryjs.getQueryLayerSeccionamientCount($(this).attr("value"));
+        Queryjs.getQueryLayerSubEstacionCount($(this).attr("value"));
+        $("#imputEquipos").val('')
     });
     $("#imputEmpresas").on("keyup", function() {
         $("#ulEmpresas li").filter((index, elemento) => {

@@ -3,11 +3,13 @@ define([
     "assets/js/visor/visor.js",
     "esri/rest/support/Query",
     "esri/layers/FeatureLayer",
+    "esri/PopupTemplate"
 ], (
     Servicejs,
     visorjs,
     Query,
-    FeatureLayer
+    FeatureLayer,
+    PopupTemplate
 ) => {
     var _equipo_secc_equipo = Servicejs.getLayerEquipo();
     var _equipo_secc_tramo = Servicejs.getLayerTramo();
@@ -149,8 +151,10 @@ define([
 
     function getQueryService(obj, Layer, id) {
         let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",")
+        if (obj.length == 0) return;
         Layer.definitionExpression = `COD in (${cadena})`;
-        Layer.visible = true
+        Layer.visible = true;
+        Layer.popupTemplate = Layer.createPopupTemplate()
         if (id == 3)
             Layer
             .when(() => {
@@ -166,10 +170,40 @@ define([
         // });
         // Map.add(feature)
     }
+
+    function QueryLayerSubEstacionCount(CodEmpresa) {
+        if (CodEmpresa) {
+            var query = new Query({
+                where: `EMPRESA = '${CodEmpresa}'`
+            })
+            _equipo_secc_Subestacion.queryFeatureCount(query).then(count => {
+                setValueCount(count, $("#idSubAfec"))
+            });
+        } else
+            _equipo_secc_Subestacion.queryFeatureCount().then(count => {
+                setValueCount(count, $("#idSubAfec"))
+            });
+    }
+
+    function QuerySeccionamientCount(CodEmpresa) {
+        if (CodEmpresa) {
+            var query = new Query({
+                where: `EMPRESA = '${CodEmpresa}'`
+            })
+            _equipo_secc_equipo.queryFeatureCount(query).then(count => {
+                setValueCount(count, $("#idSecAfec"))
+            });
+        } else
+            _equipo_secc_equipo.queryFeatureCount().then(count => {
+                setValueCount(count, $("#idSecAfec"))
+            });
+    }
     return {
         getQueryLayerGetEmpresa: QueryLayerGetEmpresa,
         getQueryLayerGetEquipo: QueryLayerGetEquipo,
         getQueryLayerGetCountEquipo: QueryLayerGetCountEquipo,
-        getQueryLayerUbigeo: QueryLayerUbigeos
+        getQueryLayerUbigeo: QueryLayerUbigeos,
+        getQueryLayerSeccionamientCount: QuerySeccionamientCount,
+        getQueryLayerSubEstacionCount: QueryLayerSubEstacionCount
     }
 });
