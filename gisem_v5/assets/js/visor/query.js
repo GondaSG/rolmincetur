@@ -158,7 +158,12 @@ define([
         let where = `COD in (${cadena})`;
         if (id == 2)
             QuerySuministroCount(null, obj)
-        if (obj.length == 0) return;
+        if (obj.length == 0) {
+            Layer.definitionExpression = "COD = 1";
+            Layer.visible = false;
+            return;
+        }
+
         Layer.definitionExpression = where;
         Layer.visible = true;
         Layer.popupTemplate = Layer.createPopupTemplate()
