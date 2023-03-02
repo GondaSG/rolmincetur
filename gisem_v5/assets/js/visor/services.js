@@ -25,17 +25,17 @@ define([
     var _equipo_secc_equipo_symbol = new FeatureLayer({
         url: url_equipo_seccionamiento_equipos_simbologia,
         visible: false,
-        definitionExpression: "COD = -1"
+        definitionExpression: "COD = 0"
     });
     var _equipo_secc_tramo_symbol = new FeatureLayer({
         url: url_equipo_seccionamiento_Tramo_simbologia,
         visible: false,
-        definitionExpression: "COD = -1"
+        definitionExpression: "COD = 0"
     });
     var _equipo_secc_subEstacion_symbol = new FeatureLayer({
         url: url_equipo_seccionamiento_SubEstacion_simbologia,
         visible: false,
-        definitionExpression: "COD = -1"
+        definitionExpression: "COD = 0"
     });
     /*__globspace.infolayers = [{
         alias: '__equipo_secc',

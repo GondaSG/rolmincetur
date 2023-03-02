@@ -41,6 +41,7 @@ define([
                     break;
             }
         });
+        $(".loading").hide()
     }
 
     async function QueryLayerGetCountEquipo(obj) {
@@ -142,20 +143,28 @@ define([
             setValueCount(response.sed.length, $("#idSubAfec"))
             getQueryService(response.tramos, Servicejs.getLayerTramoSymbol(), 3);
         });
+        $(".loading").hide()
 
     }
 
     function getQueryService(obj, Layer, id) {
-        Map.remove(Map.findLayerById(id));
         let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",")
         Layer.definitionExpression = `COD in (${cadena})`;
         Layer.visible = true
-            // var feature = new FeatureLayer({
-            //     url: url,
-            //     definitionExpression: `COD in (${cadena})`,
-            //     id: id
-            // });
-            // Map.add(feature)
+        if (id == 3)
+            Layer
+            .when(() => {
+                return Layer.queryExtent();
+            })
+            .then((response) => {
+                View.goTo(response.extent);
+            });
+        // var feature = new FeatureLayer({
+        //     url: url,
+        //     definitionExpression: `COD in (${cadena})`,
+        //     id: id
+        // });
+        // Map.add(feature)
     }
     return {
         getQueryLayerGetEmpresa: QueryLayerGetEmpresa,

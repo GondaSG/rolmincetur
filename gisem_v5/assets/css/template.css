@@ -8799,7 +8799,7 @@ fieldset:disabled .btn {
 
 .text-bluedark {
     --bs-text-opacity: 1;
-    color: var(--bs-bluedark)
+    color: var(--bs-bluedark);
 }
 
 .text-seccionamientos {

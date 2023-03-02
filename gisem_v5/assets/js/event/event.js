@@ -9,6 +9,7 @@ require([
         idPanel: 1
     }]
     $("#ulEmpresas").on("click", "li", function() {
+        $(".loading").show()
         diccionarioEquipos.forEach(t => {
             var obj = {
                 empresa: $(this).attr("value"),
@@ -35,6 +36,7 @@ require([
         })
     })
     $("#ulEquipos").on("click", "li", function() {
+        $(".loading").show()
         let codEquipo = $(this).attr("value")
         let codEmpresa = $("#ulEmpresas>li.active").attr("value")
         Queryjs.getQueryLayerUbigeo(codEquipo, codEmpresa);
