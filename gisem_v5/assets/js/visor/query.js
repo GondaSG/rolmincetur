@@ -12,7 +12,6 @@ define([
     PopupTemplate
 ) => {
     var _equipo_secc_equipo = Servicejs.getLayerEquipo();
-    var _equipo_secc_tramo = Servicejs.getLayerTramo();
     var _equipo_secc_Subestacion = Servicejs.getLayerSubEstacion();
     var View = visorjs.getView();
     var Map = visorjs.getMap();

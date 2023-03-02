@@ -33,14 +33,13 @@ define([
 ) => {
     var _equipo_secc_equipo = Services.getLayerEquipo();
     var _equipo_secc_tramo = Services.getLayerTramo();
-    var _equipo_secc_Subestacion = Services.getLayerSubEstacion();
 
     var _equipo_secc_equipo_symbol = Services.getLayerEquipoSymbol();
     var _equipo_secc_tramo_symbol = Services.getLayerTramoSymbol();
     var _equipo_secc_Subestacion_symbol = Services.getLayerSubEstacionSymbol();
     var Map = visor.getMap();
     var View = visor.getView();
-    Map.addMany([_equipo_secc_equipo, _equipo_secc_tramo, _equipo_secc_Subestacion, _equipo_secc_equipo_symbol, _equipo_secc_tramo_symbol, _equipo_secc_Subestacion_symbol]);
+    Map.addMany([_equipo_secc_equipo, _equipo_secc_tramo, _equipo_secc_equipo_symbol, _equipo_secc_tramo_symbol, _equipo_secc_Subestacion_symbol]);
     layerList = new LayerList({
         container: document.createElement("div"),
         view: View
