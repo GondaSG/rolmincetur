@@ -8,7 +8,7 @@ namespace NetCoreApiPostgreSQL.Data.Repositories
 {
     public interface ICarRepository
     {
-        Task<IEnumerable<Car>> GetAllCars();
+        List<string> GetAllCars(string cadena);
 
         Task<Car> GetCarDetails(int id);
 

@@ -1083,7 +1083,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
+									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8080/api/notificaciondeclaracion",
@@ -1634,6 +1634,158 @@
 					]
 				},
 				{
+					"name": "NotificacionNoDeclaracion",
+					"item": [
+						{
+							"name": "list NotificacionDeclaracion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionnodeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionnodeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete NotificacionDeclaracion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionnodeclaracion/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionnodeclaracion",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create NotificacionDeclaracion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionnodeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionnodeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update NotificacionDeclaracion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle ACtualizado Not 02\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionnodeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionnodeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail NotificacionDeclaracion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/notificacionnodeclaracion/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionnodeclaracion",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findByNotificacionId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacionnodeclaracion/findByNotificacionId/41",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacionnodeclaracion",
+										"findByNotificacionId",
+										"41"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Notificacion",
 					"item": [
 						{
@@ -1787,7 +1939,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false,\r\n        \"notificacionLote\":[{\"lote\":\"CD01\", \"cantidad\":10.09}],\r\n        \"notificacionPresentacion\":[{\"tipoPresentacion\":{\"id\":1}, \"unidadMedida\":{\"id\":1}, \"volumen\":10.10}]\r\n    }"
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"entidad\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false,\r\n        \"notificacionLote\":[{\"lote\":\"CD01\", \"cantidad\":10.09}],\r\n        \"notificacionPresentacion\":[{\"tipoPresentacion\":{\"id\":1}, \"unidadMedida\":{\"id\":1}, \"volumen\":10.10}]\r\n    }"
 								},
 								"url": {
 									"raw": "http://localhost:8080/api/notificacion",
@@ -1851,12 +2003,12 @@
 									"formdata": [
 										{
 											"key": "item",
-											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1,2,21], \"estadoId\":[1,2], \"flagNacional\":true, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-28\", \"flagDigesa\":true, \"flagSenasa\":true}",
+											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1], \"estadoId\":[1,2], \"flagNacional\":false, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-28\", \"flagDigesa\":true, \"flagSenasa\":true}",
 											"type": "text"
 										},
 										{
 											"key": "paginator",
-											"value": "{\"offset\":\"1\",\"limit\":\"12\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"value": "{\"offset\":\"1\",\"limit\":\"4\",\"sort\":\"name\",\"order\":\"asc\"}",
 											"type": "text"
 										}
 									]
@@ -2055,7 +2207,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1,2,21], \"estadoId\":[1,2], \"flagNacional\":true, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-28\", \"flagDigesa\":true, \"flagSenasa\":true}",
+									"raw": "{\"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-28\"}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2081,28 +2233,8 @@
 					]
 				},
 				{
-					"name": "NotificacionNoDeclaracion",
+					"name": "NotificacionCerrada",
 					"item": [
-						{
-							"name": "list NotificacionDeclaracion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificacionnodeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacionnodeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "delete NotificacionDeclaracion",
 							"request": {
@@ -2113,7 +2245,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/notificacionnodeclaracion/3",
+									"raw": "http://localhost:8080/api/notificacioncerrada/3",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2121,7 +2253,7 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacionnodeclaracion",
+										"notificacioncerrada",
 										"3"
 									]
 								}
@@ -2144,7 +2276,7 @@
 									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/notificacionnodeclaracion",
+									"raw": "http://localhost:8080/api/notificacioncerrada",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2152,57 +2284,7 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacionnodeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update NotificacionDeclaracion",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle ACtualizado Not 02\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificacionnodeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacionnodeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail NotificacionDeclaracion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/notificacionnodeclaracion/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificacionnodeclaracion",
-										"1"
+										"notificacioncerrada"
 									]
 								}
 							},
@@ -2214,7 +2296,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/notificacionnodeclaracion/findByNotificacionId/41",
+									"raw": "http://localhost:8080/api/notificacioncerrada/findByNotificacionId/41",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2222,8 +2304,30 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacionnodeclaracion",
+										"notificacioncerrada",
 										"findByNotificacionId",
+										"41"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacioncerrada/validar/41",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacioncerrada",
+										"validar",
 										"41"
 									]
 								}

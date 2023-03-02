@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,13 +14,6 @@ namespace ServiciosAPP.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
@@ -25,25 +21,92 @@ namespace ServiciosAPP.Controllers
             return "value";
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // GET api/values
+        [HttpGet]
+        public ActionResult<object> Get()        
         {
-            // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see https://go.microsoft.com/fwlink/?LinkID=717803
+            String empresa = "SEAL";
+            String code = "120110";
+            string sql = "select trim(cod) from tramo_mt where empresa='SEAL'" +
+                                      " START WITH trim(cod_ant) in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod)='120110') " +
+                                      " connect by prior cod=cod_ant ";
+            List<string> tramos = this.GetDatosSQL(sql);
+            string sql2 = "select distinct trim(cod_sed) from nodo_enlace" +
+                            " where trim(cod_tmt) in (" +
+                                " select trim(cod) from tramo_mt where empresa = '" + empresa + "'" +
+                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '" + code + "')" +
+                                " connect by prior cod = cod_ant )";
+            List<string> sed = this.GetDatosSQL(sql2);
+            string sql3 = "select distinct trim(cod) from ly_osi_equipo_mt" +
+                            " where cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE')" +
+                            " and trim(cod_tmt) in (" +
+                                " select trim(cod) from tramo_mt" +
+                                " where empresa = '" + empresa + "'" +
+                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '" + code + "')" +
+                                " connect by prior cod = cod_ant) ";
+            List<string> seccionadorAfectado = this.GetDatosSQL(sql3);
+            object dt = new { tramos, sed, seccionadorAfectado };
+            return dt;
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-            // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see https://go.microsoft.com/fwlink/?LinkID=717803
+        // GET api/values/GetData/{empresa}/{code}
+        [Route("GetData/{empresa}/{code}")]
+        public ActionResult<object> GetData(String empresa, String code)
+        {            
+            string sql = "select trim(cod) from tramo_mt where empresa='"+ empresa + "'" +
+                                      " START WITH trim(cod_ant) in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod)= '"+ code + "') " +
+                                      " connect by prior cod=cod_ant ";
+            List<string> tramos = this.GetDatosSQL(sql);
+            string sql2 = "select distinct trim(cod_sed) from nodo_enlace" +
+                            " where trim(cod_tmt) in (" +
+                                " select trim(cod) from tramo_mt where empresa = '" + empresa + "'" +
+                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '"+ code + "')" +
+                                " connect by prior cod = cod_ant )";
+            List<string> sed = this.GetDatosSQL(sql2);
+            string sql3 = "select distinct trim(cod) from ly_osi_equipo_mt" +
+                            " where cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE')" +
+                            " and trim(cod_tmt) in (" +
+                                " select trim(cod) from tramo_mt" +
+                                " where empresa = '"+ empresa + "'" +
+                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '"+ code + "')" +
+                                " connect by prior cod = cod_ant) ";
+            List<string> seccionadorAfectado = this.GetDatosSQL(sql3);
+            object dt = new { tramos, sed, seccionadorAfectado };
+            return dt;
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see https://go.microsoft.com/fwlink/?LinkID=717803
+        private List<string> GetDatosSQL(string sql) {
+            List<string> data = new List<string>();
+            string cadena = ConfigurationManager.AppSettings["Oracle"];
+            string cad = "Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.10.23.14)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SID = desagis))); User Id=ELEC_DIST;Password=d1ST3L3c180S1;";
+            using (OracleConnection cn = new OracleConnection(cad))
+            {
+                try
+                {
+                    OracleCommand cmd = cn.CreateCommand();
+                    cmd.CommandText = sql;
+                    cmd.CommandTimeout = 100;
+                    cmd.Connection = cn;
+                    if (cn.State == ConnectionState.Closed)
+                        cn.Open();
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        Console.WriteLine(dr.GetString(0));
+                        data.Add(dr.GetString(0));
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    if (cn.State == ConnectionState.Open)
+                        cn.Close();
+                }
+            }
+            return data;
         }
     }
 }

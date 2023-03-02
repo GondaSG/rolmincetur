@@ -23,8 +23,8 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.DocumentoRepository;
 import pe.gob.vuce.template.siges.service.DocumentoService;
 
-@RestController
-@RequestMapping(value="documento")
+//@RestController
+//@RequestMapping(value="documento")
 public class DocumentoController {
 	@Autowired
 	DocumentoService documentoService;

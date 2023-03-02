@@ -8,3 +8,13 @@ E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreS
 E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.csproj.CoreCompileInputs.cache
 E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.dll
 E:\EBIZ\C#\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.pdb
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.deps.json
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.dll
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.pdb
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.csproj.AssemblyReference.cache
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.AssemblyInfoInputs.cache
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.AssemblyInfo.cs
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.csproj.CoreCompileInputs.cache
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.dll
+C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Model\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.pdb

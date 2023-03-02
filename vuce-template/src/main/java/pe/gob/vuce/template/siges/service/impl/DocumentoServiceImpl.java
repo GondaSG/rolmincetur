@@ -16,12 +16,13 @@ import pe.gob.vuce.template.siges.domain.Documento;
 import pe.gob.vuce.template.siges.repository.DocumentoRepository;
 import pe.gob.vuce.template.siges.service.DocumentoService;
 
-@Service
-public class DocumentoServiceImpl implements DocumentoService {
+//@Service
+public class DocumentoServiceImpl //implements DocumentoService 
+{
 
 	@Autowired
 	DocumentoRepository documentoRepository;
-	@Override
+	//@Override
 	@Transactional
 	public void save(MultipartFile multipartFile) {
 		try {
@@ -30,13 +31,13 @@ public class DocumentoServiceImpl implements DocumentoService {
 			documento.setContent(multipartFile.getBytes());
 			documento.setSize(multipartFile.getSize());
 			//documento.setUploadTime(new Date());
-			documentoRepository.save(documento);
+			//documentoRepository.save(documento);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 	}
-	@Override
+	//@Override
 	public void save(List<MultipartFile> files, int notificacionId, String detalle, java.util.Date fechaCreacion) {
 		for (MultipartFile multipartFile : files) {
 			Documento documento = new Documento();
@@ -44,14 +45,14 @@ public class DocumentoServiceImpl implements DocumentoService {
 			//documento.setContent(multipartFile.getBytes());
 			documento.setSize(multipartFile.getSize());
 			//documento.setUploadTime(new Date());
-			documentoRepository.save(documento);
+			//documentoRepository.save(documento);
 		}
 		
 		
 	}
-	@Override
+	//@Override
 	public Documento findById(Long id) throws Exception {
-		Optional<Documento> result = documentoRepository.findById(id);
+		Optional<Documento> result = null;//documentoRepository.findById(id);
 		if(!result.isPresent())
 			throw new Exception("no se encontro el archivo con el Id: " + id);
 		return result.get();
