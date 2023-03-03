@@ -21,6 +21,8 @@ require([
         Queryjs.getQueryLayerSubEstacionCount($(this).attr("value"));
         Queryjs.getQuerySuministroCount($(this).attr("value"));
         $("#imputEquipos").val('')
+        $('#ulSeccionamientosAfectados>li').remove()
+        $('#ulSedAfectados>li').remove()
     });
     $("#imputEmpresas").on("keyup", function() {
         $("#ulEmpresas li").filter((index, elemento) => {
