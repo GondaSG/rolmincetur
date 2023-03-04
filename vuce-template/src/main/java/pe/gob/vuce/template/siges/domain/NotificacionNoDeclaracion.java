@@ -22,19 +22,19 @@ public class NotificacionNoDeclaracion {
 	@SequenceGenerator(name = "notificacion_no_declaracion_id_seq", sequenceName="notificacion_no_declaracion_id_seq", allocationSize=1)
 	private int id;
 		
-	@Column
+	@Column(nullable = true)
 	private String detalle;
-	
-	@Column
+		
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Column(nullable = false)
 	private Date fechaCreacion;
 	
 	@ManyToOne
-    @JoinColumn(name = "notificacion_id", referencedColumnName = "id")
+    @JoinColumn(name = "notificacion_id", referencedColumnName = "id", nullable = false)
 	private Notificacion notificacion;
 	
 	@ManyToOne
-    @JoinColumn(name = "entidad_id", referencedColumnName = "id")
+    @JoinColumn(name = "entidad_id", referencedColumnName = "id", nullable = false)
 	private Entidad entidad;
 	
 	public int getId() {

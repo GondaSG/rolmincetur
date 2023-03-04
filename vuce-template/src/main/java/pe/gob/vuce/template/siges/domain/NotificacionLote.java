@@ -27,11 +27,11 @@ public class NotificacionLote {
 	private int id;
 	
 	@ManyToOne
-    @JoinColumn(name = "unidad_medida_id", referencedColumnName = "id")
+    @JoinColumn(name = "unidad_medida_id", referencedColumnName = "id", nullable = false)
 	private UnidadMedida unidadMedida;
 
 	@ManyToOne
-    @JoinColumn(name = "notificacion_id", referencedColumnName = "id")
+    @JoinColumn(name = "notificacion_id", referencedColumnName = "id", nullable = false)
 	private Notificacion notificacion;
 	
 	@Column

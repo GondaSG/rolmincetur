@@ -25,16 +25,16 @@ public class NotificacionCerrada {
 	@Column
 	private String detalle;
 	
-	@Column
+	@Column(nullable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCreacion;
 	
 	@ManyToOne
-    @JoinColumn(name = "notificacion_id", referencedColumnName = "id")
+    @JoinColumn(name = "notificacion_id", referencedColumnName = "id", nullable = false)
 	private Notificacion notificacion;
 	
 	@ManyToOne
-    @JoinColumn(name = "entidad_id", referencedColumnName = "id")
+    @JoinColumn(name = "entidad_id", referencedColumnName = "id", nullable = false)
 	private Entidad entidad;
 	
 	public int getId() {

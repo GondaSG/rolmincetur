@@ -23,11 +23,12 @@ public class Entidad {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "entidad_id_seq", sequenceName="entidad_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=400)
-	private String nombre;
-	@Column(length=500)
-	private String abreviatura;
 	
+	@Column(length=400, nullable = false)
+	private String nombre;
+	
+	@Column(length=500)
+	private String abreviatura;	
 	
 	public int getId() {
 		return id;

@@ -91,7 +91,7 @@ public class NotificacionEstado implements Serializable{
 	
 	private Estado estado;
 	
-	@Column (nullable=true)
+	@Column (nullable=false)
 	private boolean flagActivo;
 	
 	public boolean getFlagActivo() {
@@ -110,11 +110,13 @@ public class NotificacionEstado implements Serializable{
 		this.flagLeido = flagLeido;
 	}
 	
-	@Column (nullable=true)
+	@Column (nullable=false)
 	private boolean flagLeido;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Column (nullable=false)
 	private Date fechaCreacion = new Date();
+	
 	public Date getFechaCreacion() {
 		return fechaCreacion;
 	}

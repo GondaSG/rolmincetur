@@ -53,23 +53,28 @@ namespace ServiciosAPP.Controllers
         [Route("GetData/{empresa}/{code}")]
         public ActionResult<object> GetData(String empresa, String code)
         {            
-            string sql = "select trim(cod) from tramo_mt where empresa='"+ empresa + "'" +
-                                      " START WITH trim(cod_ant) in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod)= '"+ code + "') " +
-                                      " connect by prior cod=cod_ant ";
+            string sql = "select trim(cod) from (" +
+                " select * from tramo_mt where empresa = '"+ empresa + "'" +
+                " ) START WITH trim(cod_ant) in" +
+                " (select trim(cod_tmt) from ly_osi_equipo_mt" +
+                " where empresa = '"+ empresa + "' and trim(cod)= '" + code + "') " +
+                " connect by prior cod = cod_ant";
             List<string> tramos = this.GetDatosSQL(sql);
-            string sql2 = "select distinct trim(cod_sed) from nodo_enlace" +
-                            " where trim(cod_tmt) in (" +
-                                " select trim(cod) from tramo_mt where empresa = '" + empresa + "'" +
-                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '"+ code + "')" +
-                                " connect by prior cod = cod_ant )";
+            string sql2 = "WITH tramos as ( select trim(cod) from ( " +
+                " select * from tramo_mt where empresa = '"+ empresa + "'" +
+                " ) START WITH trim(cod_ant) in (" +
+                " select trim(cod_tmt) from ly_osi_equipo_mt where empresa = '"+ empresa + "' and trim(cod)= '"+ code + "'" +
+                " ) connect by prior cod = cod_ant" +
+                " ) select distinct trim(cod_sed) from nodo_enlace where empresa = '"+ empresa + "' and" +
+                " trim(cod_tmt) in (select * from tramos)";
             List<string> sed = this.GetDatosSQL(sql2);
-            string sql3 = "select distinct trim(cod) from ly_osi_equipo_mt" +
-                            " where cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE')" +
-                            " and trim(cod_tmt) in (" +
-                                " select trim(cod) from tramo_mt" +
-                                " where empresa = '"+ empresa + "'" +
-                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '"+ code + "')" +
-                                " connect by prior cod = cod_ant) ";
+            string sql3 = "WITH tramos as (" +
+                " select trim(cod) from ( select * from tramo_mt where empresa='"+ empresa + "') START WITH trim(cod_ant) in" +
+                " ( select trim(cod_tmt) from ly_osi_equipo_mt where empresa='"+ empresa + "' and trim(cod)='"+ code + "') connect by prior cod=cod_ant" +
+                " ) select distinct trim(cod) from ly_osi_equipo_mt where empresa='"+ empresa + "' and" +
+                " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from tramos)" +
+                " union all" +
+                " select distinct trim(cod) from ly_osi_equipo_mt where trim(cod)='"+ code + "'";
             List<string> seccionadorAfectado = this.GetDatosSQL(sql3);
             object dt = new { tramos, sed, seccionadorAfectado };
             return dt;
@@ -96,9 +101,9 @@ namespace ServiciosAPP.Controllers
                         data.Add(dr.GetString(0));
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    data = new List<string>();
                 }
                 finally
                 {

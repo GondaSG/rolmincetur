@@ -26,27 +26,27 @@ public class Usuario {
     @Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "usuario_id_seq", sequenceName="usuario_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=50)
+	@Column(length=50, nullable=false)
 	private String codigo;
-	@Column(length=400)
+	@Column(length=400, nullable=false)
 	private String nombre;
-	@Column(length=400)
+	@Column(length=400, nullable=false)
 	private String correo;
 	@Column(length=20)
 	private String telefono;
-	@Column(length=20)
+	@Column(length=20, nullable=false)
 	private String ruc;
 
 	@ManyToOne
-    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", nullable=false)
 	private Rol rol;
 	
 	@ManyToOne
-    @JoinColumn(name = "entidad_id", referencedColumnName = "id")
+    @JoinColumn(name = "entidad_id", referencedColumnName = "id", nullable=false)
 	private Entidad entidad;
 	
 	@ManyToOne
-    @JoinColumn(name = "tipo_usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "tipo_usuario_id", referencedColumnName = "id", nullable=false)
 	private TipoUsuario tipoUsuario;
 	
 	public String getCodigo() {

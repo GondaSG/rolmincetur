@@ -24,8 +24,10 @@ public class CategoriaAlimento {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "categoria_alimento_id_seq", sequenceName="categoria_alimento_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=200)
+	
+	@Column(length=200, nullable = false)
 	private String nombre;
+	
 	@Column(length=200)
 	private String descripcion;
 	

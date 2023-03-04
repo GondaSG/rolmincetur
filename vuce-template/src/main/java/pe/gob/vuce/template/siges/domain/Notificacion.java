@@ -92,7 +92,7 @@ public class Notificacion implements Serializable {
 	private Date fechaVencimiento;	
 	@Column(length=250)
 	private String titulo;
-	@Column(length=250)
+	@Column(length=250, nullable = false)
 	private String codigoGenerado;
 	
 	@Column
@@ -103,8 +103,9 @@ public class Notificacion implements Serializable {
 	private Boolean flagBiologico;
 	@Column
 	private Boolean flagOtro;
-	@Column
+	
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Column(nullable = false)
 	private Date fechaCreacion = new Date();
 	@Column	
 	private Boolean flagNacional;
@@ -115,7 +116,7 @@ public class Notificacion implements Serializable {
 	@Column (columnDefinition="TEXT")
 	private String peligroEspecifico;
 	
-	@Column
+	@Column(nullable = false)
 	private Boolean flagActivo = true;
 	
 	@ManyToOne

@@ -22,7 +22,10 @@ public class Fase {
     @Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "fase_id_seq", sequenceName="fase_id_seq", allocationSize=1)
 	private int id;
-	private String nombre;	
+	
+	@Column(length=50, nullable = false)
+	private String nombre;
+	
 	public int getId() {
 		return id;
 	}

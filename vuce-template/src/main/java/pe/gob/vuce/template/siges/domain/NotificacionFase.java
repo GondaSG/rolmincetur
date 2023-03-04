@@ -104,6 +104,7 @@ public class NotificacionFase implements Serializable{
     }
         
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column (nullable=false)
 	private Date fechaCreacion = new Date();
 	public Date getFechaCreacion() {
 		return fechaCreacion;
@@ -112,7 +113,7 @@ public class NotificacionFase implements Serializable{
 		this.fechaCreacion = fechaCreacion;
 	}
 	
-	@Column (nullable=true)
+	@Column (nullable=false)
 	private boolean flagActivo;
 	
 	public boolean getFlagActivo() {

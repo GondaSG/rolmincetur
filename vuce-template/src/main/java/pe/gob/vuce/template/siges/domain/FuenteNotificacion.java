@@ -23,10 +23,10 @@ public class FuenteNotificacion {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "fuente_notificacion_id_seq", sequenceName="fuente_notificacion_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=200)
+	@Column(length=200, nullable = false)
 	private String nombre;
 	
-	@Column (nullable=true)
+	@Column (nullable=false)
 	private int tipoId;
 	
 	public int getTipoId() {

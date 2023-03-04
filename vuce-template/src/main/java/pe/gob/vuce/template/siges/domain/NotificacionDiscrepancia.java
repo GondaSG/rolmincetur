@@ -24,17 +24,16 @@ public class NotificacionDiscrepancia {
 	@SequenceGenerator(name = "notificacion_discrepancia_id_seq", sequenceName="notificacion_discrepancia_id_seq", allocationSize=1)
 	private int id;	
 	
-	@Column(length=1000)
+	@Column(length=1000, nullable = false)
 	private String detalle;
 
-	@Column
+	@Column(nullable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCreacion;
 	
 	@ManyToOne
-    @JoinColumn(name = "notificacion_id", referencedColumnName = "id")
+    @JoinColumn(name = "notificacion_id", referencedColumnName = "id", nullable = false)
 	private Notificacion notificacion;
-
 	
 	public int getId() {
 		return id;

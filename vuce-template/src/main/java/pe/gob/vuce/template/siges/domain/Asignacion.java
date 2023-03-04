@@ -23,11 +23,16 @@ public class Asignacion {
     @Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "asignacion_id_seq", sequenceName="asignacion_id_seq", allocationSize=1)
 	private int id;
+	
+	@Column (nullable=false)
 	private String nombre;
+	
 	@Column (nullable=true)
 	private int tipoId;
+	
 	@Column (nullable=true)
 	private String tipoNombre;
+	
 	public int getTipoId() {
 		return tipoId;
 	}

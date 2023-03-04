@@ -24,7 +24,7 @@ public class UnidadMedida {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "unidad_medida_id_seq", sequenceName="unidad_medida_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=200)
+	@Column(length=200, nullable=false)
 	private String nombre;
 	@Column(length=400)
 	private String descripcion;

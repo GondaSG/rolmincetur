@@ -23,7 +23,7 @@ public class Pais {
 	@Column(name = "id", unique = true, nullable = false)
 	@SequenceGenerator(name = "pais_id_seq", sequenceName="pais_id_seq", allocationSize=1)
 	private int id;
-	@Column(length=250)
+	@Column(length=250, nullable=false)
 	private String nombre;
 	@Column(length=400)
 	private String descripcion;
