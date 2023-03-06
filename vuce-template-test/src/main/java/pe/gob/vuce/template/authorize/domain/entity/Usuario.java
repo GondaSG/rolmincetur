@@ -3,7 +3,11 @@ package pe.gob.vuce.template.authorize.domain.entity;
 
 import java.util.Date;
 
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@Builder
 public class Usuario {
     private Long id;
     private String usuario;

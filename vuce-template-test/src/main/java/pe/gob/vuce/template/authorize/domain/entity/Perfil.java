@@ -6,7 +6,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@Builder
 public class Perfil {
 	private Long id;
 	private String perfil;
@@ -14,7 +18,7 @@ public class Perfil {
 	private Date fechaIniVigencia;
 	private Date fechaFinVigencia;
 	private String estado;
-	private Set<Usuario> usuarios = new HashSet<Usuario>();
+	@Builder.Default private Set<Usuario> usuarios = new HashSet<Usuario>();
 	
 	public void addUsuario(Usuario usuario) {
         this.usuarios.add(usuario);
