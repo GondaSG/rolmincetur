@@ -87,10 +87,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Autowired(required=true)
     ModelMapper modelMapper;
 	
-	@Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+
 	
 	@SuppressWarnings("rawtypes")
 	@Transactional

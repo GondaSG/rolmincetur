@@ -7,7 +7,6 @@ import pe.gob.vuce.template.authorize.application.dto.PerfilDto;
 import pe.gob.vuce.template.authorize.application.dto.UserAuthDto;
 import pe.gob.vuce.template.authorize.application.dto.UsuarioDto;
 import pe.gob.vuce.template.authorize.domain.entity.Usuario;
-import pe.gob.vuce.template.authorize.domain.repository.UsuarioRepository;
 import pe.gob.vuce.template.common.infrastructure.security.JwtTokenProvider;
 
 import java.util.List;
@@ -15,13 +14,11 @@ import java.util.UUID;
 
 @Service
 public class UsuarioApplicationService {
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private PerfilApplicationService perfilApplicationService;
 
-    @Autowired
+    @Autowired(required=true)
     private ModelMapper mapper;
 
     @Autowired
@@ -29,14 +26,14 @@ public class UsuarioApplicationService {
 
     public UsuarioDto create(UsuarioDto usuarioDto) {
         Usuario usuario = mapper.map(usuarioDto, Usuario.class);
-        usuario = usuarioRepository.save(usuario);
+        usuario = null;//usuarioRepository.save(usuario);
         usuarioDto = mapper.map(usuario, UsuarioDto.class);
         return usuarioDto;
     }
 
     public UsuarioDto update(UsuarioDto usuarioDto) {
         Usuario usuario = mapper.map(usuarioDto, Usuario.class);
-        usuario = usuarioRepository.update(usuario);
+        usuario = null;//usuarioRepository.save(usuario);
         usuarioDto = mapper.map(usuario, UsuarioDto.class);
         return usuarioDto;
     }
@@ -56,7 +53,7 @@ public class UsuarioApplicationService {
     }
 
     public UsuarioDto getById(long usuarioId) {
-        Usuario usuario = this.usuarioRepository.getById(usuarioId);
+        Usuario usuario = null;//this.usuarioRepository.getOne(usuarioId);
         UsuarioDto usuarioDto = null;
         if (usuario != null) {
             usuarioDto = mapper.map(usuario, UsuarioDto.class);
@@ -70,7 +67,7 @@ public class UsuarioApplicationService {
     }
 
     public UsuarioDto getByNameAndSOL(String nombreUsuario, String usuarioSol) {
-        Usuario usuario = this.usuarioRepository.getByNameAndSOL(nombreUsuario, usuarioSol);
+        Usuario usuario = null;//this.usuarioRepository.getByNameAndSOL(nombreUsuario, usuarioSol);
         UsuarioDto usuarioDto = usuario == null ? null : mapper.map(usuario, UsuarioDto.class);
         usuarioDto.addPerfiles(this.perfilApplicationService.getByUsuarioId(usuario.getId()));
         return usuarioDto;
