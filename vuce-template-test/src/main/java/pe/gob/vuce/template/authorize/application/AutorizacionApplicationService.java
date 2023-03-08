@@ -66,28 +66,28 @@ public class AutorizacionApplicationService {
                     Boolean expirado = Boolean.FALSE;
                     Map.Entry<String, String> rol = null;
                     Date fechaActual = DateUtils.truncate(new Date(), Calendar.DATE);
-                    Iterator<Map.Entry<String, String>> roles = response.getBody().getRoles().entrySet().iterator();
-                    while (roles.hasNext()) {
-                        rol = roles.next();
-                        perfil = this.perfilApplicationService.getByCode(rol.getValue());
-                        if (perfil != null) {
-                            perfiles.add(perfil);
-                        }
-                        if (!(fechaActual.after(Util.getDateFromStr(perfil.getFechaIniVigencia(), Constantes.DATEFORMAT_DDMMYYYY))
-                                && fechaActual.before(DateUtils.addDays(Util.getDateFromStr(perfil.getFechaFinVigencia(), Constantes.DATEFORMAT_DDMMYYYY), 1)))) {
-                            expirado = Boolean.TRUE;
-                            break;
-                        }
-                    }
+                    //Iterator<Map.Entry<String, String>> roles = response.getBody().getRoles().entrySet().iterator();
+                    //while (roles.hasNext()) {
+                    //   rol = roles.next();
+                    //    perfil = this.perfilApplicationService.getByCode(rol.getValue());
+                    //    if (perfil != null) {
+                    //        perfiles.add(perfil);
+                    //    }
+                    //    if (!(fechaActual.after(Util.getDateFromStr(perfil.getFechaIniVigencia(), Constantes.DATEFORMAT_DDMMYYYY))
+                    //            && fechaActual.before(DateUtils.addDays(Util.getDateFromStr(perfil.getFechaFinVigencia(), Constantes.DATEFORMAT_DDMMYYYY), 1)))) {
+                    //        expirado = Boolean.TRUE;
+                    //        break;
+                    //    }
+                    //}
 
 
                     if (expirado) {
                         throw new ValidationException(1, "Al menos uno de los roles asignados en el Sistema PENX ha expirado. Comun�quese con el Administrador del Sistema para habilitarlo.");
                     }
 
-                    if (perfiles.isEmpty()) {
-                        throw new ValidationException(1, "Usted no tiene asignado el rol esperado en SUNAT");
-                    }
+                    //if (perfiles.isEmpty()) {
+                    //    throw new ValidationException(1, "Usted no tiene asignado el rol esperado en SUNAT");
+                    //}
                     toIdentificacion.getUserAuth().setTipUsuario("4");
 
                     fechaRegistro = new SimpleDateFormat(Constantes.DATEFORMAT_DATE_AND_TIME_REPRESENTATION).parse((String) response.getBody().getMap().get("fecRegistro"));
@@ -133,8 +133,8 @@ public class AutorizacionApplicationService {
             } else {
                 usuarioDto.addPerfiles(perfiles);
             }
-            this.usuarioApplicationService.create(usuarioDto);
-            usuarioDto = usuarioApplicationService.getByNameAndSOL(numeroRuc, usuarioSol);
+            //this.usuarioApplicationService.create(usuarioDto);
+            //usuarioDto = usuarioApplicationService.getByNameAndSOL(numeroRuc, usuarioSol);
         } else {
             Boolean actualizar = Boolean.FALSE;
             for (PerfilDto perfilSunat : perfiles) {
