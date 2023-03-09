@@ -871,310 +871,6 @@
 					]
 				},
 				{
-					"name": "Notificacion Discrepancia",
-					"item": [
-						{
-							"name": "list NotificacionDiscrepancia",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete NotificacionDiscrepancia",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create NotificacionDiscrepancia",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":20}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update NotificacionDiscrepancia",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":15}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail NotificacionDiscrepancia",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/notificaciondiscrepancia/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "findByNotificacionId",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia/findByNotificacionId/20",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"findByNotificacionId",
-										"20"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "NotificacionDeclaracion",
-					"item": [
-						{
-							"name": "list NotificacionDeclaracion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete NotificacionDeclaracion",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion/3",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create NotificacionDeclaracion",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update NotificacionDeclaracion",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle ACtualizado Not 02\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail NotificacionDeclaracion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/notificaciondeclaracion/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "findByNotificacionId",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion/findByNotificacionId/20",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"findByNotificacionId",
-										"20"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Rol",
 					"item": [
 						{
@@ -1786,6 +1482,110 @@
 					]
 				},
 				{
+					"name": "NotificacionCerrada",
+					"item": [
+						{
+							"name": "delete NotificacionDeclaracion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacioncerrada/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacioncerrada",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create NotificacionDeclaracion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacioncerrada",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacioncerrada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findByNotificacionId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacioncerrada/findByNotificacionId/41",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacioncerrada",
+										"findByNotificacionId",
+										"41"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validar",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificacioncerrada/validar/41",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacioncerrada",
+										"validar",
+										"41"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Notificacion",
 					"item": [
 						{
@@ -2233,8 +2033,28 @@
 					]
 				},
 				{
-					"name": "NotificacionCerrada",
+					"name": "NotificacionDeclaracion",
 					"item": [
+						{
+							"name": "list NotificacionDeclaracion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "delete NotificacionDeclaracion",
 							"request": {
@@ -2245,7 +2065,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/notificacioncerrada/3",
+									"raw": "http://localhost:8080/api/notificaciondeclaracion/3",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2253,7 +2073,7 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacioncerrada",
+										"notificaciondeclaracion",
 										"3"
 									]
 								}
@@ -2276,7 +2096,7 @@
 									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/notificacioncerrada",
+									"raw": "http://localhost:8080/api/notificaciondeclaracion",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2284,7 +2104,57 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacioncerrada"
+										"notificaciondeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update NotificacionDeclaracion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle ACtualizado Not 02\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail NotificacionDeclaracion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/notificaciondeclaracion/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion",
+										"2"
 									]
 								}
 							},
@@ -2296,7 +2166,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/notificacioncerrada/findByNotificacionId/41",
+									"raw": "http://localhost:8080/api/notificaciondeclaracion/findByNotificacionId/20",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2304,21 +2174,31 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacioncerrada",
+										"notificaciondeclaracion",
 										"findByNotificacionId",
-										"41"
+										"20"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "validar",
+							"name": "updateleido",
 							"request": {
-								"method": "GET",
-								"header": [],
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 38\r\n}"
+								},
 								"url": {
-									"raw": "http://localhost:8080/api/notificacioncerrada/validar/41",
+									"raw": "http://localhost:8080/api/notificaciondeclaracion/updateleido",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2326,9 +2206,191 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacioncerrada",
-										"validar",
-										"41"
+										"notificaciondeclaracion",
+										"updateleido"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notificacion Discrepancia",
+					"item": [
+						{
+							"name": "list NotificacionDiscrepancia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete NotificacionDiscrepancia",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create NotificacionDiscrepancia",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":20}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update NotificacionDiscrepancia",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":15}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail NotificacionDiscrepancia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/notificaciondiscrepancia/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findByNotificacionId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia/findByNotificacionId/20",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"findByNotificacionId",
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateleido",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 22\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia/updateleido",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"updateleido"
 									]
 								}
 							},
