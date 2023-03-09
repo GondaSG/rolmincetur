@@ -150,18 +150,7 @@ public class NotificacionController extends BaseController {
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
-	}
-	
-	//@PostMapping
-	//@RequestMapping(value = "/updatenocompetencia")
-	//public ResponseEntity<?> updatenocompetencia(@RequestBody NotificacionDTO item){
-	//	try {
-	//		ResponseEntity<?> response = this._service.updateNoCompetencia(item);
-	//		return response;
-	//	} catch (Exception ex) {
-	//		return super.getJSON(ex);
-	//	}
-	//}
+	}	
 	
 	@SuppressWarnings({ "unchecked" })
 	@RequestMapping(value = "/indicadores", method = RequestMethod.POST)

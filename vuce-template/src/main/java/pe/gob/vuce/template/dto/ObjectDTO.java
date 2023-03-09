@@ -1,7 +1,5 @@
 package pe.gob.vuce.template.dto;
 
-import java.util.List;
-
 public class ObjectDTO {
 	
 	private int id;
@@ -9,6 +7,10 @@ public class ObjectDTO {
 	private String nombre;
 	
 	private int cantidad;
+	
+	private String isoAlfa2;
+	
+	private String isoAlfa3;
 
 	public int getId() {
 		return id;
@@ -32,5 +34,21 @@ public class ObjectDTO {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}	
+	}
+	
+	public String getIsoAlfa2() {
+		return isoAlfa2;
+	}
+	
+	public void setIsoAlfa2(String isoAlfa2) {
+		this.isoAlfa2 = isoAlfa2;
+	}
+	
+	public String getIsoAlfa3() {
+		return isoAlfa3;
+	}
+	
+	public void setIsoAlfa3(String isoAlfa3) {
+		this.isoAlfa3 = isoAlfa3;
+	}
 }

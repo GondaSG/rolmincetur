@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.dto.NotificacionFaseDTO;
 import pe.gob.vuce.template.dto.ObjectDTO;
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
-import pe.gob.vuce.template.siges.domain.Estado;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
+import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 import pe.gob.vuce.template.siges.domain.NotificacionFase;
 import pe.gob.vuce.template.siges.domain.NotificacionLote;
@@ -38,6 +37,7 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.CategoriaAlimentoRepository;
 import pe.gob.vuce.template.siges.repository.EstadoRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionCerradaRepository;
+import pe.gob.vuce.template.siges.repository.NotificacionDeclaracionRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionDiscrepanciaRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionEstadoRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionFaseRepository;
@@ -71,6 +71,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	
 	@Autowired
 	NotificacionDiscrepanciaRepository _repositoryDiscrepancia;
+	
+	@Autowired
+	NotificacionDeclaracionRepository _repositoryDeclaracion;
 	
 	@Autowired
 	TipoNotificacionRepository _repositoryTipoNotificacion;
@@ -364,12 +367,35 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		try {
 			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
 			List<Notificacion> items = this._repository.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);			
-			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
-			for (int i = 0; i < notiList.size(); i++) {
-				NotificacionDTO item = notiList.get(i);
-				item.setNotificacionEstado(this._repositoryEstado.findByNoti(item.getId()));
+			List<NotificacionDTO> listNotificacionDTO = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
+			for (int i = 0; i < listNotificacionDTO.size(); i++) {
+				NotificacionDTO itemDTO = listNotificacionDTO.get(i);
+				itemDTO.setTipo("Notificacion");
+				itemDTO.setNotificacionEstado(this._repositoryEstado.findByNoti(itemDTO.getId()));
 			}
-			response.setItems(notiList);
+			List<NotificacionDTO> listDiscrepanciaDTO = new ArrayList<NotificacionDTO>();
+			List<NotificacionDiscrepancia> listDiscrepancia = this._repositoryDiscrepancia.findNoLeidos();
+			for (int i = 0; i < listDiscrepancia.size(); i++) {
+				NotificacionDiscrepancia itemDiscrepancia = listDiscrepancia.get(i);
+				NotificacionDTO itemDTO = modelMapper.map(itemDiscrepancia.getNotificacion(), NotificacionDTO.class);
+				itemDTO.setId(itemDiscrepancia.getId());
+				itemDTO.setTipo("Discrepancia");
+				listDiscrepanciaDTO.add(itemDTO);
+			}
+			List<NotificacionDTO> listDeclaracionDTO = new ArrayList<NotificacionDTO>();
+			List<NotificacionDeclaracion> listDeclaracion = this._repositoryDeclaracion.findNoLeidos();
+			for (int i = 0; i < listDeclaracion.size(); i++) {
+				NotificacionDeclaracion itemDeclaracion = listDeclaracion.get(i);
+				NotificacionDTO itemDTO = modelMapper.map(itemDeclaracion.getNotificacion(), NotificacionDTO.class);
+				itemDTO.setId(itemDeclaracion.getId());
+				itemDTO.setTipo("Declaracion");
+				listDeclaracionDTO.add(itemDTO);
+			}
+			List<NotificacionDTO> list = new ArrayList<>();			 
+		    list.addAll(listNotificacionDTO);
+		    list.addAll(listDiscrepanciaDTO);
+		    list.addAll(listDeclaracionDTO);
+			response.setItems(list);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
@@ -416,7 +442,6 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
 	public	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception {
 		try {
 			ResponseEntity<IndicadorDTO> response = new ResponseEntity<IndicadorDTO>();
@@ -446,6 +471,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				object.setCantidad(items.stream().filter(p -> p.getTipoNotificacion().getId() == object.getId()).toArray().length);
 			}			
 			paisDTO = paisDTO.stream().sorted(Comparator.comparingInt(ObjectDTO::getCantidad)).collect(Collectors.toList());
+			Collections.reverse(paisDTO);
 			indicador.setPaises(paisDTO);
 			
 			//Peligros			
@@ -489,6 +515,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				object.setCantidad(items.stream().filter(p -> p.getTipoNotificacion().getId() == object.getId()).toArray().length);
 			}			
 			categoriaDTO = categoriaDTO.stream().sorted(Comparator.comparingInt(ObjectDTO::getCantidad)).collect(Collectors.toList());
+			Collections.reverse(categoriaDTO);
 			indicador.setRechazos(categoriaDTO);
 			
 			indicador.setTotal(items.size());

@@ -1,5 +1,6 @@
 package pe.gob.vuce.template.siges.service;
 
+import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 
@@ -14,4 +15,6 @@ public interface NotificacionDiscrepanciaService {
 	ResponseEntity<NotificacionDiscrepancia> findAll() throws Exception;
 	
 	ResponseEntity<NotificacionDiscrepancia> findByNotificacionId(int notificacionId) throws Exception;
+	@SuppressWarnings("rawtypes")
+	ResponseEntity updateLeido(NotificacionDTO item) throws Exception;
 }

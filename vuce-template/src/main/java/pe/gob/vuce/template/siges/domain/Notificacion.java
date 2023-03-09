@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -28,6 +29,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("serial")
 @Entity
 @Data
 @Builder
@@ -122,6 +124,16 @@ public class Notificacion implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "entidad_id", referencedColumnName = "id")
 	private Entidad entidad;
+	
+	@Transient
+	private String tipo;
+	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
 	public Entidad getEntidad() {
 		return entidad;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.NotificacionDeclaracionService;
@@ -99,5 +100,16 @@ public class NotificacionDeclaracionController extends BaseController{
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
-	}	
+	}
+	
+	@RequestMapping(value = "/updateleido")
+	@PostMapping
+	public ResponseEntity<?> updateLeido(@RequestBody NotificacionDTO item){
+		try {
+			ResponseEntity<?> response = this._service.updateLeido(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

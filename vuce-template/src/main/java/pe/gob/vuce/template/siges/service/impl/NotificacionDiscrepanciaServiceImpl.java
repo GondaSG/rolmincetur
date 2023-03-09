@@ -2,10 +2,10 @@ package pe.gob.vuce.template.siges.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
@@ -22,6 +22,7 @@ public class NotificacionDiscrepanciaServiceImpl implements NotificacionDiscrepa
 	@Autowired
 	NotificacionRepository _notificacionRepository;
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity create(NotificacionDiscrepancia item) throws Exception {
 		try {
@@ -29,6 +30,7 @@ public class NotificacionDiscrepanciaServiceImpl implements NotificacionDiscrepa
 			String message ="";
 			boolean success = false;
 			if (id == 0) {
+				item.setFlagLeido(false);
 				NotificacionDiscrepancia item2 = this._repository.save(item);
 				id = item2.getId();
 				message += "Se guardarón sus datos de manera correcta";
@@ -70,6 +72,7 @@ public class NotificacionDiscrepanciaServiceImpl implements NotificacionDiscrepa
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity delete(int id) throws Exception {
 		try {
@@ -110,5 +113,28 @@ public class NotificacionDiscrepanciaServiceImpl implements NotificacionDiscrepa
 			throw new Exception(ex.getMessage());
 		}
 	}
-
+	
+	@SuppressWarnings("rawtypes")
+	@Transactional
+	public ResponseEntity updateLeido(NotificacionDTO item) throws Exception {
+		try {
+			Integer id = item.getId();
+			String message = "";
+			boolean success = false;
+			if (id != 0) {
+				message += "Se actualizaron sus datos de manera correcta";
+				NotificacionDiscrepancia item2 = this._repository.findById(id).get();
+				item2.setFlagLeido(true);
+				this._repository.save(item2);
+				success = true;
+			}			
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

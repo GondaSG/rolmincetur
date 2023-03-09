@@ -116,6 +116,15 @@ public class NotificacionDTO {
 	
 	private Entidad entidad;
 	
+	private String tipo;
+	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
 	public Entidad getEntidad() {
 		return entidad;
 	}
