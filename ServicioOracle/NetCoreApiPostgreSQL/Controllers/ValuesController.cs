@@ -56,25 +56,24 @@ namespace ServiciosAPP.Controllers
             string sql = "select trim(cod) from (" +
                 " select * from tramo_mt where empresa = '"+ empresa + "'" +
                 " ) START WITH trim(cod_ant) in" +
-                " (select trim(cod_tmt) from ly_osi_equipo_mt" +
+                " (select trim(cod_tmt) from equipo_mt " +
                 " where empresa = '"+ empresa + "' and trim(cod)= '" + code + "') " +
-                " connect by prior cod = cod_ant";
+                " connect by prior cod = cod_ant ";
             List<string> tramos = this.GetDatosSQL(sql);
             string sql2 = "WITH tramos as ( select trim(cod) from ( " +
                 " select * from tramo_mt where empresa = '"+ empresa + "'" +
                 " ) START WITH trim(cod_ant) in (" +
-                " select trim(cod_tmt) from ly_osi_equipo_mt where empresa = '"+ empresa + "' and trim(cod)= '"+ code + "'" +
-                " ) connect by prior cod = cod_ant" +
-                " ) select distinct trim(cod_sed) from nodo_enlace where empresa = '"+ empresa + "' and" +
+                " select trim(cod_tmt) from equipo_mt where empresa = '" + empresa + "' and trim(cod)= '"+ code + "'" +
+                " ) connect by prior cod = cod_ant " +
+                " ) select distinct trim(cod_sed) from nodo_enlace where empresa = '" + empresa + "' and" +
                 " trim(cod_tmt) in (select * from tramos)";
             List<string> sed = this.GetDatosSQL(sql2);
             string sql3 = "WITH tramos as (" +
                 " select trim(cod) from ( select * from tramo_mt where empresa='"+ empresa + "') START WITH trim(cod_ant) in" +
-                " ( select trim(cod_tmt) from ly_osi_equipo_mt where empresa='"+ empresa + "' and trim(cod)='"+ code + "') connect by prior cod=cod_ant" +
-                " ) select distinct trim(cod) from ly_osi_equipo_mt where empresa='"+ empresa + "' and" +
+                " ( select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)='"+ code + "') connect by prior cod=cod_ant" +
+                " ) select distinct cast (trim(cod) as nvarchar2(100)) from equipo_mt where empresa='" + empresa + "' and" +
                 " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from tramos)" +
-                " union all" +
-                " select distinct trim(cod) from ly_osi_equipo_mt where trim(cod)='"+ code + "'";
+                " union all select cast ('"+ code + "' as nvarchar2(100)) from dual";
             List<string> seccionadorAfectado = this.GetDatosSQL(sql3);
             object dt = new { tramos, sed, seccionadorAfectado };
             return dt;
