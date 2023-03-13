@@ -566,6 +566,7 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_declaracion
     fecha_creacion timestamp without time zone NOT NULL,
     entidad_id integer NOT NULL,
     notificacion_id integer NOT NULL,
+	flag_leido boolean NOT NULL,
     CONSTRAINT notificacion_declaracion_pk PRIMARY KEY (id),
     CONSTRAINT declaracion_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
