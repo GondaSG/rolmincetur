@@ -39,7 +39,7 @@ public class NotificacionDeclaracion {
     @JoinColumn(name = "entidad_id", referencedColumnName = "id", nullable = false)
 	private Entidad entidad;
 
-	@Column (nullable=true)
+	@Column (nullable=false)
 	private boolean flagLeido;
 	
 	public boolean getFlagLeido() {

@@ -116,7 +116,11 @@ CREATE SEQUENCE IF NOT EXISTS siges.fase_id_seq
 CREATE TABLE IF NOT EXISTS siges.fase
 (
     id integer NOT NULL DEFAULT nextval('siges.fase_id_seq'::regclass),
+<<<<<<< HEAD
     nombre character varying(255) COLLATE pg_catalog."default" NOT NULL,
+=======
+    nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
+>>>>>>> 7197d4090a3098660b5b589e030bb4faaebf91a2
     CONSTRAINT fase_pk PRIMARY KEY (id)
 );	
 CREATE INDEX fase_id_i
@@ -135,7 +139,7 @@ CREATE SEQUENCE IF NOT EXISTS siges.fuente_notificacion_id_seq
 CREATE TABLE IF NOT EXISTS siges.fuente_notificacion
 (
     id integer NOT NULL DEFAULT nextval('siges.fuente_notificacion_id_seq'::regclass),
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     tipo_id integer,
     CONSTRAINT fuente_notificacion_pk PRIMARY KEY (id)
 );
@@ -156,7 +160,7 @@ CREATE TABLE IF NOT EXISTS siges.origen_notificacion
 (
     id integer NOT NULL DEFAULT nextval('siges.origen_notificacion_id_seq'::regclass),
     descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT origen_notificacion_pk PRIMARY KEY (id)
 );
 CREATE INDEX origen_notificacion_id_i
@@ -176,7 +180,7 @@ CREATE TABLE IF NOT EXISTS siges.pais
 (
     id integer NOT NULL DEFAULT nextval('siges.pais_id_seq'::regclass),
     descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(250) COLLATE pg_catalog."default",
+    nombre character varying(250) COLLATE pg_catalog."default" NOT NULL,
 	iso_alfa2 character varying(2) COLLATE pg_catalog."default",
     iso_alfa3 character varying(3) COLLATE pg_catalog."default",
     CONSTRAINT pais_pk PRIMARY KEY (id)
@@ -198,7 +202,7 @@ CREATE TABLE IF NOT EXISTS siges.rol
 (
     id integer NOT NULL DEFAULT nextval('siges.rol_id_seq'::regclass),
     descripcion character varying(600) COLLATE pg_catalog."default",
-    nombre character varying(80) COLLATE pg_catalog."default",
+    nombre character varying(80) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT rol_pk PRIMARY KEY (id)
 );
 CREATE INDEX rol_id_i
@@ -235,7 +239,7 @@ CREATE TABLE IF NOT EXISTS siges.tipo_alimento
 (
     id integer NOT NULL DEFAULT nextval('siges.tipo_alimento_id_seq'::regclass),
     descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_alimento_pk PRIMARY KEY (id)
 );
 CREATE INDEX tipo_alimento_id_i
@@ -255,7 +259,7 @@ CREATE TABLE IF NOT EXISTS siges.tipo_notificacion
 (
     id integer NOT NULL DEFAULT nextval('siges.tipo_notificacion_id_seq'::regclass),
     descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_notificacion_pk PRIMARY KEY (id)
 );
 
@@ -275,7 +279,7 @@ CREATE SEQUENCE IF NOT EXISTS siges.tipo_presentacion_id_seq
 CREATE TABLE IF NOT EXISTS siges.tipo_presentacion
 (
     id integer NOT NULL DEFAULT nextval('siges.tipo_presentacion_id_seq'::regclass),
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_presentacion_pk PRIMARY KEY (id)
 );
 CREATE INDEX tipo_presentacion_id_i
@@ -295,7 +299,7 @@ CREATE TABLE IF NOT EXISTS siges.unidad_medida
 (
     id integer NOT NULL DEFAULT nextval('siges.unidad_medida_id_seq'::regclass),
     descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT unidad_medida_pk PRIMARY KEY (id)
 );	
 CREATE INDEX unidad_medida_id_i
@@ -314,7 +318,7 @@ CREATE SEQUENCE IF NOT EXISTS siges.tipo_usuario_id_seq
 CREATE TABLE IF NOT EXISTS siges.tipo_usuario
 (
     id integer NOT NULL DEFAULT nextval('siges.tipo_usuario_id_seq'::regclass),
-    nombre character varying(200) COLLATE pg_catalog."default",
+    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_usuario_pk PRIMARY KEY (id)
 );
 
@@ -329,14 +333,14 @@ CREATE SEQUENCE IF NOT EXISTS siges.usuario_id_seq
 CREATE TABLE IF NOT EXISTS siges.usuario
 (
     id integer NOT NULL DEFAULT nextval('siges.usuario_id_seq'::regclass),
-    correo character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(400) COLLATE pg_catalog."default",
-    telefono character varying(200) COLLATE pg_catalog."default",
-    entidad_id integer,
-    rol_id integer,
-    ruc character varying(20) COLLATE pg_catalog."default",
-    tipo_usuario_id integer,
-    codigo character varying(50) COLLATE pg_catalog."default",
+    codigo character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    correo character varying(400) COLLATE pg_catalog."default" NOT NULL,
+    nombre character varying(400) COLLATE pg_catalog."default" NOT NULL,
+    ruc character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    telefono character varying(20) COLLATE pg_catalog."default",
+    entidad_id integer NOT NULL,
+    rol_id integer NOT NULL,
+    tipo_usuario_id integer NOT NULL,
     CONSTRAINT usuario_pk PRIMARY KEY (id),
     CONSTRAINT usuario_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
@@ -363,7 +367,7 @@ CREATE SEQUENCE IF NOT EXISTS siges.notificacion_id_seq
 CREATE TABLE IF NOT EXISTS siges.notificacion
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_id_seq'::regclass),
-    codigo_generado character varying(250) COLLATE pg_catalog."default",
+    codigo_generado character varying(250) COLLATE pg_catalog."default" NOT NULL,
     dato_exportador character varying(250) COLLATE pg_catalog."default",
     dato_importador character varying(250) COLLATE pg_catalog."default",
     fecha_evento timestamp without time zone,
@@ -388,10 +392,10 @@ CREATE TABLE IF NOT EXISTS siges.notificacion
     flag_fisico boolean,
     flag_otro boolean,
     flag_quimico boolean,
-    fecha_creacion timestamp without time zone,
+    fecha_creacion timestamp without time zone NOT NULL,
     comentario text COLLATE pg_catalog."default",
     peligro_especifico text COLLATE pg_catalog."default",
-    flag_activo boolean,
+    flag_activo boolean NOT NULL,
     entidad_id integer,
     flag_nacional boolean,
     CONSTRAINT notificacion_pk PRIMARY KEY (id),
@@ -437,9 +441,9 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_estado
 (
     notificacion_id integer NOT NULL,
     estado_id integer NOT NULL,
-    fecha_creacion timestamp without time zone,
-    flag_activo boolean,
-    flag_leido boolean,
+    fecha_creacion timestamp without time zone NOT NULL,
+    flag_activo boolean NOT NULL,
+    flag_leido boolean NOT NULL,
     mensaje text COLLATE pg_catalog."default",
     CONSTRAINT notificacion_estado_pk PRIMARY KEY (notificacion_id, estado_id),
     CONSTRAINT notificacion_estado_estado_fk FOREIGN KEY (estado_id)
@@ -463,10 +467,10 @@ CREATE SEQUENCE IF NOT EXISTS siges.notificacion_lote_id_seq
 CREATE TABLE IF NOT EXISTS siges.notificacion_lote
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_lote_id_seq'::regclass),
-    lote character varying(255) COLLATE pg_catalog."default",
-    notificacion_id integer,
-    unidad_medida_id integer,
     cantidad numeric(12,2),
+    lote character varying(255) COLLATE pg_catalog."default",
+    notificacion_id integer NOT NULL,
+    unidad_medida_id integer NOT NULL,
     CONSTRAINT notificacion_lote_pk PRIMARY KEY (id),
     CONSTRAINT notificion_lote_noti_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -491,10 +495,10 @@ CREATE SEQUENCE IF NOT EXISTS siges.notificacion_presentacion_id_seq
 CREATE TABLE IF NOT EXISTS siges.notificacion_presentacion
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_presentacion_id_seq'::regclass),
-    notificacion_id integer,
-    tipo_presentacion_id integer,
-    unidad_medida_id integer,
     volumen numeric(12,2),
+    notificacion_id integer NOT NULL,
+    tipo_presentacion_id integer NOT NULL,
+    unidad_medida_id integer NOT NULL,
     CONSTRAINT notificacion_presentacion_pk PRIMARY KEY (id),
     CONSTRAINT notificacion_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -524,8 +528,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_accion
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_accion_id_seq'::regclass),
     detalle character varying(255) COLLATE pg_catalog."default",
-    fecha_creacion timestamp without time zone,
-    notificacion_id integer,
+    fecha_creacion timestamp without time zone NOT NULL,
+    notificacion_id integer NOT NULL,
     CONSTRAINT notificacion_accion_pk PRIMARY KEY (id),
     CONSTRAINT accion_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -545,9 +549,9 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_cerrada
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_cerrada_id_seq'::regclass),
     detalle character varying(255) COLLATE pg_catalog."default",
-    fecha_creacion timestamp without time zone,
-    entidad_id integer,
-    notificacion_id integer,
+    fecha_creacion timestamp without time zone NOT NULL,
+    entidad_id integer NOT NULL,
+    notificacion_id integer NOT NULL,
     CONSTRAINT notificacion_cerrada_pk PRIMARY KEY (id),
     CONSTRAINT cerrada_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -571,9 +575,10 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_declaracion
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_declaracion_id_seq'::regclass),
     detalle character varying(255) COLLATE pg_catalog."default",
-    fecha_creacion timestamp without time zone,
-    entidad_id integer,
-    notificacion_id integer,
+    fecha_creacion timestamp without time zone NOT NULL,
+    entidad_id integer NOT NULL,
+    notificacion_id integer NOT NULL,
+	flag_leido boolean NOT NULL,
     CONSTRAINT notificacion_declaracion_pk PRIMARY KEY (id),
     CONSTRAINT declaracion_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
@@ -596,9 +601,10 @@ CREATE SEQUENCE IF NOT EXISTS siges.notificacion_discrepancia_id_seq
 CREATE TABLE IF NOT EXISTS siges.notificacion_discrepancia
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_discrepancia_id_seq'::regclass),
-    detalle character varying(1000) COLLATE pg_catalog."default",
-    fecha_creacion timestamp without time zone,
-    notificacion_id integer,
+    detalle character varying(1000) COLLATE pg_catalog."default" NOT NULL,
+    fecha_creacion timestamp without time zone NOT NULL,
+    flag_leido boolean,
+    notificacion_id integer NOT NULL,
     CONSTRAINT notificacion_discrepancia_pk PRIMARY KEY (id),
     CONSTRAINT discrepancia_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -612,8 +618,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_fase
 (
     fase_id integer NOT NULL,
     notificacion_id integer NOT NULL,
-    fecha_creacion timestamp without time zone,
-    flag_activo boolean,
+    fecha_creacion timestamp without time zone NOT NULL,
+    flag_activo boolean NOT NULL,
     mensaje text COLLATE pg_catalog."default",
     CONSTRAINT notificacion_fase_pk PRIMARY KEY (fase_id, notificacion_id),
     CONSTRAINT fase_fk FOREIGN KEY (fase_id)
@@ -638,9 +644,9 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_no_declaracion
 (
     id integer NOT NULL DEFAULT nextval('siges.notificacion_no_declaracion_id_seq'::regclass),
     detalle character varying(255) COLLATE pg_catalog."default",
-    fecha_creacion timestamp without time zone,
-    entidad_id integer,
-    notificacion_id integer,
+    fecha_creacion timestamp without time zone NOT NULL,
+    entidad_id integer NOT NULL,
+    notificacion_id integer NOT NULL,
     CONSTRAINT notificacion_no_declaracion_pk PRIMARY KEY (id),
     CONSTRAINT nodeclaracion_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
