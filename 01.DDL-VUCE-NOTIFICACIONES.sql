@@ -116,11 +116,7 @@ CREATE SEQUENCE IF NOT EXISTS siges.fase_id_seq
 CREATE TABLE IF NOT EXISTS siges.fase
 (
     id integer NOT NULL DEFAULT nextval('siges.fase_id_seq'::regclass),
-<<<<<<< HEAD
-    nombre character varying(255) COLLATE pg_catalog."default" NOT NULL,
-=======
     nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
->>>>>>> 7197d4090a3098660b5b589e030bb4faaebf91a2
     CONSTRAINT fase_pk PRIMARY KEY (id)
 );	
 CREATE INDEX fase_id_i
@@ -323,6 +319,23 @@ CREATE TABLE IF NOT EXISTS siges.tipo_usuario
 );
 
 
+-- TIPO DOCUMENTO
+CREATE TABLE IF NOT EXISTS siges.tipo_documento
+(
+    id integer NOT NULL DEFAULT nextval('siges.tipo_documento_id_seq'::regclass),
+    activo_uo character varying(1) COLLATE pg_catalog."default",
+    descripcion character varying(150) COLLATE pg_catalog."default" NOT NULL,
+    doc_vuce character varying(1) COLLATE pg_catalog."default",
+    documento_tipo_digemid character varying(2) COLLATE pg_catalog."default",
+    documento_tipo_produce integer,
+    documento_tipo_sunat character varying(1) COLLATE pg_catalog."default",
+    equivalencia_sunat_vuce character varying(1) COLLATE pg_catalog."default",
+    estado character varying(1) COLLATE pg_catalog."default",
+    persona_natural character varying(1) COLLATE pg_catalog."default",
+    CONSTRAINT tipo_documento_pk PRIMARY KEY (id)
+);
+
+
 -- USUARIO
 CREATE SEQUENCE IF NOT EXISTS siges.usuario_id_seq
     INCREMENT 1
@@ -341,9 +354,14 @@ CREATE TABLE IF NOT EXISTS siges.usuario
     entidad_id integer NOT NULL,
     rol_id integer NOT NULL,
     tipo_usuario_id integer NOT NULL,
+	tipo_documento_id integer,
     CONSTRAINT usuario_pk PRIMARY KEY (id),
     CONSTRAINT usuario_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT usuario_tipo_documento_fk FOREIGN KEY (tipo_documento_id)
+        REFERENCES siges.tipo_documento (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT usuario_tipousuario_fk FOREIGN KEY (tipo_usuario_id)

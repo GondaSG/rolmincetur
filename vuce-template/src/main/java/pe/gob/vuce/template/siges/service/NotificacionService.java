@@ -30,4 +30,5 @@ public interface NotificacionService {
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateNoCompetencia(NotificacionDTO item) throws Exception;
 	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception;
+	ResponseEntity<NotificacionDTO> afectaHumanos(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 }
