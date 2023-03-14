@@ -72,15 +72,19 @@ CREATE SEQUENCE IF NOT EXISTS siges.ciudad_id_seq
 CREATE TABLE IF NOT EXISTS siges.ciudad
 (
     id integer NOT NULL DEFAULT nextval('siges.ciudad_id_seq'::regclass),
-    descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    estado character varying(200) COLLATE pg_catalog."default",
+    modo_transporte_id integer,
+    nombre character varying(250) COLLATE pg_catalog."default" NOT NULL,
+    nombre_abreviado character varying(250) COLLATE pg_catalog."default",
+    puerto character varying(400) COLLATE pg_catalog."default",
+    secuencia_pais_iso integer,
+    pais_id integer NOT NULL,
     CONSTRAINT ciudad_pk PRIMARY KEY (id)
 );
 CREATE INDEX ciudad_id_i
 ON siges.ciudad(id);
 CREATE INDEX ciudad_nombre_i
 ON siges.ciudad(nombre);
-
 
 -- ENTIDAD
 CREATE SEQUENCE IF NOT EXISTS siges.entidad_id_seq
@@ -112,11 +116,15 @@ CREATE SEQUENCE IF NOT EXISTS siges.fase_id_seq
 CREATE TABLE IF NOT EXISTS siges.fase
 (
     id integer NOT NULL DEFAULT nextval('siges.fase_id_seq'::regclass),
-    nombre character varying(255) COLLATE pg_catalog."default",
+    nombre character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT fase_pk PRIMARY KEY (id)
 );	
+CREATE INDEX fase_id_i
+ON siges.fase(id);
+CREATE INDEX fase_nombre_i
+ON siges.fase(nombre);
 
-		
+
 --  FUENTE NOTIFICACION
 CREATE SEQUENCE IF NOT EXISTS siges.fuente_notificacion_id_seq
     INCREMENT 1
