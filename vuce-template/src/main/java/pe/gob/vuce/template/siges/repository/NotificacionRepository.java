@@ -37,13 +37,6 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	int booleanDato,
 	Pageable page);
 	
-	//@Query(value="select n.* from notificacion n "
-	//		+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
-	//		+ "	where ?1"
-	//		+ " order by id",	nativeQuery=false)
-	//Page<Notificacion> search2(String code,	
-	//Pageable page);
-	
 	@Modifying
 	@Query(value="update notificacion set flag_activo = false where id = ?1", nativeQuery=true)
 	int updateActive(int id);
@@ -62,4 +55,9 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 			+ "	and case when ?3 > 0 then n.fecha_creacion <= ?2 else 1 = 1 end ", nativeQuery=true)
 	List<Notificacion> indicadores(Date fechaCreacion, Date fechaCreacionFinal, int value);
 	
+	@Query(value="select n.* from notificacion n "
+			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
+			+ "	where n.flag_activo = true and n.flag_afectado = true and n.codigo_generado ilike %?1% "
+			+ " order by fecha_creacion desc",	nativeQuery=true)
+	Page<Notificacion> afectaHumanos(String code, Pageable page);
 }

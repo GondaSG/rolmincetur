@@ -176,4 +176,17 @@ public class NotificacionController extends BaseController {
 		headers.add("Content-Disposition", "attachment; filename=personas.xls");		
 		return org.springframework.http.ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
 	}
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping(value = "/afectahumanos", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<NotificacionDTO> afectaHumanos(@RequestParam("item") String item) throws IOException {
+		try {
+			PaginatorEntity paginator = super.setPaginator();
+			NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
+			ResponseEntity<NotificacionDTO> response = this._service.afectaHumanos(item2, paginator);
+			return response;
+		} catch (Exception ex) {	
+			return super.getJSON(ex);
+		}
+	}
 }

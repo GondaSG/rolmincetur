@@ -38,8 +38,6 @@ public class Ciudad {
 	private String nombre_abreviado;
 	@Column
 	private int modo_transporte_id;
-	@Column
-	private int secuencia_pais_iso;			
 	
 	public String getPuerto() {
 		return puerto;
@@ -64,12 +62,6 @@ public class Ciudad {
 	}
 	public void setModo_transporte_id(int modo_transporte_id) {
 		this.modo_transporte_id = modo_transporte_id;
-	}
-	public int getSecuencia_pais_iso() {
-		return secuencia_pais_iso;
-	}
-	public void setSecuencia_pais_iso(int secuencia_pais_iso) {
-		this.secuencia_pais_iso = secuencia_pais_iso;
 	}
 	public int getId() {
 		return id;

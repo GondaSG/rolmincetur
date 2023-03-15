@@ -536,6 +536,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}
 	}
 	
+<<<<<<< HEAD
 	@Override
 	public ByteArrayInputStream exportar() throws Exception{
 		String[] columns = {"id", "nombre"};
@@ -564,5 +565,23 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		workbook.write(stream);
 		workbook.close();		
 		return new ByteArrayInputStream(stream.toByteArray());
+	}
+	
+	@Override		
+	public ResponseEntity<NotificacionDTO> afectaHumanos(NotificacionDTO item, PaginatorEntity paginator)
+			throws Exception {
+		try {
+			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
+			Pageable page = PageRequest.of(paginator.getOffset() - 1, paginator.getLimit());
+			Page<Notificacion> pag1 = this._repository.afectaHumanos(item.getCodigoGenerado(), page);
+			List<Notificacion> items2 = pag1.getContent();			
+			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items2, NotificacionDTO[].class));			
+			paginator.setTotal((int) pag1.getTotalElements());
+			response.setItems(notiList);
+			response.setPaginator(paginator);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
 	}
 }

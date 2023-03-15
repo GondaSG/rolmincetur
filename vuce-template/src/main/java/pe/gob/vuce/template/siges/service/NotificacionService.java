@@ -33,4 +33,5 @@ public interface NotificacionService {
 	ResponseEntity updateNoCompetencia(NotificacionDTO item) throws Exception;
 	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception;
 	ByteArrayInputStream exportar() throws Exception;
+	ResponseEntity<NotificacionDTO> afectaHumanos(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 }
