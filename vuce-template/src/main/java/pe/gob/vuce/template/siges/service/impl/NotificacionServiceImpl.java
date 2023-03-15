@@ -536,7 +536,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	@Override
 	public ByteArrayInputStream exportar() throws Exception{
 		String[] columns = {"id", "nombre"};
