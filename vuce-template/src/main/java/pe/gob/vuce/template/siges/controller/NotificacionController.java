@@ -1,7 +1,10 @@
 package pe.gob.vuce.template.siges.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -164,5 +167,13 @@ public class NotificacionController extends BaseController {
 		} catch (Exception ex) {	
 			return super.getJSON(ex);
 		}
+	}	
+	
+	@GetMapping("/exportar/all")
+	public org.springframework.http.ResponseEntity<InputStreamResource> exportar() throws Exception{
+		ByteArrayInputStream stream = this._service.exportar();		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=personas.xls");		
+		return org.springframework.http.ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
 	}
 }

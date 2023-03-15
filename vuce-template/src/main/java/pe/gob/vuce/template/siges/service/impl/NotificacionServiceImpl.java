@@ -1,15 +1,25 @@
 package pe.gob.vuce.template.siges.service.impl;
 
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -524,5 +534,35 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	@Override
+	public ByteArrayInputStream exportar() throws Exception{
+		String[] columns = {"id", "nombre"};
+		
+		Workbook workbook = new HSSFWorkbook();
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		
+		Sheet sheet = workbook.createSheet("Notificacion");
+		Row row = sheet.createRow(0);
+		
+		for (int i = 0; i < columns.length; i++) {
+			Cell cell = row.createCell(i);
+			cell.setCellValue(columns[i]);	
+		}
+		
+		List<Notificacion> notificaciones = this._repository.findAll();
+		int initRow = 1;
+		for (Notificacion notificacion : notificaciones) {
+			row = sheet.createRow(initRow);
+			row.createCell(0).setCellValue(notificacion.getId());
+			row.createCell(1).setCellValue(notificacion.getNombreAlimento());
+			
+			initRow++;
+		}
+		
+		workbook.write(stream);
+		workbook.close();		
+		return new ByteArrayInputStream(stream.toByteArray());
 	}
 }

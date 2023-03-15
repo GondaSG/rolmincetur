@@ -1,5 +1,7 @@
 package pe.gob.vuce.template.siges.service;
 
+import java.io.ByteArrayInputStream;
+
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
@@ -30,4 +32,5 @@ public interface NotificacionService {
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateNoCompetencia(NotificacionDTO item) throws Exception;
 	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception;
+	ByteArrayInputStream exportar() throws Exception;
 }

@@ -1,5 +1,6 @@
 package pe.gob.vuce.template.siges.repository;
 
+import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,8 @@ import pe.gob.vuce.template.siges.domain.NotificacionEstado;
 
 @Repository
 public interface NotificacionRepository extends JpaRepository<Notificacion, Integer>{
+	
+	
 	
 	@Query(value="select n.* from notificacion n "
 			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
@@ -58,4 +61,5 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 			+ "	and case when ?3 > 0 then n.fecha_creacion >= ?1 else 1 = 1 end "
 			+ "	and case when ?3 > 0 then n.fecha_creacion <= ?2 else 1 = 1 end ", nativeQuery=true)
 	List<Notificacion> indicadores(Date fechaCreacion, Date fechaCreacionFinal, int value);
+	
 }
