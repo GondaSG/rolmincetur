@@ -538,8 +538,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	
 
 	@Override
-	public ByteArrayInputStream exportar() throws Exception{
-		String[] columns = {"id", "nombre"};
+	public ByteArrayInputStream exportar(NotificacionDTO item) throws Exception{
+		String[] columns = {"CODIGO", "PRODUCTOR", "NOMBRE IMPORTADOR", "NOMBRE EXPORTADOR", "NOMBRE ALIMENTO",
+				"CATEGORÍA ALIMENTO", "TIPO ALIMENTO","FECHA NOTIFICACIÓN",};
 		
 		Workbook workbook = new HSSFWorkbook();
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -552,16 +553,32 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			cell.setCellValue(columns[i]);	
 		}
 		
-		List<Notificacion> notificaciones = this._repository.findAll();
+		int value = item.getFechaCreacion() == null ? 0 : 1;
+		if (item.getFechaCreacion() == null)
+			item.setFechaCreacion(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+		if (item.getFechaCreacionFinal() == null)
+			item.setFechaCreacionFinal(new java.sql.Date(Calendar.getInstance().getTime().getTime()));		
+		int booleanDato = item.getFlagNacional() == null ? 0 : 1;
+		if (item.getFlagNacional() == null) {
+			item.setFlagNacional(false);
+		}
+		
+		List<Notificacion> notificaciones = this._repository.search2(item.getCodigoGenerado(), item.getFlagNacional(),
+				item.getFlagDigesa(), item.getFlagSenasa(),	item.getFechaCreacion(), item.getFechaCreacionFinal(), value,
+				item.getTipoNotificacionId(), booleanDato);
 		int initRow = 1;
 		for (Notificacion notificacion : notificaciones) {
 			row = sheet.createRow(initRow);
-			row.createCell(0).setCellValue(notificacion.getId());
-			row.createCell(1).setCellValue(notificacion.getNombreAlimento());
-			
+			row.createCell(0).setCellValue(notificacion.getCodigoGenerado());
+			row.createCell(1).setCellValue(notificacion.getProductor());
+			row.createCell(2).setCellValue(notificacion.getDatoImportador());
+			row.createCell(3).setCellValue(notificacion.getDatoExportador());
+			row.createCell(4).setCellValue(notificacion.getNombreAlimento());
+			row.createCell(5).setCellValue(notificacion.getCategoriaAlimento().getNombre());
+			row.createCell(6).setCellValue(notificacion.getTipoAlimento().getNombre());
+			row.createCell(7).setCellValue(notificacion.getFechaNotificacion());
 			initRow++;
-		}
-		
+		}		
 		workbook.write(stream);
 		workbook.close();		
 		return new ByteArrayInputStream(stream.toByteArray());

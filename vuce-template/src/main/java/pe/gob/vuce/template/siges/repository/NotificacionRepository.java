@@ -37,6 +37,22 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	int booleanDato,
 	Pageable page);
 	
+	
+	@Query(value="select n.* from notificacion n "
+			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
+			+ "	where n.flag_activo = true and n.codigo_generado ilike %?1% "
+			+ "	and case when ?9 > 0 then n.flag_nacional = ?2 else 1 = 1 end "
+			+ "	and case when ?3 is not null then n.flag_digesa = ?3 else 1 = 1 end "
+			+ "	and case when ?4 is not null then n.flag_senasa = ?4 else 1 = 1 end "
+			+ "	and case when ?7 > 0 then n.fecha_creacion >= ?5 else 1 = 1 end "
+			+ "	and case when ?7 > 0 then n.fecha_creacion <= ?6 else 1 = 1 end "
+			+ "	and n.tipo_notificacion_id in (?8) "
+			+ " order by fecha_creacion desc",	nativeQuery=true)
+	List<Notificacion> search2(String code,	Boolean isNacional, Boolean flagDigesa, Boolean flagSenasa,
+	Date fechaCreacion, Date fechaCreacionFinal, int value,	List<Integer> tipoNotificacionId, 
+	int booleanDato);
+	
+	
 	@Modifying
 	@Query(value="update notificacion set flag_activo = false where id = ?1", nativeQuery=true)
 	int updateActive(int id);

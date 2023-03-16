@@ -159,23 +159,32 @@ public class NotificacionController extends BaseController {
 	@RequestMapping(value = "/indicadores", method = RequestMethod.POST)
 	@ResponseBody()
 	public ResponseEntity<IndicadorDTO> indicadores(@RequestBody IndicadorDTO item) throws IOException {
-		try {
-			//PaginatorEntity paginator = super.setPaginator();
-			//NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
+		try {			
 			ResponseEntity<IndicadorDTO> response = this._service.indicadores(item);
 			return response;
+			//return "Funciona mi meotod";
 		} catch (Exception ex) {	
 			return super.getJSON(ex);
+			//return "No funciona";
 		}
 	}	
 	
-	@GetMapping("/exportar/all")
-	public org.springframework.http.ResponseEntity<InputStreamResource> exportar() throws Exception{
-		ByteArrayInputStream stream = this._service.exportar();		
+	
+	@SuppressWarnings({ "unchecked" })
+	//@RequestMapping(value = "/exportar", method = RequestMethod.POST)
+	@ResponseBody()
+	@GetMapping("/exportar")
+	public org.springframework.http.ResponseEntity<InputStreamResource> exportar(@RequestBody NotificacionDTO item) throws Exception{
+		ByteArrayInputStream stream = this._service.exportar(item);		
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Disposition", "attachment; filename=personas.xls");		
+		
+		//date 
+		
+		headers.add("Content-Disposition", "attachment; filename=Notificaciones.xls");		
 		return org.springframework.http.ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
 	}
+	
+	
 	@SuppressWarnings({ "unchecked" })
 	@RequestMapping(value = "/afectahumanos", method = RequestMethod.POST)
 	@ResponseBody()
