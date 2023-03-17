@@ -25,7 +25,7 @@ public interface NotificacionService {
 	ResponseEntity<NotificacionDTO> search(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateLeido(NotificacionDTO item) throws Exception;
-	ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception;
+	ResponseEntity<NotificacionDTO> getNoLeidos(Boolean flagDigesa,	Boolean flagSanipes, Boolean flagSenasa) throws Exception;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateFase(NotificacionFaseDTO item) throws Exception;
 	ResponseEntity<NotificacionFase> findFase(int id) throws Exception;

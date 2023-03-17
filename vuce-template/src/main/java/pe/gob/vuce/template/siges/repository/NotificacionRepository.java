@@ -27,13 +27,10 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 			+ "	and case when ?7 > 0 then n.fecha_creacion >= ?5 else 1 = 1 end "
 			+ "	and case when ?7 > 0 then n.fecha_creacion <= ?6 else 1 = 1 end "
 			+ "	and n.tipo_notificacion_id in (?8) "
-			//+ "	and case when ?9 = 0 then 1 = 1 else n.tipo_notificacion_id in (?8) end "
-			//+ "	and case when ?11 > 0 then ne.estado_id in (?10) else 1 = 1  end "
 			+ " order by fecha_creacion desc",	nativeQuery=true)
 	Page<Notificacion> search(String code,	Boolean isNacional, Boolean flagDigesa, Boolean flagSenasa,
 	Date fechaCreacion, Date fechaCreacionFinal, int value,	
-	List<Integer> tipoNotificacionId, //int value2,
-	//List<Integer> estadoId, int value3, 
+	List<Integer> tipoNotificacionId,
 	int booleanDato,
 	Pageable page);
 	
@@ -60,10 +57,10 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	@Query(value="select n.* from notificacion n "
 			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
 			+ " where ne.flag_leido = false "
-			+ "	and case when ?1 is not null then n.flag_digesa = ?1 else 1 = 1 end "
-			+ "	and case when ?2 is not null then n.flag_sanipes = ?2 else 1 = 1 end "
-			+ " and case when ?3 is not null then n.flag_senasa = ?3 else 1 = 1 end ", nativeQuery=true)
-	List<Notificacion> getNoLeidos(Boolean flagDigesa, Boolean flagSanipes, Boolean flagSenasa);
+			+ "	and case when ?4 = 1 then n.flag_digesa = ?1 "
+			+ "	when ?4 = 2 then n.flag_sanipes = ?2 "
+			+ " when ?4 = 3 then n.flag_senasa = ?3 else 1 = 1 end ", nativeQuery=true)
+	List<Notificacion> getNoLeidos(Boolean flagDigesa, Boolean flagSanipes, Boolean flagSenasa, int value);
 	
 	@Query(value="select n.* from notificacion n "
 			+ " where n.flag_activo = true "
@@ -74,6 +71,6 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 	@Query(value="select n.* from notificacion n "
 			+ "	inner join notificacion_estado as ne ON ne.notificacion_id = n.id and ne.flag_activo = true "
 			+ "	where n.flag_activo = true and n.flag_afectado = true and n.codigo_generado ilike %?1% "
-			+ " order by fecha_creacion desc",	nativeQuery=true)
+			+ " order by fecha_creacion desc", nativeQuery=true)
 	Page<Notificacion> afectaHumanos(String code, Pageable page);
 }

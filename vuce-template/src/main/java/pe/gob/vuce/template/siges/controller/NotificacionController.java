@@ -122,8 +122,8 @@ public class NotificacionController extends BaseController {
 	}
 	
 	@GetMapping("obtenerNoLeidos/{flagDigesa}/{flagSanipes}/{flagSenasa}")
-	public ResponseEntity<NotificacionDTO> getNoLeidos(@PathVariable("flagDigesa") boolean flagDigesa,
-			@PathVariable("flagSanipes") boolean flagSanipes, @PathVariable("flagSenasa") boolean flagSenasa){
+	public ResponseEntity<NotificacionDTO> getNoLeidos(@PathVariable("flagDigesa") Boolean flagDigesa,
+			@PathVariable("flagSanipes") Boolean flagSanipes, @PathVariable("flagSenasa") Boolean flagSenasa){
 		ResponseEntity<NotificacionDTO> response = new ResponseEntity<>();
 		try {
 			response = this._service.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);
@@ -171,9 +171,9 @@ public class NotificacionController extends BaseController {
 	
 	
 	@SuppressWarnings({ "unchecked" })
-	//@RequestMapping(value = "/exportar", method = RequestMethod.POST)
+	@RequestMapping(value = "/exportar", method = RequestMethod.POST)
 	@ResponseBody()
-	@GetMapping("/exportar")
+	//@GetMapping("/exportar")
 	public org.springframework.http.ResponseEntity<InputStreamResource> exportar(@RequestBody NotificacionDTO item) throws Exception{
 		ByteArrayInputStream stream = this._service.exportar(item);		
 		HttpHeaders headers = new HttpHeaders();

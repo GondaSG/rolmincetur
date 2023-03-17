@@ -321,7 +321,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			//	value2 = 1;
 			//int value3 = item.getEstadoId() == null ? 0 : 1;
 			//if (item.getEstadoId() != null)
-			//	value3 = 1;
+			//	value3 = 1;		
 			int booleanDato = item.getFlagNacional() == null ? 0 : 1;
 			if (item.getFlagNacional() == null) {
 				item.setFlagNacional(false);
@@ -373,10 +373,23 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}
 	}
 	
-	public ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception {
+	public ResponseEntity<NotificacionDTO> getNoLeidos(Boolean flagDigesa,	Boolean flagSanipes, Boolean flagSenasa) throws Exception {
 		try {
 			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
-			List<Notificacion> items = this._repository.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);			
+			int value = 0;
+			if (flagDigesa==true && flagSenasa==true && flagSanipes==true) {
+				value = 0;
+			}
+			else if (flagDigesa==true) {
+				value = 1;
+			}
+			else if (flagSenasa==true) {
+				value = 2;
+			}
+			else if (flagSanipes==true) {
+				value = 3;
+			}	
+			List<Notificacion> items = this._repository.getNoLeidos(flagDigesa, flagSanipes, flagSenasa, value);			
 			List<NotificacionDTO> listNotificacionDTO = Arrays.asList(modelMapper.map(items, NotificacionDTO[].class));
 			for (int i = 0; i < listNotificacionDTO.size(); i++) {
 				NotificacionDTO itemDTO = listNotificacionDTO.get(i);
@@ -388,6 +401,11 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			for (int i = 0; i < listDiscrepancia.size(); i++) {
 				NotificacionDiscrepancia itemDiscrepancia = listDiscrepancia.get(i);
 				NotificacionDTO itemDTO = modelMapper.map(itemDiscrepancia.getNotificacion(), NotificacionDTO.class);
+				NotificacionEstado notificacionEstado = new NotificacionEstado();
+				Notificacion notificacion = new Notificacion();
+				notificacion.setId(itemDTO.getId());
+				notificacionEstado.setNotificacion(notificacion);
+				itemDTO.setNotificacionEstado(notificacionEstado);
 				itemDTO.setId(itemDiscrepancia.getId());
 				itemDTO.setTipo("Discrepancia");
 				listDiscrepanciaDTO.add(itemDTO);
@@ -397,11 +415,16 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			for (int i = 0; i < listDeclaracion.size(); i++) {
 				NotificacionDeclaracion itemDeclaracion = listDeclaracion.get(i);
 				NotificacionDTO itemDTO = modelMapper.map(itemDeclaracion.getNotificacion(), NotificacionDTO.class);
+				NotificacionEstado notificacionEstado = new NotificacionEstado();
+				Notificacion notificacion = new Notificacion();
+				notificacion.setId(itemDTO.getId());
+				notificacionEstado.setNotificacion(notificacion);
+				itemDTO.setNotificacionEstado(notificacionEstado);
 				itemDTO.setId(itemDeclaracion.getId());
 				itemDTO.setTipo("Declaracion");
 				listDeclaracionDTO.add(itemDTO);
 			}
-			List<NotificacionDTO> list = new ArrayList<>();			 
+			List<NotificacionDTO> list = new ArrayList<>();
 		    list.addAll(listNotificacionDTO);
 		    list.addAll(listDiscrepanciaDTO);
 		    list.addAll(listDeclaracionDTO);
@@ -478,7 +501,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			List<ObjectDTO> paisDTO = Arrays.asList(modelMapper.map(pais, ObjectDTO[].class));
 			for (int i = 0; i < paisDTO.size(); i++) {
 				ObjectDTO object = paisDTO.get(i);
-				object.setCantidad(items.stream().filter(p -> p.getTipoNotificacion().getId() == object.getId()).toArray().length);
+				object.setCantidad(items.stream().filter(p -> p.getPais().getId() == object.getId()).toArray().length);
 			}			
 			paisDTO = paisDTO.stream().sorted(Comparator.comparingInt(ObjectDTO::getCantidad)).collect(Collectors.toList());
 			Collections.reverse(paisDTO);
@@ -591,8 +614,14 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			ResponseEntity<NotificacionDTO> response = new ResponseEntity<NotificacionDTO>();
 			Pageable page = PageRequest.of(paginator.getOffset() - 1, paginator.getLimit());
 			Page<Notificacion> pag1 = this._repository.afectaHumanos(item.getCodigoGenerado(), page);
-			List<Notificacion> items2 = pag1.getContent();			
-			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items2, NotificacionDTO[].class));			
+			List<Notificacion> items2 = pag1.getContent();
+			
+			List<NotificacionDTO> notiList = Arrays.asList(modelMapper.map(items2, NotificacionDTO[].class));
+			for (int i = 0; i < notiList.size(); i++) {
+				NotificacionDTO ntdo = notiList.get(i);
+				ntdo.setNotificacionEstado(this._repositoryEstado.findByNoti(ntdo.getId()));
+				ntdo.setDiscrepancias(this._repositoryDiscrepancia.findByNotificacionId(ntdo.getId()));
+			}
 			paginator.setTotal((int) pag1.getTotalElements());
 			response.setItems(notiList);
 			response.setPaginator(paginator);
