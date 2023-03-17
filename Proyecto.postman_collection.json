@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "08f11cd0-abe3-4801-b053-c7bd822c3395",
-		"name": "Servicios SIGESNOT2",
+		"_postman_id": "b5d5e184-2bfe-4877-a266-36e238240031",
+		"name": "Servicios SIGESNOT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16915442"
+		"_exporter_id": "3924554"
 	},
 	"item": [
 		{
@@ -562,30 +562,6 @@
 									"port": "8080",
 									"path": [
 										"origenNotificacion"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Ciudad",
-					"item": [
-						{
-							"name": "list ciudad",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/ciudad",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"ciudad"
 									]
 								}
 							},
@@ -1313,7 +1289,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/api/usuario/7",
+									"raw": "localhost:8080/api/usuario/12",
 									"host": [
 										"localhost"
 									],
@@ -1321,7 +1297,7 @@
 									"path": [
 										"api",
 										"usuario",
-										"7"
+										"12"
 									]
 								}
 							},
@@ -1586,15 +1562,15 @@
 					]
 				},
 				{
-					"name": "Notificacion",
+					"name": "NotificacionDeclaracion",
 					"item": [
 						{
-							"name": "Excel",
+							"name": "list NotificacionDeclaracion",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/notificacion/exportar/all",
+									"raw": "http://localhost:8080/api/notificaciondeclaracion",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1602,24 +1578,443 @@
 									"port": "8080",
 									"path": [
 										"api",
-										"notificacion",
-										"exportar",
-										"all"
+										"notificaciondeclaracion"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "list Notificacion Copy",
+							"name": "delete NotificacionDeclaracion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create NotificacionDeclaracion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":123},\r\n    \"entidad\": {\"id\":21}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update NotificacionDeclaracion",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle ACtualizado Not 02\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail NotificacionDeclaracion",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/notificacion",
+									"raw": "localhost:8080/api/notificaciondeclaracion/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findByNotificacionId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion/findByNotificacionId/20",
 									"protocol": "http",
 									"host": [
 										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion",
+										"findByNotificacionId",
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateleido",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 38\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondeclaracion/updateleido",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondeclaracion",
+										"updateleido"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notificacion Discrepancia",
+					"item": [
+						{
+							"name": "list NotificacionDiscrepancia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete NotificacionDiscrepancia",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create NotificacionDiscrepancia",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":123}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update NotificacionDiscrepancia",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":15}\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail NotificacionDiscrepancia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/notificaciondiscrepancia/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findByNotificacionId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia/findByNotificacionId/20",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"findByNotificacionId",
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateleido",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 22\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificaciondiscrepancia/updateleido",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificaciondiscrepancia",
+										"updateleido"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ciudad",
+					"item": [
+						{
+							"name": "list ciudad",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/ciudad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"ciudad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list ciudad por pais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/ciudad/buscarpais/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"ciudad",
+										"buscarpais",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TipoDocumento",
+					"item": [
+						{
+							"name": "list",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/tipodocumento",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"tipodocumento"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notificacion",
+					"item": [
+						{
+							"name": "list Notificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://24.199.109.251:8080/api/notificacion",
+									"protocol": "http",
+									"host": [
+										"24",
+										"199",
+										"109",
+										"251"
 									],
 									"port": "8080",
 									"path": [
@@ -1761,7 +2156,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 1},\r\n        \"entidad\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"C0190\",\r\n        \"flagAfectado\": true,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": false,\r\n        \"notificacionLote\":[{\"lote\":\"CD01\", \"cantidad\":10.09}],\r\n        \"notificacionPresentacion\":[{\"tipoPresentacion\":{\"id\":1}, \"unidadMedida\":{\"id\":1}, \"volumen\":10.10}]\r\n    }"
+									"raw": "{\r\n        \"fuenteNotificacion\": {\"id\": 1},\r\n        \"categoriaAlimento\": {\"id\": 1},\r\n        \"tipoAlimento\": {\"id\": 1},\r\n        \"origenNotificacion\": {\"id\": 1},\r\n        \"tipoNotificacion\": {\"id\": 1},\r\n        \"ciudad\": {\"id\": 1},\r\n        \"pais\": {\"id\": 168},\r\n        \"entidad\": {\"id\": 1},\r\n        \"tipoPeligro\": {\"id\": 1},\r\n        \"fechaNotificacion\": \"2023-01-19\",\r\n        \"fechaEvento\": \"2023-01-19\",\r\n        \"productor\": \"19Prod\",\r\n        \"datoImportador\": \"19Import\",\r\n        \"datoExportador\": \"19Export\",\r\n        \"nombreAlimento\": \"19Aliment\",\r\n        \"fechaProduccion\": \"2023-01-19\",\r\n        \"fechaVencimiento\": \"2023-01-19\",\r\n        \"titulo\": \"19Titulo\",\r\n        \"codigoGenerado\": \"\",\r\n        \"flagAfectado\": false,\r\n        \"flagDigesa\": true,\r\n        \"flagSanipes\": false,\r\n        \"flagSenasa\": true,\r\n        \"flagNacional\":true\r\n    }"
 								},
 								"url": {
 									"raw": "http://localhost:8080/api/notificacion",
@@ -1824,13 +2219,13 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "paginator",
-											"value": "{\"offset\":\"1\",\"limit\":\"4\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"key": "item",
+											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1], \"estadoId\":[1,2], \"flagNacional\":false, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-03-28\", \"flagDigesa\":true, \"flagSenasa\":true}",
 											"type": "text"
 										},
 										{
-											"key": "item",
-											"value": "{\"codigoGenerado\":\"\", \"tipoNotificacionId\":[1], \"estadoId\":[1,2], \"flagNacional\":false, \"fechaCreacion\":\"2023-01-10\", \"fechaCreacionFinal\":\"2023-02-28\", \"flagDigesa\":true, \"flagSenasa\":true}",
+											"key": "paginator",
+											"value": "{\"offset\":\"1\",\"limit\":\"4\",\"sort\":\"name\",\"order\":\"asc\"}",
 											"type": "text"
 										}
 									]
@@ -2053,12 +2448,51 @@
 							"response": []
 						},
 						{
-							"name": "exportar",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "Afecta Humanos",
 							"request": {
-								"method": "GET",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer 26f9c2f3-00b4-4103-b5c4-df96697d5314",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"codigoGenerado\":\"C0190\"}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/afectahumanos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"afectahumanos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "exportar",
+							"request": {
+								"method": "POST",
 								"header": [
 									{
 										"key": "Authorization",
@@ -2092,7 +2526,7 @@
 							"response": []
 						},
 						{
-							"name": "exportar Copy",
+							"name": "mail",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2125,372 +2559,6 @@
 										"api",
 										"notificacion",
 										"mail"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "NotificacionDeclaracion",
-					"item": [
-						{
-							"name": "list NotificacionDeclaracion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete NotificacionDeclaracion",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion/3",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create NotificacionDeclaracion",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"detalle\": \"Detalle Not 01\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":41},\r\n    \"entidad\": {\"id\":21}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update NotificacionDeclaracion",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle ACtualizado Not 02\",\r\n    \"fechaCreacion\": \"2023-02-10\",\r\n    \"notificacion\": {\"id\":20},\r\n    \"entidad\": {\"id\":1}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail NotificacionDeclaracion",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/notificaciondeclaracion/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "findByNotificacionId",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion/findByNotificacionId/20",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"findByNotificacionId",
-										"20"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "updateleido",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 38\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondeclaracion/updateleido",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondeclaracion",
-										"updateleido"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Notificacion Discrepancia",
-					"item": [
-						{
-							"name": "list NotificacionDiscrepancia",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete NotificacionDiscrepancia",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia/2",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create NotificacionDiscrepancia",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":20}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update NotificacionDiscrepancia",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"detalle\": \"Detalle Not 03\",\r\n    \"fechaCreacion\": \"2023-02-09\",\r\n    \"notificacion\": {\"id\":15}\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "detail NotificacionDiscrepancia",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/api/notificaciondiscrepancia/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "findByNotificacionId",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia/findByNotificacionId/20",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"findByNotificacionId",
-										"20"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "updateleido",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 22\r\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/notificaciondiscrepancia/updateleido",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"notificaciondiscrepancia",
-										"updateleido"
 									]
 								}
 							},
