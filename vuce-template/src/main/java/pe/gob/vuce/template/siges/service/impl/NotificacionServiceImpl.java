@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
@@ -104,6 +107,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@SuppressWarnings("rawtypes")
 	@Transactional
@@ -563,7 +569,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	@Override
 	public ByteArrayInputStream exportar(NotificacionDTO item) throws Exception{
 		String[] columns = {"CODIGO", "PRODUCTOR", "NOMBRE IMPORTADOR", "NOMBRE EXPORTADOR", "NOMBRE ALIMENTO",
-				"CATEGORÍA ALIMENTO", "TIPO ALIMENTO","FECHA NOTIFICACIÓN",};
+				"CATEGORÍA ALIMENTO", "TIPO ALIMENTO","FECHA NOTIFICACIÓN","FECHA EVENTO","TIPO NOTIFICACIÓN",
+				"PELIGRO ESPECÍFICO","AFECTA HUMANOS", "PAÍS", "CIUDAD","FECHA PRODUCCIÓN","FECHA VENCIMIENTO",
+				"OBSERVACIONES","TITULO"};
 		
 		Workbook workbook = new HSSFWorkbook();
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -600,6 +608,17 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			row.createCell(5).setCellValue(notificacion.getCategoriaAlimento().getNombre());
 			row.createCell(6).setCellValue(notificacion.getTipoAlimento().getNombre());
 			row.createCell(7).setCellValue(notificacion.getFechaNotificacion());
+			row.createCell(8).setCellValue(notificacion.getFechaEvento());
+			row.createCell(9).setCellValue(notificacion.getTipoNotificacion().getNombre());
+			row.createCell(10).setCellValue(notificacion.getPeligroEspecifico());
+			row.createCell(11).setCellValue(notificacion.getFlagAfectado());
+			row.createCell(12).setCellValue(notificacion.getPais().getNombre());
+			row.createCell(13).setCellValue(notificacion.getCiudad().getNombre());
+			row.createCell(14).setCellValue(notificacion.getFechaProduccion());
+			row.createCell(15).setCellValue(notificacion.getFechaVencimiento());
+			row.createCell(15).setCellValue(notificacion.getComentario());
+			row.createCell(16).setCellValue(notificacion.getTitulo());	
+			row.createCell(16).setCellValue(notificacion.getFlagDigesa());
 			initRow++;
 		}		
 		workbook.write(stream);
@@ -630,4 +649,22 @@ public class NotificacionServiceImpl  implements NotificacionService {
 			throw new Exception(ex.getMessage());
 		}
 	}
+	
+	public void send() {
+		Notificacion item = new Notificacion();
+		item.setCodigoGenerado("2023. P.023");
+		TipoNotificacion t = new TipoNotificacion();
+		t.setNombre("Rechazo");		
+		item.setTipoNotificacion(t);
+        item.setTitulo("Leche Gloria");
+        item.setFechaEvento(new Date());
+        
+		SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("riveraevento@gmail.com");
+        message.setTo("riveraevento@gmail.com");
+        message.setSubject("PRUEBAS " + item.getCodigoGenerado());
+        message.setText("MENSAJE 01 DE PRUEBAS");
+        mailSender.send(message);
+	}
+	
 }

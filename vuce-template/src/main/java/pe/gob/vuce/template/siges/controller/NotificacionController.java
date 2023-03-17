@@ -198,4 +198,11 @@ public class NotificacionController extends BaseController {
 			return super.getJSON(ex);
 		}
 	}
+		
+	@GetMapping("/mail")
+	public boolean send (){
+		boolean respuesta=true;
+		this._service.send();
+		return respuesta;
+	}
 }

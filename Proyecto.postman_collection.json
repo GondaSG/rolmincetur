@@ -2090,6 +2090,45 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "exportar Copy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer 26f9c2f3-00b4-4103-b5c4-df96697d5314",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/notificacion/mail",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"notificacion",
+										"mail"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
