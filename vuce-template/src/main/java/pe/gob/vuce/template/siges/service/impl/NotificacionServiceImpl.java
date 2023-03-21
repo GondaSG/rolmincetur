@@ -36,6 +36,7 @@ import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
 import pe.gob.vuce.template.dto.NotificacionFaseDTO;
 import pe.gob.vuce.template.dto.ObjectDTO;
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
+import pe.gob.vuce.template.siges.domain.FuenteNotificacion;
 import pe.gob.vuce.template.siges.domain.Notificacion;
 import pe.gob.vuce.template.siges.domain.NotificacionDeclaracion;
 import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
@@ -653,17 +654,32 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	public void send() {
 		Notificacion item = new Notificacion();
 		item.setCodigoGenerado("2023. P.023");
-		TipoNotificacion t = new TipoNotificacion();
-		t.setNombre("Rechazo");		
+		TipoNotificacion t = new TipoNotificacion();		
+		t.setNombre("Rechazo");
+		FuenteNotificacion f = new FuenteNotificacion();
+		f.setNombre("Infosan");
+		
+		item.setFuenteNotificacion(f);		
 		item.setTipoNotificacion(t);
+		item.setFlagNacional(true);
         item.setTitulo("Leche Gloria");
         item.setFechaEvento(new Date());
         
 		SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("riveraevento@gmail.com");
         message.setTo("riveraevento@gmail.com");
-        message.setSubject("PRUEBAS " + item.getCodigoGenerado());
-        message.setText("MENSAJE 01 DE PRUEBAS");
+        message.setSubject("VUCE - Ges - Notificación # " + item.getCodigoGenerado());
+        message.setText("Estimado Funcionario \n" + "\n" +
+        		"Tiene una nueva notificación en el sistema de de la plataforma VUCE: \n" + "\n" +
+        		"Nro. Notificación: " + item.getCodigoGenerado() + "\n" +
+        		"Nombre de la notificación: " + item.getTitulo() + "\n" +
+        		"Tipo de Notificación: " + item.getTipoNotificacion().getNombre() + "\n" +
+        		"Fuente de la notificación: " + (item.getFlagNacional() ? "Nacional" : "Internacional") + " - " + item.getFuenteNotificacion().getNombre() + "\n" +
+        		"Fecha del evento: "+ item.getFechaEvento().toString() + "\n" + "\n" +
+        		"Mensaje automatico, por favor no responder. Las tildes has sido omitidas intencionalmente." + "\n"
+        		+ "Aviso de confidencialidad:\n "
+        		+ "Este correo electronico y/o material adjunto es para uso exclusivo de la persona o entidad a la expresamente se le ha enviado, y puede contener información confidencial o material privilegiado."
+        		);
         mailSender.send(message);
 	}
 	

@@ -2,6 +2,8 @@ package pe.gob.vuce.template.siges.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -175,12 +177,11 @@ public class NotificacionController extends BaseController {
 	@ResponseBody()
 	//@GetMapping("/exportar")
 	public org.springframework.http.ResponseEntity<InputStreamResource> exportar(@RequestBody NotificacionDTO item) throws Exception{
-		ByteArrayInputStream stream = this._service.exportar(item);		
-		HttpHeaders headers = new HttpHeaders();
-		
-		//date 
-		
-		headers.add("Content-Disposition", "attachment; filename=Notificaciones.xls");		
+		ByteArrayInputStream stream = this._service.exportar(item);
+		HttpHeaders headers = new HttpHeaders();		
+		LocalDate dateActual = LocalDate.now(); 
+		String Noti = "Notificacines" + dateActual.toString();
+		headers.add("Content-Disposition", "attachment; filename="+  Noti + ".xls");		
 		return org.springframework.http.ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
 	}
 	
@@ -201,7 +202,7 @@ public class NotificacionController extends BaseController {
 		
 	@GetMapping("/mail")
 	public boolean send (){
-		boolean respuesta=true;
+		boolean respuesta=true;		
 		this._service.send();
 		return respuesta;
 	}
