@@ -24,7 +24,7 @@ define([
         query.outFields = ["EMPRESA"];
         query.returnDistinctValues = true;
         await _equipo_secc_equipo.queryFeatures(query).then(function(results) {
-            createList(results.features, $("#ulEmpresas"), "EMPRESA");
+            createList(results.features, $("#ulEmpresas"), "EMPRESA", 1);
             $(".loading").hide()
         });
     }
@@ -38,10 +38,7 @@ define([
         await _equipo_secc_equipo.queryFeatures(query).then(function(results) {
             switch (obj.idPanel) {
                 case 1:
-                    createList(results.features, $("#ulEquipos"), "COD")
-                    break;
-                case 2:
-                    createList(results.features, $("#ulEquiposAfectados"), "COD")
+                    createList(results.features, $("#ulEquipos"), "COD", 1)
                     break;
             }
         });
@@ -103,14 +100,17 @@ define([
         });
     }
 
-    function createList(features, dom, attribute) {
+    function createList(features, dom, attribute, etiqueta) {
+        let etiqueta1 = `<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="15" height="15" fill="#000"><path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z"/></svg>`;
+        let etiqueta2 = `<img src="assets/images/subestaciones.png" alt="">`;
+
         let li = `<li class="list-group-item d-flex">
                 <label>No se encontro registros.</label>
             </li>`;
         if (features.length)
             li = features.map(t => {
                 return `<li class="list-group-item d-flex align-items-end" value="${attribute != "" ? t.attributes[attribute]: t}">
-                <h3 class="h4 mb-0 text-accent-app">.</h3>
+                <h3 class="h4 mb-0 text-accent-app">${etiqueta == 1 ? etiqueta1: etiqueta2 }</h3>
                 <p class="mb-0">${attribute != "" ? t.attributes[attribute]: t}</p>
             </li>`;
             })
@@ -140,11 +140,11 @@ define([
         let url = `https://gisem.osinergmin.gob.pe/validar/seccionador/api/api/values/GetData/${codEmpresa}/${codEquipo}`;
         await $.get(url).then(response => {
             getQueryService(response.seccionadorAfectado, Servicejs.getLayerEquipoSymbol(), 1);
-            createList(response.seccionadorAfectado, $("#ulSeccionamientosAfectados"), "")
+            createList(response.seccionadorAfectado, $("#ulSeccionamientosAfectados"), "", 1)
             setValueCount(response.seccionadorAfectado.length, $("#idSecAfec"))
 
             getQueryService(response.sed, Servicejs.getLayerSubEstacionSymbol(), 2);
-            createList(response.sed, $("#ulSedAfectados"), "")
+            createList(response.sed, $("#ulSedAfectados"), "", 2)
             setValueCount(response.sed.length, $("#idSubAfec"))
 
             getQueryService(response.tramos, Servicejs.getLayerTramoSymbol(), 3);

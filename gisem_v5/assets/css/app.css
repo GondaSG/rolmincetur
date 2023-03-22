@@ -175,12 +175,12 @@
     background-color: #D0DADB;
 }
 
-.listEmpEquip>li.active>h3 {
-    color: orange !important
+.listEmpEquip>li.active>h3>svg {
+    fill: orange !important
 }
 
-.listEmpEquipafectados>li.active>h3 {
-    color: red !important
+.listEmpEquipafectados>li>h3>svg {
+    fill: red !important
 }
 
 .listEmpEquipafectados>li>p,
