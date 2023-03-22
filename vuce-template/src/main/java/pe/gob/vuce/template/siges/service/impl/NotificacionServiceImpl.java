@@ -1,6 +1,5 @@
 package pe.gob.vuce.template.siges.service.impl;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,9 +25,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
@@ -46,6 +46,7 @@ import pe.gob.vuce.template.siges.domain.NotificacionLote;
 import pe.gob.vuce.template.siges.domain.NotificacionPresentacion;
 import pe.gob.vuce.template.siges.domain.Pais;
 import pe.gob.vuce.template.siges.domain.TipoNotificacion;
+import pe.gob.vuce.template.siges.domain.Usuario;
 import pe.gob.vuce.template.siges.entity.PaginatorEntity;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.repository.CategoriaAlimentoRepository;
@@ -60,10 +61,14 @@ import pe.gob.vuce.template.siges.repository.NotificacionPresentacionRepository;
 import pe.gob.vuce.template.siges.repository.NotificacionRepository;
 import pe.gob.vuce.template.siges.repository.PaisRepository;
 import pe.gob.vuce.template.siges.repository.TipoNotificacionRepository;
+import pe.gob.vuce.template.siges.repository.UsuarioRepository;
 import pe.gob.vuce.template.siges.service.NotificacionService;
 
 @Service
 public class NotificacionServiceImpl  implements NotificacionService {
+		
+	@Autowired
+	UsuarioRepository _repositoryUsuario;
 	
 	@Autowired
 	NotificacionRepository _repository;
@@ -148,6 +153,9 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				itemNF.setFlagActivo(true);
 				itemNF.setIdFase(idFaseDefault);
 				this.updateFase(itemNF);
+				List<String> emails = this.configEmails(item2, false);
+				String[] array = emails.stream().toArray(n -> new String[n]);
+				this.send(item2, array);
 			} else {
 				message += "Se actualizaron sus datos de manera correcta";
 				this._repository.save(item3);
@@ -189,6 +197,52 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	private List<String> configEmails(Notificacion item, boolean activar) {
+		int value = 0;
+		List<String> emails = new ArrayList<String>();
+		if (item.getFlagDigesa() && !activar) {
+			value = 2;
+			List<Usuario> user = this._repositoryUsuario.buscarPorEntidad(value);
+			if (user.size() > 0)
+			{
+				for (int i = 0; i < user.size(); i++) {
+					emails.add(user.get(i).getCorreo());
+				}
+			}
+		}
+		if (item.getFlagSenasa() && !activar) {
+			value = 3;
+			List<Usuario> user = this._repositoryUsuario.buscarPorEntidad(value);
+			if (user.size() > 0)
+			{
+				for (int i = 0; i < user.size(); i++) {
+					emails.add(user.get(i).getCorreo());
+				}
+			}
+		}
+		if (item.getFlagSanipes() && !activar) {
+			value = 4;
+			List<Usuario> user = this._repositoryUsuario.buscarPorEntidad(value);
+			if (user.size() > 0)
+			{
+				for (int i = 0; i < user.size(); i++) {
+					emails.add(user.get(i).getCorreo());
+				}
+			}
+		}
+		if (activar) {
+			value = 6;
+			List<Usuario> user = this._repositoryUsuario.buscarPorEntidad(value);
+			if (user.size() > 0)
+			{
+				for (int i = 0; i < user.size(); i++) {
+					emails.add(user.get(i).getCorreo());
+				}
+			}
+		}
+		return emails;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -415,6 +469,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				itemDTO.setNotificacionEstado(notificacionEstado);
 				itemDTO.setId(itemDiscrepancia.getId());
 				itemDTO.setTipo("Discrepancia");
+				itemDTO.setFechaCreacion(itemDiscrepancia.getFechaCreacion());
 				listDiscrepanciaDTO.add(itemDTO);
 			}
 			List<NotificacionDTO> listDeclaracionDTO = new ArrayList<NotificacionDTO>();
@@ -429,12 +484,20 @@ public class NotificacionServiceImpl  implements NotificacionService {
 				itemDTO.setNotificacionEstado(notificacionEstado);
 				itemDTO.setId(itemDeclaracion.getId());
 				itemDTO.setTipo("Declaracion");
+				itemDTO.setFechaCreacion(itemDeclaracion.getFechaCreacion());
 				listDeclaracionDTO.add(itemDTO);
 			}
 			List<NotificacionDTO> list = new ArrayList<>();
 		    list.addAll(listNotificacionDTO);
 		    list.addAll(listDiscrepanciaDTO);
-		    list.addAll(listDeclaracionDTO);
+		    list.addAll(listDeclaracionDTO);		    
+		    //list = list.stream().sorted(Comparator.comparingInt(ObjectDTO::getCantidad)).collect(Collectors.toList());
+		    Collections.sort(list, new Comparator<NotificacionDTO>(){
+	    	  public int compare(NotificacionDTO o1, NotificacionDTO o2)
+	    	  {
+	    	     return o1.getFechaCreacion().compareTo(o2.getFechaCreacion());
+	    	  }
+	    	});
 			response.setItems(list);
 			return response;
 		} catch (Exception ex) {
@@ -649,6 +712,64 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	public void send(Notificacion item, String[] emails) {
+		SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("riveraevento@gmail.com");
+        message.setTo(emails);
+        message.setSubject("VUCE - Gestión de Notificaciones de Inocuidad Alimentaria – Notificación # " + item.getCodigoGenerado());
+        message.setText("Estimado Funcionario \n" + "\n" +
+        		"Tiene una nueva notificación en el sistema de de la plataforma VUCE: \n" + "\n" +
+        		"Nro. Notificación: " + item.getCodigoGenerado() + "\n" +
+        		"Nombre de la notificación: " + item.getTitulo() + "\n" +
+        		"Tipo de Notificación: " + item.getTipoNotificacion().getNombre() + "\n" +
+        		"Fuente de la notificación: " + (item.getFlagNacional() ? "Nacional" : "Internacional") + " - " + item.getFuenteNotificacion().getNombre() + "\n" +
+        		"Fecha del evento: "+ item.getFechaEvento().toString() + "\n" + "\n" +
+        		"Mensaje automatico, por favor no responder. Las tildes has sido omitidas intencionalmente." + "\n"
+        		+ "Aviso de confidencialidad:\n "
+        		+ "Este correo electronico y/o material adjunto es para uso exclusivo de la persona o entidad a la expresamente se le ha enviado, y puede contener información confidencial o material privilegiado."
+        		);
+        try {
+        	 mailSender.send(message);
+		} catch (MailException  e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity send(EmailDTO item) throws Exception {
+		try {
+			boolean success = false;
+			Integer id = item.getId();
+			String message = "";
+			List<String> emails = new ArrayList<String>();
+			if (id > 0) {
+				Notificacion noti = this._repository.findById(id).get();
+				if (noti.getFlagNacional()) {
+					emails = this.configEmails(noti, false);
+				}
+				else {
+					emails = this.configEmails(noti, true);
+				}				
+				List<String> c = new ArrayList<String>();
+				for (int i = 0; i < item.getCorreos().length; i++) {
+					emails.add(item.getCorreos()[i]);
+				}
+				String[] array = emails.stream().toArray(n -> new String[n]);
+				//emails = emails.concat(item.getCorreos());
+				this.send(noti, array);
+				success = true;
+				message = "Se enviado los correos correctamente";
+			}
+			ResponseEntity response = new ResponseEntity();
+			response.setSuccess(success);
+			response.setMessage(message);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}	
 	}
 	
 	public void send() {

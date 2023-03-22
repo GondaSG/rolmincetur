@@ -3,11 +3,6 @@ package pe.gob.vuce.template.dto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import pe.gob.vuce.template.siges.domain.CategoriaAlimento;
 import pe.gob.vuce.template.siges.domain.Ciudad;

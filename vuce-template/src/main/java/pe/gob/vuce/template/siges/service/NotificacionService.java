@@ -2,6 +2,7 @@ package pe.gob.vuce.template.siges.service;
 
 import java.io.ByteArrayInputStream;
 
+import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
@@ -35,4 +36,6 @@ public interface NotificacionService {
 	ResponseEntity<NotificacionDTO> afectaHumanos(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 	ByteArrayInputStream exportar(NotificacionDTO item) throws Exception;
 	void send();
+	@SuppressWarnings("rawtypes")
+	ResponseEntity send(EmailDTO item) throws Exception;
 }

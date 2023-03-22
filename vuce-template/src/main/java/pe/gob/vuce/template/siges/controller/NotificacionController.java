@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
@@ -198,8 +200,19 @@ public class NotificacionController extends BaseController {
 		} catch (Exception ex) {	
 			return super.getJSON(ex);
 		}
+	}		
+	
+	@RequestMapping(value = "/mail", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<?> send (@RequestBody EmailDTO item){
+		try {
+			ResponseEntity<?> response = this._service.send(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}		
 	}
-		
+	
 	@GetMapping("/mail")
 	public boolean send (){
 		boolean respuesta=true;		
