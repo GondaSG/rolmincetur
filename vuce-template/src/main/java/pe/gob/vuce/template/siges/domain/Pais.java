@@ -27,6 +27,10 @@ public class Pais {
 	private String nombre;
 	@Column(length=400)
 	private String descripcion;
+	@Column(length=2)
+	private String isoAlfa2;
+	@Column(length=3)
+	private String isoAlfa3;
 	
 	public int getId() {
 		return id;
@@ -45,5 +49,17 @@ public class Pais {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}	
+	}
+	public String getIsoAlfa2() {
+		return isoAlfa2;
+	}
+	public void setIsoAlfa2(String isoAlfa2) {
+		this.isoAlfa2 = isoAlfa2;
+	}
+	public String getIsoAlfa3() {
+		return isoAlfa3;
+	}
+	public void setIsoAlfa3(String isoAlfa3) {
+		this.isoAlfa3 = isoAlfa3;
+	}
 }

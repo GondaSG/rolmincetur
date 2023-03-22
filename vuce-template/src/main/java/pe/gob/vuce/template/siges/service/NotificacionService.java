@@ -1,5 +1,8 @@
 package pe.gob.vuce.template.siges.service;
 
+import java.io.ByteArrayInputStream;
+
+import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
@@ -23,11 +26,16 @@ public interface NotificacionService {
 	ResponseEntity<NotificacionDTO> search(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateLeido(NotificacionDTO item) throws Exception;
-	ResponseEntity<NotificacionDTO> getNoLeidos(boolean flagDigesa,	boolean flagSanipes, boolean flagSenasa) throws Exception;
+	ResponseEntity<NotificacionDTO> getNoLeidos(Boolean flagDigesa,	Boolean flagSanipes, Boolean flagSenasa) throws Exception;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateFase(NotificacionFaseDTO item) throws Exception;
 	ResponseEntity<NotificacionFase> findFase(int id) throws Exception;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity updateNoCompetencia(NotificacionDTO item) throws Exception;
 	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception;
+	ResponseEntity<NotificacionDTO> afectaHumanos(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
+	ByteArrayInputStream exportar(NotificacionDTO item) throws Exception;
+	void send();
+	@SuppressWarnings("rawtypes")
+	ResponseEntity send(EmailDTO item) throws Exception;
 }

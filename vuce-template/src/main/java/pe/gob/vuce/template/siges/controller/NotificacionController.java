@@ -1,7 +1,12 @@
 package pe.gob.vuce.template.siges.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.dto.NotificacionEstadoDTO;
@@ -119,8 +126,8 @@ public class NotificacionController extends BaseController {
 	}
 	
 	@GetMapping("obtenerNoLeidos/{flagDigesa}/{flagSanipes}/{flagSenasa}")
-	public ResponseEntity<NotificacionDTO> getNoLeidos(@PathVariable("flagDigesa") boolean flagDigesa,
-			@PathVariable("flagSanipes") boolean flagSanipes, @PathVariable("flagSenasa") boolean flagSenasa){
+	public ResponseEntity<NotificacionDTO> getNoLeidos(@PathVariable("flagDigesa") Boolean flagDigesa,
+			@PathVariable("flagSanipes") Boolean flagSanipes, @PathVariable("flagSenasa") Boolean flagSenasa){
 		ResponseEntity<NotificacionDTO> response = new ResponseEntity<>();
 		try {
 			response = this._service.getNoLeidos(flagDigesa, flagSanipes, flagSenasa);
@@ -150,30 +157,66 @@ public class NotificacionController extends BaseController {
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
-	}
-	
-	//@PostMapping
-	//@RequestMapping(value = "/updatenocompetencia")
-	//public ResponseEntity<?> updatenocompetencia(@RequestBody NotificacionDTO item){
-	//	try {
-	//		ResponseEntity<?> response = this._service.updateNoCompetencia(item);
-	//		return response;
-	//	} catch (Exception ex) {
-	//		return super.getJSON(ex);
-	//	}
-	//}
+	}	
 	
 	@SuppressWarnings({ "unchecked" })
 	@RequestMapping(value = "/indicadores", method = RequestMethod.POST)
 	@ResponseBody()
 	public ResponseEntity<IndicadorDTO> indicadores(@RequestBody IndicadorDTO item) throws IOException {
-		try {
-			//PaginatorEntity paginator = super.setPaginator();
-			//NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
+		try {			
 			ResponseEntity<IndicadorDTO> response = this._service.indicadores(item);
+			return response;
+			//return "Funciona mi meotod";
+		} catch (Exception ex) {	
+			return super.getJSON(ex);
+			//return "No funciona";
+		}
+	}	
+	
+	
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping(value = "/exportar", method = RequestMethod.POST)
+	@ResponseBody()
+	//@GetMapping("/exportar")
+	public org.springframework.http.ResponseEntity<InputStreamResource> exportar(@RequestBody NotificacionDTO item) throws Exception{
+		ByteArrayInputStream stream = this._service.exportar(item);
+		HttpHeaders headers = new HttpHeaders();		
+		LocalDate dateActual = LocalDate.now(); 
+		String Noti = "Notificacines" + dateActual.toString();
+		headers.add("Content-Disposition", "attachment; filename="+  Noti + ".xls");		
+		return org.springframework.http.ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
+	}
+	
+	
+	@SuppressWarnings({ "unchecked" })
+	@RequestMapping(value = "/afectahumanos", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<NotificacionDTO> afectaHumanos(@RequestParam("item") String item) throws IOException {
+		try {
+			PaginatorEntity paginator = super.setPaginator();
+			NotificacionDTO item2 = super.fromJson(item, NotificacionDTO.class);
+			ResponseEntity<NotificacionDTO> response = this._service.afectaHumanos(item2, paginator);
 			return response;
 		} catch (Exception ex) {	
 			return super.getJSON(ex);
 		}
+	}		
+	
+	@RequestMapping(value = "/mail", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<?> send (@RequestBody EmailDTO item){
+		try {
+			ResponseEntity<?> response = this._service.send(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}		
+	}
+	
+	@GetMapping("/mail")
+	public boolean send (){
+		boolean respuesta=true;		
+		this._service.send();
+		return respuesta;
 	}
 }

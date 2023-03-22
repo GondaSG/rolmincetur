@@ -69,7 +69,7 @@ public class UsuarioApplicationService {
     public UsuarioDto getByNameAndSOL(String nombreUsuario, String usuarioSol) {
         Usuario usuario = null;//this.usuarioRepository.getByNameAndSOL(nombreUsuario, usuarioSol);
         UsuarioDto usuarioDto = usuario == null ? null : mapper.map(usuario, UsuarioDto.class);
-        usuarioDto.addPerfiles(this.perfilApplicationService.getByUsuarioId(usuario.getId()));
+        //usuarioDto.addPerfiles(this.perfilApplicationService.getByUsuarioId(usuario.getId()));
         return usuarioDto;
     }
 }

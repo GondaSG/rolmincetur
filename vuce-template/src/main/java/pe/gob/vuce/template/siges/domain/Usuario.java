@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,6 +47,10 @@ public class Usuario {
 	@ManyToOne
     @JoinColumn(name = "tipo_usuario_id", referencedColumnName = "id", nullable=false)
 	private TipoUsuario tipoUsuario;
+	
+	@ManyToOne
+    @JoinColumn(name = "tipo_documento_id", referencedColumnName = "id", nullable=false)
+	private TipoDocumento tipoDocumento;
 	
 	public String getCodigo() {
 		return codigo;
@@ -119,5 +122,13 @@ public class Usuario {
 
 	public void setTipoUsuario(TipoUsuario tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 }

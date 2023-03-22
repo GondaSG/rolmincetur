@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pe.gob.vuce.template.dto.NotificacionDTO;
 import pe.gob.vuce.template.siges.domain.NotificacionDiscrepancia;
 import pe.gob.vuce.template.siges.entity.ResponseEntity;
 import pe.gob.vuce.template.siges.service.NotificacionDiscrepanciaService;
-
 
 @RestController
 @RequestMapping(value="notificaciondiscrepancia")
@@ -66,6 +66,7 @@ public class NotificacionDiscrepanciaController extends BaseController {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/{id}")
 	public ResponseEntity<NotificacionDiscrepancia> findById(@PathVariable("id") int id){
 		try {
@@ -77,12 +78,24 @@ public class NotificacionDiscrepanciaController extends BaseController {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("findByNotificacionId/{notificacionid}")
 	public ResponseEntity<NotificacionDiscrepancia> findByNotificacionId(@PathVariable("notificacionid") int notificacionid){
 		try {
 			ResponseEntity<NotificacionDiscrepancia> response = this._service.findByNotificacionId(notificacionid);
 			return response;
 		} catch(Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@RequestMapping(value = "/updateleido")
+	@PostMapping
+	public ResponseEntity<?> updateLeido(@RequestBody NotificacionDTO item){
+		try {
+			ResponseEntity<?> response = this._service.updateLeido(item);
+			return response;
+		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
 	}
