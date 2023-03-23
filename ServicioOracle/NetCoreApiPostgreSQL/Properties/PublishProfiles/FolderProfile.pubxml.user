@@ -4,7 +4,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <History>True|2023-03-10T18:51:02.6761396Z;True|2023-03-02T19:58:19.3142375-05:00;True|2023-03-02T19:41:55.2457300-05:00;True|2023-03-02T11:00:29.0062555-05:00;True|2023-03-01T17:07:38.8095011-05:00;False|2023-03-01T17:06:37.1117648-05:00;False|2023-03-01T17:05:49.5800160-05:00;</History>
+    <History>True|2023-03-22T19:05:27.9981668Z;True|2023-03-10T13:51:02.6761396-05:00;True|2023-03-02T19:58:19.3142375-05:00;True|2023-03-02T19:41:55.2457300-05:00;True|2023-03-02T11:00:29.0062555-05:00;True|2023-03-01T17:07:38.8095011-05:00;False|2023-03-01T17:06:37.1117648-05:00;False|2023-03-01T17:05:49.5800160-05:00;</History>
     <LastFailureDetails />
     <_PublishTargetUrl>C:\projects\Servicios\rolmincetur\publicado\apiDashboard</_PublishTargetUrl>
   </PropertyGroup>

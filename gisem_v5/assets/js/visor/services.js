@@ -22,10 +22,12 @@ define([
 
     //esriConfig.request.proxyUrl = "https://gisem.osinergmin.gob.pe/proxy_esri_corsgral/proxy.ashx"; //oficial
     var _equipo_secc_equipo = new FeatureLayer({
-        url: url_equipo_seccionamiento_Equipos
+        url: url_equipo_seccionamiento_Equipos,
+        title: "SECCIONADORES"
     });
     var _equipo_secc_tramo = new FeatureLayer({
-        url: url_equipo_seccionamiento_Tramo
+        url: url_equipo_seccionamiento_Tramo,
+        title: "TRAMO MT"
     });
     var _equipo_secc_subEstacion = new FeatureLayer({
         url: url_equipo_seccionamiento_SubEstacion,
@@ -35,17 +37,20 @@ define([
     var _equipo_secc_equipo_symbol = new FeatureLayer({
         url: url_equipo_seccionamiento_equipos_simbologia,
         visible: false,
-        definitionExpression: "COD = 0"
+        definitionExpression: "COD = 0",
+        title: "SECCIONADORES AFECTADOS"
     });
     var _equipo_secc_tramo_symbol = new FeatureLayer({
         url: url_equipo_seccionamiento_Tramo_simbologia,
         visible: false,
-        definitionExpression: "COD = 0"
+        definitionExpression: "COD = 0",
+        title: "TRAMO MT AFECTADOS"
     });
     var _equipo_secc_subEstacion_symbol = new FeatureLayer({
         url: url_equipo_seccionamiento_SubEstacion_simbologia,
         visible: false,
-        definitionExpression: "COD = 0"
+        definitionExpression: "COD = 0",
+        title: "SUBESTACION AFECTADA"
     });
     /*__globspace.infolayers = [{
         alias: '__equipo_secc',
