@@ -1,5 +1,4 @@
-FROM openjdk:8
-VOLUME /TEMP
+FROM openjdk:8-jdk-alpine
+COPY ./build/libs/prod-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-COPY build/libs/vuce-template-test-0.0.1-SNAPSHOT.jar message-server-1.0.0.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

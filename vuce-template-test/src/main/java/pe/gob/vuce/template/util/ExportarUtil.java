@@ -9,7 +9,7 @@ public class ExportarUtil {
 	
 	public static void crearExcel() {
 		
-		var wb = (var) new XSSFWorkbook();
+		//var wb = (var) new XSSFWorkbook();
 		
 		//crear hoja
 		//Sheet hoja = wb.createSheet(nombreHoja);

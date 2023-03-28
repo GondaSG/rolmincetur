@@ -21,7 +21,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -108,11 +107,6 @@ public class NotificacionServiceImpl  implements NotificacionService {
 	
 	@Autowired(required=true)
     ModelMapper modelMapper;
-	
-	@Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 	
 	@Autowired
 	private JavaMailSender mailSender;
