@@ -1,0 +1,10 @@
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ApiCierrePuerto.exe
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\appsettings.Development.json
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\appsettings.json
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ApiCierrePuerto.dll
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ApiCierrePuerto.deps.json
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ApiCierrePuerto.runtimeconfig.json
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ApiCierrePuerto.pdb
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ExcelDataReader.dll
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\ExcelDataReader.DataSet.dll
+C:\Users\User\source\repos\ApiCierrePuerto\obj\Release\netcoreapp3.1\PubTmp\Out\Newtonsoft.Json.dll
