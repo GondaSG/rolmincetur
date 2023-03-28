@@ -11,17 +11,3 @@ E:\EBIZ\C#\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQ
 E:\EBIZ\C#\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.csproj.CopyComplete
 E:\EBIZ\C#\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.dll
 E:\EBIZ\C#\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.pdb
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.deps.json
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.dll
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.pdb
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.dll
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\bin\Debug\netcoreapp3.1\Oracle.ManagedDataAccess.dll
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\bin\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Model.pdb
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.csproj.AssemblyReference.cache
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.GeneratedMSBuildEditorConfig.editorconfig
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.AssemblyInfoInputs.cache
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.AssemblyInfo.cs
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.csproj.CoreCompileInputs.cache
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.csproj.CopyComplete
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.dll
-C:\projects\Servicios\rolmincetur\ServicioOracle\NetCoreApiPostgreSQL.Data\obj\Debug\netcoreapp3.1\NetCoreApiPostgreSQL.Data.pdb

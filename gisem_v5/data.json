@@ -1,0 +1,23 @@
+{
+    "data": {
+        "EDLN": "ENEL",
+        "ELC": "Electro Centro",
+        "ELDU": "Electro Dunas",
+        "ELN": "Electro Norte",
+        "ELNM": "Hidrandina",
+        "ELNO": "Electro Noroeste",
+        "ELOR": "Electro Oriente",
+        "ELPU": "Electro Puno",
+        "SEAL": "SEAL",
+        "ELUC": "Electro Ucayali",
+        "LDS": "Luz del Sur",
+        "ELTO": "Electro Tocache",
+        "ELS": "Electro Sur",
+        "EMSE": "EMSEMSA",
+        "EMSU": "EMSEUSA",
+        "SERS": "SERSA",
+        "ELSE": "Electro Sur Este",
+        "COEL": "COELVISAC",
+        "EPAN": "Electro Pangoa"
+    }
+}

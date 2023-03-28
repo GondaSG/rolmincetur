@@ -19,9 +19,6 @@ namespace NetCoreApiPostgreSQL
         public void ConfigureServices(IServiceCollection services)
         {            
             services.AddControllers();
-            //var postgreSQLConnectionConfiguration = new PostgreSQLConfiguration(Configuration.GetConnectionString("PostgreSQLConnection"));
-            //services.AddSingleton(postgreSQLConnectionConfiguration);
-            //services.AddScoped<CarRepository, CarRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

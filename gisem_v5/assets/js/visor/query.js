@@ -18,15 +18,21 @@ define([
     var View = visorjs.getView();
     var Map = visorjs.getMap();
     async function QueryLayerGetEmpresa() {
-        const query = new Query();
-        query.where = "1=1";
-        query.returnGeometry = false;
-        query.outFields = ["EMPRESA"];
-        query.returnDistinctValues = true;
-        await _equipo_secc_equipo.queryFeatures(query).then(function(results) {
-            createList(results.features, $("#ulEmpresas"), "EMPRESA", 1);
+
+        await $.getJSON("https://gisem.osinergmin.gob.pe/validar/seccionador/data.json", function( response ) {
+            console.log(response);
+            createList2(response.data, $("#ulEmpresas"), "EMPRESA", 1);
             $(".loading").hide()
-        });
+          });
+        //const query = new Query();
+        //query.where = "1=1";
+        //query.returnGeometry = false;
+        //query.outFields = ["EMPRESA"];
+        //query.returnDistinctValues = true;
+        //await _equipo_secc_equipo.queryFeatures(query).then(function(results) {
+        //    createList(results.features, $("#ulEmpresas"), "EMPRESA", 1);
+        //    $(".loading").hide()
+        //});
     }
     async function QueryLayerGetEquipo(obj) {
         const query = new Query();
@@ -117,16 +123,20 @@ define([
         dom.html(li);
     }
 
-    function createListAfectados(features, dom, attribute) {
+    function createList2(features, dom, attribute, etiqueta) {
+        debugger;
+        let etiqueta1 = `<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="15" height="15" fill="#000"><path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z"/></svg>`;
+        let etiqueta2 = `<img src="assets/images/subestaciones.png" alt="">`;
+
         let li = `<li class="list-group-item d-flex">
                 <label>No se encontro registros.</label>
             </li>`;
-        if (features.length)
-            li = features.map(t => {
-                return ` <li class="list-group-item d-flex align-items-end" value="${attribute == "" ? t.attributes[attribute]: t}>
-                    <h3 class="h4 mb-0 text-accent-app pe-3"> .</h3>
-                    <p class="mb-0">${attribute == "" ? t.attributes[attribute]: t}</p>
-                </li>`;
+        if (Object.keys(features).length)
+            li = Object.keys(features).map(t => {
+                return `<li class="list-group-item d-flex align-items-end" value="${t}">
+                <h3 class="h4 mb-0 text-accent-app">${etiqueta == 1 ? etiqueta1: etiqueta2 }</h3>
+                <p class="mb-0">${features[t]}</p>
+            </li>`;
             })
         dom.html(li);
     }

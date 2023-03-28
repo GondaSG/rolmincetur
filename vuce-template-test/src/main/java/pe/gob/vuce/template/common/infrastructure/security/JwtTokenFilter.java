@@ -73,8 +73,8 @@ public class JwtTokenFilter extends GenericFilterBean {
 	
 	private HashSet<String> getPublicEndPoints() {
 		HashSet<String> endPoints = new HashSet<String>();
-		endPoints.add("/v1/vuce-services/template/authorization/extranet");
-		endPoints.add("/v1/vuce-services/template/authorization/reload-session");
+		endPoints.add("/authorization/extranet");
+		endPoints.add("/authorization/reload-session");
 		return endPoints;
 	}
 }

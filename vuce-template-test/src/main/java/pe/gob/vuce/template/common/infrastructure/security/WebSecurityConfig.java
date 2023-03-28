@@ -20,8 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.csrf().disable();
 	    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	    http.authorizeRequests()
-	        .antMatchers("/authorization/extranet").permitAll()
-			.antMatchers("/authorization/reload-session").permitAll()
+			.antMatchers("/authorization/extranet").permitAll()
+				.antMatchers("/authorization/reload-session").permitAll()
 	        .anyRequest().authenticated();
 	    http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
 	}
