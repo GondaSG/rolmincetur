@@ -35,6 +35,17 @@ public class NotificacionDiscrepancia {
     @JoinColumn(name = "notificacion_id", referencedColumnName = "id", nullable = false)
 	private Notificacion notificacion;
 	
+	@Column (nullable=true)
+	private boolean flagLeido;
+	
+	public boolean getFlagLeido() {
+		return flagLeido;
+	}
+
+	public void setFlagLeido(boolean flagLeido) {
+		this.flagLeido = flagLeido;
+	}
+	
 	public int getId() {
 		return id;
 	}

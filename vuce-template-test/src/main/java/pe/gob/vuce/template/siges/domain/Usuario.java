@@ -8,27 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario {
 
-	public Usuario(int id, String codigo, String nombre, String correo, String telefono, String ruc, Rol rol,
-			Entidad entidad, TipoUsuario tipoUsuario) {
-		super();
-		this.id = id;
-		this.codigo = codigo;
-		this.nombre = nombre;
-		this.correo = correo;
-		this.telefono = telefono;
-		this.ruc = ruc;
-		this.rol = rol;
-		this.entidad = entidad;
-		this.tipoUsuario = tipoUsuario;
-	}
-	public Usuario() {
-		super();
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -56,6 +47,10 @@ public class Usuario {
 	@ManyToOne
     @JoinColumn(name = "tipo_usuario_id", referencedColumnName = "id", nullable=false)
 	private TipoUsuario tipoUsuario;
+	
+	@ManyToOne
+    @JoinColumn(name = "tipo_documento_id", referencedColumnName = "id", nullable=false)
+	private TipoDocumento tipoDocumento;
 	
 	public String getCodigo() {
 		return codigo;
@@ -127,5 +122,13 @@ public class Usuario {
 
 	public void setTipoUsuario(TipoUsuario tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 }

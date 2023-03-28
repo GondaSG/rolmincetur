@@ -3,7 +3,6 @@ package pe.gob.vuce.template.siges.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -13,30 +12,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @IdClass(NotificacionFaseId.class)
 @Table(name = "notificacion_fase", uniqueConstraints= {
 		@UniqueConstraint(name = "notificacion_fase_pk", columnNames = {"notificacionId", "faseId"})
 })
 public class NotificacionFase implements Serializable{
-	
-	public NotificacionFase(int idNotificacion, int idFase, Notificacion notificacion, Fase fase, Date fechaCreacion,
-			boolean flagActivo, String mensaje) {
-		super();
-		IdNotificacion = idNotificacion;
-		IdFase = idFase;
-		this.notificacion = notificacion;
-		this.fase = fase;
-		this.fechaCreacion = fechaCreacion;
-		this.flagActivo = flagActivo;
-		this.mensaje = mensaje;
-	}
-	public NotificacionFase() {
-		super();
-	}
 	@Id()
 	@Column(name = "notificacionId")
 	private int IdNotificacion;

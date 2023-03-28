@@ -6,19 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pais {
 
-	public Pais(int id, String nombre, String descripcion) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-	}
-	public Pais() {
-		super();
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -28,6 +27,10 @@ public class Pais {
 	private String nombre;
 	@Column(length=400)
 	private String descripcion;
+	@Column(length=2)
+	private String isoAlfa2;
+	@Column(length=3)
+	private String isoAlfa3;
 	
 	public int getId() {
 		return id;
@@ -46,5 +49,17 @@ public class Pais {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}	
+	}
+	public String getIsoAlfa2() {
+		return isoAlfa2;
+	}
+	public void setIsoAlfa2(String isoAlfa2) {
+		this.isoAlfa2 = isoAlfa2;
+	}
+	public String getIsoAlfa3() {
+		return isoAlfa3;
+	}
+	public void setIsoAlfa3(String isoAlfa3) {
+		this.isoAlfa3 = isoAlfa3;
+	}
 }

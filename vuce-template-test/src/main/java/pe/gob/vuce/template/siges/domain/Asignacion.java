@@ -7,8 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Asignacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,16 +27,6 @@ public class Asignacion {
 	@Column (nullable=false)
 	private String nombre;
 	
-	public Asignacion(int id, String nombre, int tipoId, String tipoNombre) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.tipoId = tipoId;
-		this.tipoNombre = tipoNombre;
-	}
-	public Asignacion() {
-		super();
-	}
 	@Column (nullable=true)
 	private int tipoId;
 	

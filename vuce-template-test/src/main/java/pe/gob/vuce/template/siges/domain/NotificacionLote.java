@@ -8,22 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NotificacionLote {
 
-	public NotificacionLote(int id, UnidadMedida unidadMedida, Notificacion notificacion, String lote,
-			Double cantidad) {
-		super();
-		this.id = id;
-		this.unidadMedida = unidadMedida;
-		this.notificacion = notificacion;
-		this.lote = lote;
-		this.cantidad = cantidad;
-	}
-	public NotificacionLote() {
-		super();
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)

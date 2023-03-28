@@ -61,6 +61,7 @@ public class CategoriaAlimentoController extends BaseController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoriaAlimento> findById(@PathVariable("id") int id){
 		try {

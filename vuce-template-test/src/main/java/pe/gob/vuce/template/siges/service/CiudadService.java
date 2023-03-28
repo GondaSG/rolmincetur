@@ -6,5 +6,5 @@ import pe.gob.vuce.template.siges.entity.ResponseEntity;
 public interface CiudadService {
 
 	ResponseEntity<Ciudad> findAll() throws Exception;
-
+	ResponseEntity<Ciudad> findById(int id) throws Exception;
 }

@@ -22,7 +22,7 @@ import pe.gob.vuce.template.common.controller.ResponseHandler;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("v1/vuce-services/template/authorization")
+@RequestMapping("authorization")
 @Slf4j
 public class AutorizacionController {
 

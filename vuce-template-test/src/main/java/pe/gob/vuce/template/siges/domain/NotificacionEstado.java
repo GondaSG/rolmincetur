@@ -3,8 +3,6 @@ package pe.gob.vuce.template.siges.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -14,32 +12,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @IdClass(NotificacionEstadoId.class)
 @Table(name = "notificacion_estado", uniqueConstraints= {
 		@UniqueConstraint(name = "notificacion_estado_pk", columnNames = {"notificacionId", "estadoId"})
 })
 public class NotificacionEstado implements Serializable{
-	
-	public NotificacionEstado(int idNotificacion, int idEstado, Notificacion notificacion, Estado estado,
-			boolean flagActivo, boolean flagLeido, Date fechaCreacion, String mensaje) {
-		super();
-		IdNotificacion = idNotificacion;
-		IdEstado = idEstado;
-		this.notificacion = notificacion;
-		this.estado = estado;
-		this.flagActivo = flagActivo;
-		this.flagLeido = flagLeido;
-		this.fechaCreacion = fechaCreacion;
-		this.mensaje = mensaje;
-	}
-	public NotificacionEstado() {
-		super();
-	}
 	@Id()
 	@Column(name = "notificacionId")
 	private int IdNotificacion;
