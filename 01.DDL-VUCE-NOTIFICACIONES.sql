@@ -1,4 +1,9 @@
 
+
+-- SCRIPT ESQUEMA
+CREATE SCHEMA siges;
+
+
 -- SCRIPT CREACION DE TABLAS
 
 -- CATEGORIA ALIMENTO
@@ -318,8 +323,14 @@ CREATE TABLE IF NOT EXISTS siges.tipo_usuario
     CONSTRAINT tipo_usuario_pk PRIMARY KEY (id)
 );
 
-
+	
 -- TIPO DOCUMENTO
+CREATE SEQUENCE IF NOT EXISTS siges.tipo_documento_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;	
 CREATE TABLE IF NOT EXISTS siges.tipo_documento
 (
     id integer NOT NULL DEFAULT nextval('siges.tipo_documento_id_seq'::regclass),
