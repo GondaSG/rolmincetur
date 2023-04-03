@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using NetCoreApiPostgreSQL.Config;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,16 @@ namespace ServiciosAPP.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public IConfiguration configuration;
+        //public IConfiguration configuration;
 
-        public ValuesController() {
-            configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
+        //public ValuesController() {
+            //configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
+        //}
+
+        private readonly AppSettings _mySettings;
+        public ValuesController(IOptions<AppSettings> settings)
+        {
+            _mySettings = settings.Value;
         }
 
         // GET api/values/5
@@ -116,7 +124,7 @@ namespace ServiciosAPP.Controllers
 
         private List<string> GetDatosSQL(string sql) {
             List<string> data = new List<string>();
-            string cadena = configuration.GetConnectionString("Oracle");// ConfigurationManager.AppSettings["Oracle"];
+            string cadena = _mySettings.oracle;// ConfigurationManager.AppSettings["Oracle"];
             //string cad = "Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.10.23.14)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SID = desagis))); User Id=ELEC_DIST;Password=d1ST3L3c180S1;";
             using (OracleConnection cn = new OracleConnection(cadena))
             {
