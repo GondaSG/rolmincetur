@@ -72,6 +72,7 @@ namespace ServiciosAPP.Controllers
             string sqlTramos = "";
             string sqlSED = "";
             string sqlSeccionadorAfectado = "";
+            string sqlelementos = "";
             if (empresaContain.Contains(empresa)) {
                 sqlTramos = "select distinct cod from (" +
                     " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa = '" + empresa + "'" +
@@ -91,6 +92,15 @@ namespace ServiciosAPP.Controllers
                     " ) select distinct cod from (select cast (trim(cod) as nvarchar2(100)) as cod from equipo_mt where empresa='" + empresa + "' and" +
                     " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from tramos)" +
                     " union all select cast ('" + code + "' as nvarchar2(100)) from dual)";
+                sqlelementos = "WITH tramos as ( " +
+                    " select distinct cod from ( " +
+                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa= '" + empresa + "'" +
+                    " ) START WITH cod_ant  in (" +
+                    " select trim(cod_tmt) from equipo_mt where empresa= '" + empresa + "' and trim(cod)= '" + code + "'" +
+                    " ) connect by nocycle prior cod=cod_ant ), " +
+                    " select distinct trim(b.etiqueta) from nodo_enlace a left join ( " +
+                    " select etiqueta,cod from subestacion where empresa='" + empresa + "'" +
+                    " ) b on trim(a.cod_sed) = trim(b.cod) where a.empresa= '" + empresa + "' and trim(a.cod_tmt) in (select * from tramos)";
             }
             else {
                 sqlTramos = "select distinct cod from (" +
@@ -114,11 +124,23 @@ namespace ServiciosAPP.Controllers
                     " ) select distinct cod from (select cast (trim(cod) as nvarchar2(100)) as cod from equipo_mt where empresa='" + empresa + "' and" +
                     " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from tramos)" +
                     " union all select cast ('" + code + "' as nvarchar2(100)) from dual)";
+                sqlelementos = "WITH tramos as ( " +
+                    " select distinct cod from ( " +
+                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa= '" + empresa + "'" +
+                    " ) START WITH cod_ant  in (" +
+                    " select trim(cod_tmt) from equipo_mt where empresa= '" + empresa + "' and trim(cod)= '" + code + "'" +
+                    " ) connect by nocycle prior cod=cod_ant " +
+                    " select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)= '" + code + "'" +
+                    " ), " +
+                    " select distinct trim(b.etiqueta) from nodo_enlace a left join ( " +
+                    " select etiqueta,cod from subestacion where empresa='" + empresa + "'" +
+                    " ) b on trim(a.cod_sed) = trim(b.cod) where a.empresa= '" + empresa + "' and trim(a.cod_tmt) in (select * from tramos)";
             }
             List<string> tramos = this.GetDatosSQL(sqlTramos);
             List<string> sed = this.GetDatosSQL(sqlSED);
             List<string> seccionadorAfectado = this.GetDatosSQL(sqlSeccionadorAfectado);
-            object dt = new { tramos, sed, seccionadorAfectado };
+            List<string> elementos = this.GetDatosSQL(sqlelementos);
+            object dt = new { tramos, sed, seccionadorAfectado, elementos };
             return dt;
         }
 
