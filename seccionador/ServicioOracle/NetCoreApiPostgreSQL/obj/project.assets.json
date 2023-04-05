@@ -813,19 +813,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jrreyna\\.nuget\\packages\\": {}
+    "C:\\Users\\jrreyna\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
+      "projectUniqueName": "D:\\projects\\github\\rolmincetur\\seccionador\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
       "projectName": "NetCoreApiPostgreSQL",
-      "projectPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
+      "projectPath": "D:\\projects\\github\\rolmincetur\\seccionador\\ServicioOracle\\NetCoreApiPostgreSQL\\NetCoreApiPostgreSQL.csproj",
       "packagesPath": "C:\\Users\\jrreyna\\.nuget\\packages\\",
-      "outputPath": "C:\\projects\\Servicios\\rolmincetur\\ServicioOracle\\NetCoreApiPostgreSQL\\obj\\",
+      "outputPath": "D:\\projects\\github\\rolmincetur\\seccionador\\ServicioOracle\\NetCoreApiPostgreSQL\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\jrreyna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -871,24 +876,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[3.1.10, 3.1.10]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[3.1.31, 3.1.31]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[3.1.0, 3.1.0]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[3.1.0, 3.1.0]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -897,7 +884,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

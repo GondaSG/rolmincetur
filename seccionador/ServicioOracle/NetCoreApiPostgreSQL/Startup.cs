@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NetCoreApiPostgreSQL.Config;
 
 namespace NetCoreApiPostgreSQL
 {
@@ -17,7 +18,8 @@ namespace NetCoreApiPostgreSQL
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddControllers();
         }
 
@@ -28,9 +30,12 @@ namespace NetCoreApiPostgreSQL
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyMethod();
+            });
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
