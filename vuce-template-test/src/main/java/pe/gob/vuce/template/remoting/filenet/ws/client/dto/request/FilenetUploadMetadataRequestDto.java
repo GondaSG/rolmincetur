@@ -8,6 +8,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public class FilenetUploadMetadataRequestDto {
-	private String Key;
+	private String key;
 	private double value;
 }

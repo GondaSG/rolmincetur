@@ -32,7 +32,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
     implementation "io.springfox:springfox-swagger2:2.9.2"
 	implementation "io.springfox:springfox-swagger-ui:2.9.2"
-	
+    implementation group: 'org.json', name: 'json', version: '20090211'
+    implementation 'org.jetbrains:annotations:23.0.0'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'org.postgresql:postgresql'
 }

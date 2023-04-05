@@ -1,11 +1,13 @@
 package pe.gob.vuce.template.remoting.filenet.ws.client.util;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import pe.gob.vuce.template.remoting.filenet.ws.client.FilenetWSClient;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class FilenetUtil {
 
 	public static String getToken(String baseUrl, String jsonStr) {
