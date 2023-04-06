@@ -41,7 +41,7 @@ define([
     var __mil_aue = Services.getLayerAUE();
     var __mil_fep = Services.getLayerFEP();
     var __gru_aniadido = Services.getGruAniadido();
-
+    var arrayFieldFeature = []
 
     /*********************** AÑADIR CAPAS DE INFORMACIÓN ***********************/
     __globspace.map.addMany([__mil_electricidad_restr, __gru_aniadido, __mil_aue, __mil_fep, __mil_mineria, __mil_hidrocarburos, __mil_gasnatural, __mil_electricidad]);
@@ -219,7 +219,6 @@ define([
         switch (itemchb) {
             case 'lbl_sectorelectricidad':
                 $("#chb_sectorelectricidad").addClass("active");
-                debugger;
                 __mil_electricidad.visible = isactive;
                 __mil_electricidad_restr.visible = isactive;
                 break;
@@ -410,6 +409,10 @@ define([
                         sublayer.createFeatureLayer().then((featureLayer) => featureLayer.load())
                             .then((featureLayer) => {
                                 if (featureLayer.url == url_electricidad && dominio.domain.filter(t => t.name == featureLayer.title).length > 0) {
+                                    let feature = {};
+                                    feature.name = featureLayer.title;
+                                    feature.alias = featureLayer.fields.map(t => { return { alias: t.alias, name: t.name } })
+                                    arrayFieldFeature.push(feature);
                                     sublayer.popupTemplate = {
                                         title: featureLayer.title + " :{NOMBRE}",
                                         content: populationChange,
@@ -439,17 +442,19 @@ define([
     }]
 
     function populationChange(feature) {
-        debugger;
-        let _domain = dominio.domain.find(t => t.name == feature.graphic.sourceLayer.title)
+        let title = feature.graphic.sourceLayer.title
+        let _domain = dominio.domain.find(t => t.name == title)
+        let featureAlias = arrayFieldFeature.find(t => t.name == title)
         let properties = dominio.propertie
         let ini = `<div class="esri-feature__fields esri-feature__content-element"><table class="esri-widget__table" summary="Lista de atributos y valores"><tbody>`;
         let fin = `</tbody></table></div>`;
         let content = Object.entries(feature.graphic.attributes)
             .map(t => {
+                debugger
                 for (var i = 0; i < _domain.properties.length; i++)
                     if (t[0] == _domain.properties[i])
-                        return `<tr><th class="esri-feature__field-header">${t[0]}</th><td class="esri-feature__field-data">${ dominio.propertie.find(t2=>t2.id ==_domain.properties[i]).values.map(t2 => t2[t[1]])}</td></tr>`
-                return `<tr><th class="esri-feature__field-header">${t[0]}</th><td class="esri-feature__field-data">${t[1]}</td></tr>`
+                        return `<tr><th class="esri-feature__field-header">${  featureAlias.alias.find(_a=> _a.name == t[0]).alias}</th><td class="esri-feature__field-data">${ dominio.propertie.find(t2=>t2.id ==_domain.properties[i]).values.map(t2 => t2[t[1]])}</td></tr>`
+                return `<tr><th class="esri-feature__field-header">${featureAlias.alias.find(_a=> _a.name == t[0]).alias}</th><td class="esri-feature__field-data">${t[1]}</td></tr>`
             });
         console.log(content)
         let node = domConstruct.create("div", { innerHTML: ini + content.join("") + fin });

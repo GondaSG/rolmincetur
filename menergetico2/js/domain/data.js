@@ -5,13 +5,15 @@ function getDomain() {
             "name": "Tramo Media Tensión",
             "properties": [
                 "CODEMP",
-                "CODTIPORED"
+                "CODTIPORED",
+                "PROPIEDAD"
             ]
         }, {
             "id": 6,
             "name": "Estructuras MT",
             "properties": [
-                "CODEMP"
+                "CODEMP",
+                "PROPIEDAD"
             ]
         }, {
             "id": 8,
@@ -23,20 +25,23 @@ function getDomain() {
             "id": 9,
             "name": "SED - Esc. hasta 1/9000",
             "properties": [
-                "CODEMP"
+                "CODEMP",
+                "PROPIEDAD"
             ]
         }, {
             "id": 10,
             "name": "Estructuras BT",
             "properties": [
-                "CODEMP"
+                "CODEMP",
+                "PROPIEDAD"
             ]
         }, {
             "id": 11,
             "name": "Tramo Baja Tensión",
             "properties": [
                 "CODEMP",
-                "CODTIPORED"
+                "CODTIPORED",
+                "PROPIEDAD"
             ]
         }, {
             "id": 12,
@@ -56,13 +61,15 @@ function getDomain() {
             "properties": [
                 "CODEMP",
                 "CODTIPORED",
-                "CODSOPORTE"
+                "CODSOPORTE",
+                "PROPIEDAD"
             ]
         }, {
             "id": 15,
             "name": "Alumbrado Público",
             "properties": [
-                "CODEMP"
+                "CODEMP",
+                "PROPIEDAD"
             ]
         }, {
             "id": 16,
@@ -121,6 +128,13 @@ function getDomain() {
                 "values": [{
                     "A": "AÉREO",
                     "S": "SUBTERRÁNEO"
+                }]
+            },
+            {
+                "id": "PROPIEDAD",
+                "values": [{
+                    "D": "DISTRIBUIDORA",
+                    "T": "TERCEROS"
                 }]
             }
         ]
