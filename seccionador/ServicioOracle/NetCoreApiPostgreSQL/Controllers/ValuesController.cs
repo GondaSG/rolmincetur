@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NetCoreApiPostgreSQL.Config;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ServiciosAPP.Controllers
 {    
@@ -17,11 +13,6 @@ namespace ServiciosAPP.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        //public IConfiguration configuration;
-
-        //public ValuesController() {
-            //configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
-        //}
 
         private readonly AppSettings _mySettings;
         public ValuesController(IOptions<AppSettings> settings)
@@ -42,22 +33,22 @@ namespace ServiciosAPP.Controllers
         {
             String empresa = "SEAL";
             String code = "120110";
-            string sql = "select trim(cod) from tramo_mt where empresa='SEAL'" +
-                                      " START WITH trim(cod_ant) in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod)='120110') " +
-                                      " connect by prior cod=cod_ant ";
+            string sql = "select trim("+_mySettings.campo1+") from " + _mySettings.t_tramo + " where empresa='SEAL'" +
+                                      " START WITH trim("+_mySettings.campo2+") in (select trim(cod_tmt) from "+ _mySettings.t_equipo + " where trim("+_mySettings.campo1+")='120110') " +
+                                      " connect by prior "+_mySettings.campo1+"="+_mySettings.campo2;
             List<string> tramos = this.GetDatosSQL(sql);
-            string sql2 = "select distinct trim(cod_sed) from nodo_enlace" +
+            string sql2 = "select distinct trim(cod_sed) from "+ _mySettings.t_nodo_enlace + "" +
                             " where trim(cod_tmt) in (" +
-                                " select trim(cod) from tramo_mt where empresa = '" + empresa + "'" +
-                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '" + code + "')" +
+                                " select trim("+_mySettings.campo1+") from " + _mySettings.t_tramo + " where empresa = '" + empresa + "'" +
+                                " START WITH trim("+_mySettings.campo2+")  in (select trim(cod_tmt) from "+ _mySettings.t_equipo + " where trim("+_mySettings.campo1+") = '" + code + "')" +
                                 " connect by prior cod = cod_ant )";
             List<string> sed = this.GetDatosSQL(sql2);
-            string sql3 = "select distinct trim(cod) from ly_osi_equipo_mt" +
+            string sql3 = "select distinct trim("+_mySettings.campo1+") from "+ _mySettings.t_equipo + "" +
                             " where cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE')" +
                             " and trim(cod_tmt) in (" +
-                                " select trim(cod) from tramo_mt" +
+                                " select trim("+_mySettings.campo1+") from " + _mySettings.t_tramo + "" +
                                 " where empresa = '" + empresa + "'" +
-                                " START WITH trim(cod_ant)  in (select trim(cod_tmt) from ly_osi_equipo_mt where trim(cod) = '" + code + "')" +
+                                " START WITH trim("+_mySettings.campo2+")  in (select trim(cod_tmt) from "+ _mySettings.t_equipo + " where trim("+_mySettings.campo1+") = '" + code + "')" +
                                 " connect by prior cod = cod_ant) ";
             List<string> seccionadorAfectado = this.GetDatosSQL(sql3);
             object dt = new { tramos, sed, seccionadorAfectado };
@@ -75,66 +66,66 @@ namespace ServiciosAPP.Controllers
             string sqlelementos = "";
             if (empresaContain.Contains(empresa)) {
                 sqlTramos = "select distinct cod from (" +
-                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa = '" + empresa + "'" +
-                    " ) START WITH cod_ant in" +
-                    " (select trim(cod_tmt) from equipo_mt where empresa = '" + empresa + "' and trim(cod)= '" + code + "') " +
-                    " connect by nocycle prior cod=cod_ant ";
+                    " select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from "+ _mySettings.t_tramo + " where empresa = '" + empresa + "'" +
+                    " ) START WITH "+_mySettings.campo2+" in" +
+                    " (select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa = '" + empresa + "' and trim("+_mySettings.campo1+")= '" + code + "') " +
+                    " connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2;
                 sqlSED = "WITH tramos as ( select distinct cod from ( " +
-                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa = '" + empresa + "'" +
-                    " ) START WITH cod_ant in (" +
-                    " select trim(cod_tmt) from equipo_mt where empresa = '" + empresa + "' and trim(cod)= '" + code + "'" +
-                    " ) connect by nocycle prior cod=cod_ant " +
-                    " ) select distinct trim(cod_sed) from nodo_enlace where empresa = '" + empresa + "' and" +
-                    " trim(cod_tmt) in (select * from tramos)";
+                    " select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa = '" + empresa + "'" +
+                    " ) START WITH "+_mySettings.campo2+" in (" +
+                    " select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa = '" + empresa + "' and trim("+_mySettings.campo1+")= '" + code + "'" +
+                    " ) connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 +
+                    " ) select distinct trim(cod_sed) from "+ _mySettings.t_nodo_enlace + " where empresa = '" + empresa + "' and" +
+                    " trim(cod_tmt) in (select * from " + _mySettings.t_tramos + ")";
                 sqlSeccionadorAfectado = "WITH tramos as (" +
-                    " select distinct cod from ( select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa='" + empresa + "') START WITH cod_ant in" +
-                    " ( select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)='" + code + "') connect by nocycle prior cod=cod_ant" +
-                    " ) select distinct cod from (select cast (trim(cod) as nvarchar2(100)) as cod from equipo_mt where empresa='" + empresa + "' and" +
-                    " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from tramos)" +
+                    " select distinct cod from ( select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa='" + empresa + "') START WITH "+_mySettings.campo2+" in" +
+                    " ( select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa='" + empresa + "' and trim("+_mySettings.campo1+")='" + code + "') connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 +
+                    " ) select distinct cod from (select cast (trim("+_mySettings.campo1+") as nvarchar2(100)) as cod from "+ _mySettings.t_equipo + " where empresa='" + empresa + "' and" +
+                    " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from " + _mySettings.t_tramos + ")" +
                     " union all select cast ('" + code + "' as nvarchar2(100)) from dual)";
                 sqlelementos = "WITH tramos as ( " +
                     " select distinct cod from ( " +
-                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa= '" + empresa + "'" +
-                    " ) START WITH cod_ant  in (" +
-                    " select trim(cod_tmt) from equipo_mt where empresa= '" + empresa + "' and trim(cod)= '" + code + "'" +
-                    " ) connect by nocycle prior cod=cod_ant ), " +
-                    " select distinct trim(b.etiqueta) from nodo_enlace a left join ( " +
-                    " select etiqueta,cod from subestacion where empresa='" + empresa + "'" +
-                    " ) b on trim(a.cod_sed) = trim(b.cod) where a.empresa= '" + empresa + "' and trim(a.cod_tmt) in (select * from tramos)";
+                    " select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa= '" + empresa + "'" +
+                    " ) START WITH "+_mySettings.campo2+" in (" +
+                    " select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa= '" + empresa + "' and trim("+_mySettings.campo1+")= '" + code + "'" +
+                    " ) connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 +") " +
+                    " select distinct trim(b.etiqueta) from "+ _mySettings.t_nodo_enlace + " a left join ( " +
+                    " select etiqueta,cod from " + _mySettings.t_subestaciones + " where empresa='" + empresa + "'" +
+                    " ) b on trim(a.cod_sed) = trim(b.cod) where a.empresa= '" + empresa + "' and trim(a.cod_tmt) in (select * from "+_mySettings.t_tramos+")";
             }
             else {
                 sqlTramos = "select distinct cod from (" +
-                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa = '" + empresa + "'" +
-                    " ) START WITH cod_ant in" +
-                    " (select trim(cod_tmt) from equipo_mt where empresa = '"+ empresa + "' and trim(cod)= '" + code + "') " +
-                    " connect by nocycle prior cod=cod_ant " +
-                    " union all select trim(cod_tmt) from equipo_mt where empresa='"+ empresa + "' and trim(cod)='" + code + "'";
+                    " select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa = '" + empresa + "'" +
+                    " ) START WITH "+_mySettings.campo2+" in" +
+                    " (select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa = '"+ empresa + "' and trim("+_mySettings.campo1+")= '" + code + "') " +
+                    " connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 +
+                    " union all select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa='"+ empresa + "' and trim("+_mySettings.campo1+")='" + code + "'";
                 sqlSED = "WITH tramos as ( select distinct cod from ( " +
-                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa = '" + empresa + "'" +
-                    " ) START WITH cod_ant in (" +
-                    " select trim(cod_tmt) from equipo_mt where empresa = '" + empresa + "' and trim(cod)= '" + code + "'" +
-                    " ) connect by nocycle prior cod=cod_ant " +
-                    " union all select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)='" + code + "'" +
-                    " ) select distinct trim(cod_sed) from nodo_enlace where empresa = '" + empresa + "' and" +
-                    " trim(cod_tmt) in (select * from tramos)";
+                    " select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa = '" + empresa + "'" +
+                    " ) START WITH "+_mySettings.campo2+" in (" +
+                    " select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa = '" + empresa + "' and trim("+_mySettings.campo1+")= '" + code + "'" +
+                    " ) connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 +
+                    " union all select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa='" + empresa + "' and trim("+_mySettings.campo1+")='" + code + "'" +
+                    " ) select distinct trim(cod_sed) from "+ _mySettings.t_nodo_enlace + " where empresa = '" + empresa + "' and" +
+                    " trim(cod_tmt) in (select * from "+_mySettings.t_tramos+")";
                 sqlSeccionadorAfectado = "WITH tramos as (" +
-                    " select distinct cod from ( select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa='" + empresa + "') START WITH cod_ant in" +
-                    " ( select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)='" + code + "') connect by nocycle prior cod=cod_ant" +
-                    " union all select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)='" + code + "'" +
-                    " ) select distinct cod from (select cast (trim(cod) as nvarchar2(100)) as cod from equipo_mt where empresa='" + empresa + "' and" +
-                    " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from tramos)" +
+                    " select distinct cod from ( select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa='" + empresa + "') START WITH "+_mySettings.campo2+" in" +
+                    " ( select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa='" + empresa + "' and trim("+_mySettings.campo1+")='" + code + "') connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 +
+                    " union all select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa='" + empresa + "' and trim("+_mySettings.campo1+")='" + code + "'" +
+                    " ) select distinct cod from (select cast (trim("+_mySettings.campo1+") as nvarchar2(100)) as cod from "+ _mySettings.t_equipo + " where empresa='" + empresa + "' and" +
+                    " cod_tip in ('IN', 'RE', 'SL', 'SC', 'SF', 'FU', 'SE', 'DB', 'DP', 'CA', 'CE') and trim(cod_tmt) in (select * from "+_mySettings.t_tramos+")" +
                     " union all select cast ('" + code + "' as nvarchar2(100)) from dual)";
                 sqlelementos = "WITH tramos as ( " +
                     " select distinct cod from ( " +
-                    " select trim(cod) as cod, trim(cod_ant) as cod_ant from tramo_mt where empresa= '" + empresa + "'" +
-                    " ) START WITH cod_ant  in (" +
-                    " select trim(cod_tmt) from equipo_mt where empresa= '" + empresa + "' and trim(cod)= '" + code + "'" +
-                    " ) connect by nocycle prior cod=cod_ant " +
-                    " select trim(cod_tmt) from equipo_mt where empresa='" + empresa + "' and trim(cod)= '" + code + "'" +
-                    " ), " +
-                    " select distinct trim(b.etiqueta) from nodo_enlace a left join ( " +
-                    " select etiqueta,cod from subestacion where empresa='" + empresa + "'" +
-                    " ) b on trim(a.cod_sed) = trim(b.cod) where a.empresa= '" + empresa + "' and trim(a.cod_tmt) in (select * from tramos)";
+                    " select trim("+_mySettings.campo1+") as cod, trim("+_mySettings.campo2+") as cod_ant from " + _mySettings.t_tramo + " where empresa= '" + empresa + "'" +
+                    " ) START WITH "+_mySettings.campo2+" in (" +
+                    " select trim(cod_tmt) from "+ _mySettings.t_equipo + " where empresa= '" + empresa + "' and trim("+_mySettings.campo1+")= '" + code + "'" +
+                    " ) connect by nocycle prior "+_mySettings.campo1+"="+_mySettings.campo2 + " union all " +
+                    " select trim(cod_tmt) from " + _mySettings.t_equipo + " where empresa='" + empresa + "' and trim("+_mySettings.campo1+")= '" + code + "'" +
+                    " ) " +
+                    " select distinct trim(b.etiqueta) from "+ _mySettings.t_nodo_enlace + " a left join ( " +
+                    " select etiqueta,cod from " + _mySettings.t_subestaciones + " where empresa='" + empresa + "'" +
+                    " ) b on trim(a.cod_sed) = trim(b.cod) where a.empresa= '" + empresa + "' and trim(a.cod_tmt) in (select * from " + _mySettings.t_tramos + ")";
             }
             List<string> tramos = this.GetDatosSQL(sqlTramos);
             List<string> sed = this.GetDatosSQL(sqlSED);
@@ -168,6 +159,8 @@ namespace ServiciosAPP.Controllers
                 catch (Exception ex)
                 {
                     data = new List<string>();
+                    data.Add(sql);
+                    data.Add(ex.Message);
                 }
                 finally
                 {

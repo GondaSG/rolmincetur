@@ -4,6 +4,8 @@ const url_equipo_seccionamiento_SubEstacion = "https://gisem.osinergmin.gob.pe/s
 const url_equipo_seccionamiento_Tramo_simbologia = "https://gisem.osinergmin.gob.pe/serverch/rest/services/TEST_ELEC_DIST/TEST_ELEC_DIST/MapServer/3";
 const url_equipo_seccionamiento_SubEstacion_simbologia = "https://gisem.osinergmin.gob.pe/serverch/rest/services/TEST_ELEC_DIST/TEST_ELEC_DIST/MapServer/4";
 const url_equipo_seccionamiento_equipos_simbologia = "https://gisem.osinergmin.gob.pe/serverch/rest/services/TEST_ELEC_DIST/TEST_ELEC_DIST/MapServer/5";
+const url_equipo_seccionamiento_tramos_bt = "https://gisem.osinergmin.gob.pe/serverch/rest/services/TEST_ELEC_DIST/TEST_ELEC_DIST/MapServer/6";
+const url_equipo_seccionamiento_suministros = "https://gisem.osinergmin.gob.pe/serverch/rest/services/TEST_ELEC_DIST/TEST_ELEC_DIST/MapServer/7";
 define([
     "esri/layers/FeatureLayer",
     "esri/config",
@@ -52,6 +54,18 @@ define([
         definitionExpression: "COD = 0",
         title: "SUBESTACION AFECTADA"
     });
+    var _equipo_secc_tramos = new FeatureLayer({
+        url: url_equipo_seccionamiento_tramos_bt,
+        visible: false,
+        definitionExpression: "1 = 0",
+        title: "TRAMO BT"
+    });
+    var _equipo_secc_suministros = new FeatureLayer({
+        url: url_equipo_seccionamiento_suministros,
+        visible: false,
+        definitionExpression: "1 = 0",
+        title: "SUMINISTROS"
+    });
     /*__globspace.infolayers = [{
         alias: '__equipo_secc',
         containerlyl: 'lyl_equipo_secc',
@@ -72,5 +86,7 @@ define([
         getLayerEquipoSymbol: function() { return _equipo_secc_equipo_symbol },
         getLayerTramoSymbol: function() { return _equipo_secc_tramo_symbol },
         getLayerSubEstacionSymbol: function() { return _equipo_secc_subEstacion_symbol },
+        getLayerTramosBT: function() { return _equipo_secc_tramos },
+        getLayerSuministros: function() { return _equipo_secc_suministros },
     }
 });

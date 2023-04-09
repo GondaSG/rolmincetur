@@ -9,7 +9,7 @@ require([
         idPanel: 1
     }]
     $("#ulEmpresas").on("click", "li", function() {
-        $(".loading").show()
+        $(".loading").show();
         diccionarioEquipos.forEach(t => {
             var obj = {
                 empresa: $(this).attr("value"),
@@ -20,9 +20,9 @@ require([
         Queryjs.getQueryLayerSeccionamientCount($(this).attr("value"));
         Queryjs.getQueryLayerSubEstacionCount($(this).attr("value"));
         Queryjs.getQuerySuministroCount($(this).attr("value"));
-        $("#imputEquipos").val('')
-        $('#ulSeccionamientosAfectados>li').remove()
-        $('#ulSedAfectados>li').remove()
+        $("#imputEquipos").val('');
+        $('#ulSeccionamientosAfectados>li').remove();
+        $('#ulSedAfectados>li').remove();
     });
     $("#imputEmpresas").on("keyup", function() {
         $("#ulEmpresas li").filter((index, elemento) => {
@@ -49,11 +49,13 @@ require([
     $("#ulSeccionamientosAfectados").on("click", "li", function() {
         $(".loading").show()
         let codSeccionamiento = $(this).attr("value")
-        Queryjs.getExtendLayerSeccionamiento(codSeccionamiento);
+        let codEmpresa = $("#ulEmpresas>li.active").attr("value")
+        Queryjs.getExtendLayerSeccionamiento(codSeccionamiento, codEmpresa);
     });
     $("#ulSedAfectados").on("click", "li", function() {
         $(".loading").show()
-        let codSED = $(this).attr("value")
-        Queryjs.getExtendLayerSED(codSED);
+        let codSED = $(this).attr("value");
+        let codEmpresa = $("#ulEmpresas>li.active").attr("value")
+        Queryjs.getExtendLayerSED(codSED, codEmpresa);
     });
 })

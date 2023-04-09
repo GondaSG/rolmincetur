@@ -37,9 +37,13 @@ define([
     var _equipo_secc_equipo_symbol = Services.getLayerEquipoSymbol();
     var _equipo_secc_tramo_symbol = Services.getLayerTramoSymbol();
     var _equipo_secc_Subestacion_symbol = Services.getLayerSubEstacionSymbol();
+
+    var _equipo_secc_Tramos = Services.getLayerTramosBT();
+    var _equipo_secc_Suministros = Services.getLayerSuministros();
+    
     var Map = visor.getMap();
     var View = visor.getView();
-    Map.addMany([_equipo_secc_equipo, _equipo_secc_tramo, _equipo_secc_equipo_symbol, _equipo_secc_tramo_symbol, _equipo_secc_Subestacion_symbol]);
+    Map.addMany([_equipo_secc_equipo, _equipo_secc_tramo, _equipo_secc_equipo_symbol, _equipo_secc_tramo_symbol, _equipo_secc_Subestacion_symbol, _equipo_secc_Tramos, _equipo_secc_Suministros]);
     layerList = new LayerList({
         container: document.createElement("div"),
         view: View
@@ -77,9 +81,7 @@ define([
         view: View,
         content: legend
     });
-    View.ui.add(searchWidget, {
-        position: "top-right"
-    });
+    View.ui.add(searchWidget, { position: "top-right" });
     View.ui.add(legendExpand, "top-right");
     View.ui.add(layerListExpand, "top-right");
     View.ui.add(baseMapExpand, "top-right");

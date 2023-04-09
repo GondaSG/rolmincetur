@@ -366,4 +366,8 @@ FodyWeavers.xsd
 
 
 /seccionador/ServicioOracle/.vs/
+/seccionador/ServicioOracle/NetCoreApiPostgreSQL/obj/
+/seccionador/ServicioOracle/NetCoreApiPostgreSQL/bin/
+seccionador/ServicioOracle/NetCoreApiPostgreSQL/bin/
 
+seccionador\ServicioOracle\NetCoreApiPostgreSQL/bin

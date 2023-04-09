@@ -17,13 +17,13 @@ define([
     var _equipo_secc_SED = Servicejs.getLayerSubEstacion();
     var View = visorjs.getView();
     var Map = visorjs.getMap();
+    var empresas = "";
     async function QueryLayerGetEmpresa() {
 
         await $.getJSON("https://gisem.osinergmin.gob.pe/validar/seccionador/data.json", function( response ) {
-            console.log(response);
             createList2(response.data, $("#ulEmpresas"), "EMPRESA", 1);
-            $(".loading").hide()
-          });
+            $(".loading").hide();
+        });
         //const query = new Query();
         //query.where = "1=1";
         //query.returnGeometry = false;
@@ -48,7 +48,7 @@ define([
                     break;
             }
         });
-        $(".loading").hide()
+        $(".loading").hide();
     }
 
     async function QueryLayerGetCountEquipo(obj) {
@@ -124,7 +124,6 @@ define([
     }
 
     function createList2(features, dom, attribute, etiqueta) {
-        debugger;
         let etiqueta1 = `<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="15" height="15" fill="#000"><path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z"/></svg>`;
         let etiqueta2 = `<img src="assets/images/subestaciones.png" alt="">`;
 
@@ -141,56 +140,75 @@ define([
         dom.html(li);
     }
 
-    function setValueCount(count, dom, attribute) {
-        p = count.toString();
+    function setValueCount(count, dom) {
+        console.log('count');
+        console.log(count.toString().length);
+        var p = "";
+        if (count && count.toString().length == 4)
+            p = count.toString().substring(0, 1) + " k";
+        else if (count && count.toString().length == 5)
+            p = count.toString().substring(0, 2) + " k";
+        else if (count && count.toString().length == 6)
+            p = count.toString().substring(0, 3) + " k";
+        else if (count && count.toString().length == 7)
+            p = count.toString().substring(0, 4) + " k";
+        else 
+            p = count.toString();
         dom.html(p);
     }
 
     async function QueryLayerUbigeos(codEquipo, codEmpresa) {
+        //empresas = codEmpresa;
         let url = `https://gisem.osinergmin.gob.pe/validar/seccionador/api/api/values/GetData/${codEmpresa}/${codEquipo}`;
         await $.get(url).then(response => {
-            getQueryService(response.seccionadorAfectado, Servicejs.getLayerEquipoSymbol(), 1);
-            createList(response.seccionadorAfectado, $("#ulSeccionamientosAfectados"), "", 1)
-            setValueCount(response.seccionadorAfectado.length, $("#idSecAfec"))
+            getQueryService(response.seccionadorAfectado, Servicejs.getLayerEquipoSymbol(), 1, codEmpresa);
+            createList(response.seccionadorAfectado, $("#ulSeccionamientosAfectados"), "", 1);
+            setValueCount(response.seccionadorAfectado.length, $("#idSecAfec"));
 
-            getQueryService(response.sed, Servicejs.getLayerSubEstacionSymbol(), 2);
-            createList(response.sed, $("#ulSedAfectados"), "", 2)
-            setValueCount(response.sed.length, $("#idSubAfec"))
+            getQueryService(response.sed, Servicejs.getLayerSubEstacionSymbol(), 2, codEmpresa);
+            createList(response.sed, $("#ulSedAfectados"), "", 2);
+            setValueCount(response.sed.length, $("#idSubAfec"));
 
-            getQueryService(response.tramos, Servicejs.getLayerTramoSymbol(), 3);
+            getQueryService(response.tramos, Servicejs.getLayerTramoSymbol(), 3, codEmpresa);
+            console.log('codEmpresa');
+            console.log(codEmpresa);
+            getQueryService(response.elementos, Servicejs.getLayerTramosBT(), 6, codEmpresa);
+            getQueryService(response.elementos, Servicejs.getLayerSuministros(), 7, codEmpresa);
+            $(".loading").hide();
         });
-        $(".loading").hide()
-
     }
 
-    function getQueryService(obj, Layer, id) {
-        let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",")
-        let where = `COD in (${cadena})`;
-        if (id == 2)
-            QuerySuministroCount(null, obj)
+    function getQueryService(obj, Layer, id, codEmpresa) {
         if (obj.length == 0) {
             Layer.definitionExpression = "COD = 1";
             Layer.visible = false;
             return;
         }
-
-        Layer.definitionExpression = where;
-        Layer.visible = true;
-        Layer.popupTemplate = Layer.createPopupTemplate()
-        if (id == 3)
+        let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",");
+        if (id == 1) {
+            Layer.definitionExpression = `COD in (${cadena}) AND EMPRESA = '${codEmpresa}'`;
+            Layer.visible = true;
+            Layer.popupTemplate = Layer.createPopupTemplate();
+        }
+        else if (id == 2) {            
+            QuerySuministroCount(codEmpresa, obj);
+        }
+        else if (id == 3) {
+            Layer.definitionExpression = `COD in (${cadena}) AND EMPRESA = '${codEmpresa}'`;
+            Layer.visible = true;
+            Layer.popupTemplate = Layer.createPopupTemplate();
             Layer
-            .when(() => {
-                return Layer.queryExtent();
-            })
-            .then((response) => {
-                View.goTo(response.extent);
-            });
-        // var feature = new FeatureLayer({
-        //     url: url,
-        //     definitionExpression: `COD in (${cadena})`,
-        //     id: id
-        // });
-        // Map.add(feature)
+            .when(() => { return Layer.queryExtent(); })
+            .then((response) => { View.goTo(response.extent); });
+        }
+        else if (id == 6 || id == 7) {
+            if (codEmpresa){
+                console.log(`SED in (${cadena}) AND EMPRESA = '${codEmpresa}'`);
+                Layer.definitionExpression = `SED in (${cadena}) AND EMPRESA = '${codEmpresa}'`;
+                Layer.visible = true;
+                //Layer.popupTemplate = Layer.createPopupTemplate();
+            }            
+        }
     }
 
     function QueryLayerSubEstacionCount(CodEmpresa, ) {
@@ -221,25 +239,8 @@ define([
             });
     }
 
-    async function ExtendLayerSeccionamiento(cod) {
-        let query = new Query();
-        query.where = `COD = '${cod}'`;
-        await Servicejs.getLayerEquipoSymbol().queryExtent(query).then(response => {
-            View.goTo(response.extent);
-        })
-        $(".loading").hide()
-    }
-
-    async function ExtendLayerSED(cod) {
-        let query = new Query();
-        query.where = `COD = '${cod}'`;
-        await Servicejs.getLayerSubEstacionSymbol().queryExtent(query).then(response => {
-            View.goTo(response.extent);
-        })
-        $(".loading").hide()
-    }
-
     function QuerySuministroCount(CodEmpresa, obj) {
+        console.log('CodEmpresa ' + CodEmpresa);
         let totalSUm = new StatisticDefinition({
             statisticType: "sum",
             onStatisticField: "NUM_SUMIN",
@@ -251,16 +252,39 @@ define([
         if (obj) {
             if (obj.length > 0) {
                 let cadena = obj.map(t => { return `'${t.toString()}'` }).join(",");
-                query.where = `COD in (${cadena})`;
-            } else { setValueCount(0, $("#idSumAfec")); return }
+                console.log(`COD in (${cadena}) AND EMPRESA = '${CodEmpresa}'`);
+                query.where = `COD in (${cadena}) AND EMPRESA = '${CodEmpresa}'`;
+            } else { 
+                setValueCount(0, $("#idSumAfec"));
+                return;
+            }
         }
         query.outStatistics = [totalSUm];
 
         Servicejs.getLayerSubEstacionSymbol().queryFeatures(query).then(count => {
-
             setValueCount(count.features[0].attributes.NUM_SUMIN_TOTAL, $("#idSumAfec"))
         });
     }
+
+    async function ExtendLayerSeccionamiento(cod, codEmpresa) {
+        console.log('ExtendLayerSeccionamiento');
+        let query = new Query();
+        query.where = `COD = '${cod}' AND EMPRESA = '${codEmpresa}'`;
+        await Servicejs.getLayerEquipoSymbol().queryExtent(query).then(response => {
+            View.goTo(response.extent);
+        });
+        $(".loading").hide();
+    }
+
+    async function ExtendLayerSED(cod, codEmpresa) {
+        let query = new Query();
+        query.where = `COD = '${cod}' AND EMPRESA = '${codEmpresa}'`;
+        await Servicejs.getLayerSubEstacionSymbol().queryExtent(query).then(response => {
+            View.goTo(response.extent);
+        })
+        $(".loading").hide();
+    }
+
     return {
         getQueryLayerGetEmpresa: QueryLayerGetEmpresa,
         getQueryLayerGetEquipo: QueryLayerGetEquipo,
