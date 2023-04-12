@@ -2,6 +2,8 @@ package pe.gob.vuce.template.siges.service;
 
 import java.io.ByteArrayInputStream;
 
+import javax.mail.MessagingException;
+
 import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
 import pe.gob.vuce.template.dto.NotificacionDTO;
@@ -35,7 +37,7 @@ public interface NotificacionService {
 	ResponseEntity<IndicadorDTO> indicadores(IndicadorDTO item) throws Exception;
 	ResponseEntity<NotificacionDTO> afectaHumanos(NotificacionDTO item, PaginatorEntity paginator) throws Exception;
 	ByteArrayInputStream exportar(NotificacionDTO item) throws Exception;
-	void send();
+	void send() throws MessagingException;
 	@SuppressWarnings("rawtypes")
 	ResponseEntity send(EmailDTO item) throws Exception;
 }

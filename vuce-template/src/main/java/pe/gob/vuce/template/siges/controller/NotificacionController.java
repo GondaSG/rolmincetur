@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -202,19 +204,8 @@ public class NotificacionController extends BaseController {
 		}
 	}		
 	
-	@RequestMapping(value = "/mail", method = RequestMethod.POST)
-	@ResponseBody()
-	public ResponseEntity<?> send (@RequestBody EmailDTO item){
-		try {
-			ResponseEntity<?> response = this._service.send(item);
-			return response;
-		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}		
-	}
-	
 	@GetMapping("/mail")
-	public boolean send (){
+	public boolean send () throws MessagingException{
 		boolean respuesta=true;		
 		this._service.send();
 		return respuesta;

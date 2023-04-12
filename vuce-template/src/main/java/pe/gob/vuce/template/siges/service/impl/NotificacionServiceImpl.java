@@ -13,6 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -28,6 +31,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import pe.gob.vuce.template.dto.EmailDTO;
 import pe.gob.vuce.template.dto.IndicadorDTO;
@@ -772,7 +776,7 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		}	
 	}
 	
-	public void send() {
+	public void send() throws MessagingException{
 		Notificacion item = new Notificacion();
 		item.setCodigoGenerado("2023. P.023");
 		TipoNotificacion t = new TipoNotificacion();		
@@ -784,24 +788,34 @@ public class NotificacionServiceImpl  implements NotificacionService {
 		item.setTipoNotificacion(t);
 		item.setFlagNacional(true);
         item.setTitulo("Leche Gloria");
-        item.setFechaEvento(new Date());
-        
-		SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("riveraevento@gmail.com");
-        message.setTo("riveraevento@gmail.com");
-        message.setSubject("VUCE - Ges - Notificación # " + item.getCodigoGenerado());
-        message.setText("Estimado Funcionario \n" + "\n" +
-        		"Tiene una nueva notificación en el sistema de de la plataforma VUCE: \n" + "\n" +
-        		"Nro. Notificación: " + item.getCodigoGenerado() + "\n" +
-        		"Nombre de la notificación: " + item.getTitulo() + "\n" +
-        		"Tipo de Notificación: " + item.getTipoNotificacion().getNombre() + "\n" +
-        		"Fuente de la notificación: " + (item.getFlagNacional() ? "Nacional" : "Internacional") + " - " + item.getFuenteNotificacion().getNombre() + "\n" +
-        		"Fecha del evento: "+ item.getFechaEvento().toString() + "\n" + "\n" +
-        		"Mensaje automatico, por favor no responder. Las tildes has sido omitidas intencionalmente." + "\n"
-        		+ "Aviso de confidencialidad:\n "
-        		+ "Este correo electronico y/o material adjunto es para uso exclusivo de la persona o entidad a la expresamente se le ha enviado, y puede contener información confidencial o material privilegiado."
-        		);
-        mailSender.send(message);
-	}
-	
+        item.setFechaEvento(new Date());  
+		 
+        MimeMessage mime = this.mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mime, true);
+        helper.setFrom("riveraevento@gmail.com");
+        helper.setTo("riveraevento@gmail.com");
+        helper.setSubject("VUCE - Gestón de Notificaciones de Inocuidad Alimentaria - Notificación # " + item.getCodigoGenerado());
+        String htmlText = "<div style='background:#FFFFFF;text-align:left;"+
+                      "font-size:10pt;font-weight:400;color:#000000;padding:10px;'>"+
+                      
+                      "Estimado Funcionario <br /><br />"+
+                      "Tiene una nueva notificación en el sistema de " +
+                      "<b>Gestión Gestón de Notificaciones de Inocuidad Alimentaria</b>" +
+                      " de la plataforma VUCE: <br /><br />"+
+                      
+                      "Nro. Notificación: " + "<b>" + item.getCodigoGenerado()   + "</b><br />"+
+                      "Nombre de la notificación: " + "<b>" +item.getTitulo() + "</b><br />" +
+                      "Tipo de Notificación: " + item.getTipoNotificacion().getNombre()  +  " <br />"+                    
+                      "Fuente de la notificación: " + (item.getFlagNacional() ? "Nacional" : "Internacional") + " - " + item.getFuenteNotificacion().getNombre() + " <br />"+
+                      "Fecha del evento: "+ item.getFechaEvento().toString() +  " <br /><br />"+
+                      
+                      "Mensaje automatico, por favor no responder. Las tildes has sido omitidas intencionalmente.<br />" + 
+                      "<b>Aviso de confidencialidad: </b><br />" +
+                      "Este correo electronico y/o material adjunto es para uso exclusivo de la persona o entidad a la expresamente se le ha enviado, y puede contener información confidencial o material privilegiado."+
+              		
+                      "</div>";
+          helper.setText(htmlText,true);
+          this.mailSender.send(mime);
+          }        
+		
 }
