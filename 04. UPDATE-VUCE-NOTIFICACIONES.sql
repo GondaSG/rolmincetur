@@ -81,9 +81,9 @@ UPDATE siges.rol SET fecha_creacion='11/05/2023', usuario='SIGTI';
 ALTER TABLE siges.rol ALTER COLUMN fecha_creacion SET NOT NULL;
 ALTER TABLE siges.rol ALTER COLUMN usuario SET NOT NULL;
 
---UPDATE siges.rol_asignacion SET fecha_creacion='11/05/2023', usuario='SIGTI';		
---ALTER TABLE siges.rol_asignacion ALTER COLUMN fecha_creacion SET NOT NULL;
---ALTER TABLE siges.rol_asignacion ALTER COLUMN usuario SET NOT NULL;
+UPDATE siges.rol_asignacion SET fecha_creacion='11/05/2023', usuario='SIGTI';		
+ALTER TABLE siges.rol_asignacion ALTER COLUMN fecha_creacion SET NOT NULL;
+ALTER TABLE siges.rol_asignacion ALTER COLUMN usuario SET NOT NULL;
 
 UPDATE siges.tipo_alimento SET fecha_creacion='11/05/2023', usuario='SIGTI';		
 ALTER TABLE siges.tipo_alimento ALTER COLUMN fecha_creacion SET NOT NULL;
