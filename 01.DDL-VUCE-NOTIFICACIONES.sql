@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS siges.categoria_alimento
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT categoria_alimento_pk PRIMARY KEY (id)
 );
 
@@ -46,7 +47,8 @@ CREATE TABLE IF NOT EXISTS siges.asignacion
     tipo_nombre character varying(255) COLLATE pg_catalog."default",
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT asignacion_pk PRIMARY KEY (id)
 );
 CREATE INDEX asignacion_id_i
@@ -68,13 +70,40 @@ CREATE TABLE IF NOT EXISTS siges.estado
     nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT estado_pk PRIMARY KEY (id)
 );
 CREATE INDEX estado_id_i
 ON siges.estado(id);
 CREATE INDEX estado_nombre_i
 ON siges.estado(nombre);
+
+
+-- PAIS
+CREATE SEQUENCE IF NOT EXISTS siges.pais_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+CREATE TABLE IF NOT EXISTS siges.pais
+(
+    id integer NOT NULL DEFAULT nextval('siges.pais_id_seq'::regclass),
+    descripcion character varying(400) COLLATE pg_catalog."default",
+    nombre character varying(250) COLLATE pg_catalog."default" NOT NULL,
+	iso_alfa2 character varying(2) COLLATE pg_catalog."default",
+    iso_alfa3 character varying(3) COLLATE pg_catalog."default",
+	fecha_creacion timestamp without time zone,
+    fecha_modificacion timestamp without time zone,
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT pais_pk PRIMARY KEY (id)
+);
+CREATE INDEX pais_id_i
+ON siges.pais(id);
+CREATE INDEX pais_nombre_i
+ON siges.pais(nombre);
 
 
 -- CIUDAD
@@ -96,8 +125,13 @@ CREATE TABLE IF NOT EXISTS siges.ciudad
     pais_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT ciudad_pk PRIMARY KEY (id)
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT ciudad_pk PRIMARY KEY (id),
+    CONSTRAINT ciudad_pais_fk FOREIGN KEY (pais_id)
+        REFERENCES siges.pais (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 CREATE INDEX ciudad_id_i
 ON siges.ciudad(id);
@@ -118,7 +152,8 @@ CREATE TABLE IF NOT EXISTS siges.entidad
     nombre character varying(400) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT entidad_pk PRIMARY KEY (id)
 );
 CREATE INDEX entidad_id_i
@@ -140,7 +175,8 @@ CREATE TABLE IF NOT EXISTS siges.fase
     nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT fase_pk PRIMARY KEY (id)
 );	
 CREATE INDEX fase_id_i
@@ -163,7 +199,8 @@ CREATE TABLE IF NOT EXISTS siges.fuente_notificacion
     tipo_id integer,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT fuente_notificacion_pk PRIMARY KEY (id)
 );
 CREATE INDEX fuente_notificacion_id_i
@@ -186,38 +223,14 @@ CREATE TABLE IF NOT EXISTS siges.origen_notificacion
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT origen_notificacion_pk PRIMARY KEY (id)
 );
 CREATE INDEX origen_notificacion_id_i
 ON siges.origen_notificacion(id);
 CREATE INDEX origen_notificacion_nombre_i
 ON siges.origen_notificacion(nombre);
-
-
--- PAIS
-CREATE SEQUENCE IF NOT EXISTS siges.pais_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
-CREATE TABLE IF NOT EXISTS siges.pais
-(
-    id integer NOT NULL DEFAULT nextval('siges.pais_id_seq'::regclass),
-    descripcion character varying(400) COLLATE pg_catalog."default",
-    nombre character varying(250) COLLATE pg_catalog."default" NOT NULL,
-	iso_alfa2 character varying(2) COLLATE pg_catalog."default",
-    iso_alfa3 character varying(3) COLLATE pg_catalog."default",
-	fecha_creacion timestamp without time zone,
-    fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT pais_pk PRIMARY KEY (id)
-);
-CREATE INDEX pais_id_i
-ON siges.pais(id);
-CREATE INDEX pais_nombre_i
-ON siges.pais(nombre);
 
 
 -- ROL
@@ -234,7 +247,8 @@ CREATE TABLE IF NOT EXISTS siges.rol
     nombre character varying(80) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT rol_pk PRIMARY KEY (id)
 );
 CREATE INDEX rol_id_i
@@ -250,7 +264,8 @@ CREATE TABLE IF NOT EXISTS siges.rol_asignacion
     asignacion_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT rol_asignacion_pk PRIMARY KEY (rol_id, asignacion_id),
     CONSTRAINT rol_asignacion_asignacion_fk FOREIGN KEY (asignacion_id)
         REFERENCES siges.asignacion (id) MATCH SIMPLE
@@ -277,7 +292,8 @@ CREATE TABLE IF NOT EXISTS siges.tipo_alimento
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT tipo_alimento_pk PRIMARY KEY (id)
 );
 CREATE INDEX tipo_alimento_id_i
@@ -300,7 +316,8 @@ CREATE TABLE IF NOT EXISTS siges.tipo_notificacion
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
 	CONSTRAINT tipo_notificacion_pk PRIMARY KEY (id)
 );
 
@@ -323,7 +340,8 @@ CREATE TABLE IF NOT EXISTS siges.tipo_presentacion
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
 	CONSTRAINT tipo_presentacion_pk PRIMARY KEY (id)
 );
 CREATE INDEX tipo_presentacion_id_i
@@ -346,7 +364,8 @@ CREATE TABLE IF NOT EXISTS siges.unidad_medida
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
     fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
 	CONSTRAINT unidad_medida_pk PRIMARY KEY (id)
 );	
 CREATE INDEX unidad_medida_id_i
@@ -368,7 +387,8 @@ CREATE TABLE IF NOT EXISTS siges.tipo_usuario
     nombre character varying(200) COLLATE pg_catalog."default" NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT tipo_usuario_pk PRIMARY KEY (id)
 );
 
@@ -394,7 +414,8 @@ CREATE TABLE IF NOT EXISTS siges.tipo_documento
     persona_natural character varying(1) COLLATE pg_catalog."default",
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT tipo_documento_pk PRIMARY KEY (id)
 );
 
@@ -420,7 +441,8 @@ CREATE TABLE IF NOT EXISTS siges.usuario
 	tipo_documento_id integer,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT usuario_pk PRIMARY KEY (id),
     CONSTRAINT usuario_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
@@ -483,7 +505,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion
     flag_nacional boolean,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_pk PRIMARY KEY (id),
     CONSTRAINT notificacion_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
@@ -532,7 +555,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_estado
     mensaje text COLLATE pg_catalog."default",
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_estado_pk PRIMARY KEY (notificacion_id, estado_id),
     CONSTRAINT notificacion_estado_estado_fk FOREIGN KEY (estado_id)
         REFERENCES siges.estado (id) MATCH SIMPLE
@@ -561,7 +585,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_lote
     unidad_medida_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_lote_pk PRIMARY KEY (id),
     CONSTRAINT notificion_lote_noti_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -592,7 +617,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_presentacion
     unidad_medida_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_presentacion_pk PRIMARY KEY (id),
     CONSTRAINT notificacion_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -625,7 +651,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_accion
     notificacion_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_accion_pk PRIMARY KEY (id),
     CONSTRAINT accion_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -649,7 +676,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_cerrada
     notificacion_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_cerrada_pk PRIMARY KEY (id),
     CONSTRAINT cerrada_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -678,7 +706,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_declaracion
 	flag_leido boolean NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_declaracion_pk PRIMARY KEY (id),
     CONSTRAINT declaracion_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
@@ -706,7 +735,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_discrepancia
     notificacion_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_discrepancia_pk PRIMARY KEY (id),
     CONSTRAINT discrepancia_notificacion_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
@@ -724,7 +754,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_fase
     mensaje text COLLATE pg_catalog."default",
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_fase_pk PRIMARY KEY (fase_id, notificacion_id),
     CONSTRAINT fase_fk FOREIGN KEY (fase_id)
         REFERENCES siges.fase (id) MATCH SIMPLE
@@ -752,7 +783,8 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_no_declaracion
     notificacion_id integer NOT NULL,
 	fecha_creacion timestamp without time zone,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT notificacion_no_declaracion_pk PRIMARY KEY (id),
     CONSTRAINT nodeclaracion_entidad_fk FOREIGN KEY (entidad_id)
         REFERENCES siges.entidad (id) MATCH SIMPLE
@@ -781,9 +813,10 @@ CREATE TABLE IF NOT EXISTS siges.notificacion_documento
     numero_documento character varying(50) COLLATE pg_catalog."default" NOT NULL,
     notificacion_id integer NOT NULL,
     fecha_modificacion timestamp without time zone,
-    usuario character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT notificacion_documento_pkey PRIMARY KEY (id),
-    CONSTRAINT fkdnevdcdh7lnim6hfau08fadat FOREIGN KEY (notificacion_id)
+    usuario_creacion character varying(100) COLLATE pg_catalog."default",
+    usuario_modificacion character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT notificacion_documento_pk PRIMARY KEY (id),
+    CONSTRAINT notificacion_documento_noti_fk FOREIGN KEY (notificacion_id)
         REFERENCES siges.notificacion (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
