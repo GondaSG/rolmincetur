@@ -66,10 +66,18 @@ require([
 ) => {
 
     _proxyurl = "http://gisem.osinergmin.gob.pe/proxy_developer/proxy.ashx";
-    $(document).ready(async function() {
+    $(document).ready(function() {
 
-        var urlPuertos1 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/0?token=kzSwaJcNtXT-juJt7eSTbWb0SOdG8Crsd7CyC882WRQSnfNQoRtCg8zg8txhgsjWMKMSHgCmw_eayjqpQQqZprw6mZcDiLZpmonNACvYIOA55441D9fvUITPEOefLbd-wr0vZa-LNhiKKsYTfQcu2kdFmYmeazQf6LxMTQ8GRNmJ_iE80Lmkk7vY7qVENcEwHMdWpG3Cijp0u4kmwPtJ80lJpArexGJL0S12XLCIOD4Rx88Bsb3vmS6WaQHx64xq";
-        var urlPuertos2 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/1?token=kzSwaJcNtXT-juJt7eSTbWb0SOdG8Crsd7CyC882WRQSnfNQoRtCg8zg8txhgsjWMKMSHgCmw_eayjqpQQqZprw6mZcDiLZpmonNACvYIOA55441D9fvUITPEOefLbd-wr0vZa-LNhiKKsYTfQcu2kdFmYmeazQf6LxMTQ8GRNmJ_iE80Lmkk7vY7qVENcEwHMdWpG3Cijp0u4kmwPtJ80lJpArexGJL0S12XLCIOD4Rx88Bsb3vmS6WaQHx64xq";
+        urlUtils.addProxyRule({
+            urlPrefix: "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk",
+            proxyUrl: _proxyurl
+        });
+
+        //var urlPuertos1 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/0?token=kzSwaJcNtXT-juJt7eSTbWb0SOdG8Crsd7CyC882WRQSnfNQoRtCg8zg8txhgsjWMKMSHgCmw_eayjqpQQqZprw6mZcDiLZpmonNACvYIOA55441D9fvUITPEOefLbd-wr0vZa-LNhiKKsYTfQcu2kdFmYmeazQf6LxMTQ8GRNmJ_iE80Lmkk7vY7qVENcEwHMdWpG3Cijp0u4kmwPtJ80lJpArexGJL0S12XLCIOD4Rx88Bsb3vmS6WaQHx64xq";
+        var urlPuertos1 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/0";
+        //var urlPuertos2 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/1?token=kzSwaJcNtXT-juJt7eSTbWb0SOdG8Crsd7CyC882WRQSnfNQoRtCg8zg8txhgsjWMKMSHgCmw_eayjqpQQqZprw6mZcDiLZpmonNACvYIOA55441D9fvUITPEOefLbd-wr0vZa-LNhiKKsYTfQcu2kdFmYmeazQf6LxMTQ8GRNmJ_iE80Lmkk7vY7qVENcEwHMdWpG3Cijp0u4kmwPtJ80lJpArexGJL0S12XLCIOD4Rx88Bsb3vmS6WaQHx64xq";
+        var urlPuertos2 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/1";
+        var urlPuertos3 = "https://locationservices2.arcgis.com/Sd7lSuz9Mahnylzk/ArcGIS/rest/services/location_tracking/FeatureServer/2";
         var layer1 = {
             url: urlPuertos1,
             title: "Límite Departamental",
@@ -88,8 +96,8 @@ require([
         view = new MapView({
             container: "map",
             map: map,
-            center: [-74.049, -8.185],
-            zoom: 5
+            center: [-77.0630, -12.0077],
+            zoom: 12
         });
 
         var homeWidget = new Home({
@@ -112,18 +120,24 @@ require([
         $("#map").css("height", "100%");
         $("#containerBarra").css("height", window.innerHeight - 160 + "px");
         $(".loading").hide();
-        var layer_Feature1 = await createFeatureLayer(layer1, "1=1");
-        var layer_Feature2 = await createFeatureLayer(layer2, "1=1");
-        map.add(layer_Feature1, 0);
+        var layer_Feature1 = createFeatureLayer(layer1, "1=1");
+        var layer_Feature2 = createFeatureLayer(layer2, "1=1");
+        var layer_Feature3 = createFeatureLayer({url: urlPuertos3}, "1=1");
+        //map.add(layer_Feature1, 0);
         map.add(layer_Feature2, 0);
-        //map.add(layer_Feature3, 0);
-
+        //map.add(layer_Feature3, 0);        
         function createFeatureLayer(layer, where) {
             let featureLayer = new FeatureLayer({
                 url: layer.url,
-                title: layer.title,
-                outFields: ["*"],
-                definitionExpression: where
+                renderer : {
+                    type: "simple",
+                    symbol: {
+                        type: "picture-marker",
+                        url: "/imagenes/logo.png",
+                        width: "18px",
+                        height: "18px"
+                      }
+                  }
             });
             return featureLayer;
         }

@@ -45,25 +45,25 @@
 
 @media(min-width:576px) {
     .section__map {
-        height: calc(100vh - 280px)
+        height: calc(100vh - 10px)
     }
 }
 
 @media(min-width:609px) {
     .section__map {
-        height: calc(100vh - 265px)
+        height: calc(100vh - 10px)
     }
 }
 
 @media(min-width:768px) {
     .section__map {
-        height: calc(100vh - 190px)
+        height: calc(100vh - 10px)
     }
 }
 
 @media(min-width:992px) {
     .section__map {
-        height: calc(100vh - 165px)
+        height: calc(100vh - 10px)
     }
 }
 
