@@ -84,6 +84,12 @@ require(
     //VARIABLES DE FILTRO
     var $cmbuser = $('#cmb_usuario');
     var $fecsuperv = $('#fec_superv');
+    const MESES = [ "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" ];
+    const date = new Date();
+    
+    MESES[date.getMonth()];
+    var d = new Date();
+    $('#fechaActual').html( d.getDate() + "-" + MESES[date.getMonth()] + "-"+d.getFullYear());
 
     //SELECCIONAR USUARIO Y FECHA A CONSULTAR/FILTRAR
     $('#cmb_usuario, #fec_superv').on('change', function(event){
@@ -272,7 +278,7 @@ require(
                       <td style="border: solid 1px; white-space: nowrap;">${kp} &nbsp;&nbsp;</td>
                       <td style="border: solid 1px;">¿Existe alguna anomalía? </td>
                       <td style="border: solid 1px;" >${ri} </td>
-                      <td style="border: solid 1px;">¿La anomalía fue identificada por el Agente Supervisado? </td>
+                      <td style="border: solid 1px;">¿La anomalía fue identificada por el Agente Fiscalizado? </td>
                       <td style="border: solid 1px;">${rirep} </td>
                     </tr>
                     <tr><td></td></tr>`;                  

@@ -41,7 +41,7 @@ require([
         $(document).ready(function(){          
 
           var url_informales = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/survey123_8c161cbdf65e4ed894b34df0c7b3c70b_results/FeatureServer/0";
-         
+          var title = 'Registro de Emergencias';
           let editor, features;
           map = new Map({
               basemap: "osm"
@@ -61,23 +61,36 @@ require([
           //    proxyUrl: _proxyurl
           //});
 
-          // Adds widget base map
-          //let basemapGallery = new BasemapGallery({
-          //  view: view
-          //});
-          //const MeExpand = new Expand({
-          //    view: view,
-          //    content: basemapGallery,
-          //    expanded: false,
-          //    expandTooltip: 'Mapas Base'
-          //});
-          //view.ui.add(MeExpand, 'top-left'); 
-          //
-			    //// Adds widget home
+          const searchWidget = new Search({
+            view: view,
+            sources : [
+             {
+                layer: new FeatureLayer({
+                  url: url_informales,
+                  outFields: ["*"]
+                }),
+                searchFields: ["codigo"],
+                displayField: "codigo",
+                exactMatch: false,
+                outFields: ["*"],
+                name: title,
+                placeholder: "Código",
+                maxResults: 6,
+                maxSuggestions: 6,
+                suggestionsEnabled: true,
+                minSuggestCharacters: 0
+              }]
+          });
+          // Adds the search widget below other elements in
+          // the top left corner of the view
+          view.ui.add(searchWidget, {
+            position: "top-left",
+            index: 0
+          });
+          //			    //// Adds widget home
           var homeWidget = new Home({
             view: view
-          });
-          
+          });          
           view.ui.add(homeWidget, "top-left");
           
           let layerList = new LayerList({
@@ -85,11 +98,9 @@ require([
           });
           layerListExpand = new Expand({
               expandIconClass: "esri-icon-layer-list", // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
-              // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
               view: view,
               content: layerList
           });
-          // Adds widget below other elements in the top left corner of the view
           view.ui.add(layerListExpand, "top-left");
 
           let legend = new Legend({
@@ -97,14 +108,13 @@ require([
           });
           legendExpand = new Expand({
               expandIconClass: "esri-icon-legend", // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
-              // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
               view: view,
               content: legend
           });
           view.ui.add(legendExpand, "top-left");
 
           const editThisAction = {
-            title: "Editar feature",
+            title: "Editar",
             id: "edit-this",
             className: "esri-icon-edit"
           };
@@ -112,7 +122,7 @@ require([
           // Create a popupTemplate for the featurelayer and pass in a function to set its content and specify an action to handle editing the selected feature
           // Creacion de featureClass a editar
           const template = {
-            title: "Local Informal",
+            title: title,
             content: [
                 {
                   type: "fields", // FieldsContentElement
@@ -166,14 +176,14 @@ require([
           };
 
           const featureLayer = new FeatureLayer({
-              title: 'Registro de Emergencias',
+              title: title,
               url: url_informales,
               outFields: ["*"],
               //popupTemplate: template
               popupTemplate: {
-                title: "Registro de Emergencias",
+                title: title,
                 content: "<div style='font-size:18px;text-align: center;'>ESTADO: {selected_estado}</div> <br/> "+
-                "<div style='font-size:18px;text-align: center;'> <a href='arcgis-survey123://?itemID=11c6cf25311b446b9eefdc0de0a6d78f&amp;field:selected_sector={selected_sector}&amp;field:selected_tipos={selected_tipos}&amp;field:selected_fuente={selected_fuente}&amp;field:selected_ubigeo={selected_ubigeo}&amp;field:selected_departamento={selected_departamento}&amp;field:selected_provincia={selected_provincia}&amp;field:selected_distrito={selected_distrito}&amp;field:selected_estado={selected_estado}&amp;field:descripcion={descripcion}&amp;field:codigo={codigo}&amp;field:fecha_y_hora_registro={fecha_y_hora_registro}&amp;field:oficina_regional={oficina_regional}&amp;field:unidad={unidad}&amp;field:nivel_del_evento={nivel_del_evento}&amp;field:coord_x={coord_x}&amp;field:coord_y={coord_y}&amp;field: _djrealurl='  "+
+                "<div style='font-size:18px;text-align: center;'> <a href='https://survey123.arcgis.com/share/11c6cf25311b446b9eefdc0de0a6d78f?field:selected_sector={selected_sector}&field:selected_tipos={selected_tipos}&field:selected_fuente={selected_fuente}&field:selected_ubigeo={selected_ubigeo}&field:selected_departamento={selected_departamento}&field:selected_provincia={selected_provincia}&field:selected_distrito={selected_distrito}&field:selected_estado={selected_estado}&field:descripcion={descripcion}&field:codigo={codigo}&field:fecha_y_hora_registro={fecha_y_hora_registro}&field:oficina_regional={oficina_regional}&field:unidad={unidad}&field:nivel_del_evento={nivel_del_evento}&field:coord_x={coord_x}&field:coord_y={coord_y}"+
                 " style='color:blue;background:yellow;'> Abrir formulario de seguimiento de incidencias </a> </div> <br/> "+
                 "<div style='font-size:10px;'> <span style='color:red;'>SECTOR:</span> {selected_sector} <br/> "+
                 "<span style='color:red;'>FECHA Y HORA EVENTO:</span> {fecha_y_hora_evento} <br/> "+
@@ -198,6 +208,12 @@ require([
                   layer: featureLayer,
                   formTemplate: {
                     elements: [
+                    {
+                      type: "field",
+                      fieldName: "nivel_del_evento",
+                      label: "CRITICIDAD",
+                      hint: "CRITICIDAD"
+                    },
                     {
                       type: "field",
                       fieldName: "selected_sector",
@@ -251,12 +267,6 @@ require([
                       fieldName: "unidad",
                       label: "UNIDAD",
                       hint: "UNIDAD"
-                    },
-                    {
-                      type: "field",
-                      fieldName: "nivel_del_evento",
-                      label: "CRITICIDAD",
-                      hint: "CRITICIDAD"
                     }
                   ]
                   }
@@ -288,7 +298,7 @@ require([
                 setTimeout(() => {
                   let arrComp = editor.domNode.getElementsByClassName("esri-editor__back-button esri-interactive");
                   if (arrComp.length === 1) {
-                    arrComp[0].setAttribute("title", "Cancel edits, return to popup");
+                    arrComp[0].setAttribute("title", "Cancel edición, retornar to popup");
                     arrComp[0].addEventListener('click', (evt) => {
                       evt.preventDefault();
                       view.ui.remove(editor);
@@ -345,7 +355,6 @@ require([
             //}
             event.result.then(
               function(value) { 
-                console.log(value);
                 alert("Se ha modificado correctamente"); 
               },
               function(error) { /* code if some error */ }
@@ -353,27 +362,34 @@ require([
             
             editor.viewModel.cancelWorkflow();
           });
-
-
-          //var layer = {
-          //  url: urlOficinasRegionales,
-          //  title: "",
-          //  index: 0
-          //}
-          //var layer_oficinas = createFeatureLayer(layer, "1=1");
-          //map.add(layer_oficinas, 0);
-
-          //function createFeatureLayer(layer, where){
-          //  let featureLayer = new FeatureLayer({
-          //      url: layer.url,
-          //      title: layer.title,
-          //      index: layer.index,
-          //      uurl:layer.url,
-          //      outFields: ["*"],
-          //      definitionExpression: where
-          //  });
-          //  return featureLayer;
-          //}          
-
+          const valores = window.location.search;
+          if (valores != ""){
+            const urlParams = new URLSearchParams(valores);
+            var cod = urlParams.get('cod');
+            if (cod){
+               featureLayer.queryFeatures().
+               then( function (results) {
+                const result = results.features.find(t => t.attributes.codigo == cod);
+                if (result) {
+                  console.log(result);
+                  view.goTo({
+                    target:result.geometry,
+                    zoom: 20
+                  })
+                    .then(function () {                     
+                      view.popup.open({
+                        features: [result],
+                        updateLocationEnabled: true
+                      });
+                    })
+                    .catch(function(error) {
+                      if (error.name != "AbortError") {
+                        console.error(error);
+                      }
+                    });
+                }
+              })
+            }
+          }
         });
     });
