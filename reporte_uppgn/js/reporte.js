@@ -35,21 +35,21 @@ require(
     });
     
     _proxyurl = "https://gisem.osinergmin.gob.pe/proxy_dsgn/proxy.ashx";
-
-	// AUTENTICACIÓN
-	urlUtils.addProxyRule({
-	  urlPrefix: "http://domainosinerg4321",
-	  proxyUrl: _proxyurl
-	});
+    _proxyurl = "";
+	  // AUTENTICACIÓN
+    //urlUtils.addProxyRule({
+    //  urlPrefix: "http://domainosinerg4321",
+    //  proxyUrl: _proxyurl
+    //});
 
 	//// URL DE WEB SERVICES
-	var url_dsgn = "http://domainosinerg4321/service_6c8c9f98345540ee9199e52fe5524af3/FeatureServer/0";
-	var url_attachements = "http://domainosinerg4321/service_6c8c9f98345540ee9199e52fe5524af3/FeatureServer/1";
+	var url_dsgn = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/0";
+	var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/1";
 	
     // fields de ws (1)
     var fusuario = "REC_USUARIO";
     var fobjectidform = "objectid";
-    var ffecha = "REC_FECHA";
+    var ffecha = "REC_FECHASUPER";
     var frd = "REC_RD_child";
     var fdescr = "REC_DESC_child";
     var ftema = "REC_TEMA_child";
@@ -89,7 +89,7 @@ require(
     
     MESES[date.getMonth()];
     var d = new Date();
-    $('#fechaActual').html( d.getDate() + "-" + MESES[date.getMonth()] + "-"+d.getFullYear());
+    $('#fechaActual').html('26-jun-2023');
 
     //SELECCIONAR USUARIO Y FECHA A CONSULTAR/FILTRAR
     $('#cmb_usuario, #fec_superv').on('change', function(event){
@@ -124,7 +124,7 @@ require(
       var fi = moment(fecha).add(5,'hours').format('M/D/YYYY HH:mm:ss');
       var ff = moment(fecha).add(29,'hours').format('M/D/YYYY HH:mm:ss');
 
-      var sql = "REC_USUARIO = '"+usuario+"' and REC_FECHA between '"+fi+"' and '"+ff+"'";
+      var sql = "REC_USUARIO = '"+usuario+"' and REC_FECHASUPER between '"+fi+"' and '"+ff+"'";
       var query = new QueryTask({url:url_dsgn}); 
       var params  = new Query();  
       params.returnGeometry = false;
@@ -145,12 +145,12 @@ require(
           for (var i = 0; i < auxlength; i++) {
             let row = response.features[i].attributes;
             let id = row['objectid'];
-            let fecha = new Date(row['REC_FECHA']);
+            let fecha = new Date(row['REC_FECHASUPER']);
             let fechaformat = moment(fecha).format('D/M/YYYY HH:mm:ss');
             let nreport = row['REC_RD_parent'];
-            let coordenadas = row['REC_COORD'];
-            let tema = row['REC_TEMA_parent_label']; 
-            let descripcion = row['REC_DESC_parent'];        
+            let coordenadas = row['REC_ASPECTO'];
+            let tema = row['REC_AGESUP']; 
+            let descripcion = row['REC_MODALIDAD'];        
 
             cadena = cadena +
               `<tr>
@@ -193,13 +193,15 @@ require(
         }
         let contfoto = 0;
         Object.keys(datafiltrada).forEach(function(auxobjectid) { 
-          let tema = datafiltrada[auxobjectid].tema;
+          //let tema = datafiltrada[auxobjectid].tema;
           let objectid = auxobjectid.split('_')[1]; 
           let record = relatedrecords[objectid];              
           let rec_fotos = record.features;
           let auxlength = rec_fotos.length;
           for (let i = 0; i < auxlength; i++) {
+            
             let row = rec_fotos[i].attributes;
+            let tema = (row[ftema] != null) ? row[ftema] : "";
             let id_rec_foto = row[fobjectidform];
             let rd = (row[frd] != null) ? row[frd] : ""; 
             let desc = (row[fdescr] != null) ? row[fdescr] : "";
@@ -220,7 +222,7 @@ require(
 
             let table  = document.createElement('table');
             let trfoto = '', tr1 = '', tr2 = '', f1 = '', f2 = '', f3 = '';
-
+            debugger;
             table.style.cssText = "font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;6";
             
             trfoto = `<tr><td></td></tr>
@@ -244,50 +246,12 @@ require(
                     <td style="border: solid 1px;">Norte: </td>
                     <td style="border: solid 1px;">${norte}</td>
                   </tr>`;
-
-            if(tema.search("Supervisión Geotécnica")>=0) {
-                f1 = 
-                   `<tr>
-                      <td style="border: solid 1px;">KP: </td>
-                      <td style="border: solid 1px; white-space: nowrap;">${kp} &nbsp;&nbsp;</td>
-                      <td style="border: solid 1px;">¿Existe Riesgo Geotécnico? </td>
-                      <td style="border: solid 1px;">${rg} </td>
-                      <td style="border: solid 1px;">¿Riesgo Geotécnico reportado a Osinergmin? </td>
-                      <td style="border: solid 1px;">${rgrep} </td>
-                    </tr>
-                    <tr><td></td></tr>`;
-            }else if (tema.search("Control de Corrosión")>=0) {
-                f2 =
-                     `<tr>
-                      <td style="border: solid 1px;" >KP: </td>
-                      <td style="border: solid 1px; white-space: nowrap;">${kp} &nbsp;&nbsp;</td>
-                      <td style="border: solid 1px;">¿Se realizará verificaciones? </td>
-                      <td style="border: solid 1px;">${verif} </td>
-                      <td style="border: solid 1px;">Tipo de Verificación: </td>
-                      <td style="border: solid 1px;">${tverif} </td>
-                    </tr>
-                    <tr><td></td></tr>`;
-            }else if (tema.search("Instalaciones de Superficie")>=0) {
-                tr1 = `<tr>  
-                        <td colspan="2" style="border: solid 1px; white-space: nowrap;">RD-${rd}-Foto-${correlat}: &nbsp;&nbsp;</td>
-                        <td colspan="4" style="border: solid 1px;">${tinst}. ${inst} <br> ${desc}</td>
-                      </tr>`;
-                f3 =
-                    `<tr>
-                      <td style="border: solid 1px;">KP: </td>
-                      <td style="border: solid 1px; white-space: nowrap;">${kp} &nbsp;&nbsp;</td>
-                      <td style="border: solid 1px;">¿Existe alguna anomalía? </td>
-                      <td style="border: solid 1px;" >${ri} </td>
-                      <td style="border: solid 1px;">¿La anomalía fue identificada por el Agente Fiscalizado? </td>
-                      <td style="border: solid 1px;">${rirep} </td>
-                    </tr>
-                    <tr><td></td></tr>`;                  
-            }
             
             table.innerHTML = trfoto + tr1 + tr2 + f1 + f2 + f3;
             document.querySelector("#tb_fotos").appendChild(table);
-
-            fetch(`${_proxyurl}?${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
+            
+            //fetch(`${_proxyurl}?${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
+            fetch(`${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
             .then(response => response.json())
             .then(function(datajson) {
                 if(!datajson.error){
@@ -338,7 +302,8 @@ require(
 
     //OBTIENE URL DE ATTACHMENTS
     function getUrlAttachment(idfeature, idattachmet){
-      return `${_proxyurl}?${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
+      //return `${_proxyurl}?${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
+      return `${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
     }
 
     // CARGAR CMB USUARIOS
