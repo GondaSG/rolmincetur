@@ -47,24 +47,16 @@ require(
 	var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/1";
 	
     // fields de ws (1)
-    var fusuario = "REC_USUARIO";
+    var fusuario = "REC_USUARIO_child";
     var fobjectidform = "objectid";
-    var ffecha = "REC_FECHASUPER";
+    var ffecha = "REC_FECHASUPER_child";
+    var fDescripcion = "REC_DESC_child";
     var frd = "REC_RD_child";
     var fdescr = "REC_DESC_child";
-    var ftema = "REC_TEMA_child";
+    var ftema = "REC_TEMA_child_label";
     var fhuso = "REC_ZONE_child";
-    var feste = "REC_X_child";
-    var fnorte = "REC_Y_child";
-    var fkp = "REC_KP_child";
-    var frg = "REC_GEO_RISK_child";
-    var frgrep = "REC_GEO_RISK_NOTIF_child";
-    var fverif = "REC_TYS_COR_VERI_child";
-    var ftverif = "REC_TYS_COR_VERI_TIPO_child";
-    var fri = "REC_GRAL_RISK_child";
-    var frirep = "REC_GRAL_RISK_NOTIF_child";
-    var ftinst = "REC_TIPO_INST_child";
-    var finst = "REC_INST_child";
+    var feste = "REC_X";
+    var fnorte = "REC_Y";
 
     //// DEFINICIÓN DE FEATURE LAYERS 
     var fl_serv1 = new FeatureLayer({ 
@@ -124,8 +116,8 @@ require(
       var fi = moment(fecha).add(5,'hours').format('M/D/YYYY HH:mm:ss');
       var ff = moment(fecha).add(29,'hours').format('M/D/YYYY HH:mm:ss');
 
-      var sql = "REC_USUARIO = '"+usuario+"' and REC_FECHASUPER between '"+fi+"' and '"+ff+"'";
-      var query = new QueryTask({url:url_dsgn}); 
+      var sql = fusuario + " = '"+usuario+"' and "+ffecha+" between '"+fi+"' and '"+ff+"'";
+      var query = new QueryTask({url:url_attachements}); 
       var params  = new Query();  
       params.returnGeometry = false;
       params.outFields = ["*"];
@@ -145,12 +137,12 @@ require(
           for (var i = 0; i < auxlength; i++) {
             let row = response.features[i].attributes;
             let id = row['objectid'];
-            let fecha = new Date(row['REC_FECHASUPER']);
+            let fecha = new Date(row[ffecha]);
             let fechaformat = moment(fecha).format('D/M/YYYY HH:mm:ss');
-            let nreport = row['REC_RD_parent'];
-            let coordenadas = row['REC_ASPECTO'];
-            let tema = row['REC_AGESUP']; 
-            let descripcion = row['REC_MODALIDAD'];        
+            let nreport = row[frd];
+            let coordenadas = row[feste] + ", " + row[fnorte];
+            let tema = row[ftema]; 
+            let descripcion = row[fDescripcion];        
 
             cadena = cadena +
               `<tr>
@@ -162,29 +154,31 @@ require(
                 <td>${descripcion}</td>
               </tr>`;
             n++;
-            ids.push(id);
-            let auxid = i+'_'+id;
-            datafiltrada[auxid] = {tema: tema };
             
+            ids.push(id);
+            console.log(cadena);
+            console.log(ids);
+            //let auxid = i+'_'+id;
+            //datafiltrada[auxid] = {tema: tema };            
           }
           $('#tbody_data').html(cadena);    
           repaginar();
-          getAdjuntos(ids, datafiltrada);          
+          getAdjuntos(ids, response.features);          
         }
       });
     }
 
     // OBTIENE FOTOS DE LOS REGISTROS FILTRADOS Y MUESTRA EN DIV OCULTO PARA EXPORTAR
-    function getAdjuntos(ids, datafiltrada){
+    function getAdjuntos(ids, responses){
       let $tbfotos = $("#tb_fotos").html("");
       _auxsf = 0; //aux n sinfoto
-      fl_serv1.queryRelatedFeatures({
-        outFields: ["*"],
-        relationshipId: 1,
-        objectIds: ids
-      })
-      .then(function(relatedrecords){
-        if (!relatedrecords) { 
+      //fl_serv1.queryRelatedFeatures({
+      //  outFields: ["*"],
+      //  relationshipId: 1,
+      //  objectIds: ids
+      //})
+      //.then(function(relatedrecords){
+        if (responses.length == 0) { 
           console.log("No se encontraron registros relacionados de fotos"); 
           $tbfotos.html("No se encontraron registros relacionados de fotos");
           $('#div_barprogress').html(showPreloaderProgress(100));
@@ -192,37 +186,29 @@ require(
           return; 
         }
         let contfoto = 0;
-        Object.keys(datafiltrada).forEach(function(auxobjectid) { 
+        responses.forEach(function(response) { 
           //let tema = datafiltrada[auxobjectid].tema;
-          let objectid = auxobjectid.split('_')[1]; 
-          let record = relatedrecords[objectid];              
-          let rec_fotos = record.features;
+          //let objectid = response[objectid]; 
+          let record = response;
+          let rec_fotos = response;
           let auxlength = rec_fotos.length;
-          for (let i = 0; i < auxlength; i++) {
+          //for (let i = 0; i < auxlength; i++) {
             
-            let row = rec_fotos[i].attributes;
+            let row = rec_fotos.attributes;
             let tema = (row[ftema] != null) ? row[ftema] : "";
             let id_rec_foto = row[fobjectidform];
+            console.log('id_rec_foto');
+            console.log(id_rec_foto);
             let rd = (row[frd] != null) ? row[frd] : ""; 
             let desc = (row[fdescr] != null) ? row[fdescr] : "";
             let huso = (row[fhuso] != null) ? row[fhuso] : ""; 
             let este = (row[feste] != null) ? row[feste] : "";  
-            let norte = (row[fnorte] != null) ? row[fnorte] : "";    
-            let kp = (row[fkp] != null) ? row[fkp] : "";  
-            let rg = (row[frg] != null) ? row[frg] : "";  
-            let rgrep = (row[frgrep] != null) ? row[frgrep] : "";  
-            let verif = (row[fverif] != null) ? row[fverif] : "";  
-            let tverif = (row[ftverif] != null) ? row[ftverif] : "";  
-            let ri = (row[fri] != null) ? row[fri] : "";  
-            let rirep = (row[frirep] != null) ? row[frirep] : "";  
-            let tinst = (row[ftinst] != null) ? row[ftinst] : "";  
-            let inst = (row[finst] != null) ? row[finst] : "";  
+            let norte = (row[fnorte] != null) ? row[fnorte] : "";
             contfoto++;
             contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
 
             let table  = document.createElement('table');
             let trfoto = '', tr1 = '', tr2 = '', f1 = '', f2 = '', f3 = '';
-            debugger;
             table.style.cssText = "font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;6";
             
             trfoto = `<tr><td></td></tr>
@@ -271,11 +257,11 @@ require(
                   console.log(`Ocurrió un error al obtener información de foto: ${datajson.error.message}`);
                 } 
             });
-          }
+          //}
         });
         waitLoadImgs();
         
-      });
+      //});
     }    
 
     //GARANTIZAR QUE SE HAYA TERMINADO DE CARGAR TODAS LAS IMÁGENES
@@ -309,7 +295,7 @@ require(
     // CARGAR CMB USUARIOS
     function cargarCmbUsuario(){
       let lstusuarios = new Array();
-      let query = new QueryTask({url:url_dsgn}); 
+      let query = new QueryTask({url:url_attachements}); 
       let params  = new Query();            
       params.returnGeometry = false;
       params.outFields = [fusuario];
