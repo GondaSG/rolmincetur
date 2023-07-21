@@ -6,8 +6,7 @@ require(
     "esri/tasks/QueryTask",
     "esri/tasks/support/Query",
     "esri/core/watchUtils",
-    "dojo/_base/array",  
-          
+    "dojo/_base/array",
     "dojo/domReady!"
   ],
   function(
@@ -31,7 +30,6 @@ require(
       }else{
         console.log("ingrese parámetros");
       }
-
     });
     
     _proxyurl = "https://gisem.osinergmin.gob.pe/proxy_dsgn/proxy.ashx";
@@ -42,9 +40,9 @@ require(
     //  proxyUrl: _proxyurl
     //});
 
-	//// URL DE WEB SERVICES
-	var url_dsgn = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/0";
-	var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/1";
+	  //// URL DE WEB SERVICES
+	  //var url_dsgn = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/0";
+	  var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/1";
 	
     // fields de ws (1)
     var fusuario = "REC_USUARIO_child";
@@ -54,17 +52,17 @@ require(
     var frd = "REC_RD_child";
     var fdescr = "REC_DESC_child";
     var ftema = "REC_TEMA_child_label";
-    var fhuso = "REC_ZONE_child";
+    var fhuso = "REC_ZONE";
     var feste = "REC_X";
     var fnorte = "REC_Y";
 
     //// DEFINICIÓN DE FEATURE LAYERS 
-    var fl_serv1 = new FeatureLayer({ 
-      url: url_dsgn,
-      outFields: ["*"],
-      visible:true,
-      definitionExpression: "1=1"
-    });
+    //var fl_serv1 = new FeatureLayer({ 
+    //  url: url_dsgn,
+    //  outFields: ["*"],
+    //  visible:true,
+    //  definitionExpression: "1=1"
+    //});
 
    /******************************* UX *********************************************/
 
@@ -76,11 +74,11 @@ require(
     //VARIABLES DE FILTRO
     var $cmbuser = $('#cmb_usuario');
     var $fecsuperv = $('#fec_superv');
-    const MESES = [ "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" ];
-    const date = new Date();
-    
-    MESES[date.getMonth()];
-    var d = new Date();
+    //const MESES = [ "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" ];
+    //const date = new Date();
+    //
+    //MESES[date.getMonth()];
+    //var d = new Date();
     $('#fechaActual').html('26-jun-2023');
 
     //SELECCIONAR USUARIO Y FECHA A CONSULTAR/FILTRAR
@@ -131,12 +129,23 @@ require(
           clearData('No hay registros coincidentes'); 
         }else{          
           var ids = [];
-          var datafiltrada = {}; 
+          //var datafiltrada = {};
+          responses = response.features;
+          console.log(responses);
+          const filteredResponse = [];
+          responses.forEach(feature => {
+            var d = filteredResponse.find(cat => cat.parentglobalid == feature.attributes.parentglobalid);
+            if (!d) {
+                const { parentglobalid, objectid, REC_FECHASUPER_child, frd, ftema, REC_DESC_child } = feature.attributes;
+                filteredResponse.push({ parentglobalid, objectid, REC_FECHASUPER_child, frd, ftema, REC_DESC_child, data:[feature.attributes] });
+            }
+            else { d.data.push(feature.attributes);}
+          }); 
           var cadena = '';
-          let auxlength = response.features.length;
+          let auxlength = filteredResponse.length;
           for (var i = 0; i < auxlength; i++) {
-            let row = response.features[i].attributes;
-            let id = row['objectid'];
+            let row = filteredResponse[i];
+            let id = row[fobjectidform];
             let fecha = new Date(row[ffecha]);
             let fechaformat = moment(fecha).format('D/M/YYYY HH:mm:ss');
             let nreport = row[frd];
@@ -163,7 +172,7 @@ require(
           }
           $('#tbody_data').html(cadena);    
           repaginar();
-          getAdjuntos(ids, response.features);          
+          getAdjuntos(ids, filteredResponse);          
         }
       });
     }
@@ -186,15 +195,16 @@ require(
           return; 
         }
         let contfoto = 0;
-        responses.forEach(function(response) { 
-          //let tema = datafiltrada[auxobjectid].tema;
-          //let objectid = response[objectid]; 
-          let record = response;
-          let rec_fotos = response;
-          let auxlength = rec_fotos.length;
-          //for (let i = 0; i < auxlength; i++) {
-            
-            let row = rec_fotos.attributes;
+        responses.forEach(response => { 
+
+          response.data.forEach( t => {
+            //let tema = datafiltrada[auxobjectid].tema;
+            //let objectid = response[objectid]; 
+            //let record = response;
+            let rec_fotos = t;
+            //let auxlength = rec_fotos.length;
+            //for (let i = 0; i < auxlength; i++) {            
+            let row = rec_fotos;
             let tema = (row[ftema] != null) ? row[ftema] : "";
             let id_rec_foto = row[fobjectidform];
             console.log('id_rec_foto');
@@ -257,15 +267,19 @@ require(
                   console.log(`Ocurrió un error al obtener información de foto: ${datajson.error.message}`);
                 } 
             });
+          })
+            
           //}
+          waitLoadImgs();
         });
-        waitLoadImgs();
+        
         
       //});
     }    
 
     //GARANTIZAR QUE SE HAYA TERMINADO DE CARGAR TODAS LAS IMÁGENES
     function waitLoadImgs(){ 
+      debugger;
       let totalphotos = $('img').length - 2; //2 imgs precargadas: logo vista y logo reporte
       let realphotos;
       let loadedphotos = 0;  
@@ -294,7 +308,7 @@ require(
 
     // CARGAR CMB USUARIOS
     function cargarCmbUsuario(){
-      let lstusuarios = new Array();
+      //let lstusuarios = new Array();
       let query = new QueryTask({url:url_attachements}); 
       let params  = new Query();            
       params.returnGeometry = false;
@@ -374,5 +388,3 @@ require(
     }
       
 });
-
- 
