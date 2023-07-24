@@ -4,7 +4,7 @@
   <meta charset="UTF-8">  
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <title>Generador de Reportes - DSGN</title>
+  <title>Generador de Reportes - DSGN/UPPGN</title>
   <link rel="icon" type="image/png" href="https://www.osinergmin.gob.pe/_catalogs/masterpage/starter/images/osinerg.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -35,7 +35,7 @@
 			<!-- ##### HEADER -->
 			<nav class="navbar justify-content-between">
 		      <div>
-		        <a class="navbar-brand title">Generador de Reportes - DSGN</a>		        
+		        <a class="navbar-brand title">Generador de Reportes - DSGN/UPPGN</a>		        
 		      </div>
 		      <div><img src="images/logo.png" alt="osinergmin"></div>
 			</nav>
@@ -142,15 +142,15 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Agente Fiscalizado:</b></td>
-							<td colspan="4" style="border:solid 1px; width: 78%"></td>
+							<td colspan="4" style="border:solid 1px; width: 78%" id="REC_AGESUP"></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Unidad Fiscalizada:</b></td>
-							<td colspan="4" style="border:solid 1px;"></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_UNISUP"></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Ubicación/Dirección:</b></td>
-							<td colspan="4" style="border:solid 1px;"></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_UBICACION"></td>
 						</tr>
 
 					<tr><td></td></tr>
@@ -159,11 +159,11 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Empresa Supervisora:</b></td>
-							<td colspan="4" style="border:solid 1px;"></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_EST"></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Personal:</b></td>
-							<td colspan="4" style="border:solid 1px;"></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_SUPER_label"></td>
 						</tr>
 					
 					<tr><td></td></tr>
@@ -172,21 +172,21 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Carta Línea:</b></td>
-							<td colspan="1" style="border:solid 1px; width: 25%"></td>
+							<td colspan="1" style="border:solid 1px; width: 25%" id="REC_CL"></td>
 							<td colspan="2" style="border:solid 1px;"><b>Aspecto:</b></td>
-							<td colspan="1" style="border:solid 1px; width: 25%"></td>
+							<td colspan="1" style="border:solid 1px; width: 25%" id="REC_ASPECTO"></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Tipo de Fiscalización:</b></td>
-							<td colspan="1" style="border:solid 1px;"></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_TIPO"></td>
 							<td colspan="2" style="border:solid 1px;"><b>Modalidad de Fiscalización:</b></td>
-							<td colspan="1" style="border:solid 1px; "></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_MODALIDAD"></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="border:solid 1px;"><b>Fecha de Inicio:</b></td>
-							<td colspan="1" style="border:solid 1px;" id="val_finicio"></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_FECHAINI"></td>
 							<td colspan="2" style="border:solid 1px;"><b>Fecha del Reporte:</b></td>
-							<td colspan="1" style="border:solid 1px;" id="val_freporte"></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_START"></td>
 						</tr>
 					
 					<tr><td></td></tr>
@@ -234,15 +234,15 @@
 					</tr>
 					<tr>
 						<td colspan="2" style="border: solid 1px; width: 150px;">Empresa Supervisora:</td>
-						<td colspan="4" style="border: solid 1px;"></td>
+						<td colspan="4" style="border: solid 1px;" id="REC_EST_"></td>
 					</tr>
 					<tr>
 						<td colspan="2" style="border: solid 1px;">Personal:</td>
-						<td colspan="4" style="border: solid 1px;"></td>
+						<td colspan="4" style="border: solid 1px;" id="REC_SUPER_label_"></td>
 					</tr>
 					<tr>
 						<td colspan="2" style="border: solid 1px;">DNI/CE:</td>
-						<td colspan="4" style="border: solid 1px;"></td>
+						<td colspan="4" style="border: solid 1px;" id="REC_DNI_"></td>
 					</tr>
 				</table>
 			</div>

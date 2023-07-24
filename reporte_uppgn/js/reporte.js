@@ -56,6 +56,22 @@ require(
     var feste = "REC_X";
     var fnorte = "REC_Y";
 
+    var REC_AGESUP = "REC_AGESUP_child";
+    var REC_UNISUP = "REC_UNISUP_child";
+    var REC_UBICACION = "REC_UBICACION";
+    var REC_EST = "REC_EST_child";
+    var REC_SUPER_label = "REC_SUPER_child";
+    var REC_CL = "REC_CL_child";
+    var REC_ASPECTO = "REC_ASPECTO_child";
+    var REC_TIPO = "REC_TIPO_child";
+    var REC_MODALIDAD = "REC_MODALIDAD_child";
+    var REC_FECHAINI = "REC_FECHAINI_child";
+    var REC_START = "REC_START";
+    var REC_EST_INIC = "REC_EST_INIC_child";
+    var REC_INICIALES = "REC_INICIALES_child";
+    var REC_RD_parent = "REC_RD_child";
+    var REC_DNI = "REC_DNI";
+
     //// DEFINICIÓN DE FEATURE LAYERS 
     //var fl_serv1 = new FeatureLayer({ 
     //  url: url_dsgn,
@@ -129,29 +145,21 @@ require(
           clearData('No hay registros coincidentes'); 
         }else{          
           var ids = [];
-          //var datafiltrada = {};
           responses = response.features;
-          console.log(responses);
-          const filteredResponse = [];
-          responses.forEach(feature => {
-            var d = filteredResponse.find(cat => cat.parentglobalid == feature.attributes.parentglobalid);
-            if (!d) {
-                const { parentglobalid, objectid, REC_FECHASUPER_child, frd, ftema, REC_DESC_child } = feature.attributes;
-                filteredResponse.push({ parentglobalid, objectid, REC_FECHASUPER_child, frd, ftema, REC_DESC_child, data:[feature.attributes] });
-            }
-            else { d.data.push(feature.attributes);}
-          }); 
           var cadena = '';
-          let auxlength = filteredResponse.length;
+          let auxlength = responses.length;
           for (var i = 0; i < auxlength; i++) {
-            let row = filteredResponse[i];
+            let row = responses[i].attributes;
             let id = row[fobjectidform];
             let fecha = new Date(row[ffecha]);
             let fechaformat = moment(fecha).format('D/M/YYYY HH:mm:ss');
-            let nreport = row[frd];
-            let coordenadas = row[feste] + ", " + row[fnorte];
-            let tema = row[ftema]; 
-            let descripcion = row[fDescripcion];        
+            let nreport = row[frd];            
+            let coordenadas = "";
+            if (row[feste] != null && row[fnorte] != null){
+              coordenadas = row[feste] + ", " + row[fnorte];
+            }            
+            let tema = row[ftema];
+            let descripcion = row[fDescripcion]; 
 
             cadena = cadena +
               `<tr>
@@ -165,14 +173,30 @@ require(
             n++;
             
             ids.push(id);
-            console.log(cadena);
-            console.log(ids);
-            //let auxid = i+'_'+id;
-            //datafiltrada[auxid] = {tema: tema };            
+            if (i==0) {
+              var ini = row[REC_EST_INIC] == null ? '' : '-'+row[REC_EST_INIC];
+              $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+ini+'-'+row[REC_INICIALES]+'-'+row[REC_RD_parent]);
+              $('#REC_AGESUP').html(row[REC_AGESUP]);
+              $('#REC_UNISUP').html(row[REC_UNISUP]);
+              $('#REC_UBICACION').html(row[REC_UBICACION]);
+              $('#REC_EST').html(row[REC_EST]);
+              $('#REC_SUPER_label').html(row[REC_SUPER_label]);
+              $('#REC_CL').html(row[REC_CL]);
+              $('#REC_ASPECTO').html(row[REC_ASPECTO]);
+              $('#REC_TIPO').html(row[REC_TIPO]);
+              $('#REC_MODALIDAD').html(row[REC_MODALIDAD]);
+              let fecha = new Date(row[REC_FECHAINI]);
+              let fecha_start = new Date(row[REC_START]);
+              $('#REC_FECHAINI').html(moment(fecha).format('DD/MM/YYYY'));
+              $('#REC_START').html(moment(fecha_start).format('DD/MM/YYYY'));
+              $('#REC_EST_').html(row[REC_EST]);
+              $('#REC_SUPER_label_').html(row[REC_SUPER_label]);
+              $('#REC_DNI_').html(row[REC_DNI]);
+            }
           }
-          $('#tbody_data').html(cadena);    
+          $('#tbody_data').html(cadena);
           repaginar();
-          getAdjuntos(ids, filteredResponse);          
+          getAdjuntos(ids, responses);          
         }
       });
     }
@@ -197,11 +221,11 @@ require(
         let contfoto = 0;
         responses.forEach(response => { 
 
-          response.data.forEach( t => {
+          //response.data.forEach( t => {
             //let tema = datafiltrada[auxobjectid].tema;
             //let objectid = response[objectid]; 
             //let record = response;
-            let rec_fotos = t;
+            let rec_fotos = response.attributes;
             //let auxlength = rec_fotos.length;
             //for (let i = 0; i < auxlength; i++) {            
             let row = rec_fotos;
@@ -267,7 +291,7 @@ require(
                   console.log(`Ocurrió un error al obtener información de foto: ${datajson.error.message}`);
                 } 
             });
-          })
+          //})
             
           //}
           waitLoadImgs();
@@ -275,11 +299,10 @@ require(
         
         
       //});
-    }    
+    }
 
     //GARANTIZAR QUE SE HAYA TERMINADO DE CARGAR TODAS LAS IMÁGENES
     function waitLoadImgs(){ 
-      debugger;
       let totalphotos = $('img').length - 2; //2 imgs precargadas: logo vista y logo reporte
       let realphotos;
       let loadedphotos = 0;  
