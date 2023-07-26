@@ -33,16 +33,15 @@ require(
     });
     
     _proxyurl = "https://gisem.osinergmin.gob.pe/proxy_dsgn/proxy.ashx";
-    _proxyurl = "";
 	  // AUTENTICACIÓN
-    //urlUtils.addProxyRule({
-    //  urlPrefix: "http://domainosinerg4321",
-    //  proxyUrl: _proxyurl
-    //});
+    urlUtils.addProxyRule({
+      urlPrefix: "https://services5.arcgis.com/oAvs2fapEemUpOTy",
+      proxyUrl: _proxyurl
+    });
 
 	  //// URL DE WEB SERVICES
-	  //var url_dsgn = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/0";
-	  var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/1";
+	  var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/survey123_d587a7fd58404926971fea0b4a6fc66d_results/FeatureServer/1";
+	  //var url_attachements = "https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/UPPGN_SUPERVISION_vista/FeatureServer/1";
 	
     // fields de ws (1)
     var fusuario = "REC_USUARIO_child";
@@ -58,7 +57,8 @@ require(
 
     var REC_AGESUP = "REC_AGESUP_child";
     var REC_UNISUP = "REC_UNISUP_child";
-    var REC_UBICACION = "REC_UBICACION";
+    var REC_ZONA_GEO = "REC_ZONA_GEO_child";
+    var REC_UBICACION = "REC_UBICACION_child";
     var REC_EST = "REC_EST_child";
     var REC_SUPER_label = "REC_SUPER_child";
     var REC_CL = "REC_CL_child";
@@ -66,7 +66,7 @@ require(
     var REC_TIPO = "REC_TIPO_child";
     var REC_MODALIDAD = "REC_MODALIDAD_child";
     var REC_FECHAINI = "REC_FECHAINI_child";
-    var REC_START = "REC_START";
+    var REC_START = "REC_FECHASUPER_child";
     var REC_EST_INIC = "REC_EST_INIC_child";
     var REC_INICIALES = "REC_INICIALES_child";
     var REC_RD_parent = "REC_RD_child";
@@ -175,9 +175,10 @@ require(
             ids.push(id);
             if (i==0) {
               var ini = row[REC_EST_INIC] == null ? '' : '-'+row[REC_EST_INIC];
+              var geo = row[REC_ZONA_GEO] == null ? '' : '-'+row[REC_ZONA_GEO];
               $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+ini+'-'+row[REC_INICIALES]+'-'+row[REC_RD_parent]);
               $('#REC_AGESUP').html(row[REC_AGESUP]);
-              $('#REC_UNISUP').html(row[REC_UNISUP]);
+              $('#REC_UNISUP').html(row[REC_UNISUP]+geo);
               $('#REC_UBICACION').html(row[REC_UBICACION]);
               $('#REC_EST').html(row[REC_EST]);
               $('#REC_SUPER_label').html(row[REC_SUPER_label]);
@@ -270,8 +271,8 @@ require(
             table.innerHTML = trfoto + tr1 + tr2 + f1 + f2 + f3;
             document.querySelector("#tb_fotos").appendChild(table);
             
-            //fetch(`${_proxyurl}?${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
-            fetch(`${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
+            fetch(`${_proxyurl}?${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
+            //fetch(`${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
             .then(response => response.json())
             .then(function(datajson) {
                 if(!datajson.error){
@@ -325,21 +326,20 @@ require(
 
     //OBTIENE URL DE ATTACHMENTS
     function getUrlAttachment(idfeature, idattachmet){
-      //return `${_proxyurl}?${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
-      return `${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
+      return `${_proxyurl}?${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
+      //return `${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
     }
 
     // CARGAR CMB USUARIOS
-    function cargarCmbUsuario(){
-      //let lstusuarios = new Array();
+    function cargarCmbUsuario(){		
       let query = new QueryTask({url:url_attachements}); 
       let params  = new Query();            
       params.returnGeometry = false;
       params.outFields = [fusuario];
       params.orderByFields= [`${fusuario} asc`];
       params.where = "1=1";
-      params.returnDistinctValues = true;
-      query.execute(params).then(function(response){
+	    params.returnDistinctValues = true;
+	    query.execute(params).then(function(response){
         let nreg = response.features.length;
         let cmb = "<option selected value=''>- Seleccione usuario -</option>";
         for (let i = 0; i < nreg ; i++) {
