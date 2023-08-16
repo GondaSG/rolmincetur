@@ -27,6 +27,9 @@ require(
         cargarCmbUsuario();        
         $('#preloader_gral').addClass('hide');//retira preloader gral
         $('#viewDiv').removeClass('hide').addClass("animate__animated animate__fadeInDown");
+        //location.replace('http://127.0.0.1:5500/reporte_uppgn/index.html');
+        window.history.pushState(null, "", "index.html");
+
       }else{
         console.log("ingrese parámetros");
       }
