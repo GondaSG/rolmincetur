@@ -58,6 +58,16 @@ require(
     var feste = "REC_X";
     var fnorte = "REC_Y";
 
+    var fkp = "REC_KP_child";
+    var frg = "REC_GEO_RISK_child";
+    var frgrep = "REC_GEO_RISK_NOTIF_child";
+    var fverif = "REC_OYM_COR_VERI_child";
+    var ftverif = "REC_OYM_COR_TIPO_VERI_child";
+    var fri = "REC_OYM_INS_ANOM_child";
+    var frirep = "REC_OYM_INS_ANOM_NOTIF_child";
+    var ftinst = "REC_HCA_EXIST_AT_child";
+    var finst = "REC_HCA_AT_IDENT_child";
+
     var REC_AGESUP = "REC_AGESUP_child";
     var REC_UNISUP = "REC_UNISUP_child";
     var REC_ZONA_GEO = "REC_ZONA_GEO_child";
@@ -73,7 +83,7 @@ require(
     var REC_EST_INIC = "REC_EST_INIC_child";
     var REC_INICIALES = "REC_INICIALES_child";
     var REC_RD_parent = "REC_RD_child";
-    var REC_DNI = "REC_DNI";
+    var REC_DNI = "REC_DNI_child";
 
     //// DEFINICIÓN DE FEATURE LAYERS 
     //var fl_serv1 = new FeatureLayer({ 
@@ -177,6 +187,7 @@ require(
             
             ids.push(id);
             if (i==0) {
+              debugger;
               var ini = row[REC_EST_INIC] == null ? '' : '-'+row[REC_EST_INIC];
               var geo = row[REC_ZONA_GEO] == null ? '' : '-'+row[REC_ZONA_GEO];
               $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+ini+'-'+row[REC_INICIALES]+'-'+row[REC_RD_parent]);
@@ -246,6 +257,7 @@ require(
             let rg = (row[frg] != null) ? row[frg] : "";  
             let rgrep = (row[frgrep] != null) ? row[frgrep] : "";  
             let verif = (row[fverif] != null) ? row[fverif] : "";  
+            debugger;
             let tverif = (row[ftverif] != null) ? row[ftverif] : "";  
             let ri = (row[fri] != null) ? row[fri] : "";  
             let rirep = (row[frirep] != null) ? row[frirep] : "";  
@@ -253,9 +265,8 @@ require(
             let inst = (row[finst] != null) ? row[finst] : "";            
             contfoto++;
             contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
-
             let table  = document.createElement('table');
-            let trfoto = '', tr1 = '', tr2 = '', f1 = '', f2 = '', f3 = '';
+            let trfoto = '', tr1 = '', tr2 = '', f1 = '', f2 = '', f3 = '', f4="";
             table.style.cssText = "font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;6";
             
             trfoto = `<tr><td></td></tr>
@@ -280,7 +291,7 @@ require(
                     <td style="border: solid 1px;">${norte}</td>
                   </tr>`;
 
-                  if(tema.search("Supervisión Geotécnica")>=0) {
+                  if(tema.search("Supervisión Geotécnica de la Estabilidad del Derecho de Vía y Cruces de Cursos de Agua en actividades de transporte de Gas Natural")>=0) {
                     f1 = 
                        `<tr>
                           <td style="border: solid 1px;">KP: </td>
@@ -291,8 +302,9 @@ require(
                           <td style="border: solid 1px;">${rgrep} </td>
                         </tr>
                         <tr><td></td></tr>`;
-                }else if (tema.search("Control de Corrosión")>=0) {
-                    f2 =
+                }else if (tema.search("Supervisión Técnica y Seguridad del Control de Corrosión en los Sistemas de Transporte por Ductos de Gas Natural")>=0) {
+                    debugger;
+                  f2 =
                          `<tr>
                           <td style="border: solid 1px;" >KP: </td>
                           <td style="border: solid 1px; white-space: nowrap;">${kp} &nbsp;&nbsp;</td>
@@ -302,11 +314,7 @@ require(
                           <td style="border: solid 1px;">${tverif} </td>
                         </tr>
                         <tr><td></td></tr>`;
-                }else if (tema.search("Instalaciones de Superficie")>=0) {
-                    tr1 = `<tr>  
-                            <td colspan="2" style="border: solid 1px; white-space: nowrap;">RD-${rd}-Foto-${correlat}: &nbsp;&nbsp;</td>
-                            <td colspan="4" style="border: solid 1px;">${tinst}. ${inst} <br> ${desc}</td>
-                          </tr>`;
+                }else if (tema.search("Supervisión Técnica y Seguridad de las Instalaciones de Superficie en actividades de transporte de Gas Natural")>=0) {
                     f3 =
                         `<tr>
                           <td style="border: solid 1px;">KP: </td>
@@ -317,9 +325,20 @@ require(
                           <td style="border: solid 1px;">${rirep} </td>
                         </tr>
                         <tr><td></td></tr>`;                  
-                }
+                }else if (tema.search("Supervisión Técnica y Seguridad de Localizaciones de Área, Áreas de Alta Consecuencia y Acciones de Terceros en actividades de transporte de Gas Natural")>=0) {
+                  f4 =
+                      `<tr>
+                        <td style="border: solid 1px;">KP: </td>
+                        <td style="border: solid 1px; white-space: nowrap;">${kp} &nbsp;&nbsp;</td>
+                        <td style="border: solid 1px;">¿Existe una AT? </td>
+                        <td style="border: solid 1px;" >${tinst} </td>
+                        <td style="border: solid 1px;">¿La AT fue identificada por el AGEFIS? </td>
+                        <td style="border: solid 1px;">${inst} </td>
+                      </tr>
+                      <tr><td></td></tr>`;                  
+              }
             
-            table.innerHTML = trfoto + tr1 + tr2 + f1 + f2 + f3;
+            table.innerHTML = trfoto + tr1 + tr2 + f1 + f2 + f3 + f4;
             document.querySelector("#tb_fotos").appendChild(table);
             
             fetch(`${_proxyurl}?${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
