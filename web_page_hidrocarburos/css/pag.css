@@ -1,0 +1,133 @@
+
+#barra {
+    background: #ffc400;
+    height: 90px;
+    text-align: left ;
+    padding-left: 270px;
+    padding-top: 10px;    
+}
+
+
+#servicio01 {
+    background: #5eb7ff;
+    justify-content: center!important;
+    border-radius: 20px;
+    width: 350px;
+    height: auto;
+    margin: 20px; 
+    text-align: justify;
+    padding-bottom: 10px;     
+}
+
+#servicio03 {
+    background: #5eb7ff;
+    justify-content: center!important;
+    border-radius: 20px;
+    width: 400px;
+    height: auto;
+    padding: auto;
+    padding-bottom: 15px;
+    margin: 20px; 
+    text-align: justify;     
+}
+
+#botonpag{
+    width: 150px;
+    height: 40px; 
+    justify-content: center;  
+    margin-left: 90px;
+    border-radius: 12px;    
+}
+
+#boton02{
+    width: 120px;
+    height: 40px; 
+    justify-content: center;  
+    margin: 10px;
+    border-radius: 12px;  
+    margin: 10px;  
+}
+
+#boton03{
+    width: auto;
+    height: 40px; 
+    justify-content: center;  
+    margin: 10px;
+    border-radius: 12px;       
+    font-size: 15px;
+    text-align: center;
+}
+
+.text-reset:hover {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
+#servicios04{
+    border-radius: 20px;
+    width: 400px;
+    height: auto;     
+    text-align: justify;     
+}
+
+
+#servicios05{   
+    background: #5eb7ff;
+    justify-content: center!important;
+    border-radius: 20px;
+    width: 380px;
+    height: auto;    
+    text-align: justify;  
+    padding: 30px;
+    
+}
+
+
+#servicios06{   
+    background: #5eb7ff;
+    justify-content: center!important;
+    border-radius: 20px;
+    width: 380px;
+    height: auto;    
+    text-align: justify;  
+    padding: 30px;
+    
+}
+
+#imagenUp{
+    width: 380px;
+    height: 200px;    
+    padding: 10px;
+    padding-bottom: 15px;
+    margin-block-start:auto;
+}
+
+
+/*=========================MEDIA QUERIES PANTALLA EXTRA-SM================================*/
+
+@media (max-width: 576px) {
+    #barra {     
+        text-align: left !important ;
+        padding-left: 20px !important;
+        padding-top: 0;        
+    }
+
+    #servicio03 {
+        background: #5eb7ff;
+        justify-content: center!important;        
+        width: 350px;
+        padding: 10px !important;
+        height: 600px;
+        margin: 20px; 
+        text-align: justify;     
+    }
+
+    #boton03{
+        width: auto;
+        height: auto;         
+        margin: 10px; 
+        font-size: 14px;
+    }
+    
+}
