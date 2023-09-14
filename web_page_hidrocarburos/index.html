@@ -43,8 +43,8 @@
         <div> <h5 class="px-4 mt-4 icono-wrap">Transporte </h5> </div>
         <img class="box2img .img-fluid  ms-auto" src="./img/transpor00.JPG" alt="concepto" >              
       </div>
+      <a class="btn btn-primary fs-5" href="./pag/pag1Upstream.html" role="button" id="boton" > Upstream </a>
 
-      <a class="btn btn-primary fs-5" href="/pag/pag1Upstream.html" role="button" id="boton" > Upstream </a>
     </div>  
     
     <div class="col-lg-6 col-md-6 col-sm-12" id="servicios">
@@ -67,7 +67,7 @@
         <div> <h5 class="px-4 mt-4 icono-wrap"> Distribución </h5> </div>
         <img class="box2img .img-fluid  ms-auto" src="./img/distri00.JPG" alt="concepto" >              
       </div> 
-      <a class="btn btn-primary fs-5" href="/pag/pag2Downstream.html" role="button" id="boton" > Downstream </a>
+      <a class="btn btn-primary fs-5" href="./pag/pag2Downstream.html" role="button" id="boton" > Downstream </a>
     </div>
   </div>
 
@@ -86,8 +86,8 @@
               document.getElementById(elemento).innerHTML = data;
           });
   }  
-  cargarContenido('/pag/navbar.html', 'navbar-container');
-  cargarContenido('/pag/footer.html', 'footer-container');
+  cargarContenido('./pag/navbar.html', 'navbar-container');
+  cargarContenido('./pag/footer.html', 'footer-container');
   AOS.init({
     easing: 'ease-out-back',
     duration: 1500
