@@ -85,6 +85,9 @@ require(
     var REC_RD_parent = "REC_RD_child";
     var REC_DNI = "REC_DNI_child";
 
+    var REC_TIPO_INST_child = "REC_TIPO_INST_child";
+    var REC_INST_child = "REC_INST_child";
+
     //// DEFINICIÓN DE FEATURE LAYERS 
     //var fl_serv1 = new FeatureLayer({ 
     //  url: url_dsgn,
@@ -187,7 +190,6 @@ require(
             
             ids.push(id);
             if (i==0) {
-              debugger;
               var ini = row[REC_EST_INIC] == null ? '' : '-'+row[REC_EST_INIC];
               var geo = row[REC_ZONA_GEO] == null ? '' : '-'+row[REC_ZONA_GEO];
               $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+ini+'-'+row[REC_INICIALES]+'-'+row[REC_RD_parent]);
@@ -257,12 +259,13 @@ require(
             let rg = (row[frg] != null) ? row[frg] : "";  
             let rgrep = (row[frgrep] != null) ? row[frgrep] : "";  
             let verif = (row[fverif] != null) ? row[fverif] : "";  
-            debugger;
             let tverif = (row[ftverif] != null) ? row[ftverif] : "";  
             let ri = (row[fri] != null) ? row[fri] : "";  
             let rirep = (row[frirep] != null) ? row[frirep] : "";  
             let tinst = (row[ftinst] != null) ? row[ftinst] : "";  
-            let inst = (row[finst] != null) ? row[finst] : "";            
+            let inst = (row[finst] != null) ? row[finst] : "";
+            let fREC_TIPO_INST_child = (row[REC_TIPO_INST_child] != null) ? row[REC_TIPO_INST_child] : "";
+            let fREC_INST_child = (row[REC_INST_child] != null) ? row[REC_INST_child] : "";
             contfoto++;
             contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
             let table  = document.createElement('table');
@@ -274,8 +277,8 @@ require(
                       <td id="td_${id_rec_foto}" colspan="6" style="border: solid 1px; text-align: center;"><img id="img_${id_rec_foto}" crossorigin="Anonymous"></td>
                     </tr>`;
             tr1 = `<tr>
-                    <td colspan="2" style="border: solid 1px; white-space: nowrap;">RD-${rd}-Foto-${correlat}: &nbsp;&nbsp;</td>
-                    <td colspan="4" style="border: solid 1px;">${desc}</td>
+                    <td colspan="2" style="border: solid 1px; white-space: nowrap;"><b>RD-${rd}-Foto-${correlat}:</b> &nbsp;&nbsp;</td>
+                    <td colspan="4" style="border: solid 1px;">${fREC_TIPO_INST_child}. ${fREC_INST_child}<br>${desc}</td>
                   </tr>`;
 
             tr2 = `<tr>
@@ -303,7 +306,6 @@ require(
                         </tr>
                         <tr><td></td></tr>`;
                 }else if (tema.search("Supervisión Técnica y Seguridad del Control de Corrosión en los Sistemas de Transporte por Ductos de Gas Natural")>=0) {
-                    debugger;
                   f2 =
                          `<tr>
                           <td style="border: solid 1px;" >KP: </td>
