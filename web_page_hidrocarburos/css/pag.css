@@ -113,6 +113,12 @@
         padding-top: 0;        
     }
 
+    .icono-wrap {     
+        text-align: center!important;  
+        padding-bottom: 10px;
+        padding-right: 5px!important;
+    }
+
     #servicio03 {
         background: #5eb7ff;
         justify-content: center!important;        
