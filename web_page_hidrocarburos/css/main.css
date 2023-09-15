@@ -156,3 +156,19 @@ footer p{
         height: auto;
     }       
 }
+
+.footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index: 1030; */
+}
+
+.footer2{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: unset;
+    /* z-index: 1030; */
+}
