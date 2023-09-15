@@ -8,17 +8,29 @@
 
 nav{
     background-color: #000090;
+    height: 90px;
     /* background-color: #075DAA;  */
 }
 
-#servicios-fila-1 {
-    width:100% !important;
-    margin-bottom: 120px;
+.footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* z-index: 1030; */
 }
 
+.footer2{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: unset;
+    /* z-index: 1030; */
+}
 #servicios {
-    background: #133c91;
-    justify-content: center!important;
+    background: #084298;
+    align-items: center;
+    justify-content: center;
     border-radius: 20px;
     width: 530px;
     height: 480px;
@@ -26,21 +38,18 @@ nav{
    
 }
 
-.box2 {      
-    background: #dedfe0;  
+.box2 {   
+    align-items: center; 
+    text-align: center;
+    background: #ffc107;  
     justify-content: center;  
     border-radius: 20px;
-    margin: 20px;
-    /* padding: 10px; */
+    
+    
     width: 450px;
     height: 80px;    
 }  
 
-.box2img {
-    width: 120px;
-    height: 80px;
-    margin-right: 20px;
-}
 
 #boton{    
     width: 150px;
@@ -155,20 +164,4 @@ footer p{
         width: 250px;
         height: auto;
     }       
-}
-
-.footer{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /* z-index: 1030; */
-}
-
-.footer2{
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: unset;
-    /* z-index: 1030; */
 }
