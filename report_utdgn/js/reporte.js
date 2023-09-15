@@ -250,8 +250,7 @@ require(
             let id_rec_foto = row[fobjectidform];
             console.log('id_rec_foto');
             console.log(id_rec_foto);
-            let rd = (row[frd] != null) ? row[frd] : ""; 
-            let desc = (row[fdescr] != null) ? row[fdescr] : "";
+            let rd = (row[frd] != null) ? row[frd] : "";            
             let huso = (row[fhuso] != null) ? row[fhuso] : ""; 
             let este = (row[feste] != null) ? row[feste] : "";  
             let norte = (row[fnorte] != null) ? row[fnorte] : "";
@@ -265,7 +264,16 @@ require(
             let tinst = (row[ftinst] != null) ? row[ftinst] : "";  
             let inst = (row[finst] != null) ? row[finst] : "";
             let fREC_TIPO_INST_child = (row[REC_TIPO_INST_child] != null) ? row[REC_TIPO_INST_child] : "";
-            let fREC_INST_child = (row[REC_INST_child] != null) ? row[REC_INST_child] : "";
+            let fREC_INST_child = "";
+            if (fREC_TIPO_INST_child !="")
+              fREC_INST_child = (row[REC_INST_child] != null) ? fREC_TIPO_INST_child + ". " + row[REC_INST_child]: "";
+            else 
+              fREC_INST_child = (row[REC_INST_child] != null) ? row[REC_INST_child] : "";
+            let desc = "";
+            if (fREC_INST_child !="")
+              desc = (row[fdescr] != null) ? fREC_INST_child + "<br>" + row[fdescr] : "";
+            else 
+              desc = (row[fdescr] != null) ? row[fdescr] : "";
             contfoto++;
             contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
             let table  = document.createElement('table');
@@ -278,7 +286,7 @@ require(
                     </tr>`;
             tr1 = `<tr>
                     <td colspan="2" style="border: solid 1px; white-space: nowrap;"><b>RD-${rd}-Foto-${correlat}:</b> &nbsp;&nbsp;</td>
-                    <td colspan="4" style="border: solid 1px;">${fREC_TIPO_INST_child}. ${fREC_INST_child}<br>${desc}</td>
+                    <td colspan="4" style="border: solid 1px;">${desc}</td>
                   </tr>`;
 
             tr2 = `<tr>
