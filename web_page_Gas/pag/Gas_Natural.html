@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/pag.css">
+    <title>Pag Osinergmin</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />		
+  </head>
+
+<body>
+  <!--========================================================== -->  
+  <!---- HEADER ---->
+  <div id="navbar-container"></div>    
+
+  <!--========================================================== -->
+  <!---- BARRA ---->
+<section class="w-100  " id="barra">
+    <div class=" " id=""  >             
+        <h3 class="fw-bold" id="textbar"> MERCADO DE GAS NATURAL  </h3>
+        <p class="text-muted">
+          <a href="../index.html" class="text-reset"> Inicio </a>
+        </p>
+    </div> 
+</section>  
+
+  <!--========================================================== -->
+  <!---- SERVICIOS ---->
+ 
+<section data-aos="fade-up" class="w-100 d-flex justify-content-center ">
+    <div class="row w-100 mx-auto  justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-12 justify-content-center" id="servicio00">          
+          <h3 class="text-center mt-3 fw-bold"> GAS NATURAL - PLANTAS   </h3>
+        </div>
+    </div>
+</section>   
+
+
+<section data-aos="fade-up" class="w-100 mb-4 justify-content-center ">
+  <div class="row justify-content-center" > 
+    
+    <div class="col-lg-6 col-md-6 col-sm-12  justify-content-center " id="servicios04">
+        <div class="justify-content-center" id="servicios05">         
+            <h3 class="text-center fs-5 fw-bold"> Planta de Procesamiento de Gas Natural</h3>
+            <p class="mt-4" id="texto01">
+              Conjunto de instalaciones y equipos diseñados para realizar procesos físicos o procesos químicos al Gas Natural Seco. Incluye los servicios y facilidades conexas requeridas por los procesos, así como los sistemas de almacenaje, de tuberías e instalaciones necesarias para el transporte del Gas Natural Seco desde un punto de entrega hasta la Planta, incluyendo un ducto principal y, cuando corresponda, la infraestructura complementaria de transporte y despacho terrestre, así como las facilidades portuarias y marítimas requeridas para el despacho y embarque de los productos obtenidos en la Planta.
+            </p>
+            <div class="d-flex justify-content-center " >
+              <a class="btn btn-warning"  role="button" id="boton03" > D. S. n.° 031-2004-EM ART. 1  y mod. </a>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center mb-3" >
+          <a class="btn btn-primary" href="https://spij.minjus.gob.pe/spij-ext-web/detallenorma/H872550" role="button" id="boton03" > Más información </a>
+        </div>
+
+    </div>
+
+
+    <div class="col-lg-6 col-md-6 col-sm-12  justify-content-center " id="servicios04">
+      <div class="justify-content-center" id="servicios05">         
+          <h3 class="text-center fs-5 fw-bold"> Planta de Petroquímica Básica
+          </h3>
+          <p class="mt-4" id="texto01">
+            Son aquellas industrias que realizan la primera transformación del Gas Natural y Condensados y otros hidrocarburos líquidos, para la obtención de insumos para la Industria Petroquímica Intermedia o en productos finales. 
+            Ley de promoción para el desarrollo de Industria Petroquímica LEY n.° 29163.
+          </p>
+          <div class="d-flex justify-content-center " >
+            <a class="btn btn-warning"  role="button" id="boton03" >LEY n.° 29163
+            </a>
+          </div>
+      </div>
+
+      <div class="d-flex justify-content-center mb-3 " >
+        <a class="btn btn-primary" href="https://spij.minjus.gob.pe/spij-ext-web/detallenorma/H872550" role="button" id="boton03" > Más información </a>
+      </div>
+
+    </div>    
+
+  </div> 
+
+</section>
+
+
+<!--========================================================== -->  
+<!---- FOOTER ---->
+<div id="footer-container"></div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>	
+<script>
+  function cargarContenido(url, elemento) {
+      fetch(url)
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById(elemento).innerHTML = data;
+          });
+  }  
+  cargarContenido('./navbar.html', 'navbar-container');
+  cargarContenido('./footer.html', 'footer-container');
+  AOS.init({
+    easing: 'ease-out-back',
+    duration: 1500
+  });
+</script>
+
+</body>
+</html>
