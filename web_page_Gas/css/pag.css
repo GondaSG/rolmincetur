@@ -1,12 +1,9 @@
 
-#barra {
+#barraColor {
     background: #ffc400;
+    padding-top: 10px;  
     height: 90px;
-    text-align: left ;
-    padding-left: 270px;
-    padding-top: 10px;    
 }
-
 
 #servicio01 {
     background: #5eb7ff;
