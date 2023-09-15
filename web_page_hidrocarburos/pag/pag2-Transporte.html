@@ -169,6 +169,10 @@
           .then(response => response.text())
           .then(data => {
               document.getElementById(elemento).innerHTML = data;
+              console.log(document.getElementById('divFooter'));
+              var element = document.getElementById("divFooter");
+              if (element)
+              element.classList.add("footer2");
           });
   }  
   cargarContenido('./navbar.html', 'navbar-container');
