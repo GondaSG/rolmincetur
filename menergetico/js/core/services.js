@@ -5,6 +5,10 @@ var url_hidrocarburos = 'https://gisem.osinergmin.gob.pe/serverosih/rest/service
 var url_mineria = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Mineria/MINERIA_MEM/MapServer';
 var url_fep = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Transversal/ME_Solar_Hidraulica_Eolica_2017/MapServer';
 var url_aue = 'https://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/SERV_CARTOGRAFIA_BASE_WGS84/MapServer';
+var url_aue1 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/HIDROGRAFIA_100K/MapServer';
+var url_aue2 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/FISIOGRAFIA_100K/MapServer';
+var url_aue3 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/TOPONIMIA_100K/MapServer';
+var url_aue4 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/TRANSPORTES_Y_COMUNICACIONES_100K/MapServer';
 
 var url_depa = "https://gisem.osinergmin.gob.pe/serverosih/rest/services/Cartografia/LIMITE_DEPARTAMENTAL/MapServer/0";
 var url_prov = "https://gisem.osinergmin.gob.pe/serverosih/rest/services/Cartografia/LIMITE_PROVINCIAL/MapServer/0";
@@ -61,10 +65,36 @@ define([
         aux_alias: 'sectormineria'
     });
 
-    var _mil_aue = new MapImageLayer({
-        url: url_aue,
+    var _mil_aue2 = new MapImageLayer({
+        url: url_aue1,
         visible: false,
-        title: 'CARTOGRAFÍA',
+        title: 'Hidrografía'
+    });
+
+    var _mil_aue3 = new MapImageLayer({
+        url: url_aue2,
+        visible: false,
+        title: 'Fisiografía'
+    });
+
+    var _mil_aue4 = new MapImageLayer({
+        url: url_aue3,
+        visible: false,
+        title: 'Toponimia'
+    });
+
+    var _mil_aue5 = new MapImageLayer({
+        url: url_aue4,
+        visible: false,
+        title: 'Transporte y Comunicaciones'
+    });
+
+    var _mil_aue = new GroupLayer({
+        title: "CARTOGRAFÍA T",
+        visible: false,        
+        visibilityMode: "independent",
+        layers: [_mil_aue2, _mil_aue3, _mil_aue4, _mil_aue5],
+        opacity: 0.75,
         aux_alias: 'sectoraue'
     });
 

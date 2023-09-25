@@ -306,6 +306,7 @@ define([
 
 
     function loadPopups() { //obtener todos los sublayers finales(mil) para crear los popup por defecto o asignarlo un popup personalizado
+        debugger;
         let layers = __globspace.map.allLayers.items,
             grouplayers = [],
             auxlength = layers.length;
