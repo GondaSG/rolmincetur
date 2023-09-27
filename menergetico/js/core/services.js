@@ -90,7 +90,7 @@ define([
     });
 
     var _mil_aue = new GroupLayer({
-        title: "CARTOGRAFÍA T",
+        title: "CARTOGRAFÍA",
         visible: false,        
         visibilityMode: "independent",
         layers: [_mil_aue2, _mil_aue3, _mil_aue4, _mil_aue5],

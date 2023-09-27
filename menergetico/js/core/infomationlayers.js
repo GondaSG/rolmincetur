@@ -185,7 +185,7 @@ define([
         switch (itemchb) {
             case 'chb_sectorelectricidad':
                 __mil_electricidad.visible = isactive;
-                __mil_electricidad_restr.visible = isactive;
+                //__mil_electricidad_restr.visible = isactive;
                 break;
             case 'chb_sectorgasnatural':
                 __mil_gasnatural.visible = isactive;
@@ -383,6 +383,8 @@ define([
             let sublayersector = [];
 
             let aux_sector = __globspace.infolayers.find(sublayer => sublayer.aux_alias == group);
+            if (!aux_sector)
+                return;
             let alias_sector = aux_sector.alias;
             // let _mil_sectorx = eval(alias_sector);
             esriRequest(urllegends, {
@@ -752,7 +754,7 @@ define([
 
 
     $("#btnswitch_2d3d").on('click', function() {
-
+        debugger;
         if (!flagswitch2d3d) {
             $(this).attr('disabled', 'disabled');
             $('body').addClass("cargando2d3d");
