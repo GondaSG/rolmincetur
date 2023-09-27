@@ -55,12 +55,12 @@ define([
 
     _lyl_electricidad.opacity = 0.75;
 
-    var _lyl_electricidad_restr = new LayerList({
-        view: __globspace.view,
-        container: 'lyl_electricidad_restr',
-    });
+    //var _lyl_electricidad_restr = new LayerList({
+    //    view: __globspace.view,
+    //    container: 'lyl_electricidad_restr',
+    //});
 
-    _lyl_electricidad_restr.opacity = 0.75;
+    //_lyl_electricidad_restr.opacity = 0.75;
 
     var _lyl_gasnatural = new LayerList({
         view: __globspace.view,
@@ -135,7 +135,6 @@ define([
     watchUtils.whenFalse(__globspace.view, "updating", function(evt) {
 
         if ($('body').hasClass("cargando")) { //acciones para el primer updating solamente (carga inicial)
-
             $("#lyl_electricidad > ul > li").not(":nth-child(1)").remove();
             $("#lyl_gasnatural > ul > li").not(":nth-child(2)").remove();
             $("#lyl_hidrocarburos > ul > li").not(":nth-child(3)").remove();
@@ -152,6 +151,14 @@ define([
             console.log('View actualizado');
         } else {
             console.log(__globspace.view);
+            $("#lyl_electricidad > ul > li").not(":nth-child(1)").remove();
+            $("#lyl_gasnatural > ul > li").not(":nth-child(1)").remove();
+            $("#lyl_hidrocarburos > ul > li").not(":nth-child(1)").remove();
+            $("#lyl_mineria > ul > li").not(":nth-child(1)").remove();
+            $("#lyl_fep > ul > li").not(":nth-child(1)").remove();
+            $("#lyl_aue > ul > li").not(":nth-child(1)").remove();
+            $("#lyl_aniadido > ul > li").not(":nth-child(1)").remove();
+
         }
     });
 
@@ -200,7 +207,6 @@ define([
                 __mil_fep.visible = isactive;
                 break;
             case 'chb_sectoraue':
-                console.log(isactive);
                 __mil_aue.visible = isactive;
                 break;
             case 'chb_sectoraniadido':
@@ -220,7 +226,7 @@ define([
             case 'lbl_sectorelectricidad':
                 $("#chb_sectorelectricidad").addClass("active");
                 __mil_electricidad.visible = isactive;
-                __mil_electricidad_restr.visible = isactive;
+                //__mil_electricidad_restr.visible = isactive;
                 break;
             case 'lbl_sectorgasnatural':
                 $("#chb_sectorgasnatural").addClass("active");
@@ -306,7 +312,6 @@ define([
 
 
     function loadPopups() { //obtener todos los sublayers finales(mil) para crear los popup por defecto o asignarlo un popup personalizado
-        debugger;
         let layers = __globspace.map.allLayers.items,
             grouplayers = [],
             auxlength = layers.length;
@@ -754,7 +759,6 @@ define([
 
 
     $("#btnswitch_2d3d").on('click', function() {
-        debugger;
         if (!flagswitch2d3d) {
             $(this).attr('disabled', 'disabled');
             $('body').addClass("cargando2d3d");

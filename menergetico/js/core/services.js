@@ -119,11 +119,11 @@ define([
             containerlyl: 'lyl_electricidad',
             aux_alias: 'sectorelectricidad',
             layers: [],
-        }, {
-            alias: '__mil_electricidad_restr',
-            containerlyl: 'lyl_electricidad_restr',
-            aux_alias: 'sectorelectricidadrestr',
-            layers: [],
+        // }, {
+        //     alias: '__mil_electricidad_restr',
+        //     containerlyl: 'lyl_electricidad_restr',
+        //     aux_alias: 'sectorelectricidadrestr',
+        //     layers: [],
         },
         {
             alias: '__mil_gasnatural',

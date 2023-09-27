@@ -56,10 +56,16 @@ define([
       title: "Bing aerial"
     });
     
+    let basemap = new Basemap({
+      portalItem: {
+        id: "c50de463235e4161b206d000587af18b" // Mid-Century Map
+      }
+    });
+    //Basemap.fromId("streets-navigation-vector");
     let _basemapgallery = new BasemapGallery({
       view: __globspace.view,
       container: "container_basemap",
-      source: [ _basegooglemaps, _basebing , Basemap.fromId("satellite"), Basemap.fromId("osm"), Basemap.fromId("topo-vector"), Basemap.fromId("streets-vector"), Basemap.fromId("hybrid")]
+      source: [basemap, _basegooglemaps, _basebing, Basemap.fromId("satellite"), Basemap.fromId("osm"), Basemap.fromId("topo-vector"), Basemap.fromId("hybrid")]
     });
 
     $("#wg_basemap").click(function(){
