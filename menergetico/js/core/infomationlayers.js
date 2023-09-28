@@ -219,8 +219,8 @@ define([
 
         //$(this).toggleClass('active');
         let itemchb = $(this).attr('id');
-        let isactive = $(this).hasClass("active");
-        //let isactive = true;
+        //let isactive = $(this).hasClass("active");
+        let isactive = true;
 
         switch (itemchb) {
             case 'lbl_sectorelectricidad':
