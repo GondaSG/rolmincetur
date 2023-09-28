@@ -192,7 +192,7 @@ define([
         switch (itemchb) {
             case 'chb_sectorelectricidad':
                 __mil_electricidad.visible = isactive;
-                //__mil_electricidad_restr.visible = isactive;
+                __mil_electricidad_restr.visible = isactive;
                 break;
             case 'chb_sectorgasnatural':
                 __mil_gasnatural.visible = isactive;
@@ -219,14 +219,14 @@ define([
 
         //$(this).toggleClass('active');
         let itemchb = $(this).attr('id');
-        //let isactive = $(this).hasClass("active");
-        let isactive = true;
+        let isactive = $(this).hasClass("active");
+        //let isactive = true;
 
         switch (itemchb) {
             case 'lbl_sectorelectricidad':
                 $("#chb_sectorelectricidad").addClass("active");
                 __mil_electricidad.visible = isactive;
-                //__mil_electricidad_restr.visible = isactive;
+                __mil_electricidad_restr.visible = isactive;
                 break;
             case 'lbl_sectorgasnatural':
                 $("#chb_sectorgasnatural").addClass("active");

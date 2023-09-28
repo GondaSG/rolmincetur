@@ -9,6 +9,7 @@ var url_aue1 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/HI
 var url_aue2 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/FISIOGRAFIA_100K/MapServer';
 var url_aue3 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/TOPONIMIA_100K/MapServer';
 var url_aue4 = 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/TRANSPORTES_Y_COMUNICACIONES_100K/MapServer';
+var url_aue5 = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Cartografia/Limites/MapServer';
 
 var url_depa = "https://gisem.osinergmin.gob.pe/serverosih/rest/services/Cartografia/LIMITE_DEPARTAMENTAL/MapServer/0";
 var url_prov = "https://gisem.osinergmin.gob.pe/serverosih/rest/services/Cartografia/LIMITE_PROVINCIAL/MapServer/0";
@@ -89,11 +90,17 @@ define([
         title: 'Transporte y Comunicaciones'
     });
 
+    var _mil_aue6 = new MapImageLayer({
+        url: url_aue5,
+        visible: false,
+        title: 'Límites'
+    });
+
     var _mil_aue = new GroupLayer({
         title: "CARTOGRAFÍA",
         visible: false,        
         visibilityMode: "independent",
-        layers: [_mil_aue2, _mil_aue3, _mil_aue4, _mil_aue5],
+        layers: [_mil_aue6, _mil_aue2, _mil_aue3, _mil_aue4, _mil_aue5],
         opacity: 0.75,
         aux_alias: 'sectoraue'
     });
