@@ -48,7 +48,7 @@ require(
 	  var url_attachements2 = "https://gisem.osinergmin.gob.pe/serverdc/rest/services/FS_OSIC_TSCON4/FeatureServer/1";
 	
     // fields de ws (1)
-    var fusuario = "SV_SUPER_INI";
+    var fusuario = "SV_SUPERUSER";
     var fobjectidform = "GLOBALID";
     
     var ffecha = "SV_FECHAINISUP";
@@ -243,7 +243,10 @@ require(
         params.where = "PARENTGLOBALID = '"+ids[i]+"'";
         query.execute(params).then(function(response){
           console.log(response);
-          let img1 = '', img2 = '', img3 = '', img4 = '', img5 = '', imgt = '';
+          let img1 = '<td rowspan="3" colspan="2" style="border: solid 1px;"></td>', img2 = '<td rowspan="1" colspan="2" style="border: solid 1px;"></td>', 
+          img3 = '<td rowspan="1" colspan="3" style="border: solid 1px;"></td>', img4 = '<td rowspan="1" colspan="2" style="border: solid 1px;"></td>',
+          img5 = '<td rowspan="1" colspan="3" style="border: solid 1px;"></td>', imgt = '';
+          let sihay1, sihay2, sihay3, sihay4, sihay5  = false;
           response.features.forEach( (response, i) => {
               let rec_fotos = response.attributes;
               let row = rec_fotos;
@@ -251,20 +254,22 @@ require(
               
               let rdescFotos = (row[descFotos] != null) ? row[descFotos] : "";
               if (rdescFotos == "FACHADA"){
-                img1 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous">`;
+                sihay1 = true;
+                img1 = `<td id="td_f_${ids[i]}" rowspan="3" colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "GABINETE"){
-                img2 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous">`;
+                sihay2 = true;
+                img2 = `<td id="td_g_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "MEDIDOR"){
-                img3 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous">`;
+                img3 = `<td id="td_m_${ids[i]}" rowspan="1" colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "GASODOMESTICO"){
-                img4 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous">`;
+                img4 = `<td id="td_gd_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "RECIBO"){
-                img5 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous">`;
-              }            
+                img5 = `<td id="td_r_${ids[i]}" rowspan='1' colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+              }
           });
 
             //let id_rec_foto = 0;row[fobjectidform2];
@@ -289,49 +294,49 @@ require(
             table.style.cssText = "font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;6";
             
             tr1 = `<tr>
-                    <td width="100px" rowspan="2" colspan="1" style="border: solid 1px; white-space: nowrap; background-color: #002258; color: white;">&nbsp;&nbsp;${contfoto} &nbsp;&nbsp;</td>
-                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Departamento</td>
-                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Provincia</td>
-                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Distrito</td>
-                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">N° Contrato</td>
-                    <td width="100px" colspan="2" style="border: solid 1px;">${num}</td>
+                    <td width="100px" rowspan="2" colspan="1" style="text-align: center; border: solid 1px; white-space: nowrap; background-color: #002258; color: white;">&nbsp;&nbsp;${contfoto} &nbsp;&nbsp;</td>
+                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Departamento</b></td>
+                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Provincia</b></td>
+                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Distrito</b></td>
+                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>N° Contrato</b></td>
+                    <td width="100px" colspan="2" style="text-align: center; border: solid 1px;">${num}</td>
                   </tr>
                   <tr>
-                    <td colspan="1" style="border: solid 1px;">${depa}</td>
-                    <td colspan="1" style="border: solid 1px;">${prov}</td>
-                    <td colspan="1" style="border: solid 1px;">${dist}</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Huso</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Este</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Norte</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px;">${depa}</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px;">${prov}</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px;">${dist}</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Huso</b></td>
+                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Este</b></td>
+                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Norte</b></td>
                   </tr>
                   <tr>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Dirección</td>
-                    <td colspan="3" style="border: solid 1px;">${dir}</td>                     
-                    <td colspan="1" style="border: solid 1px;">${zona}</td>
-                    <td colspan="1" style="border: solid 1px;">${este}</td>
-                    <td colspan="1" style="border: solid 1px;">${norte}</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Dirección</b></td>
+                    <td colspan="3" style="text-align: center; border: solid 1px;">${dir}</td>                     
+                    <td colspan="1" style="text-align: center; border: solid 1px;">${zona}</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px;">${este}</td>
+                    <td colspan="1" style="text-align: center; border: solid 1px;">${norte}</td>
                   </tr>`;
             trfoto = `
                     <tr>
-                      <td width="200px" id="td_f_${ids[i]}" rowspan="3" colspan="2" style="border: solid 1px; text-align: center; height: 300px; width:300px;">${img1}</td>
-                      <td width="200px" id="td_g_${ids[i]}" rowspan="1" colspan="2" style="border: solid 1px; text-align: center; height: 300px; width:300px;">${img2}</td>
-                      <td width="200px" id="td_m_${ids[i]}" rowspan="1" colspan="3" style="border: solid 1px; text-align: center; height: 300px; width:300px;">${img3}</td>
+                      ${img1}
+                      ${img2}
+                      ${img3}
                     </tr>
                     <tr>
-                      <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">GABINETE</td>
-                      <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">MEDIDOR</td>
+                      <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GABINETE</b></td>
+                      <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>MEDIDOR</b></td>
                     </tr>
                     <tr>
-                      <td id="td_gd_${ids[i]}" colspan="2" style="border: solid 1px; text-align: center;">${img4}</td>
-                      <td id="td_r_${ids[i]}" colspan="3" style="border: solid 1px; text-align: center;">${img5}</td>
+                      ${img4}
+                      ${img5}
                     </tr>`;
             tr2 = `<tr>
-                    <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">FACHADA</td>
-                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">GASODOMESTICO</td>
-                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">RECIBO</td>
+                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>FACHADA</b></td>
+                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GASODOMESTICO</b></td>
+                    <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>RECIBO</b></td>
                   </tr>
                   <tr>
-                    <td colspan="7" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">OBSERVACIONES</td>
+                    <td colspan="7" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>OBSERVACIONES</b></td>
                   </tr>
                   <tr>
                     <td colspan="7" rowspan="3" style="border: solid 1px; text-align: center;">&nbsp;&nbsp;</td>
