@@ -48,20 +48,25 @@ require(
 	  var url_attachements2 = "https://gisem.osinergmin.gob.pe/serverdc/rest/services/FS_OSIC_TSCON4/FeatureServer/1";
 	
     // fields de ws (1)
-    var fusuario = "SV_SUPERUSER";
+    var fusuario = "SV_SUPER_INI";
     var fobjectidform = "GLOBALID";
     
-    var ffecha = "FECINITSCON";
+    var ffecha = "SV_FECHAINISUP";
     var fDescripcion = "DOCUMENTSCON";
     var frd = "SV_RD";
 
     var fobjectidform2 = "OBJECTID";
-    var fdescr = "REC_DESC_child";
+    
     var ftema = "COMENTATSCON";
-    var descFotos = "DESCFOTCTSCON";
-    var fhuso = "SV_HUSO";
+    var descFotos = "DESCFOTCTSCON";    
     var feste = "SV_X";
     var fnorte = "SV_Y";
+
+    var fdepa = "DEPASUPTSCON";
+    var fprov = "PROVSUPTSCON";
+    var fdist = "DISTSUPTSCON";
+    var fzona = "SV_ZONA";
+    var fnum = "NUMTSCON";
 
     var REC_AGESUP = "SV_AGEFIS";
     var REC_UNISUP = "SV_UNIFIS";
@@ -140,11 +145,11 @@ require(
 
     //FILTRA DATA DEL WEBSERVICE Y MUESTRA EN TABLA PARA EXPORTAR 
     function filtrar(usuario, fecha) {
-      var fi = moment(fecha).add(5,'hours').format('M/D/YYYY HH:mm:ss');
-      var ff = moment(fecha).add(29,'hours').format('M/D/YYYY HH:mm:ss');
+      var fi = moment(fecha).add(5,'hours').format('DD/MM/YYYY HH:mm:ss');
+      var ff = moment(fecha).add(29,'hours').format('DD/MM/YYYY HH:mm:ss');
 
       var sql = fusuario + " = '"+usuario+"' and "+ffecha+" between '"+fi+"' and '"+ff+"'";
-      sql = fusuario + " = '"+usuario+"' ";
+      //sql = fusuario + " = '"+usuario+"' ";
       var query = new QueryTask({url:url_attachements}); 
       var params  = new Query();  
       params.returnGeometry = false;
@@ -218,6 +223,8 @@ require(
     function getAdjuntos(ids, responses){
       let $tbfotos = $("#tb_fotos").html("");
       _auxsf = 0; //aux n sinfoto
+      var data = responses;
+      console.log(data, ids);
       if (responses.length == 0) { 
         console.log("No se encontraron registros relacionados de fotos");
         $tbfotos.html("No se encontraron registros relacionados de fotos");
@@ -227,6 +234,7 @@ require(
       }
       let contfoto = 0;
       for (var i = 0; i < ids.length; i++) {
+        let row2 = responses[i].attributes;
         var query = new QueryTask({url:url_attachements2}); 
         var params  = new Query();  
         params.returnGeometry = false;
@@ -235,8 +243,6 @@ require(
         params.where = "PARENTGLOBALID = '"+ids[i]+"'";
         query.execute(params).then(function(response){
           console.log(response);
-          var total = response.features.length;
-          var contents = [];
           let img1 = '', img2 = '', img3 = '', img4 = '', img5 = '', imgt = '';
           response.features.forEach( (response, i) => {
               let rec_fotos = response.attributes;
@@ -245,31 +251,36 @@ require(
               
               let rdescFotos = (row[descFotos] != null) ? row[descFotos] : "";
               if (rdescFotos == "FACHADA"){
-                img1 = row[fobjectidform2];
+                img1 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous">`;
               }
               else if (rdescFotos == "GABINETE"){
-                img2 = row[fobjectidform2];
+                img2 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous">`;
               }
               else if (rdescFotos == "MEDIDOR"){
-                img3 = row[fobjectidform2];
+                img3 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous">`;
               }
               else if (rdescFotos == "GASODOMESTICO"){
-                img4 = row[fobjectidform2];
+                img4 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous">`;
               }
               else if (rdescFotos == "RECIBO"){
-                img5 = row[fobjectidform2];
+                img5 = `<img height="180px" width="180px" style="height: 300px;width:300px" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous">`;
               }            
           });
 
             //let id_rec_foto = 0;row[fobjectidform2];
             //console.log('id_rec_foto');
             //console.log(id_rec_foto);
-            var row = [];
-            let rd = (row[frd] != null) ? row[frd] : ""; 
-            let desc = (row[fdescr] != null) ? row[fdescr] : "";
-            let huso = (row[fhuso] != null) ? row[fhuso] : ""; 
-            let este = (row[feste] != null) ? row[feste] : "";  
-            let norte = (row[fnorte] != null) ? row[fnorte] : "";
+            
+            //let rd = (row[frd] != null) ? row[frd] : ""; 
+            let depa = (row2[fdepa] != null) ? row2[fdepa] : "";
+            let prov = (row2[fprov] != null) ? row2[fprov] : ""; 
+            let dist = (row2[fdist] != null) ? row2[fdist] : "";
+            let zona = (row2[fzona] != null) ? row2[fzona] : "";
+            let este = (row2[feste] != null) ? row2[feste] : "";
+            let norte = (row2[fnorte] != null) ? row2[fnorte] : "";
+            let num = (row2[fnum] != null) ? row2[fnum] : "";
+            let dir = row2["TVIASUPTSCON"] + " & " + row2["NVIASUPTSCON"] + " & " + row2["NUMZLTSUPTSCON"] + " & " + row2["INTDEPSUPTSCON"] + " & " + row2["PISOSUPTSCON"] + " & " + row2["URBSUPTSCON"];
+            
             contfoto++;
             contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
 
@@ -278,41 +289,41 @@ require(
             table.style.cssText = "font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;6";
             
             tr1 = `<tr>
-                    <td rowspan="2" colspan="1" style="border: solid 1px; white-space: nowrap;">${contfoto} &nbsp;&nbsp;</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Departamento</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Provincia</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Distrito</td>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Contrato</td>
-                    <td colspan="2" style="border: solid 1px;">${desc}</td>
+                    <td width="100px" rowspan="2" colspan="1" style="border: solid 1px; white-space: nowrap; background-color: #002258; color: white;">&nbsp;&nbsp;${contfoto} &nbsp;&nbsp;</td>
+                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Departamento</td>
+                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Provincia</td>
+                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Distrito</td>
+                    <td width="100px" colspan="1" style="border: solid 1px; background-color: #002258; color: white;">N° Contrato</td>
+                    <td width="100px" colspan="2" style="border: solid 1px;">${num}</td>
                   </tr>
                   <tr>
-                    <td colspan="1" style="border: solid 1px;"></td>
-                    <td colspan="1" style="border: solid 1px;"></td>
-                    <td colspan="1" style="border: solid 1px;"></td>
+                    <td colspan="1" style="border: solid 1px;">${depa}</td>
+                    <td colspan="1" style="border: solid 1px;">${prov}</td>
+                    <td colspan="1" style="border: solid 1px;">${dist}</td>
                     <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Huso</td>
                     <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Este</td>
                     <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Norte</td>
                   </tr>
                   <tr>
-                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Direción</td>
-                    <td colspan="3" style="border: solid 1px;"></td>                     
-                    <td colspan="1" style="border: solid 1px;">${desc}</td>
-                    <td colspan="1" style="border: solid 1px;">${desc}</td>
-                    <td colspan="1" style="border: solid 1px;">${desc}</td>
+                    <td colspan="1" style="border: solid 1px; background-color: #002258; color: white;">Dirección</td>
+                    <td colspan="3" style="border: solid 1px;">${dir}</td>                     
+                    <td colspan="1" style="border: solid 1px;">${zona}</td>
+                    <td colspan="1" style="border: solid 1px;">${este}</td>
+                    <td colspan="1" style="border: solid 1px;">${norte}</td>
                   </tr>`;
             trfoto = `
                     <tr>
-                      <td id="td_f_${ids[i]}" rowspan="3" colspan="3" style="border: solid 1px; text-align: center;"><img style="height: 300px;width:300px" id="img_f_${img1}" crossorigin="Anonymous"></td>
-                      <td id="td_g_${ids[i]}" rowspan="1" colspan="2" style="border: solid 1px; text-align: center;"><img style="height: 300px;width:300px;" id="img_g_${img2}" crossorigin="Anonymous"></td>
-                      <td id="td_m_${ids[i]}" rowspan="1" colspan="2" style="border: solid 1px; text-align: center;"><img style="height: 300px;width:300px;" id="img_m_${img3}" crossorigin="Anonymous"></td>
+                      <td width="200px" id="td_f_${ids[i]}" rowspan="3" colspan="2" style="border: solid 1px; text-align: center; height: 300px; width:300px;">${img1}</td>
+                      <td width="200px" id="td_g_${ids[i]}" rowspan="1" colspan="2" style="border: solid 1px; text-align: center; height: 300px; width:300px;">${img2}</td>
+                      <td width="200px" id="td_m_${ids[i]}" rowspan="1" colspan="3" style="border: solid 1px; text-align: center; height: 300px; width:300px;">${img3}</td>
                     </tr>
                     <tr>
                       <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">GABINETE</td>
-                      <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">MEDIDOR</td>
+                      <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">MEDIDOR</td>
                     </tr>
                     <tr>
-                      <td id="td_gd_${ids[i]}" colspan="2" style="border: solid 1px; text-align: center;"><img style="height: 300px;width:300px" id="img_gd_${img4}" crossorigin="Anonymous"></td>
-                      <td id="td_r_${ids[i]}" colspan="2" style="border: solid 1px; text-align: center;"><img style="height: 300px;width:300px" id="img_r_${img5}" crossorigin="Anonymous"></td>
+                      <td id="td_gd_${ids[i]}" colspan="2" style="border: solid 1px; text-align: center;">${img4}</td>
+                      <td id="td_r_${ids[i]}" colspan="3" style="border: solid 1px; text-align: center;">${img5}</td>
                     </tr>`;
             tr2 = `<tr>
                     <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;">FACHADA</td>
