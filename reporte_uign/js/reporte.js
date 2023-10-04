@@ -51,7 +51,7 @@ require(
     var fusuario = "SV_SUPERUSER";
     var fobjectidform = "GLOBALID";
     
-    var ffecha = "SV_FECHAINISUP";
+    var ffecha = "FECINITSCON";
     var fDescripcion = "DOCUMENTSCON";
     var frd = "SV_RD";
 
@@ -81,7 +81,7 @@ require(
     var REC_ASPECTO = "SV_ASPECTOSUP";
     var REC_TIPO = "SV_TIPOSUP";
     var REC_MODALIDAD = "SV_MODALSUP";
-    var REC_FECHAINI = "SV_FECHAINISUP";
+    var REC_FECHAINI = "FECINITSCON";
     var REC_START = "FECINITSCON";
 
     var REC_EST_INIC = "REC_EST_INIC_child";
@@ -179,7 +179,12 @@ require(
             }            
             let tema = row[ftema];
             let descripcion = row[fDescripcion]; 
-
+            let rc = row[REC_INICIALES];
+            if (rc != null && rc != "" ){
+              rc = '-'+rc;
+            }
+            else
+              rc = '';
             cadena = cadena +
               `<tr>
                 <td style="text-align: center;">${(i+1)}</td>
@@ -193,10 +198,10 @@ require(
             
             ids.push(id);
             if (i==0) {
-              $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+'-'+row[REC_INICIALES]+'-'+row[REC_RD_parent]+'-'+row[REC_RD_parent2]);
+              $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+rc+'-'+row[REC_RD_parent]+'-'+row[REC_RD_parent2]);
               $('#REC_AGESUP').html(row[REC_AGESUP]);
               $('#REC_UNISUP').html(row[REC_UNISUP]);
-              $('#REC_UBICACION').html("Distrito de &  " + row[REC_UBICACION] + ", provincia de" + row[REC_UBICACION2] + " y departamento de " + row[REC_UBICACION3]);
+              $('#REC_UBICACION').html("Distrito de " + row[REC_UBICACION] + ", provincia de " + row[REC_UBICACION2] + " y departamento de " + row[REC_UBICACION3]);
               $('#REC_EST').html(row[REC_EST]);
               $('#REC_SUPER_label').html(row[REC_SUPER_label]);
               $('#REC_CL').html(row[REC_CL]);
@@ -224,7 +229,6 @@ require(
       let $tbfotos = $("#tb_fotos").html("");
       _auxsf = 0; //aux n sinfoto
       var data = responses;
-      console.log(data, ids);
       if (responses.length == 0) { 
         console.log("No se encontraron registros relacionados de fotos");
         $tbfotos.html("No se encontraron registros relacionados de fotos");
@@ -284,7 +288,28 @@ require(
             let este = (row2[feste] != null) ? row2[feste] : "";
             let norte = (row2[fnorte] != null) ? row2[fnorte] : "";
             let num = (row2[fnum] != null) ? row2[fnum] : "";
-            let dir = row2["TVIASUPTSCON"] + " & " + row2["NVIASUPTSCON"] + " & " + row2["NUMZLTSUPTSCON"] + " & " + row2["INTDEPSUPTSCON"] + " & " + row2["PISOSUPTSCON"] + " & " + row2["URBSUPTSCON"];
+            let ub = row2["URBSUPTSCON"];
+            if (ub != null && ub != ""){
+              ub = " & " + ub;
+            }
+            else {
+              ub = "";
+            }
+            let ub2 = row2["PISOSUPTSCON"];
+            if (ub2 != null && ub2 != ""){
+              ub2 = " & " + ub2;
+            }
+            else {
+              ub2 = "";
+            }
+            let ub3 = row2["INTDEPSUPTSCON"];
+            if (ub3 != null && ub3 != ""){
+              ub3 = " & " + ub3;
+            }
+            else {
+              ub3 = "";
+            }
+            let dir = row2["TVIASUPTSCON"] + " & " + row2["NVIASUPTSCON"] + " & " + row2["NUMZLTSUPTSCON"] + ub3 + ub2 + ub;
             
             contfoto++;
             contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
