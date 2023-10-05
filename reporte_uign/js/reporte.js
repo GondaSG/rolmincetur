@@ -52,12 +52,12 @@ require(
     var fobjectidform = "GLOBALID";
     
     var ffecha = "FECINITSCON";
-    var fDescripcion = "DOCUMENTSCON";
+    var fDescripcion = "NOMRASOTSCON";
     var frd = "SV_RD";
 
     var fobjectidform2 = "OBJECTID";
     
-    var ftema = "COMENTATSCON";
+    var ftema = "NUMTSCON";
     var descFotos = "DESCFOTCTSCON";    
     var feste = "SV_X";
     var fnorte = "SV_Y";
@@ -164,9 +164,11 @@ require(
           clearData('No hay registros coincidentes'); 
         }else{          
           var ids = [];
+          var ids2 = [];
           responses = response.features;
           var cadena = '';
           let auxlength = responses.length;
+          
           for (var i = 0; i < auxlength; i++) {
             let row = responses[i].attributes;
             let id = row[fobjectidform];
@@ -185,18 +187,36 @@ require(
             }
             else
               rc = '';
-            cadena = cadena +
-              `<tr>
-                <td style="text-align: center;">${(i+1)}</td>
+                            var query = new QueryTask({url:url_attachements2}); 
+                var params  = new Query();  
+                params.returnGeometry = false;
+                params.outFields = ["*"];
+                //params.orderByFields= [`${ffecha} asc`];
+                params.where = "PARENTGLOBALID = '"+id+"'";
+                query.execute(params).then(function(response){
+                  cadena = cadena +
+              `<tr>                
                 <td style="text-align: center;">${fechaformat}</td>
                 <td style="text-align: center;">${nreport}</td>
                 <td style="text-align: center;">${coordenadas}</td>
                 <td>${tema}</td>
                 <td>${descripcion}</td>
-              </tr>`;
+                <td>${row["DEPASUPTSCON"]}</td>`;
+                  cadena = cadena +
+                  `
+                    <td id='td_${id.replace("{","").replace("}","")}'>${response.features.length}</td>
+                  `;
+                  cadena = cadena +
+                  `</tr>`;
+                  $('#tbody_data').html(cadena);
+
+                });
+             
+
             n++;
             
             ids.push(id);
+            //ids2.push(row[fobjectidform]);
             if (i==0) {
               $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+rc+'-'+row[REC_RD_parent]+'-'+row[REC_RD_parent2]);
               $('#REC_AGESUP').html(row[REC_AGESUP]);
@@ -217,9 +237,10 @@ require(
               $('#REC_DNI_').html(row[REC_DNI]);
             }
           }
-          $('#tbody_data').html(cadena);
+          
           repaginar();
-          getAdjuntos(ids, responses);          
+          getAdjuntos(ids, responses);   
+          $('#total_reg').text(auxlength + " Registros en total");       
         }
       });
     }
@@ -246,7 +267,9 @@ require(
         //params.orderByFields= [`${ffecha} asc`];
         params.where = "PARENTGLOBALID = '"+ids[i]+"'";
         query.execute(params).then(function(response){
-          console.log(response);
+          //console.log(response.features[0].attributes.PARENTGLOBALID.replace("{","").replace("}",""));
+          //console.log($('#td_'+response.features[0].attributes.PARENTGLOBALID.replace("{","").replace("}","")));
+          //$('#td_'+response.features[0].attributes.PARENTGLOBALID).html(response.features.length);
           let img1 = '<td rowspan="3" colspan="2" style="border: solid 1px;"></td>', img2 = '<td rowspan="1" colspan="2" style="border: solid 1px;"></td>', 
           img3 = '<td rowspan="1" colspan="3" style="border: solid 1px;"></td>', img4 = '<td rowspan="1" colspan="2" style="border: solid 1px;"></td>',
           img5 = '<td rowspan="1" colspan="3" style="border: solid 1px;"></td>', imgt = '';
