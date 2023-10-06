@@ -173,7 +173,7 @@ require(
             let row = responses[i].attributes;
             let id = row[fobjectidform];
             let fecha = new Date(row[ffecha]);
-            let fechaformat = moment(fecha).format('D/M/YYYY HH:mm:ss');
+            let fechaformat = moment(fecha).format('D/M/YYYY');
             let nreport = row[frd];            
             let coordenadas = "";
             if (row[feste] != null && row[fnorte] != null){
@@ -218,7 +218,7 @@ require(
             ids.push(id);
             //ids2.push(row[fobjectidform]);
             if (i==0) {
-              $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+rc+'-'+row[REC_RD_parent]+'-'+row[REC_RD_parent2]);
+              $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+rc+'-'+row[REC_RD_parent]+'-'+row[REC_RD_parent2].replace("RD", ""));
               $('#REC_AGESUP').html(row[REC_AGESUP]);
               $('#REC_UNISUP').html(row[REC_UNISUP]);
               $('#REC_UBICACION').html("Distrito de " + row[REC_UBICACION] + ", provincia de " + row[REC_UBICACION2] + " y departamento de " + row[REC_UBICACION3]);
@@ -282,20 +282,20 @@ require(
               let rdescFotos = (row[descFotos] != null) ? row[descFotos] : "";
               if (rdescFotos == "FACHADA"){
                 sihay1 = true;
-                img1 = `<td id="td_f_${ids[i]}" rowspan="3" colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+                img1 = `<td id="td_f_${ids[i]}" rowspan="3" colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "GABINETE"){
                 sihay2 = true;
-                img2 = `<td id="td_g_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+                img2 = `<td id="td_g_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "MEDIDOR"){
-                img3 = `<td id="td_m_${ids[i]}" rowspan="1" colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+                img3 = `<td id="td_m_${ids[i]}" rowspan="1" colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "GASODOMESTICO"){
-                img4 = `<td id="td_gd_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+                img4 = `<td id="td_gd_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
               else if (rdescFotos == "RECIBO"){
-                img5 = `<td id="td_r_${ids[i]}" rowspan='1' colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180px" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+                img5 = `<td id="td_r_${ids[i]}" rowspan='1' colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
           });
 
