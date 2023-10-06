@@ -1,29 +1,24 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
 
-/*===============Propiedades Globales================*/
 * {
     font-family: 'Raleway', sans-serif;
     font:800;
 }
 
-nav{
+#navbar-container{
     background-color: #000090;
-    /* background-color: #075DAA;  */
 }
 
-#servicios-fila-1 {
-    width:100% !important;
-    margin-bottom: 120px;
+#barratext{
+    margin-left: -20px;
 }
 
 #servicios {
     background: #133c91;
     justify-content: center!important;
     border-radius: 20px;
-    width: 530px;
-    height: 480px;
-    margin: 20px; 
-   
+    width: 420px;
+    height: 500px;
+    margin: 20px;
 }
 
 .box2 {      
@@ -31,8 +26,7 @@ nav{
     justify-content: center;  
     border-radius: 20px;
     margin: 20px;
-    /* padding: 10px; */
-    width: 450px;
+    width: 350px;
     height: 80px;    
 }  
 
@@ -46,26 +40,29 @@ nav{
     width: 150px;
     height: 40px; 
     justify-content: center;  
-    margin-left: 190px;
-    border-radius: 12px;
-    
+    margin-left: 120px;
+    margin-bottom: 30px;
+    border-radius: 12px;    
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
     background: #ffffff; 
+    margin: 0px;
+    display: grid;
+    min-height:100vh;
+    grid-template-rows: auto 1fr auto;
 }
 
-/*=========================FOOTER================================*/
 footer {
-    background:  #000090;  
+    background:  #000090; 
+    height: 90px; 
 }
 footer p{
     color:#f3f3f3;
     text-align:left;
 }
-
 
 /*=========================MEDIA QUERIES PANTALLA ANCHA================================*/
 
@@ -83,10 +80,9 @@ footer p{
     width:90%;
     margin:auto;
     padding-top:50px;    
-   }
-   
- 
+   }   
 }
+
 /*=========================MEDIA QUERIES PANTALLA SM================================*/
 
 
@@ -95,9 +91,7 @@ footer p{
     #intro, #equipo{
         width:90% !important;
         margin:auto;
-    }
-
-    
+    }    
     #img-equipo{
         max-height:20rem !important;
         width:90%;
@@ -117,9 +111,8 @@ footer p{
     #bg-contactos{
         top: -120px;
     }
-
-
 }
+
 /*=========================MEDIA QUERIES PANTALLA EXTRA-SM================================*/
 
 @media (max-width: 576px) {
@@ -128,20 +121,20 @@ footer p{
     }
     #servicios-fila-1 {
         width:100% !important;
-
     }
-
     #servicios {        
         justify-content: center!important;
         width: 530px;
         height: 740px;
         margin: 20px;        
     }
+    
+    .box2{
+        width: 450px!important;
+        height: 80px;
+        justify-content: flex-end;
 
-    .box2img{
-        margin-inline-end: auto;
     }
-
     #boton {
         justify-content: center!important;
         margin-left: 25%;
@@ -154,21 +147,5 @@ footer p{
         padding-left: 0px;
         width: 250px;
         height: auto;
-    }       
-}
-
-.footer{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /* z-index: 1030; */
-}
-
-.footer2{
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: unset;
-    /* z-index: 1030; */
+    }
 }
