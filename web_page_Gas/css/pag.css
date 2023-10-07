@@ -4,7 +4,15 @@
     padding-top: 10px;  
     height: 90px;
 }
-
+#navbar-container{
+    background-color: #000090;
+}
+#barra {
+    background: #ffc400;
+    height: 50px;
+    text-align: left ;    
+    padding-top: 10px;    
+}
 #servicio01 {
     background: #5eb7ff;
     justify-content: center!important;
