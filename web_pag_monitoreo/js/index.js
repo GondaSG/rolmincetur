@@ -13,8 +13,11 @@ require(
     "dojo/domReady!",
     "esri/widgets/Expand",
     "esri/widgets/Home",
-    "esri/widgets/Zoom",
-    "esri/widgets/BasemapGallery"
+    "esri/widgets/BasemapGallery",
+    "esri/widgets/Locate",
+    "esri/widgets/Search",
+    "esri/widgets/Print",
+    "esri/widgets/Compass",
   ],
   function(
     Map,
@@ -30,8 +33,11 @@ require(
     domReady,
     Expand,
     Home,
-    Zoom,
-    BasemapGallery
+    BasemapGallery,
+    Locate,
+    Search,
+    Print,
+    Compass
   ){
 
     $(document).ready(function(){     
@@ -67,10 +73,18 @@ require(
       //  center: [-72,-10]
       //});
 
+      const searchWidget = new Search({
+        view: view,
+        container: "divTop",
+        allPlaceholder: "Buscar en Google Maps",
+        placeholder: "Buscar en Google Maps"
+      });
+
       var homeBtn = new Home({
         view: view
       })
-      basemapGallery = new Expand({
+
+      var basemapGallery = new Expand({
         expandIcon: "home",  // see https://developers.arcgis.com/calcite-design-system/icons/
         // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
         view: view,
@@ -78,17 +92,42 @@ require(
           view: view
         })
       });
-            // Add the widget to the top-right corner of the view
-      
 
+      let locate = new Locate({
+        view: view
+      });
+
+      var _print = new Expand({
+        expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
+        // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
+        view: view,
+        content: new Print({
+          view: view,
+          //container: 'container_printmap',
+          templateOptions: {
+            title: "Mapa Energético Minero",
+            format: "pdf",
+            exportOptions: {
+              dpi: 300
+            },
+          },
+          printServiceUrl: "https://gisem.osinergmin.gob.pe/serverosih/rest/services/ExportWebMapMEM/GPServer/Export%20Web%20Map"
+        })
+      });
+
+      let compass = new Compass({
+        view: view
+      });
+
+      //view.ui.components = [ "attribution", "zoom"];
       // Add the home button to the top left corner of the view
       view.ui.add(homeBtn, "top-right");
       //view.ui.add(zoom, "top-right");
       view.ui.move([ "zoom" ], "top-right");
 
-      view.ui.add(basemapGallery, "top-right");
+      view.ui.add([basemapGallery, locate, _print, compass], "top-right");
 
-      
+      // view.ui.add(searchWidget, "bottom-trailing");
 
     });
     

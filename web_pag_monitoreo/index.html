@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./main.css">
-    <title>Pag MOnitoreo</title>
+    <title>Centro MOnitoreo</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
@@ -29,12 +29,12 @@
 <section class="justify-content-center align-items-center" id="centro01" style="height: calc((100vh) - 60px);">    
     <div class="row p-0 m-0"> 
         <div class="col-12 col-lg-8 col-md-8 col-sm-12 p-0 position-relative">
+            <div style="top:10px; left: 40%;text-align: center; position: absolute; z-index: 99999;" id="divTop"></div>
             <div id="map" style="height:calc((100vh) - 60px)"></div>
             
-            
             <div class="position-absolute top-0 start-0">
-              <p class="d-inline-flex gap-1 m-3">                
-                <button class="btn btn-secondary mt-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 38px; height: 40px;">
+              <p class="d-inline-flex gap-1 m-3">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 38px; height: 40px;">
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                       <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                 </button>
