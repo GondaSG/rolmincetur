@@ -155,6 +155,14 @@ nav .title{
   cursor: pointer;
 }
 
+#btn_exportExcel{
+  background-color: #295495;
+}
+
+#btn_exportExcel:hover{
+  cursor: pointer;
+}
+
 table td, table th{
   padding: 5px 5px;
 }

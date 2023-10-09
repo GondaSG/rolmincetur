@@ -124,6 +124,7 @@ require(
         $cmbuser.prop('disabled', true);
         $fecsuperv.prop('disabled', true);
         $('#btn_exportword').prop('disabled', true).html(showPreloaderPnts());
+        $('#btn_exportExcel').prop('disabled', true);
         $('#div_barprogress').html(showPreloaderBar());
         $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
         filtrar(usuario,fecha);
@@ -141,6 +142,29 @@ require(
       let iscomprimido = $('#chb_switch').is(':checked'); 
       $("#div_fotos").wordExport(filename, iscomprimido);     
       return false;   
+    });
+
+    //BOTÓN EXPORTAR 
+    $('#btn_exportExcel').on('click', function(event) {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+      template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+      base64 = function(s) {
+        return window.btoa(unescape(encodeURIComponent(s)))
+      },
+      format = function(s, c) {
+        return s.replace(/{(\w+)}/g, function(m, p) {
+          return c[p];
+        })
+      }
+      var toExcel = document.getElementById("tbl_data").innerHTML;
+      var ctx = {
+        worksheet: name || '',
+        table: toExcel
+      };
+      var link = document.createElement("a");
+      link.download = "Reporte.xls";
+      link.href = uri + base64(format(template, ctx))
+      link.click();
     });
 
     //FILTRA DATA DEL WEBSERVICE Y MUESTRA EN TABLA PARA EXPORTAR 
@@ -255,6 +279,7 @@ require(
         $tbfotos.html("No se encontraron registros relacionados de fotos");
         $('#div_barprogress').html(showPreloaderProgress(100));
         $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>').prop('disabled', false);    
+        $('#btn_exportExcel').prop('disabled', false);    
         return; 
       }
       let contfoto = 0;
@@ -364,20 +389,20 @@ require(
                     <td colspan="1" style="text-align: center; border: solid 1px;">${este}</td>
                     <td colspan="1" style="text-align: center; border: solid 1px;">${norte}</td>
                   </tr>`;
-            trfoto = `
-                    <tr>
-                      ${img1}
-                      ${img2}
-                      ${img3}
-                    </tr>
-                    <tr>
-                      <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GABINETE</b></td>
-                      <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>MEDIDOR</b></td>
-                    </tr>
-                    <tr>
-                      ${img4}
-                      ${img5}
-                    </tr>`;
+                  trfoto = `
+                  <tr>
+                    ${img1}
+                    ${img2}
+                    ${img3}
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GABINETE</b></td>
+                    <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>MEDIDOR</b></td>
+                  </tr>
+                  <tr>
+                    ${img4}
+                    ${img5}
+                  </tr>`;
             tr2 = `<tr>
                     <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>FACHADA</b></td>
                     <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GASODOMESTICO</b></td>
@@ -462,7 +487,8 @@ require(
             $('#div_barprogress').html(showPreloaderProgress(percent));
             if(totalphotos == (loadedphotos+_auxsf)){  
               $('td.sinfoto').html('Foto no encontrada').css({height: "4em", "font-weight": "bold", color: "#075daa", "font-style": "italic"});
-              $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>').prop('disabled', false);    
+              $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>').prop('disabled', false); 
+              $('#btn_exportExcel').prop('disabled', false);
             }  
           });
       });
