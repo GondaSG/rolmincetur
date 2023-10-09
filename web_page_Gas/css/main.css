@@ -44,7 +44,8 @@ body {
 }
 
 footer {
-    background:  #000090;  
+    background:  #000090; 
+    height: 90px; 
 }
 footer p{
     color:#f3f3f3;
