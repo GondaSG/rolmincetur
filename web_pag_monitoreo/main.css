@@ -19,3 +19,36 @@ body {
     min-height: 100vh;
     grid-template-rows: auto 1fr auto;
 }
+
+.rectangulo1 {
+    background-color: #e20202;
+    height: 80px;
+    color: #fff; 
+    padding: 20px;
+    text-align: left;
+    border-radius: 5px; 
+    margin: 5px; 
+    font-size: 20px;
+}
+
+.rectangulo2 {
+    background-color: #ff7b00;
+    height: 80px;
+    color: #fff; 
+    padding: 20px;
+    text-align: left;
+    border-radius: 5px; 
+    margin: 5px; 
+    font-size: 20px;
+}
+
+.rectangulo3 {
+    background-color: #12973e;
+    height: 80px;
+    color: #fff; 
+    padding: 20px;
+    text-align: left;
+    border-radius: 5px; 
+    margin: 5px; 
+    font-size: 20px;
+}
