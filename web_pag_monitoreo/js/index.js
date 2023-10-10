@@ -1,3 +1,6 @@
+var url_electricidad = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD_TOTAL/MapServer';
+
+
 require(
   [
     "esri/Map",
@@ -18,7 +21,12 @@ require(
     "esri/widgets/Search",
     "esri/widgets/Print",
     "esri/widgets/Compass",
-    "esri/widgets/Measurement"
+    "esri/widgets/Measurement",
+    "esri/layers/MapImageLayer",
+    "esri/layers/FeatureLayer",
+    "esri/layers/GroupLayer",
+    "esri/config",
+    "esri/widgets/LayerList",
   ],
   function(
     Map,
@@ -39,7 +47,12 @@ require(
     Search,
     Print,
     Compass,
-    Measurement
+    Measurement,
+    MapImageLayer,
+    FeatureLayer,
+    GroupLayer,
+    esriConfig,
+    LayerList
   ){
 
     $(document).ready(function(){     
@@ -88,6 +101,12 @@ require(
       //  center: [-72,-10]
       //});
 
+      var _mil_electricidad = new MapImageLayer({
+        url: url_electricidad,
+        title: 'ELECTRICIDAD',
+        aux_alias: 'sectorelectricidad'
+      });
+
       const searchWidget = new Search({
         view: view,
         container: "divTop",
@@ -106,7 +125,8 @@ require(
         // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
         view: view,
         content: basemapGallery,
-        group: "top-right"
+        group: "top-right",
+        expandTooltip: "Mapas Base"
       });
 
       let locate = new Locate({
@@ -129,14 +149,17 @@ require(
         expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
         view: view,
         content: print,
+        expandTooltip: "Imprimir",
         group: "top-right"
       });
 
       var _medicion = new Expand({
-        expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
+        expandIcon: "legend",  // see https://developers.arcgis.com/calcite-design-system/icons/
+        expandIconClass : "esri-icon-measure-line",
         view: view,
         content: document.getElementById("toolbarDiv"),
-        group: "top-right"
+        group: "top-right",
+        expandTooltip: "Medición",
       });
 
       let compass = new Compass({
@@ -144,14 +167,14 @@ require(
       });
 
       // Set-up event handlers for buttons and click events
-      const switchButton = document.getElementById("switch-btn");
+      //const switchButton = document.getElementById("switch-btn");
       const distanceButton = document.getElementById('distance');
       const areaButton = document.getElementById('area');
       const clearButton = document.getElementById('clear');
 
-      switchButton.addEventListener("click", () => {
-        switchView();
-      });
+      //switchButton.addEventListener("click", () => {
+      //  switchView();
+      //});
       distanceButton.addEventListener("click", () => {
         distanceMeasurement();
       });
@@ -161,7 +184,13 @@ require(
       clearButton.addEventListener("click", () => {
         clearMeasurements();
       });
+      map.add(_mil_electricidad);
 
+
+      var _lyl_gasnatural = new LayerList({
+        view: view,
+        container: 'collapseExample',
+      });
       // Add the home button to the top left corner of the view
       
       //view.ui.add(zoom, "top-right");
@@ -174,6 +203,19 @@ require(
       // Call the loadView() function for the initial view
       loadView();
       //loadWidgets();
+      //$("#switch-btn").click(function(){
+      //  debugger;
+      //  console.log($("#switch-btn"));
+      //  switchView();
+      //});
+      $('#toolbarDiv').removeClass("d-none");
+      
+      $(document).on('click', '#switch-btn', function () {
+        debugger;
+        v = $(this).data('value');
+        console.log($("#switch-btn"));
+        switchView();
+      }); 
 
       function loadWidgets(activeView){
         measurement.view = activeView;
@@ -187,6 +229,17 @@ require(
         //activeView.ui.add(measurement, "top-right");
         activeView.ui.move(["zoom"], "top-right");
         activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion], "top-right");
+        console.log($("#switch-btn"));
+        if ($("#switch-btn").length == 0) {
+          console.log($('body'));
+          //$('body').append($("<button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>"+ (activeView.type.toUpperCase() === "2D"  ? "3D" : "2D") +"</button>"));
+        }
+        
+        activeView.ui.add('switch-btn', "top-right");
+        //const switchButton = document.getElementById("switch-btn");
+        //switchButton.addEventListener("click", () => {
+        //  switchView();
+        //});
       }
 
       // The loadView() function to define the view for the widgets and div
@@ -205,6 +258,7 @@ require(
 
       // When the 2D or 3D button is activated, the switchView() function is called
       function switchView() {
+        debugger;
         // Clone the viewpoint for the MapView or SceneView
         const viewpoint = activeView.viewpoint.clone();
         // Get the view type, either 2d or 3d
@@ -230,7 +284,7 @@ require(
         //measurement.view = activeView;
         //legend.view = activeView;
         // Reset the value of the 2D or 3D switching button
-        switchButton.value = type.toUpperCase();
+        //switchButton.value = type.toUpperCase();
       }
 
       // Call the appropriate DistanceMeasurement2D or DirectLineMeasurement3D

@@ -50,6 +50,11 @@
       .esri-widget--button.active:focus path {
         fill: #E4E4E4;
       }
+
+      #switch-btn {
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
+      }
     </style>
   </head>
 
@@ -69,10 +74,10 @@
     <div class="row p-0 m-0"> 
         <div class="col-12 col-lg-8 col-md-8 col-sm-12 p-0 m-0 position-relative">
             <div style="top:10px; left: 40%;text-align: center; position: absolute; z-index: 99999;" id="divTop"></div>
-            <div id="infoDiv">
-              <input class="esri-component esri-widget--button esri-widget esri-interactive" type="button" id="switch-btn" value="3D"/>
-            </div>
-            <div id="toolbarDiv" class="esri-component esri-widget">
+            <!-- <button class="esri-component esri-widget--button esri-widget esri-interactive" type="button" id="switch-btn" value="3D">3D</button> -->
+            <!-- <div id="infoDiv"> -->
+            <!-- </div> -->
+            <div id="toolbarDiv" class="esri-component esri-widget d-none" >
               <button id="distance" class="esri-widget--button esri-interactive esri-icon-measure-line" title="Distance Measurement Tool"></button>
               <button id="area" class="esri-widget--button esri-interactive esri-icon-measure-area" title="Area Measurement Tool"></button>
               <button id="clear" class="esri-widget--button esri-interactive esri-icon-trash" title="Clear Measurements"></button>
@@ -88,7 +93,7 @@
               </p>
             
               <div class="collapse mx-4" id="collapseExample" style="width: 300px;">
-                <div class="card card-body fw-bold fs-5"> Ambito Nacional
+                <!-- <div class="card card-body fw-bold fs-5"> Ambito Nacional
                   <ul class=""> 
                     <li> <i class="bi bi-fuel-pump"></i> Gestión</li>
                     <li> Hidrocarburos </li>
@@ -99,7 +104,7 @@
                     <li> Otros</li>
                     <li> Noticas </li>                    
                   </ul>
-                </div>
+                </div> -->
               </div>
             </div>              
         </div>
@@ -201,7 +206,7 @@
         </tbody>
       </table> 
 </section>
-
+<button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>3D</button>
 </body>
 
 
