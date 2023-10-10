@@ -105,7 +105,8 @@ require(
         expandIcon: "home",  // see https://developers.arcgis.com/calcite-design-system/icons/
         // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
         view: view,
-        content: basemapGallery
+        content: basemapGallery,
+        group: "top-right"
       });
 
       let locate = new Locate({
@@ -127,7 +128,15 @@ require(
       var _print = new Expand({
         expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
         view: view,
-        content: print
+        content: print,
+        group: "top-right"
+      });
+
+      var _medicion = new Expand({
+        expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
+        view: view,
+        content: document.getElementById("toolbarDiv"),
+        group: "top-right"
       });
 
       let compass = new Compass({
@@ -173,10 +182,11 @@ require(
         homeBtn.view = activeView;
         print.view = activeView;
         compass.view = activeView;
+        activeView.ui.components = [ "attribution" ];
         activeView.ui.add(homeBtn, "top-right");
-        activeView.ui.add(measurement, "top-right");
+        //activeView.ui.add(measurement, "top-right");
         activeView.ui.move(["zoom"], "top-right");
-        activeView.ui.add([expBasemapGallery, locate, _print, compass], "top-right");
+        activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion], "top-right");
       }
 
       // The loadView() function to define the view for the widgets and div
