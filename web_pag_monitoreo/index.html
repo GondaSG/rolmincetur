@@ -53,9 +53,9 @@
     </style>
   </head>
 
-<body>
+<body class=" ">
   <!---- HEADER ---->
-    <nav class="navbar navbar-expand-lg navbar-light p-2" id="menu">
+    <nav class="navbar navbar-expand-lg navbar-light p-0 m-0" id="menu">
         <div class="container text-center">            
             <img src="./img/logo.png" alt="Logo" style="width: 200px;">
             
@@ -65,9 +65,9 @@
 
   <!---- SERVICIOS ---->
 
-<section class="justify-content-center align-items-center" id="centro01" style="height: calc((100vh) - 60px);">    
+<section class="justify-content-center align-items-center p-0 m-0" id="centro01" style="height:calc((100vh) - 60px); width: 100%;" >    
     <div class="row p-0 m-0"> 
-        <div class="col-12 col-lg-8 col-md-8 col-sm-12 p-0 position-relative">
+        <div class="col-12 col-lg-8 col-md-8 col-sm-12 p-0 m-0 position-relative">
             <div style="top:10px; left: 40%;text-align: center; position: absolute; z-index: 99999;" id="divTop"></div>
             <div id="infoDiv">
               <input class="esri-component esri-widget--button esri-widget esri-interactive" type="button" id="switch-btn" value="3D"/>
@@ -78,13 +78,12 @@
               <button id="clear" class="esri-widget--button esri-interactive esri-icon-trash" title="Clear Measurements"></button>
             </div>
             <div id="map" style="height:calc((100vh) - 60px)"></div>
-
             
             <div class="position-absolute top-0 start-0">
               <p class="d-inline-flex gap-1 m-3">
                 <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 38px; height: 40px;">
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                      <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+                    <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                 </button>
               </p>
             
@@ -104,37 +103,38 @@
               </div>
             </div>              
         </div>
-        
-        
-        <div class="col-12 col-lg-4 col-md-4 col-sm-12 p-0">
-            <h5 class="px-4 mt-3 icono-wrap text-dark fw-bold p-2 d-flex justify-content-center">Estado general de emergencia</h5>
+                
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12 p-0 m-0">
+            <h5 class="px-4 mt-3 icono-wrap text-dark  fw-bold p-2 d-flex justify-content-center">Estado general de emergencia</h5>
             <img src="./img/Captura01.jpg" class="img-fluid p-2 " alt="Logo" >
             <p class="fs-6 m-2 p-2">Actualmente, existen un total de 52 emergencias por ser atentendidas por los operadores. 
               De estas, 10 son de alta criticidad, 14 de criticidad media y 28 de criticidad baja.
               Las emergencias de alta criticidad requieren una respuesta urgente debido a su gravedad, OSINERGMIN  viene monitoreando
               la atención oportuna, para proservar la seguridad y el bienestar de las personas y los recursos involucrados.</p>
             
-            <div class="row">
+            <div class="row p-0 m-0">
               <div class="col-md-5">
                 <img src="./img/Captura02.jpg" class="img-fluid p-2 m-0" alt="Logo">
-              </div>
-              <div class="col-md-7">
-                <p class="fs-6 p-2 m-0">Se observa un enfoque importante en el sector de electricidad, donde se registran 30 incidentes.
+              </div>              
+              <div class="col-md-5 p-0 m-0" >
+                <p class="fs-6 ">Se observa un enfoque importante en el sector de electricidad, donde se registran 30 incidentes.
                   Además, el sector de Hidrocarburos presenta 12 emergencias, mientras que el gas Natural se ve afectado por 3 situaciones.
                 </p>
-              </div>                
+              </div>
             </div>
-            
-            <p class="fs-6 m-2 p-2">Destaca que 7 de estas emergencias afectan a todos los sectores mencionados, 
-              lo que indica la necesidad de una atención conjunta y coordinada para abordar estos desafíos.</p>
-            <div class="row">
-                <img src="./img/Captura03.jpg" class="img-fluid col-md-6" alt="Imagen 1">
-                <img src="./img/Captura04.jpg" class="img-fluid col-md-6" alt="Imagen 2">
-            </div>
-            
 
+            <div class="row m-0 p-0" style="width: 500px;">
+              <p class="fs-6 m-2 p-2">Destaca que 7 de estas emergencias afectan a todos los sectores mencionados, 
+                lo que indica la necesidad de una atención conjunta y coordinada para abordar estos desafíos.</p>
+            </div>
+
+            <div class="row m-0 p-0">
+                <img src="./img/Captura03.jpg" class="img-fluid col-md-6 p-0 m-0" alt="Imagen 1"  >
+                <img src="./img/Captura04.jpg" class="img-fluid col-md-6 p-0 mr-2" alt="Imagen 2" >
+            </div> 
 
         </div>
+        
     </div>    
 </section>
 
@@ -162,14 +162,17 @@
                 <td>Fila </td>
             </tr>
         </tbody>
-      </table>
-      
-    
+      </table> 
 </section>
+
+</body>
+
+
 <script src="assets/jquery/jquery.js"></script>
 <script src="assets/jquery-ui/jquery-ui.js"></script>
 <script src="https://js.arcgis.com/4.17/"></script>
 <script type="text/javascript" src="js/index.js"></script>
 
-</body>
+
+
 </html>

@@ -3,6 +3,7 @@
     font:800;
 }
 
+
 nav {
     background-color: #000090;
     height: 60px;
@@ -10,4 +11,11 @@ nav {
 
 #centro01{
     /* height: 600px; */
+}
+
+body {
+    max-width: 100%;
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
 }
