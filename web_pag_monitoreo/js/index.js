@@ -162,6 +162,30 @@ require(
         expandTooltip: "Medición",
       });
 
+      var _cmo = new Expand({
+        expandIconClass : "esri-icon-drag-horizontal",
+        view: view,
+        content: document.getElementById("divCMO"),
+        group: "top-right",
+        expandTooltip: "Formulario CMO",
+      });
+
+      var _addLayers = new Expand({
+        expandIconClass : "esri-icon-drag-horizontal",
+        view: view,
+        content: document.getElementById("widgetAddLayers"),
+        group: "top-right",
+        expandTooltip: "Formulario CMO",
+      });
+
+      var _upload = new Expand({
+        expandIconClass : "esri-icon-drag-horizontal",
+        view: view,
+        content: document.getElementById("widgetUpload"),
+        group: "top-right",
+        expandTooltip: "Formulario CMO",
+      });
+
       let compass = new Compass({
         view: view
       });
@@ -209,6 +233,9 @@ require(
       //  switchView();
       //});
       $('#toolbarDiv').removeClass("d-none");
+      $('#divCMO').removeClass("d-none");
+      $('#widgetAddLayers').removeClass("d-none");
+      $('#widgetUpload').removeClass("d-none");
       
       $(document).on('click', '#switch-btn', function () {
         debugger;
@@ -228,7 +255,7 @@ require(
         activeView.ui.add(homeBtn, "top-right");
         //activeView.ui.add(measurement, "top-right");
         activeView.ui.move(["zoom"], "top-right");
-        activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion], "top-right");
+        activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
         console.log($("#switch-btn"));
         if ($("#switch-btn").length == 0) {
           console.log($('body'));
