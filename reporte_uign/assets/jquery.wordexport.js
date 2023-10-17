@@ -49,8 +49,14 @@ if (typeof jQuery !== "undefined" && typeof saveAs !== "undefined") {
                 // Get data URL encoding of image
                 var uri = canvas.toDataURL("image/png");
                 $(img[i]).attr("src", img[i].src);
-                img[i].width = w;
-                img[i].height = h;
+                if (img[i].getAttribute("custom")){
+                    img[i].width = w * 0.2;
+                    img[i].height = h * 0.2;
+                }
+                else {
+                    img[i].width = w;
+                    img[i].height = h;
+                }                
                 // Save encoded image to array
                 images[i] = {
                     type: uri.substring(uri.indexOf(":") + 1, uri.indexOf(";")),

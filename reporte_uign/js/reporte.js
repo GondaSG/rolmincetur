@@ -307,20 +307,20 @@ require(
               let rdescFotos = (row[descFotos] != null) ? row[descFotos] : "";
               if (rdescFotos == "FACHADA"){
                 sihay1 = true;
-                img1 = `<td id="td_f_${ids[i]}" rowspan="3" colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              }
-              else if (rdescFotos == "GABINETE"){
-                sihay2 = true;
-                img2 = `<td id="td_g_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              }
-              else if (rdescFotos == "MEDIDOR"){
-                img3 = `<td id="td_m_${ids[i]}" rowspan="1" colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              }
-              else if (rdescFotos == "GASODOMESTICO"){
-                img4 = `<td id="td_gd_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              }
-              else if (rdescFotos == "RECIBO"){
-                img5 = `<td id="td_r_${ids[i]}" rowspan='1' colspan="3" style="text-align: center; border: solid 1px;"><img height="180px" width="180" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+                img1 = `<td id="td_f_${ids[i]}" rowspan="3" colspan="2" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+              } 
+              else if (rdescFotos == "GABINETE"){ 
+                sihay2 = true; 
+                img2 = `<td id="td_g_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+              } 
+              else if (rdescFotos == "MEDIDOR"){ 
+                img3 = `<td id="td_m_${ids[i]}" rowspan="1" colspan="3" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+              } 
+              else if (rdescFotos == "GASODOMESTICO"){ 
+                img4 = `<td id="td_gd_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
+              } 
+              else if (rdescFotos == "RECIBO"){ 
+                img5 = `<td id="td_r_${ids[i]}" rowspan='1' colspan="3" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
               }
           });
 
