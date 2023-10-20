@@ -171,19 +171,19 @@ require(
       });
 
       var _addLayers = new Expand({
-        expandIconClass : "esri-icon-drag-horizontal",
+        expandIconClass : "esri-icon-plus",
         view: view,
         content: document.getElementById("widgetAddLayers"),
         group: "top-right",
-        expandTooltip: "Formulario CMO",
+        expandTooltip: "Añadir Capas",
       });
 
       var _upload = new Expand({
-        expandIconClass : "esri-icon-drag-horizontal",
+        expandIconClass : "esri-icon-up-arrow-circled",
         view: view,
         content: document.getElementById("widgetUpload"),
         group: "top-right",
-        expandTooltip: "Formulario CMO",
+        expandTooltip: "Subir KML",
       });
 
       let compass = new Compass({
