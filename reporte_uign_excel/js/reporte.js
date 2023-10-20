@@ -206,64 +206,26 @@ require(
             let tema = row[ftema];
             let descripcion = row[fDescripcion]; 
             let rc = row[REC_INICIALES];
-            if (rc != null && rc != "" ){
-              rc = '-'+rc;
-            }
-            else
-              rc = '';
-                            var query = new QueryTask({url:url_attachements2}); 
-                var params  = new Query();  
-                params.returnGeometry = false;
-                params.outFields = ["*"];
-                //params.orderByFields= [`${ffecha} asc`];
-                params.where = "PARENTGLOBALID = '"+id+"'";
-                query.execute(params).then(function(response){
-                  cadena = cadena +
+            cadena = cadena +
               `<tr>                
                 <td style="text-align: center;">${fechaformat}</td>
                 <td style="text-align: center;">${nreport}</td>
                 <td style="text-align: center;">${coordenadas}</td>
                 <td>${tema}</td>
                 <td>${descripcion}</td>
-                <td>${row["DEPASUPTSCON"]}</td>`;
-                  cadena = cadena +
-                  `
-                    <td id='td_${id.replace("{","").replace("}","")}'>${response.features.length}</td>
-                  `;
-                  cadena = cadena +
-                  `</tr>`;
-                  $('#tbody_data').html(cadena);
-
-                });
+                <td>${row["DEPASUPTSCON"]}</td>`
+                `<td></td>`
+                `</tr>`;
+            $('#tbody_data').html(cadena);
              
 
             n++;
             
-            ids.push(id);
-            //ids2.push(row[fobjectidform]);
-            if (i==0) {
-              $('#title').html('REPORTE DIARIO N° RD-'+row[REC_CL]+rc+'-'+row[REC_RD_parent]+'-'+row[REC_RD_parent2].replace("RD", ""));
-              $('#REC_AGESUP').html(row[REC_AGESUP]);
-              $('#REC_UNISUP').html(row[REC_UNISUP]);
-              $('#REC_UBICACION').html("Distrito de " + row[REC_UBICACION] + ", provincia de " + row[REC_UBICACION2] + " y departamento de " + row[REC_UBICACION3]);
-              $('#REC_EST').html(row[REC_EST]);
-              $('#REC_SUPER_label').html(row[REC_SUPER_label]);
-              $('#REC_CL').html(row[REC_CL]);
-              $('#REC_ASPECTO').html(row[REC_ASPECTO]);
-              $('#REC_TIPO').html(row[REC_TIPO]);
-              $('#REC_MODALIDAD').html(row[REC_MODALIDAD]);
-              let fecha = new Date(row[REC_FECHAINI]);
-              let fecha_start = new Date(row[REC_START]);
-              $('#REC_FECHAINI').html(moment(fecha).format('DD/MM/YYYY'));
-              $('#REC_START').html(moment(fecha_start).format('DD/MM/YYYY'));
-              $('#REC_EST_').html(row[REC_EST]);
-              $('#REC_SUPER_label_').html(row[REC_SUPER_label]);
-              $('#REC_DNI_').html(row[REC_DNI]);
-            }
+            
           }
           
-          repaginar();
-          getAdjuntos(ids, responses);   
+          //repaginar();
+          //getAdjuntos(ids, responses);   
           $('#total_reg').text(auxlength + " Registros en total");       
         }
       });
