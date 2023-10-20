@@ -23,8 +23,8 @@ require(
       let urlparams= window.location.search;//obtiene parametros de url
       paramb64 = urlparams.substring(1);
       (paramb64 == undefined || paramb64 == ' ') ? paramb64 = "undefined" : "";
-      if(paramb64==='MTBkaWNpZW1icmUxOTk1YXV4aWxpb21lZGVzbWF5b2VhZWFlYQ=='){
-      //if(paramb64===''){
+      //if(paramb64==='MTBkaWNpZW1icmUxOTk1YXV4aWxpb21lZGVzbWF5b2VhZWFlYQ=='){
+      if(paramb64===''){
           cargarCmbUsuario();        
         $('#preloader_gral').addClass('hide');//retira preloader gral
         $('#viewDiv').removeClass('hide').addClass("animate__animated animate__fadeInDown");
