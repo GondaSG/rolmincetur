@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <title>Generador de Reportes - DSGN/UTDGN (Conectados)</title>
+  <link rel="icon" type="image/png" href="https://www.osinergmin.gob.pe/_catalogs/masterpage/starter/images/osinerg.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+  
+  <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">  
+</head>
+
+<body>
+	<div id="contenedor">
+		<div id="preloader_gral">
+		    <div class="preloader-wrapper active">
+		      <div class="spinner-layer spinner-blue-only">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+		    </div>
+		</div>	  	
+
+		<div id="viewDiv" class="hide">			
+			<!-- ##### HEADER -->
+			<nav class="navbar justify-content-between">
+		      <div>
+		        <a class="navbar-brand title">Generador de Reportes - DSGN/UTDGN (Conectados)</a>		        
+		      </div>
+		      <div><img src="images/logo.png" alt="osinergmin"></div>
+			</nav>
+
+			<div id="body-reporte">
+				<div class="head-reporte">
+					<div class="div-filtros">
+					  <div class="div-filtro">
+						<select id="cmb_usuario">
+							<option value="">- Seleccione usuario -</option>
+						</select>
+					  </div>
+					  <div class="div-filtro">
+						<input type="date" id="fec_superv" value=""> 
+					  </div>
+					</div>
+					<div class="div-progress">
+					   <span class="lbl-progress" id="lbl_numfotos"></span> 
+					   <div class="bar-progress" id="div_barprogress"></div>      
+					   <span class="lbl-progress" id="lbl_percentprogress"></span>
+					</div>
+					<div class="div-botones">      
+			          <button id="btn_exportword" class="waves-effect waves-light btn btn-export" title="Exportar Reporte" disabled>
+			            <i class="small material-icons">filter</i>   
+			            <i class="material-icons">file_download</i>                   
+			          </button>
+					</div>					
+					<div class="switch">
+					   <label>
+					    	<input type="checkbox" id="chb_switch">
+					    	<span class="lever"></span> <br>
+					    	<span class="switch-label">Comprimir imgs</span>
+ 					   </label>
+					</div>
+					<div class="div-botones">      
+						<button id="btn_exportExcel" class="btn btn-export" title="Exportar Excel" disabled>
+						  <i class="material-icons">file_download</i>                   
+						</button>
+					</div>	
+				</div>
+				<div style="height: 80%;">
+					<div id="table-reporte">
+						<table class="table" id="tbl_data">
+							<thead class="headtable">
+								<tr>
+									<th style="width: 2%; text-align: center;">FECHA</th>
+									<th style="width: 2%; text-align: center;">N° REPORTE</th>
+									<th style="width:10%; text-align: center;">COORDENADAS</th>
+									<th style="width:20%; text-align: center;">N° CONTRATO</th>
+									<th style="width:15%; text-align: center;">NOMBRE/RAZON SOCIAL SUPERVISADO</th>
+									<th style="width:15%; text-align: center;">DEPARTAMENTO</th>
+									<th style="width:15%; text-align: center;">N° FOTOS</th>
+								</tr>
+							</thead>
+							<tbody id="tbody_data" style="border: .2pt solid #8EA9DB;">
+							  
+							</tbody>
+						</table>
+						<!-- PAGINACION -->
+					     <div class="col-md-12 center text-center paginador">
+					        <span class="left" id="total_reg"></span>
+					        <ul class="pagination pager" id="myPager"></ul>
+					     </div> 
+					</div>
+				</div>			
+			</div>
+		</div>
+
+		<div id="div_fotos" hidden>
+			<div class=Section>
+				<!-- encabezado  para el doc Word-->
+				<table style='margin-left:50in; margin-bottom:50in;'> 
+					<tr style='height:1pt;mso-height-rule:exactly'>
+						<td>
+							<div style='mso-element:header' id=header_doc>
+								<table id="encabezado" style="font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;">
+									<thead>
+										<tr>
+											<td rowspan="4" style="border: solid 1px; text-align: center;">
+												<img src="images/logo_formato.png" width="154" height="auto">
+											</td>
+											<td rowspan="4" style="border: solid 1px; text-align: center;"><b>"REPORTE DIARIO"</b></td>
+											<td style="border-top: solid 1px; border-right: solid 1px;"><b>Código&nbsp;&nbsp;&nbsp;&nbsp;: </b> F03-GF-DSGN</td>
+										</tr>
+										<tr>
+											<td style="border-right: solid 1px;"><b>Revisión :</b> 00</td>
+										</tr>
+										<tr>
+											<td style="border-right: solid 1px;"><b>Fecha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </b> <span id="fechaActual"></span></td>
+										</tr>
+										<tr>
+											<td style="border-bottom: solid 1px; border-right: solid 1px;">
+												<b> Página&nbsp;&nbsp;&nbsp;&nbsp;: </b><span style='mso-field-code:PAGE'></span>
+												de <span style='mso-field-code:NUMPAGES'></span>
+											</td>
+										</tr>
+										<tr><td colspan="3"></td></tr>
+									</thead>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<!-- TABLA DATOS (vacío) -->
+				<table style="font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;">
+					<tr><th colspan="6" style="line-height: 10px;" id="title">REPORTE DIARIO N°</th></tr>
+						<tr>
+							<td colspan="6" style="background-color: #002258; color: white; border: solid 1px;"><b>1. DATOS DEL AGENTE FISCALIZADO</b></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Agente Fiscalizado:</b></td>
+							<td colspan="4" style="border:solid 1px; width: 78%" id="REC_AGESUP"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Unidad Fiscalizada:</b></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_UNISUP"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Ubicación/Dirección:</b></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_UBICACION"></td>
+						</tr>
+
+					<tr><td></td></tr>
+						<tr>
+							<td colspan="6" style="background-color: #002258; color: white; border: solid 1px;"><b>2. DATOS DE LA EMPRESA SUPERVISORA</b></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Empresa Supervisora:</b></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_EST"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Personal:</b></td>
+							<td colspan="4" style="border:solid 1px;" id="REC_SUPER_label"></td>
+						</tr>
+					
+					<tr><td></td></tr>
+						<tr>
+							<td colspan="6" style="background-color: #002258; color: white; border: solid 1px;"><b>3. DATOS DE LA ACTIVIDAD DE SUPERVISIÓN</b></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Carta Línea:</b></td>
+							<td colspan="1" style="border:solid 1px; width: 25%" id="REC_CL"></td>
+							<td colspan="2" style="border:solid 1px;"><b>Aspecto:</b></td>
+							<td colspan="1" style="border:solid 1px; width: 25%" id="REC_ASPECTO"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Tipo de Fiscalización:</b></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_TIPO"></td>
+							<td colspan="2" style="border:solid 1px;"><b>Modalidad de Fiscalización:</b></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_MODALIDAD"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border:solid 1px;"><b>Fecha de Inicio:</b></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_FECHAINI"></td>
+							<td colspan="2" style="border:solid 1px;"><b>Fecha del Reporte:</b></td>
+							<td colspan="1" style="border:solid 1px;" id="REC_START"></td>
+						</tr>
+					
+					<tr><td></td></tr>
+						<tr>
+							<td colspan="6" style="background-color: #002258; color: white; border: solid 1px;"><b>4. DESCRIPCION</b></td>
+						</tr>
+						<tr>
+							<td colspan="6" style="border:solid 1px;"><b>4.1 Actividades de fiscalización ejecutadas:</b></td>
+						</tr>
+						<tr>
+							<td colspan="1" style="border:solid 1px;"><b>4.1.1</b></td>
+							<td colspan="5" style="border:solid 1px; width: 100%"></td>
+						</tr>
+						<tr>
+							<td colspan="1" style="border:solid 1px;"><b>4.1.2</b></td>
+							<td colspan="5" style="border:solid 1px;"></td>
+						</tr>
+						<tr>
+							<td colspan="1" style="border:solid 1px;"><b>4.1.3</b></td>
+							<td colspan="5" style="border:solid 1px;"></td>
+						</tr>
+					
+					<tr><td></td></tr>
+						<tr>
+							<th colspan="6" style="background-color: #002258; color: white; border: solid 1px;">5. MEDIOS PROBATORIOS</th>
+						</tr>
+					
+				</table>
+				&nbsp;
+
+				<!-- TABLAS DE FOTOS -->
+				<div id="tb_fotos">
+				</div>
+
+				<!-- &nbsp; -->
+
+				<!-- FIRMA -->
+				<br>
+				<table style="font-family: Calibri; font-size: 14px; width: 50%; border-collapse: collapse;">
+					<tr>
+						<th colspan="6" style="text-align: left;border: solid 1px; background-color: #002258; color: white;">6. FIRMA </th>
+					</tr>
+					<tr>
+						<td colspan="6" style="border: solid 1px; height: 150px;"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="border: solid 1px; width: 150px;"><b>Empresa Supervisora:</b></td>
+						<td colspan="4" style="border: solid 1px;" id="REC_EST_"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="border: solid 1px;"><b>Personal:</b></td>
+						<td colspan="4" style="border: solid 1px;" id="REC_SUPER_label_"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="border: solid 1px;"><b>DNI/CE:</b></td>
+						<td colspan="4" style="border: solid 1px;" id="REC_DNI_"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="assets/moment.js"></script>  
+	<script src="https://js.arcgis.com/4.17/"></script>
+	<script type="text/javascript" src="assets/pagination.js"></script>
+	<script type="text/javascript" src="js/reporte.js"></script>
+	<script type="text/javascript" src="assets/FileSaver.js"></script>  
+    <script type="text/javascript" src="assets/jquery.wordexport.js"></script> 
+</body>
+</html>
