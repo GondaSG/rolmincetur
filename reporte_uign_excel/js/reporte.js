@@ -173,6 +173,7 @@ require(
       var ff = moment(fecha).add(29,'hours').format('DD/MM/YYYY HH:mm:ss');
 
       var sql = fusuario + " = '"+usuario+"' and "+ffecha+" between '"+fi+"' and '"+ff+"'";
+      console.log("sql" + sql);
       //sql = fusuario + " = '"+usuario+"' ";
       var query = new QueryTask({url:url_attachements}); 
       var params  = new Query();  
@@ -216,14 +217,9 @@ require(
                 <td>${row["DEPASUPTSCON"]}</td>`
                 `<td></td>`
                 `</tr>`;
-            $('#tbody_data').html(cadena);
-             
-
-            n++;
-            
-            
-          }
-          
+            $('#tbody_data').html(cadena); 
+            n++;            
+          }          
           //repaginar();
           //getAdjuntos(ids, responses);   
           $('#total_reg').text(auxlength + " Registros en total");       

@@ -52,6 +52,27 @@ nav .title{
   line-height: 0 !important;
 }
 
+
+.buscar-btn {
+  height: 40px;
+  background-color: #007bff;
+  color: #fff; 
+  border: none; 
+  padding: 10px 20px ;
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 16px;
+}
+
+.buscar-btn:hover {
+  background-color: #0056b3; 
+}
+
+.buscar-btn:active {
+  background-color: #004492; 
+}
+
+
 /* Switch */
 .switch label input[type=checkbox]:checked+.lever {
     background-color: var(--osinerg-primary-transparente2);
