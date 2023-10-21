@@ -90,6 +90,7 @@ require(
     var REC_RD_parent2 = "SV_RD";
     var REC_DNI = "SV_DNI";
 
+    var $btnLimpiar = $('#btn_limpiar');
     //// DEFINICIÓN DE FEATURE LAYERS 
     var fl_serv1 = new FeatureLayer({ 
       url: url_attachements,
@@ -101,48 +102,52 @@ require(
    /******************************* UX *********************************************/
 
     //CARGAR COMBO FECHA ACTUAL
-    var n =  new Date();
-    n = moment(n).format('YYYY-MM-DD');
-    document.getElementById("fec_superv").value = n;
+    var n = new Date();
+    n.setDate(n.getDate() - 1);
+    var fecha = n.toISOString().split('T')[0];
+    document.getElementById("fec_superv").value = fecha;
+ 
+    var nn =  new Date();
+    nn = moment(nn).format('YYYY-MM-DD');
+    document.getElementById("fec_fin").value = nn;
 
     //VARIABLES DE FILTRO
     var $cmbuser = $('#cmb_usuario');
     var $fecsuperv = $('#fec_superv');
-    //const MESES = [ "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" ];
-    //const date = new Date();
-    //
-    //MESES[date.getMonth()];
-    //var d = new Date();
+    var $fecfin = $('#fec_fin');
     $('#fechaActual').html('26-jun-2023');
 
-    //SELECCIONAR USUARIO Y FECHA A CONSULTAR/FILTRAR
-    $('#cmb_usuario, #fec_superv').on('change', function(event){
+
+    //BUSCA POR USUARIO Y FECHA 
+    $('#btn_buscar').on('click', function(event) {
+      event.preventDefault(); // Evita que el formulario se envíe      
       clearData("");      
-      let usuario = $cmbuser.val(); 
-      let fecha = $fecsuperv.val(); 
-      if (usuario!= "" && fecha!="") {
-        $cmbuser.prop('disabled', true);
-        $fecsuperv.prop('disabled', true);
-        $('#btn_exportword').prop('disabled', true).html(showPreloaderPnts());
-        $('#btn_exportExcel').prop('disabled', true);
-        $('#div_barprogress').html(showPreloaderBar());
-        $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
-        filtrar(usuario,fecha);
-      }else{
-        clearData("Seleccione su usuario");
-      }
+      let usuario = $('#cmb_usuario').val();
+      let fecha = $('#fec_superv').val();
+      let fechaFin = $('#fec_fin').val();
+      
+      if (usuario !== "" && fecha !== "" && fechaFin !== "") {                   
+          $('#cmb_usuario, #fec_superv, #fec_fin, #btn_buscar').prop('disabled', true);
+          $('#btn_exportword').prop('disabled', true).html(showPreloaderPnts());
+          //$('#btn_exportExcel').prop('disabled', true);
+          $('#div_barprogress').html(showPreloaderBar());
+          $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
+          filtrar(usuario, fecha, fechaFin);
+      } else {
+          clearData("Seleccione su usuario y complete las fechas.");
+        }
     });
 
     //BOTÓN EXPORTAR 
-    $('#btn_exportword').on('click', function(event) {
-      let usuario = $cmbuser.val();
-      let fecha = $fecsuperv.val();
-      // let hoy = new Date().toLocaleDateString('en-GB');
-      let filename = 'Reporte_Supervision_'+usuario+'_'+fecha;      
-      let iscomprimido = $('#chb_switch').is(':checked'); 
-      $("#div_fotos").wordExport(filename, iscomprimido);     
-      return false;   
-    });
+    // $('#btn_exportword').on('click', function(event) {
+    //   let usuario = $cmbuser.val();
+    //   let fecha = $fecsuperv.val();
+    //   // let hoy = new Date().toLocaleDateString('en-GB');
+    //   let filename = 'Reporte_Supervision_'+usuario+'_'+fecha;      
+    //   let iscomprimido = $('#chb_switch').is(':checked'); 
+    //   $("#div_fotos").wordExport(filename, iscomprimido);     
+    //   return false;   
+    // });
 
     //BOTÓN EXPORTAR 
     $('#btn_exportExcel').on('click', function(event) {
@@ -156,7 +161,7 @@ require(
           return c[p];
         })
       }
-      var toExcel = document.getElementById("tbl_data").innerHTML;
+      var toExcel = document.getElementById("tbl_data2").innerHTML;
       var ctx = {
         worksheet: name || '',
         table: toExcel
@@ -167,10 +172,13 @@ require(
       link.click();
     });
 
+ 
     //FILTRA DATA DEL WEBSERVICE Y MUESTRA EN TABLA PARA EXPORTAR 
-    function filtrar(usuario, fecha) {
-      var fi = moment(fecha).add(5,'hours').format('DD/MM/YYYY HH:mm:ss');
-      var ff = moment(fecha).add(29,'hours').format('DD/MM/YYYY HH:mm:ss');
+    function filtrar(usuario, fecha, fechaFin) {
+      console.log("fecha" + fecha + "fechafin:" + fechaFin)
+
+      var fi = moment(fecha).format('DD/MM/YYYY HH:mm:ss');
+      var ff = moment(fechaFin).add(24,'hours').format('DD/MM/YYYY HH:mm:ss');
 
       var sql = fusuario + " = '"+usuario+"' and "+ffecha+" between '"+fi+"' and '"+ff+"'";
       console.log("sql" + sql);
@@ -184,6 +192,7 @@ require(
       query.execute(params).then(function(response){
         $cmbuser.prop('disabled', false);
         $fecsuperv.prop('disabled', false);
+        $fecfin.prop('disabled', false);
         var n = 0;
         if(response.features.length === 0){ 
           clearData('No hay registros coincidentes'); 
@@ -192,6 +201,7 @@ require(
           var ids2 = [];
           responses = response.features;
           var cadena = '';
+          var cadena2 = '';
           let auxlength = responses.length;
           
           for (var i = 0; i < auxlength; i++) {
@@ -214,221 +224,30 @@ require(
                 <td style="text-align: center;">${coordenadas}</td>
                 <td>${tema}</td>
                 <td>${descripcion}</td>
-                <td>${row["DEPASUPTSCON"]}</td>`
-                `<td></td>`
-                `</tr>`;
+                <td>${row["DEPASUPTSCON"]}</td>
+                <td></td>
+                </tr>`;
+            cadena2 = cadena2 +
+              `<tr>                
+                <td style="text-align: center;">${row["OBJECTID"]}</td>
+                <td style="text-align: center;">${row["GLOBALID"]}</td>
+                <td style="text-align: center;">${coordenadas}</td>
+                <td>${tema}</td>
+                <td>${descripcion}</td>
+                <td>${row["DEPASUPTSCON"]}</td>
+                <td></td>
+                </tr>`;
             $('#tbody_data').html(cadena); 
+            $('#tbody_data2').html(cadena2); 
             n++;            
           }          
-          //repaginar();
+          repaginar();
           //getAdjuntos(ids, responses);   
           $('#total_reg').text(auxlength + " Registros en total");       
         }
       });
     }
 
-    // OBTIENE FOTOS DE LOS REGISTROS FILTRADOS Y MUESTRA EN DIV OCULTO PARA EXPORTAR
-    function getAdjuntos(ids, responses){
-      let $tbfotos = $("#tb_fotos").html("");
-      _auxsf = 0; //aux n sinfoto
-      var data = responses;
-      if (responses.length == 0) { 
-        console.log("No se encontraron registros relacionados de fotos");
-        $tbfotos.html("No se encontraron registros relacionados de fotos");
-        $('#div_barprogress').html(showPreloaderProgress(100));
-        $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>').prop('disabled', false);    
-        $('#btn_exportExcel').prop('disabled', false);    
-        return; 
-      }
-      let contfoto = 0;
-      for (var i = 0; i < ids.length; i++) {
-        let row2 = responses[i].attributes;
-        var query = new QueryTask({url:url_attachements2}); 
-        var params  = new Query();  
-        params.returnGeometry = false;
-        params.outFields = ["*"];
-        //params.orderByFields= [`${ffecha} asc`];
-        params.where = "PARENTGLOBALID = '"+ids[i]+"'";
-        query.execute(params).then(function(response){
-          //console.log(response.features[0].attributes.PARENTGLOBALID.replace("{","").replace("}",""));
-          //console.log($('#td_'+response.features[0].attributes.PARENTGLOBALID.replace("{","").replace("}","")));
-          //$('#td_'+response.features[0].attributes.PARENTGLOBALID).html(response.features.length);
-          let img1 = '<td rowspan="3" colspan="2" style="border: solid 1px;"></td>', img2 = '<td rowspan="1" colspan="2" style="border: solid 1px;"></td>', 
-          img3 = '<td rowspan="1" colspan="3" style="border: solid 1px;"></td>', img4 = '<td rowspan="1" colspan="2" style="border: solid 1px;"></td>',
-          img5 = '<td rowspan="1" colspan="3" style="border: solid 1px;"></td>', imgt = '';
-          let sihay1, sihay2, sihay3, sihay4, sihay5  = false;
-          response.features.forEach( (response, i) => {
-              let rec_fotos = response.attributes;
-              let row = rec_fotos;
-              let tema = (row[ftema] != null) ? row[ftema] : "";
-              
-              let rdescFotos = (row[descFotos] != null) ? row[descFotos] : "";
-              if (rdescFotos == "FACHADA"){
-                sihay1 = true;
-                img1 = `<td id="td_f_${ids[i]}" rowspan="3" colspan="2" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_f_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              } 
-              else if (rdescFotos == "GABINETE"){ 
-                sihay2 = true; 
-                img2 = `<td id="td_g_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_g_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              } 
-              else if (rdescFotos == "MEDIDOR"){ 
-                img3 = `<td id="td_m_${ids[i]}" rowspan="1" colspan="3" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_m_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              } 
-              else if (rdescFotos == "GASODOMESTICO"){ 
-                img4 = `<td id="td_gd_${ids[i]}" rowspan='1' colspan="2" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_gd_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              } 
-              else if (rdescFotos == "RECIBO"){ 
-                img5 = `<td id="td_r_${ids[i]}" rowspan='1' colspan="3" style="text-align: center; border: solid 1px;"><img custom="0.2" id="img_r_${row[fobjectidform2]}" crossorigin="Anonymous"></td>`;
-              }
-          });
-
-            //let id_rec_foto = 0;row[fobjectidform2];
-            //console.log('id_rec_foto');
-            //console.log(id_rec_foto);
-            
-            //let rd = (row[frd] != null) ? row[frd] : ""; 
-            let depa = (row2[fdepa] != null) ? row2[fdepa] : "";
-            let prov = (row2[fprov] != null) ? row2[fprov] : ""; 
-            let dist = (row2[fdist] != null) ? row2[fdist] : "";
-            let zona = (row2[fzona] != null) ? row2[fzona] : "";
-            let este = (row2[feste] != null) ? row2[feste] : "";
-            let norte = (row2[fnorte] != null) ? row2[fnorte] : "";
-            let num = (row2[fnum] != null) ? row2[fnum] : "";
-            let ub = row2["URBSUPTSCON"];
-            if (ub != null && ub != ""){
-              ub = " & " + ub;
-            }
-            else {
-              ub = "";
-            }
-            let ub2 = row2["PISOSUPTSCON"];
-            if (ub2 != null && ub2 != ""){
-              ub2 = " & " + ub2;
-            }
-            else {
-              ub2 = "";
-            }
-            let ub3 = row2["INTDEPSUPTSCON"];
-            if (ub3 != null && ub3 != ""){
-              ub3 = " & " + ub3;
-            }
-            else {
-              ub3 = "";
-            }
-            let dir = row2["TVIASUPTSCON"] + " & " + row2["NVIASUPTSCON"] + " & " + row2["NUMZLTSUPTSCON"] + ub3 + ub2 + ub;
-            
-            contfoto++;
-            contfoto > 99 ? correlat=contfoto : correlat = ('0'+contfoto).slice(-2);            
-
-            let table  = document.createElement('table');
-            let trfoto = '', tr1 = '', tr2 = '', f1 = '', f2 = '', f3 = '';
-            table.style.cssText = "font-family: Calibri; font-size: 14px; width: 100%; border-collapse: collapse;6";
-            
-            tr1 = `<tr>
-                    <td width="100px" rowspan="2" colspan="1" style="text-align: center; border: solid 1px; white-space: nowrap; background-color: #002258; color: white;">&nbsp;&nbsp;${contfoto} &nbsp;&nbsp;</td>
-                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Departamento</b></td>
-                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Provincia</b></td>
-                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Distrito</b></td>
-                    <td width="100px" colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>N° Contrato</b></td>
-                    <td width="100px" colspan="2" style="text-align: center; border: solid 1px;">${num}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="1" style="text-align: center; border: solid 1px;">${depa}</td>
-                    <td colspan="1" style="text-align: center; border: solid 1px;">${prov}</td>
-                    <td colspan="1" style="text-align: center; border: solid 1px;">${dist}</td>
-                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Huso</b></td>
-                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Este</b></td>
-                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Norte</b></td>
-                  </tr>
-                  <tr>
-                    <td colspan="1" style="text-align: center; border: solid 1px; background-color: #002258; color: white;"><b>Dirección</b></td>
-                    <td colspan="3" style="text-align: center; border: solid 1px;">${dir}</td>                     
-                    <td colspan="1" style="text-align: center; border: solid 1px;">${zona}</td>
-                    <td colspan="1" style="text-align: center; border: solid 1px;">${este}</td>
-                    <td colspan="1" style="text-align: center; border: solid 1px;">${norte}</td>
-                  </tr>`;
-                  trfoto = `
-                  <tr>
-                    ${img1}
-                    ${img2}
-                    ${img3}
-                  </tr>
-                  <tr>
-                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GABINETE</b></td>
-                    <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>MEDIDOR</b></td>
-                  </tr>
-                  <tr>
-                    ${img4}
-                    ${img5}
-                  </tr>`;
-            tr2 = `<tr>
-                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>FACHADA</b></td>
-                    <td colspan="2" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>GASODOMESTICO</b></td>
-                    <td colspan="3" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>RECIBO</b></td>
-                  </tr>
-                  <tr>
-                    <td colspan="7" style="border: solid 1px; text-align: center; background-color: #002258; color: white;"><b>OBSERVACIONES</b></td>
-                  </tr>
-                  <tr>
-                    <td colspan="7" rowspan="3" style="border: solid 1px; text-align: center;">&nbsp;&nbsp;</td>
-                  </tr>`;
-            
-            table.innerHTML = tr1 + trfoto + tr2 + f1 + f2 + f3;
-            document.querySelector("#tb_fotos").appendChild(table);
-
-          
-
-          response.features.forEach( (response, i) => {
-            let rec_fotos = response.attributes;
-            let row = rec_fotos;
-            let id_rec_foto = response.attributes[fobjectidform2];
-            fetch(`${_proxyurl}?${url_attachements2}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
-              //fetch(`${url_attachements}/${id_rec_foto}/attachments?f=pjson`) //lee json de url
-              .then(response => response.json())
-              .then(function(datajson) {
-                  if(!datajson.error){
-                    const attachments = datajson.attachmentInfos; 
-                    if (attachments.length > 0 ) {
-                      attachments.forEach(function(attachment) { //always 1
-                        let idattachmet = attachment.id;
-                        let urlimg = getUrlAttachment(id_rec_foto, idattachmet); 
-                        let rdescFotos = (row[descFotos] != null) ? row[descFotos] : "";
-                        imgt = "";
-                        if (rdescFotos == "FACHADA"){
-                          imgt = `#img_f_${id_rec_foto}`
-                        }
-                        else if (rdescFotos == "GABINETE"){
-                          imgt = `#img_g_${id_rec_foto}`
-                        }
-                        else if (rdescFotos == "MEDIDOR"){
-                          imgt = `#img_m_${id_rec_foto}`
-                        }
-                        else if (rdescFotos == "GASODOMESTICO"){
-                          imgt = `#img_gd_${id_rec_foto}`
-                        }
-                        else if (rdescFotos == "RECIBO"){
-                          imgt = `#img_r_${id_rec_foto}`
-                        }
-                        $(imgt).attr('src', urlimg);
-                      });
-                    }else{
-                      _auxsf++;
-                      $(`#img_${id_rec_foto}`).parent().addClass('sinfoto');
-                      console.log(`El id_rec_foto ${id_rec_foto} no tiene attachments`);
-                    }              
-                  }else{
-                    console.log(`Ocurrió un error al obtener información de foto: ${datajson.error.message}`);
-                  } 
-              });
-          });
-
-          waitLoadImgs();
-
-
-
-        });
-      }
-    }
 
     //GARANTIZAR QUE SE HAYA TERMINADO DE CARGAR TODAS LAS IMÁGENES
     function waitLoadImgs(){ 
@@ -452,13 +271,6 @@ require(
       });
     }
 
-
-    //OBTIENE URL DE ATTACHMENTS
-    function getUrlAttachment(idfeature, idattachmet){
-      return `${_proxyurl}?${url_attachements2}/${idfeature}/attachments/${idattachmet}`; 
-      //return `${url_attachements}/${idfeature}/attachments/${idattachmet}`; 
-    }
-
     // CARGAR CMB USUARIOS
     function cargarCmbUsuario(){		
       let query = new QueryTask({url:url_attachements}); 
@@ -479,7 +291,13 @@ require(
         }       
         $cmbuser.html(cmb);
       });
-    }
+    }    
+
+    $btnLimpiar.on('click', function(event) {
+      $cmbuser.val(""); 
+      $fecsuperv.val(""); 
+      $fecfin.val('');
+    });
 
    /*************************************FUNCIONES DE APOYO **************************/
 

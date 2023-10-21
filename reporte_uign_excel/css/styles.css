@@ -32,11 +32,13 @@ nav{
     color: white;
 }
 nav img{
-    height: 50px;
+    height: 40px;
+    padding-right: 50px;
 }
 nav .title{
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
+    padding-left: 50px;
 }
 .navbar { /*estilo de bootstrap*/
   position: relative;
@@ -51,7 +53,6 @@ nav .title{
   padding: .5rem 1rem;
   line-height: 0 !important;
 }
-
 
 .buscar-btn {
   height: 40px;
@@ -72,6 +73,25 @@ nav .title{
   background-color: #004492; 
 }
 
+.limpiar-btn {
+  height: 40px;
+  background-color: #69819b;
+  color: #fff; 
+  border: none; 
+  padding: 10px 20px ;
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.limpiar-btn:hover {
+  background-color: #0056b3; 
+}
+
+.limpiar-btn:active {
+  background-color: #004492; 
+}
 
 /* Switch */
 .switch label input[type=checkbox]:checked+.lever {
@@ -126,6 +146,7 @@ nav .title{
 }
 .head-reporte .div-filtro select{
   display: block;
+  width: 170px;
   font-size: 15px;
   border: 0;
   background-color: transparent;
