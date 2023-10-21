@@ -56,50 +56,48 @@ require(
   ){
 
     $(document).ready(function(){     
-      
+
+      const appConfig = {
+        mapView: null,
+        sceneView: null,
+        activeView: null,
+        container: "map" // use same container for views
+      };
+
+      const initialViewParams = {
+        zoom: 6,
+        center: [-72,-10],
+        container: appConfig.container
+      };
 
       var map = new Map({
         basemap: "osm"
       });
-  
-      //var map3d = new Map({
-      //  basemap : "satellite",
-      //  ground: "world-elevation"
-      //});
-  
-      var view = new MapView({
-        //container: "map",
-        map: map,
-        zoom: 6,
-        center: [-72,-10],
-        popup: {
-          dockEnabled: false,
-          dockOptions: {
-            buttonEnabled: false,
-            breakpoint: false
-          }
+
+      // create 2D view and and set active
+      appConfig.mapView = createView(initialViewParams, "2d");
+      appConfig.mapView.map = map;
+      appConfig.activeView = appConfig.mapView;
+
+      // create 3D view, won't initialize until container is set
+      initialViewParams.container = null;
+      initialViewParams.map = map;
+      appConfig.sceneView = createView(initialViewParams, "3d");
+
+      // convenience function for creating either a 2D or 3D view dependant on the type parameter
+      function createView(params, type) {
+        let view;
+        if (type === "2d") {
+          view = new MapView(params);
+          return view;
+        } else {
+          view = new SceneView(params);
         }
-      });
-
-      // Create SceneView with similar extent to MapView
-      const sceneView = new SceneView({
-        zoom: 6,
-        center: [-72,-10],
-        map: map
-      });
-
-      // Set the activeView to the 2D MapView
-      let activeView = view;
+        return view;
+      }
 
       // Create new instance of the Measurement widget
-      const measurement = new Measurement();
-
-      //const view = new SceneView({
-      //  container: "map",
-      //  map: map3d,
-      //  zoom: 6,
-      //  center: [-72,-10]
-      //});
+      const measurement = new Measurement();      
 
       var _mil_electricidad = new MapImageLayer({
         url: url_electricidad,
@@ -108,33 +106,34 @@ require(
       });
 
       const searchWidget = new Search({
-        view: view,
+        view: appConfig.activeView,
         container: "divTop",
         allPlaceholder: "Buscar en Google Maps",
         placeholder: "Buscar en Google Maps"
       });
-
+//
       var homeBtn = new Home({
-        view: view
+        view: appConfig.activeView,
       })
+
       var basemapGallery = new BasemapGallery({
-        view: view
+        view: appConfig.activeView,
       });
+//
       var expBasemapGallery = new Expand({
         expandIcon: "home",  // see https://developers.arcgis.com/calcite-design-system/icons/
-        // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
-        view: view,
+        view: appConfig.activeView,
         content: basemapGallery,
         group: "top-right",
         expandTooltip: "Mapas Base"
       });
-
+//
       let locate = new Locate({
-        view: view
+        view: appConfig.activeView,
       });
-
+//
       var print = new Print({
-        view: view,
+        view: appConfig.activeView,
         templateOptions: {
           title: "Mapa Centro Monitoreo",
           format: "pdf",
@@ -144,61 +143,61 @@ require(
         },
         printServiceUrl: "https://gisem.osinergmin.gob.pe/serverosih/rest/services/ExportWebMapMEM/GPServer/Export%20Web%20Map"
       });
-
+//
       var _print = new Expand({
         expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
-        view: view,
+        view: appConfig.activeView,
         content: print,
         expandTooltip: "Imprimir",
         group: "top-right"
       });
-
+//
       var _medicion = new Expand({
         expandIcon: "legend",  // see https://developers.arcgis.com/calcite-design-system/icons/
         expandIconClass : "esri-icon-measure-line",
-        view: view,
+        view: appConfig.activeView,
         content: document.getElementById("toolbarDiv"),
         group: "top-right",
         expandTooltip: "Medición",
       });
-
+//
       var _cmo = new Expand({
         expandIconClass : "esri-icon-drag-horizontal",
-        view: view,
+        view: appConfig.activeView,
         content: document.getElementById("divCMO"),
         group: "top-right",
         expandTooltip: "Formulario CMO",
       });
-
+//
       var _addLayers = new Expand({
         expandIconClass : "esri-icon-plus",
-        view: view,
+        view: appConfig.activeView,
         content: document.getElementById("widgetAddLayers"),
         group: "top-right",
         expandTooltip: "Añadir Capas",
       });
-
+//
       var _upload = new Expand({
         expandIconClass : "esri-icon-up-arrow-circled",
-        view: view,
+        view: appConfig.activeView,
         content: document.getElementById("widgetUpload"),
         group: "top-right",
         expandTooltip: "Subir KML",
       });
-
+//
       let compass = new Compass({
-        view: view
+        view: appConfig.activeView,
       });
 
       // Set-up event handlers for buttons and click events
-      //const switchButton = document.getElementById("switch-btn");
+      const switchButton = document.getElementById("switch-btn");
       const distanceButton = document.getElementById('distance');
       const areaButton = document.getElementById('area');
       const clearButton = document.getElementById('clear');
 
-      //switchButton.addEventListener("click", () => {
-      //  switchView();
-      //});
+      switchButton.addEventListener("click", () => {
+        switchView();
+      });
       distanceButton.addEventListener("click", () => {
         distanceMeasurement();
       });
@@ -210,39 +209,18 @@ require(
       });
       map.add(_mil_electricidad);
 
-
       var _lyl_gasnatural = new LayerList({
-        view: view,
+        view: appConfig.activeView,
         container: 'collapseExample',
       });
-      // Add the home button to the top left corner of the view
-      
-      //view.ui.add(zoom, "top-right");
-      //view.ui.move(["zoom"], "top-right");
-
-      
-
-      // view.ui.add(searchWidget, "bottom-trailing");
 
       // Call the loadView() function for the initial view
-      loadView();
-      //loadWidgets();
-      //$("#switch-btn").click(function(){
-      //  debugger;
-      //  console.log($("#switch-btn"));
-      //  switchView();
-      //});
+      loadWidgets(appConfig.activeView);
+
       $('#toolbarDiv').removeClass("d-none");
       $('#divCMO').removeClass("d-none");
       $('#widgetAddLayers').removeClass("d-none");
-      $('#widgetUpload').removeClass("d-none");
-      
-      $(document).on('click', '#switch-btn', function () {
-        debugger;
-        v = $(this).data('value');
-        console.log($("#switch-btn"));
-        switchView();
-      }); 
+      $('#widgetUpload').removeClass("d-none");            
 
       function loadWidgets(activeView){
         measurement.view = activeView;
@@ -251,72 +229,42 @@ require(
         homeBtn.view = activeView;
         print.view = activeView;
         compass.view = activeView;
-        activeView.ui.components = [ "attribution" ];
+        if (activeView.type === "3d")
+          activeView.ui.components = [ "attribution", "zoom" ];
         activeView.ui.add(homeBtn, "top-right");
         //activeView.ui.add(measurement, "top-right");
         activeView.ui.move(["zoom"], "top-right");
         activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
-        console.log($("#switch-btn"));
-        if ($("#switch-btn").length == 0) {
-          console.log($('body'));
-          //$('body').append($("<button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>"+ (activeView.type.toUpperCase() === "2D"  ? "3D" : "2D") +"</button>"));
-        }
-        
-        activeView.ui.add('switch-btn', "top-right");
-        //const switchButton = document.getElementById("switch-btn");
-        //switchButton.addEventListener("click", () => {
-        //  switchView();
-        //});
       }
 
-      // The loadView() function to define the view for the widgets and div
-      function loadView() {
-        activeView.set({ container: "map" });
-        // Add the appropriate measurement UI to the bottom-right when activated
-        //activeView.ui.add(measurement, "top-right");
-        // Add the legend to the bottom left
-        //activeView.ui.add(legend, "bottom-left");
-        // Set the views for the widgets
-        //measurement.view = activeView;
-        //locate.view = activeView;
-        loadWidgets(activeView);
-        //legend.view = activeView;
-      }
-
-      // When the 2D or 3D button is activated, the switchView() function is called
+      // Switches the view from 2D to 3D and vice versa
       function switchView() {
-        debugger;
-        // Clone the viewpoint for the MapView or SceneView
-        const viewpoint = activeView.viewpoint.clone();
-        // Get the view type, either 2d or 3d
-        const type = activeView.type;
+        const is3D = appConfig.activeView.type === "3d";
+        const activeViewpoint = appConfig.activeView.viewpoint.clone();
 
-        // Clear any measurements that had been drawn
-        clearMeasurements();
+        // remove the reference to the container for the previous view
+        appConfig.activeView.container = null;
 
-        // Reset the measurement tools in the div
-        activeView.container = null;
-        activeView = null;
-        // Set the view based on whether it switched to 2D MapView or 3D SceneView
-        activeView = type.toUpperCase() === "2D" ? sceneView : view;
-        activeView.set({ container: "map", viewpoint: viewpoint });
-        loadWidgets(activeView);
-        // Add the appropriate measurement UI to the bottom-right when activated
-        //activeView.ui.add(measurement, "top-right");
-        //activeView.ui.move(["zoom"], "top-right");
-        // Add the legend to the bottom left
-        //activeView.ui.add(legend, "bottom-left");
-        //locate.view = activeView;
-        // Set the views for the widgets
-        //measurement.view = activeView;
-        //legend.view = activeView;
-        // Reset the value of the 2D or 3D switching button
-        //switchButton.value = type.toUpperCase();
+        if (is3D) {
+          // if the input view is a SceneView, set the viewpoint on the
+          // mapView instance. Set the container on the mapView and flag
+          // it as the active view
+          appConfig.mapView.viewpoint = activeViewpoint;
+          appConfig.mapView.container = appConfig.container;
+          appConfig.activeView = appConfig.mapView;
+          switchButton.innerHTML = "3D";
+        } else {
+          appConfig.sceneView.viewpoint = activeViewpoint;
+          appConfig.sceneView.container = appConfig.container;
+          appConfig.activeView = appConfig.sceneView;
+          switchButton.innerHTML = "2D";
+        }
+        loadWidgets(appConfig.activeView);
       }
 
       // Call the appropriate DistanceMeasurement2D or DirectLineMeasurement3D
       function distanceMeasurement() {
-        const type = activeView.type;
+        const type = appConfig.activeView.type;
         measurement.activeTool = type.toUpperCase() === "2D" ? "distance" : "direct-line";
         distanceButton.classList.add("active");
         areaButton.classList.remove("active");
