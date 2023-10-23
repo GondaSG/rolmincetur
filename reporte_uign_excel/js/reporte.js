@@ -231,11 +231,50 @@ require(
               `<tr>                
                 <td style="text-align: center;">${row["OBJECTID"]}</td>
                 <td style="text-align: center;">${row["GLOBALID"]}</td>
-                <td style="text-align: center;">${coordenadas}</td>
-                <td>${tema}</td>
-                <td>${descripcion}</td>
-                <td>${row["DEPASUPTSCON"]}</td>
-                <td></td>
+                <td style="text-align: center;">${row["CREATED_USER"]}</td>
+                <td style="text-align: center;">${row["CREATED_DATE"]}</td>
+                <td style="text-align: center;">${row["LAST_EDITED_USER"]}</td>
+                <td style="text-align: center;">${row["LAST_EDITED_DATE"]}</td>
+                <td style="text-align: center;">${row["ANNOTSCON"]}</td>
+                <td style="text-align: center;">${row["NUCARLITSCON"]}</td>
+                <td style="text-align: center;">${row["FECINITSCON"]}</td>
+                <td style="text-align: center;">${row["FECFINTSCON"]}</td>
+                <td style="text-align: center;">${row["NOMRASOTSCON"]}</td>
+                <td style="text-align: center;">${row["DNISUPTSCON"]}</td>
+                <td style="text-align: center;">${row["RUCSUPTSCON"]}</td>
+                <td style="text-align: center;">${row["PROVSUPTSCON"]}</td>
+                <td style="text-align: center;">${row["DISTSUPTSCON"]}</td>
+                <td style="text-align: center;">${row["DEPASUPTSCON"]}</td>
+                <td style="text-align: center;">${row["NOREOSITSCON"]}</td>
+                <td style="text-align: center;">${row["COREOSITSCON"]}</td>
+                <td style="text-align: center;">${row["EMREOSITSCON"]}</td>
+                <td style="text-align: center;">${row["GABINETTSCON"]}</td>
+                <td style="text-align: center;">${row["MEDIDORTSCON"]}</td>
+                <td style="text-align: center;">${row["INSTINSTSCON"]}</td>
+                <td style="text-align: center;">${row["TIPOUSUTSCON"]}</td>
+                <td style="text-align: center;">${row["BENEFICTSCON"]}</td>
+                <td style="text-align: center;">${row["ESTAUSUTSCON"]}</td>
+                <td style="text-align: center;">${row["DOCUMENTSCON"]}</td>
+                <td style="text-align: center;">${row["COMENTATSCON"]}</td>
+                <td style="text-align: center;">${row["NUMTSCON"]}</td>
+                <td style="text-align: center;">${row["SV_AGEFIS"]}</td>
+                <td style="text-align: center;">${row["SV_UNIFIS"]}</td>
+                <td style="text-align: center;">${row["SV_EMPSUP"]}</td>
+                <td style="text-align: center;">${row["SV_EMPSUP_INI"]}</td>
+                <td style="text-align: center;">${row["SV_SUPER_INI"]}</td>
+                <td style="text-align: center;">${row["SV_ASPECTOSUP"]}</td>
+                <td style="text-align: center;">${row["SV_TIPOSUP"]}</td>
+                <td style="text-align: center;">${row["SV_MODALSUP"]}</td>
+                <td style="text-align: center;">${row["SV_FECHAINISUP"]}</td>
+                <td style="text-align: center;">${row["SV_RD"]}</td>
+                <td style="text-align: center;">${row["SV_ZONA"]}</td>
+                <td style="text-align: center;">${row["SV_HUSO"]}</td>
+                <td style="text-align: center;">${row["SV_X"]}</td>
+                <td style="text-align: center;">${row["SV_Y"]}</td>
+                <td style="text-align: center;">${row["SV_Z"]}</td>
+                <td style="text-align: center;">${row["SV_DNI"]}</td>
+                <td style="text-align: center;">${row["SV_PERIODO"]}</td>
+                <td style="text-align: center;">${row["SV_SUPERUSER"]}</td>                
                 </tr>`;
             $('#tbody_data').html(cadena); 
             $('#tbody_data2').html(cadena2); 
