@@ -73,7 +73,7 @@ require(
     var REC_EST_INIC = "REC_EST_INIC_child";
     var REC_INICIALES = "REC_INICIALES_child";
     var REC_RD_parent = "REC_RD_child";
-    var REC_DNI = "REC_DNI";
+    var REC_DNI = "REC_DNI_child";
 
     //// DEFINICIÓN DE FEATURE LAYERS 
     //var fl_serv1 = new FeatureLayer({ 
@@ -155,7 +155,7 @@ require(
             let row = responses[i].attributes;
             let id = row[fobjectidform];
             let fecha = new Date(row[ffecha]);
-            let fechaformat = moment(fecha).format('D/M/YYYY HH:mm:ss');
+            let fechaformat = moment(fecha).format('D/M/YYYY');
             let nreport = row[frd];            
             let coordenadas = "";
             if (row[feste] != null && row[fnorte] != null){
