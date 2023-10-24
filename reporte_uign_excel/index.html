@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">  
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -49,10 +49,10 @@
 						</select>
 					  </div>
 					  <div class="div-filtro">
-						<input type="date" id="fec_superv" value=""> 
+						<input type="date" id="fec_superv" style="width: 115px;" value=""> 
 					  </div>
 					  <div class="div-filtro">
-						<input type="date" id="fec_fin" value=""> 
+						<input type="date" id="fec_fin" style="width: 115px;" value=""> 
 					  </div>
 					  <button class="buscar-btn" id="btn_buscar">Buscar</button>
 					  <button class="limpiar-btn" id="btn_limpiar">Limpiar</button>
@@ -79,7 +79,6 @@
 									<th style="width:10%; text-align: center;">N° CONTRATO</th>
 									<th style="width:25%; text-align: center;">NOMBRE/RAZON SOCIAL SUPERVISADO</th>
 									<th style="width:15%; text-align: center;">DEPARTAMENTO</th>
-									<th style="width:15%; text-align: center;">N° FOTOS</th>
 								</tr>
 							</thead>
 							<tbody id="tbody_data" style="border: .2pt solid #8EA9DB;">
@@ -96,7 +95,7 @@
 			</div>
 		</div>
 
-		<table class="table" id="tbl_data2" >
+		<table class="table" id="tbl_data2" hidden>
 			<thead class="headtable">
 				<tr>
 					<th style="  text-align: center;">OBJECTID</th>

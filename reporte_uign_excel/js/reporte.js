@@ -103,9 +103,10 @@ require(
 
     //CARGAR COMBO FECHA ACTUAL
     var n = new Date();
-    n.setDate(n.getDate() - 1);
+    n.setHours(n.getHours() - 24);
     var fecha = n.toISOString().split('T')[0];
     document.getElementById("fec_superv").value = fecha;
+    console.log("fecha:"+fecha)
  
     var nn =  new Date();
     nn = moment(nn).format('YYYY-MM-DD');
@@ -117,7 +118,6 @@ require(
     var $fecfin = $('#fec_fin');
     $('#fechaActual').html('26-jun-2023');
 
-
     //BUSCA POR USUARIO Y FECHA 
     $('#btn_buscar').on('click', function(event) {
       event.preventDefault(); // Evita que el formulario se envíe      
@@ -127,12 +127,14 @@ require(
       let fechaFin = $('#fec_fin').val();
       
       if (usuario !== "" && fecha !== "" && fechaFin !== "") {                   
-          $('#cmb_usuario, #fec_superv, #fec_fin, #btn_buscar').prop('disabled', true);
-          $('#btn_exportword').prop('disabled', true).html(showPreloaderPnts());
+          //$('#cmb_usuario, #fec_superv, #fec_fin, #btn_buscar').prop('disabled', true);
+          $('#btn_exportword').prop('disabled', true).html(showPreloaderBar());
           //$('#btn_exportExcel').prop('disabled', true);
           $('#div_barprogress').html(showPreloaderBar());
           $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
           filtrar(usuario, fecha, fechaFin);
+          $('#div_barprogress').html(showPreloaderProgress(100));
+
       } else {
           clearData("Seleccione su usuario y complete las fechas.");
         }
@@ -190,9 +192,9 @@ require(
       params.orderByFields= [`${ffecha} asc`];
       params.where = sql;
       query.execute(params).then(function(response){
-        $cmbuser.prop('disabled', false);
-        $fecsuperv.prop('disabled', false);
-        $fecfin.prop('disabled', false);
+        //$cmbuser.prop('disabled', false);
+        //$fecsuperv.prop('disabled', false);
+        //$fecfin.prop('disabled', false);
         var n = 0;
         if(response.features.length === 0){ 
           clearData('No hay registros coincidentes'); 
@@ -202,13 +204,18 @@ require(
           responses = response.features;
           var cadena = '';
           var cadena2 = '';
-          let auxlength = responses.length;
+          let auxlength = responses.length;          
           
           for (var i = 0; i < auxlength; i++) {
-            let row = responses[i].attributes;
+            let row = responses[i].attributes; 
             let id = row[fobjectidform];
             let fecha = new Date(row[ffecha]);
-            let fechaformat = moment(fecha).format('D/M/YYYY');
+            let fechaformat = moment(fecha).format('D/M/YYYY'); 
+            let fechaCreatedUser = moment(new Date(row["CREATED_DATE"])).format("D/M/YYYY");
+            let lastEditedDate = moment(new Date(row["LAST_EDITED_DATE"])).format("D/M/YYYY");
+            let fecIniCon = moment(new Date(row["FECINITSCON"])).format("D/M/YYYY");
+            let fecFinCon = moment(new Date(row["FECFINTSCON"])).format("D/M/YYYY");
+
             let nreport = row[frd];            
             let coordenadas = "";
             if (row[feste] != null && row[fnorte] != null){
@@ -225,20 +232,19 @@ require(
                 <td>${tema}</td>
                 <td>${descripcion}</td>
                 <td>${row["DEPASUPTSCON"]}</td>
-                <td></td>
                 </tr>`;
             cadena2 = cadena2 +
               `<tr>                
                 <td style="text-align: center;">${row["OBJECTID"]}</td>
                 <td style="text-align: center;">${row["GLOBALID"]}</td>
                 <td style="text-align: center;">${row["CREATED_USER"]}</td>
-                <td style="text-align: center;">${row["CREATED_DATE"]}</td>
+                <td style="text-align: center;">${fechaCreatedUser}</td>
                 <td style="text-align: center;">${row["LAST_EDITED_USER"]}</td>
-                <td style="text-align: center;">${row["LAST_EDITED_DATE"]}</td>
+                <td style="text-align: center;">${lastEditedDate}</td>
                 <td style="text-align: center;">${row["ANNOTSCON"]}</td>
                 <td style="text-align: center;">${row["NUCARLITSCON"]}</td>
-                <td style="text-align: center;">${row["FECINITSCON"]}</td>
-                <td style="text-align: center;">${row["FECFINTSCON"]}</td>
+                <td style="text-align: center;">${fecIniCon}</td>
+                <td style="text-align: center;">${fecFinCon}</td>
                 <td style="text-align: center;">${row["NOMRASOTSCON"]}</td>
                 <td style="text-align: center;">${row["DNISUPTSCON"]}</td>
                 <td style="text-align: center;">${row["RUCSUPTSCON"]}</td>
@@ -331,11 +337,14 @@ require(
         $cmbuser.html(cmb);
       });
     }    
-
-    $btnLimpiar.on('click', function(event) {
-      $cmbuser.val(""); 
-      $fecsuperv.val(""); 
-      $fecfin.val('');
+    
+    console.log($('#btn_limpiar'));
+    $('#btn_limpiar').on('click', function(event) {
+      document.getElementById("fec_superv").value = fecha;
+      document.getElementById("fec_fin").value = nn;$cmbuser.val(""); 
+      // $fecsuperv.val(""); 
+      // $fecfin.val('');
+      clearData(""); 
     });
 
    /*************************************FUNCIONES DE APOYO **************************/
