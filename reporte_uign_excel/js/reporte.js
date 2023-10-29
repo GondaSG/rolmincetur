@@ -401,7 +401,7 @@ require(
       $('#tbl_data').pageMe({
         pagerSelector: '#myPager',
         activeColor: 'blue',          
-        perPage: 8
+        perPage: 15
       });
     }
       

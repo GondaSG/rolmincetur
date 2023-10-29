@@ -1,0 +1,94 @@
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.NavPrim {
+    background-color: #0072c6;
+    height: 60px;
+    color: white;
+    align-items: center;    
+}
+
+.NavStyle{
+    margin: 10px 0px 10px 80px;
+    font-size: 25px;
+    font-weight: bold;   
+}
+
+
+.StyleBody{
+    height:calc((100vh) - 60px) !important; 
+    width: 100% ;
+}
+
+.Panel{
+    text-align: justify;
+}
+
+.textEstado{
+    text-align: center;
+    font-weight: bolder;
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+.rectangulo1 {
+    background-color: #e20202;
+    height: 80px;
+    color: #fff; 
+    padding: 7px;
+    text-align: left;
+    border-radius: 5px; 
+    margin: 0px; 
+}
+
+.rectangulo2 {
+    background-color: #ff7b00;
+    height: 80px;
+    color: #fff; 
+    padding: 7px;
+    text-align: left;
+    border-radius: 5px; 
+    margin: 0px; 
+}
+
+.rectangulo3 {
+    background-color: #12973e;
+    height: 80px;
+    color: #fff; 
+    padding: 7px;
+    text-align: left;
+    border-radius: 5px; 
+    margin: 0px; 
+}
+
+ .cell {
+    justify-content: center;
+}
+
+#panel {
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    margin-left: 6px;
+    width: 280px;
+    height: 902px;
+    background: #fff;
+    z-index: 1;
+    transition: left 0.3s;
+}
+
+#toggleButton {
+    position: absolute;
+    margin-left: 20px;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 2;    
+}
+
+.flecha{
+    font: 2em sans-serif;
+    width: 980px;
+}
