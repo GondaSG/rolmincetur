@@ -71,6 +71,23 @@
         top: -500px;  
         cursor: pointer;
       }
+
+      #overviewDiv {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        width: 220px;
+        height: 150px;
+        border: 1px solid black;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      #extentDiv {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        z-index: 2;
+      }
     </style>
   </head>
 
@@ -281,14 +298,16 @@
 <div id="widgetUpload" class="d-none esri-expand__content esri-expand__content--expanded">
   <div class="p-3 esri-widget esri-widget--panel">
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Seleccionar archivo KML</label>
-      <input type="file" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="¿Que estas buscando?">
+      <label for="form_uploadkml" class="form-label">Seleccionar archivo KML</label>
+      <input type="file" class="form-control form-control-sm" id="form_uploadkml" placeholder="¿Que estas buscando?">
     </div>
     <div class="">
       <button type="submit" class="btn btn-secondary">Limpiar</button>
     </div>
   </div>  
 </div>
+
+<div id="overviewDiv"><div id="extentDiv"></div></div>
 
 <script>
   $(document).ready(function() {

@@ -102,9 +102,11 @@ require(
    /******************************* UX *********************************************/
 
     //CARGAR COMBO FECHA ACTUAL
+    debugger;
     var n = new Date();
-    n.setHours(n.getHours() - 24);
-    var fecha = n.toISOString().split('T')[0];
+    fecha = moment(n).subtract(1, 'd').format('YYYY-MM-DD');
+    //n.setHours(n.getHours() - 24);
+    //var fecha = n.toISOString().split('T')[0];
     document.getElementById("fec_superv").value = fecha;
     console.log("fecha:"+fecha)
  
@@ -114,9 +116,9 @@ require(
 
     //VARIABLES DE FILTRO
     var $cmbuser = $('#cmb_usuario');
-    var $fecsuperv = $('#fec_superv');
-    var $fecfin = $('#fec_fin');
-    $('#fechaActual').html('26-jun-2023');
+    //var $fecsuperv = $('#fec_superv');
+    //var $fecfin = $('#fec_fin');
+    //$('#fechaActual').html('26-jun-2023');
 
     //BUSCA POR USUARIO Y FECHA 
     $('#btn_buscar').on('click', function(event) {
@@ -341,7 +343,8 @@ require(
     console.log($('#btn_limpiar'));
     $('#btn_limpiar').on('click', function(event) {
       document.getElementById("fec_superv").value = fecha;
-      document.getElementById("fec_fin").value = nn;$cmbuser.val(""); 
+      document.getElementById("fec_fin").value = nn;
+      $cmbuser.val("");
       // $fecsuperv.val(""); 
       // $fecfin.val('');
       clearData(""); 

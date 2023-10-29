@@ -27,6 +27,8 @@ require(
     "esri/layers/GroupLayer",
     "esri/config",
     "esri/widgets/LayerList",
+    "esri/widgets/Zoom",
+    "esri/layers/KMLLayer",
   ],
   function(
     Map,
@@ -52,7 +54,9 @@ require(
     FeatureLayer,
     GroupLayer,
     esriConfig,
-    LayerList
+    LayerList,
+    Zoom,
+    KMLLayer
   ){
 
     $(document).ready(function(){     
@@ -74,15 +78,64 @@ require(
         basemap: "osm"
       });
 
+      // Crea la vista general
+      var overviewMap = new Map({
+        basemap: "topo-vector"
+      });
+
+      var overviewView = new MapView({
+        container: "overviewDiv",
+        map: overviewMap,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+      // Remove the default widgets
+      overviewView.ui.components = [];
+
+      
       // create 2D view and and set active
       appConfig.mapView = createView(initialViewParams, "2d");
       appConfig.mapView.map = map;
       appConfig.activeView = appConfig.mapView;
 
+      // Evento para sincronizar las vistas
+      appConfig.activeView.watch("extent", function() {
+        // Sincroniza la extensión de la vista general con la vista principal
+        overviewView.goTo(appConfig.activeView.extent);
+        
+        // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
+        overviewView.graphics.removeAll(); // Limpia gráficos anteriores
+        overviewView.graphics.add({
+          geometry: appConfig.activeView.extent,
+          symbol: {
+            type: "simple-fill",
+            color: [0, 0, 0, 0.5],
+            outline: null
+          }
+        });
+      });
+
       // create 3D view, won't initialize until container is set
       initialViewParams.container = null;
       initialViewParams.map = map;
       appConfig.sceneView = createView(initialViewParams, "3d");
+      appConfig.sceneView.watch("extent", function() {
+        // Sincroniza la extensión de la vista general con la vista principal
+        overviewView.goTo(appConfig.activeView.extent);
+        
+        // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
+        overviewView.graphics.removeAll(); // Limpia gráficos anteriores
+        overviewView.graphics.add({
+          geometry: appConfig.activeView.extent,
+          symbol: {
+            type: "simple-fill",
+            color: [0, 0, 0, 0.5],
+            outline: null
+          }
+        });
+      });
 
       // convenience function for creating either a 2D or 3D view dependant on the type parameter
       function createView(params, type) {
@@ -188,7 +241,7 @@ require(
       let compass = new Compass({
         view: appConfig.activeView,
       });
-
+      
       // Set-up event handlers for buttons and click events
       const switchButton = document.getElementById("switch-btn");
       const distanceButton = document.getElementById('distance');
@@ -207,6 +260,12 @@ require(
       clearButton.addEventListener("click", () => {
         clearMeasurements();
       });
+
+      // Crea el widget de zoom
+      var zoomWidget = new Zoom({
+        view: appConfig.activeView
+      });
+
       map.add(_mil_electricidad);
 
       var _lyl_gasnatural = new LayerList({
@@ -229,12 +288,16 @@ require(
         homeBtn.view = activeView;
         print.view = activeView;
         compass.view = activeView;
-        if (activeView.type === "3d")
-          activeView.ui.components = [ "attribution", "zoom" ];
+        zoomWidget.view = activeView;
         activeView.ui.add(homeBtn, "top-right");
+        if (activeView.type === "3d") {
+          activeView.ui.components = [];
+          activeView.ui.add(zoomWidget, "top-right");
+        }
+        else activeView.ui.move(["zoom"], "top-right");
         //activeView.ui.add(measurement, "top-right");
-        activeView.ui.move(["zoom"], "top-right");
         activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
+        //activeView.ui.add(overview, "bottom-right");
       }
 
       // Switches the view from 2D to 3D and vice versa
@@ -284,7 +347,68 @@ require(
         measurement.clear();
       }
 
-      
+      $("#widgetUpload").on("change", "#form_uploadkml", function(event) {
+        //let $msgstatus = $("#sp_uploadstatus_kml").html('');          
+        let files = event.target.files;
+        if(files.length == 1 ){
+          let filename = event.target.value.toLowerCase();
+          if (filename.indexOf(".kml") !== -1 || filename.indexOf(".kmz") !== -1) { //Si archivo es .kml o .kmz
+            let file = files[0];
+            addKmlLayer(file);
+          } else {
+            alert("error");
+            //$msgstatus.removeClass('ok').addClass('failed').html('Solo se admite subir un archivo .kml');
+          }
+        }
+      });
+  
+  
+      function addKmlLayer(file){   
+        //let $preloader = $('#tabpane_addlayer_kml .preuploader').removeClass('notvisible').addClass('visible');
+        //let $placeholder = $('#tabpane_addlayer_kml .drop-zone-placeholder').removeClass('visible').addClass('notvisible');
+        //let $infile = $('#tabpane_addlayer_kml .infile').removeClass('visible').addClass('notvisible');
+        //let $msgstatus = $("#sp_uploadstatus_kml").removeClass('failed ok').html("<b>Cargando…  </b>" + file.name);
+  
+        if (window.FormData !== undefined) {
+            let data = new FormData();
+            data.append("file", file);
+            let filename = file.name;
+            filename = filename.replace(/\ /g, '%20'); //replace whitespace por %20
+            $.ajax({
+                type: "POST",
+                url: "https://gisem.osinergmin.gob.pe/validar/servicekml/home/uploadfile",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function(reponse) {
+                  if(reponse.result){           
+                    let urlkml = "https://gisem.osinergmin.gob.pe/validar/servicekml/files/"+ filename;
+                    let nuevacapa = new KMLLayer(urlkml, {
+                        id: 'KMLLayer'
+                    });
+                    
+                    map.add(nuevacapa);
+                    nuevacapa.when(function(){
+                      appConfig.activeView.extent = nuevacapa.fullExtent;
+                    });
+                    //nuevacapa.load().then(function(){
+                    //  __gru_aniadido.visible = true;
+                    //  __gru_aniadido.layers.add(nuevacapa);
+                    //  if(nuevacapa.extent){
+                    //    view.goTo(nuevacapa.extent);
+                    //  }
+                    //  //handleSuccess($msgstatus, $preloader, $placeholder, $infile, filename);
+                    //}, function(error){
+                    //  //handleError($msgstatus, $preloader, $placeholder, $infile, 'Error al cargar capa', error);
+                    //});                         
+  
+                  }else{
+                    //handleError($msgstatus, $preloader, $placeholder, $infile, 'Error al subir archivo', $.trim(filename));
+                  }
+                }
+            });
+        }
+      }
 
     });
     
