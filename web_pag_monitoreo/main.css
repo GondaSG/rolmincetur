@@ -24,6 +24,7 @@
 
 .Panel{
     text-align: justify;
+    left: -290px;
 }
 
 .textEstado{
@@ -70,7 +71,7 @@
 #panel {
     position: absolute;
     top: 0px;
-    left: -10px;
+    left: -200px;
     margin-left: 6px;
     width: 280px;
     height: 902px;
