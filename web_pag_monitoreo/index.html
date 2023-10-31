@@ -13,7 +13,7 @@
         top: 15px;
         right: 15px;
         cursor: default;
-        display: flex;
+        /* display: flex; */
         flex-direction: row;
         flex-wrap: nowrap;
         z-index: 999;
@@ -50,8 +50,8 @@
         border: none;
         box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
         position: absolute;
-        top: 5%;
-        left: 25%;
+        /* top: 5%; */
+        left: 10px;
         z-index: 999;
       }
 
@@ -88,9 +88,10 @@
 <body>
 
   <div class="row NavPrim">
+    <button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>3D</button>
     <div class="colspan-4 NavStyle">
       <img src="./img/logo.png" alt="Logo" style="width: 185px;">
-      <button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>3D</button>
+      
     </div>
     <div class="colspan-5 NavStyle"><p class="text-right ">Centro de Monitoreo</p></div>
   </div>
@@ -177,40 +178,13 @@
   </section>
 
   <!---- SERVICIOS ---->
-  <!-- <section class="justify-content-center align-items-center p-0 m-0 d-none" id="centro01" style="height:calc((100vh) - 60px); width: 100%;" >    
-    <div class="row p-0 m-0"> 
-        <div class="col-12 col-lg-8 col-md-8 col-sm-12 p-0 m-0 position-relative">              
-            <div id="map" style="height:calc((100vh) - 60px)"></div>              
-            <div class="position-absolute top-0 start-0">
-              <p class="d-inline-flex gap-1 m-3">
-                <button class="esri-component esri-widget--button esri-interactive esri-icon-legend" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 38px; height: 40px;">
-                </button>
-              </p>              
-              <div class="collapse mx-4" id="collapseExample" style="width: 300px;">                  
-              </div>
-            </div>              
-        </div>
-                
-        <div class="col-12 col-lg-4 col-md-4 col-sm-12 m-0">
-            <h5 class="px-4 mt-3 icono-wrap text-dark fw-bold p-2 d-flex justify-content-center">Estado general de emergencia</h5>
-
-            <div class="row p-0 m-0">
-              <div id="divCharts"></div>
-            </div> 
-
-        </div>
-        
-    </div>    
-  </section> -->
-
-
   <div class="position-relative d-none">
-  <div class="position-absolute bottom-0 start-50 translate-middle-x d-inline-flex gap-1">
-    <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTable" aria-expanded="false" aria-controls="collapseTable">      
-      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"> 
-        <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
-    </button>
-  </div>
+    <div class="position-absolute bottom-0 start-50 translate-middle-x d-inline-flex gap-1">
+      <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTable" aria-expanded="false" aria-controls="collapseTable">      
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"> 
+          <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+      </button>
+    </div>
   </div>
 
   <div class="collapseTable position-relative collapse" id="collapseTable" style="width: 1000px;">
@@ -242,8 +216,7 @@
 
 
 <!--widget -->
-<!-- <button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>3D</button> -->
-<div id="toolbarDiv" class="esri-component esri-widget d-none" >
+<div id="toolbarDiv" class="d-none esri-component esri-widget" >
   <button id="distance" class="esri-widget--button esri-interactive esri-icon-measure-line" title="Distance Measurement Tool"></button>
   <button id="area" class="esri-widget--button esri-interactive esri-icon-measure-area" title="Area Measurement Tool"></button>
   <button id="clear" class="esri-widget--button esri-interactive esri-icon-trash" title="Clear Measurements"></button>
@@ -350,7 +323,6 @@
   
   <script src="https://js.arcgis.com/4.17/"></script>
   <script type="text/javascript" src="js/index.js"></script>
-  <!-- <script type="text/javascript" src="js/index2.js"></script>              -->
 
 </body>
 

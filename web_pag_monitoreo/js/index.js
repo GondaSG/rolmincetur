@@ -288,11 +288,6 @@ require(
       // Call the loadView() function for the initial view
       loadWidgets(appConfig.activeView);
 
-      $('#toolbarDiv').removeClass("d-none");
-      $('#divCMO').removeClass("d-none");
-      $('#widgetAddLayers').removeClass("d-none");
-      $('#widgetUpload').removeClass("d-none");            
-
       function loadWidgets(activeView){
         measurement.view = activeView;
         basemapGallery.view = activeView;
@@ -370,8 +365,7 @@ require(
             alert("error");
           }
         }
-      });
-  
+      });  
   
       function addKmlLayer(file){   
         //let $preloader = $('#tabpane_addlayer_kml .preuploader').removeClass('notvisible').addClass('visible');
@@ -514,7 +508,10 @@ require(
 
       Highcharts.chart('divCharts', response);
     
-
+      //$('#toolbarDiv').removeClass("d-none");
+      $('#divCMO').removeClass("d-none");
+      $('#widgetAddLayers').removeClass("d-none");
+      $('#widgetUpload').removeClass("d-none");  
     });
     
     
