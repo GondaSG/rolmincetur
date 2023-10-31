@@ -1,4 +1,3 @@
-
 * {
     font-family: 'Roboto', sans-serif;
 }
@@ -16,7 +15,6 @@
     font-weight: bold;   
 }
 
-
 .StyleBody{
     height:calc((100vh) - 60px) !important; 
     width: 100% ;
@@ -24,7 +22,6 @@
 
 .Panel{
     text-align: justify;
-
 }
 
 .textEstado{
@@ -64,32 +61,43 @@
     margin: 0px; 
 }
 
- .cell {
+.cell {
     justify-content: center;
-}
-
-#panel {
-    position: absolute;
-    top: 0px;
-    left: -200px;
-    margin-left: 6px;
-    width: 280px;
-    
-    background: #fff;
-    z-index: 1;
-    transition: left 0.3s;
 }
 
 #toggleButton {
     position: absolute;
-    margin-left: 20px;
-    left: 50%;
+    left: 0;
     top: 0;
-    transform: translateX(-50%);
-    z-index: 2;    
+    z-index: 2;
+}
+
+#panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 0;
+    background: #fff;
+    z-index: 1;
+    transition: height 0.3s;
+    overflow: hidden;
 }
 
 .flecha{
     font: 2em sans-serif;
     width: 980px;
+}
+
+.textParrafo{
+    margin: 5px;
+}
+
+.panelTi{
+    margin-top: 55px !important;
+    margin-left: 10px ;
+}
+
+.panelParr {
+    margin-left: 10px ;
 }
