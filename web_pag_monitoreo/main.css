@@ -24,7 +24,7 @@
 
 .Panel{
     text-align: justify;
-    left: -290px;
+
 }
 
 .textEstado{
@@ -74,7 +74,7 @@
     left: -200px;
     margin-left: 6px;
     width: 280px;
-    height: 902px;
+    
     background: #fff;
     z-index: 1;
     transition: left 0.3s;
