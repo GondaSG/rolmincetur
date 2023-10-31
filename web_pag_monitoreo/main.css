@@ -3,7 +3,7 @@
 }
 
 .NavPrim {
-    background-color: #000090;
+    background-color: #0072c6;
     height: 60px;
     color: white;
     align-items: center;    
@@ -100,4 +100,21 @@
 
 .panelParr {
     margin-left: 10px ;
+}
+
+.iconList {
+    color: #0072c6;
+    font-weight: bold;
+    margin-left: 15px ;
+}
+.iconList li {
+    display: flex;
+    align-items: center; /
+}
+.icon{
+    width: 25px;
+    height: 25px;
+}
+.iconText {
+    padding: 8px;
 }
