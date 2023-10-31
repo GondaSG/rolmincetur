@@ -112,7 +112,6 @@
     align-items: center; /
 }
 .icon{
-    filter: hue-rotate(50);
     width: 25px;
     height: 25px;
 }
