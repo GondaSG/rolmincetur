@@ -6,14 +6,6 @@ require(
     "esri/Map",
     "esri/views/MapView",
     "esri/views/SceneView",
-    "esri/identity/IdentityManager",
-    "esri/core/urlUtils",
-    "esri/layers/FeatureLayer",
-    "esri/tasks/QueryTask",
-    "esri/tasks/support/Query",
-    "esri/core/watchUtils",
-    "dojo/_base/array",
-    "dojo/domReady!",
     "esri/widgets/Expand",
     "esri/widgets/Home",
     "esri/widgets/BasemapGallery",
@@ -23,25 +15,17 @@ require(
     "esri/widgets/Compass",
     "esri/widgets/Measurement",
     "esri/layers/MapImageLayer",
-    "esri/layers/FeatureLayer",
-    "esri/layers/GroupLayer",
-    "esri/config",
     "esri/widgets/LayerList",
     "esri/widgets/Zoom",
     "esri/layers/KMLLayer",
+    "esri/layers/WebTileLayer",
+    "esri/Basemap",
+    "esri/layers/BingMapsLayer"
   ],
   function(
     Map,
     MapView,
     SceneView,
-    IdentityManager,
-    urlUtils, 
-    FeatureLayer,
-    QueryTask,
-    Query,
-    watchUtils,
-    array,
-    domReady,
     Expand,
     Home,
     BasemapGallery,
@@ -51,12 +35,12 @@ require(
     Compass,
     Measurement,
     MapImageLayer,
-    FeatureLayer,
-    GroupLayer,
-    esriConfig,
     LayerList,
     Zoom,
-    KMLLayer
+    KMLLayer,
+    WebTileLayer,
+    Basemap,
+    BingMapsLayer
   ){
 
     $(document).ready(function(){     
@@ -154,8 +138,7 @@ require(
 
       var _mil_electricidad = new MapImageLayer({
         url: url_electricidad,
-        title: 'ELECTRICIDAD',
-        aux_alias: 'sectorelectricidad'
+        title: 'ELECTRICIDAD'
       });
 
       const searchWidget = new Search({
@@ -169,8 +152,37 @@ require(
         view: appConfig.activeView,
       })
 
+      let _webtilegoogle = new WebTileLayer({
+        urlTemplate: "https://mts1.google.com/vt/lyrs=s@186112443&hl=x-local&src=app&x={col}&y={row}&z={level}&s=Galile",
+        title: "google maps"
+      });
+
+      let _basegooglemaps = new Basemap({
+        baseLayers : [_webtilegoogle],
+        thumbnailUrl: "img/widget/mapgoogle.png",
+        title: "Google maps"
+      });
+
+      let bing = new BingMapsLayer({
+        style : "aerial",
+        key : "AicSAOPnUoCgvinvEKdYlAQ0lHWapVDXrLjbSPtamQME4fpNseNCu3vHRRTuOejk",
+      });
+  
+      let _basebing = new Basemap({
+        baseLayers : [bing],
+        thumbnailUrl: "img/widget/mapabing.png",
+        title: "Bing aerial"
+      });
+      
+      let basemap = new Basemap({
+        portalItem: {
+          id: "c50de463235e4161b206d000587af18b" // Mid-Century Map
+        }
+      });
+
       var basemapGallery = new BasemapGallery({
         view: appConfig.activeView,
+        source: [basemap, _basegooglemaps, _basebing, Basemap.fromId("satellite"), Basemap.fromId("osm"), Basemap.fromId("topo-vector"), Basemap.fromId("hybrid")]
       });
 //
       var expBasemapGallery = new Expand({
@@ -266,7 +278,7 @@ require(
         view: appConfig.activeView
       });
 
-      map.add(_mil_electricidad);
+      //map.add(_mil_electricidad);
 
       var _lyl_gasnatural = new LayerList({
         view: appConfig.activeView,

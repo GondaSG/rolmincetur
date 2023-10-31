@@ -107,22 +107,18 @@
       <!-- Botón con icono de flecha hacia la izquierda que muestra/oculta el panel -->
       <button id="toggleButton" style="position: absolute; left: 0; top: 0; z-index: 2;">
         <span class="flecha" >«</span>
-      </button>
-      
-      <!-- Panel que se muestra/oculta -->
+      </button>          
       <div id="panel">
-          <!-- Contenido del panel -->
-          <!-- <h4>Panel de opciones</h4>
-          <p>Aquí puedes agregar contenido y opciones adicionales.</p> -->
+          
       </div>
       
       <!-- Imagen -->
-      <div id="map" style="height:calc((100vh) - 60px)"></div>
+      <div id="map" style="height:100%"></div>
       <div style="top:10px; left: 40%;text-align: center; position: absolute; z-index: 99999;" id="divTop"></div>
     </div>
 
-    <div class="colspan-4 " style="height:calc((100vh) - 60px)">
-      <div class="Panel" data-role="panel" data-width="auto px" data-height="100%">
+    <div class="colspan-4" style="height:100%;overflow: auto;">
+      <div class="Panel" data-role="panel" data-width="auto px">
         
         <h5 class="textEstado">Estado general de emergencia</h5>
 
@@ -136,7 +132,7 @@
   </section>
 
   <!---- SERVICIOS ---->
-  <section class="justify-content-center align-items-center p-0 m-0 d-none" id="centro01" style="height:calc((100vh) - 60px); width: 100%;" >    
+  <!-- <section class="justify-content-center align-items-center p-0 m-0 d-none" id="centro01" style="height:calc((100vh) - 60px); width: 100%;" >    
     <div class="row p-0 m-0"> 
         <div class="col-12 col-lg-8 col-md-8 col-sm-12 p-0 m-0 position-relative">              
             <div id="map" style="height:calc((100vh) - 60px)"></div>              
@@ -160,7 +156,7 @@
         </div>
         
     </div>    
-  </section>
+  </section> -->
 
 
   <div class="position-relative d-none">
@@ -268,14 +264,14 @@
   // Agregar un controlador de eventos al botón para mostrar/ocultar el panel
       const toggleButton = document.getElementById('toggleButton');
       const panel = document.getElementById('panel');
-      let panelVisible = true;
+      let panelVisible = false;
 
       toggleButton.addEventListener('click', () => {
           if (panelVisible) {
-              panel.style.left = '-250px';
+              panel.style.height = '0';
               panelVisible = false;
           } else {
-              panel.style.left = '0';
+              panel.style.height = '100%';
               panelVisible = true;
           }
       });
