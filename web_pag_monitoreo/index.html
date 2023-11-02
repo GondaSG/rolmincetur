@@ -50,8 +50,8 @@
         border: none;
         box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
         position: absolute;
-        /* top: 5%; */
-        left: 10px;
+        top: 6.5%;
+        right: 36%;
         z-index: 999;
       }
 
@@ -82,16 +82,27 @@
         position: absolute;
         z-index: 2;
       }
+
+      .esri-ui-top-right {
+          top: 25px;
+          right: 2%;
+      }
+
+      @media (max-height: 700px) {
+        #switch-btn {
+          top: 11%;
+          right: 36%;
+        }
+      }
     </style>
   </head>
 
 <body>
 
   <div class="row NavPrim">
-    <button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>3D</button>
+    
     <div class="colspan-4 NavStyle">
-      <img src="./img/logo.png" alt="Logo" style="width: 185px;">
-      
+      <img src="./img/logo.png" alt="Logo" style="width: 185px;">      
     </div>
     <div class="colspan-5 NavStyle"><p class="text-right ">Centro de Monitoreo</p></div>
   </div>
@@ -216,7 +227,8 @@
 
 
 <!--widget -->
-<div id="toolbarDiv" class="d-none esri-component esri-widget" >
+<button class='esri-component esri-widget--button esri-widget esri-interactive' type='button' id='switch-btn'>3D</button>
+<div id="toolbarDiv" class="d-none esri-component esri-widget">
   <button id="distance" class="esri-widget--button esri-interactive esri-icon-measure-line" title="Distance Measurement Tool"></button>
   <button id="area" class="esri-widget--button esri-interactive esri-icon-measure-area" title="Area Measurement Tool"></button>
   <button id="clear" class="esri-widget--button esri-interactive esri-icon-trash" title="Clear Measurements"></button>
