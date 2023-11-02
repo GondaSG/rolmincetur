@@ -1,4 +1,4 @@
-var url_electricidad = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD_TOTAL/MapServer';
+var url_electricidad = 'https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/Registro_de_Emergencias_View/FeatureServer';
 
 
 require(
@@ -20,7 +20,8 @@ require(
     "esri/layers/KMLLayer",
     "esri/layers/WebTileLayer",
     "esri/Basemap",
-    "esri/layers/BingMapsLayer"
+    "esri/layers/BingMapsLayer",
+    "esri/layers/FeatureLayer"
   ],
   function(
     Map,
@@ -40,7 +41,8 @@ require(
     KMLLayer,
     WebTileLayer,
     Basemap,
-    BingMapsLayer
+    BingMapsLayer,
+    FeatureLayer
   ){
 
     $(document).ready(function(){     
@@ -139,6 +141,11 @@ require(
       var _mil_electricidad = new MapImageLayer({
         url: url_electricidad,
         title: 'ELECTRICIDAD'
+      });
+
+      const layer = new FeatureLayer({
+        // URL to the service
+        url: url_electricidad
       });
 
       const searchWidget = new Search({
@@ -279,7 +286,7 @@ require(
       });
 
       //map.add(_mil_electricidad);
-
+      map.add(layer);
       var _lyl_gasnatural = new LayerList({
         view: appConfig.activeView,
         container: 'collapseExample',
