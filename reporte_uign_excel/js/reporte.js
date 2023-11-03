@@ -217,6 +217,7 @@ require(
             let lastEditedDate = moment(new Date(row["LAST_EDITED_DATE"])).format("D/M/YYYY");
             let fecIniCon = moment(new Date(row["FECINITSCON"])).format("D/M/YYYY");
             let fecFinCon = moment(new Date(row["FECFINTSCON"])).format("D/M/YYYY");
+            let fecIniSup = moment(new Date(row["SV_FECHAINISUP"])).format("D/M/YYYY");
 
             let nreport = row[frd];            
             let coordenadas = "";
@@ -273,7 +274,7 @@ require(
                 <td style="text-align: center;">${row["SV_ASPECTOSUP"]}</td>
                 <td style="text-align: center;">${row["SV_TIPOSUP"]}</td>
                 <td style="text-align: center;">${row["SV_MODALSUP"]}</td>
-                <td style="text-align: center;">${row["SV_FECHAINISUP"]}</td>
+                <td style="text-align: center;">${fecIniSup}</td>
                 <td style="text-align: center;">${row["SV_RD"]}</td>
                 <td style="text-align: center;">${row["SV_ZONA"]}</td>
                 <td style="text-align: center;">${row["SV_HUSO"]}</td>
