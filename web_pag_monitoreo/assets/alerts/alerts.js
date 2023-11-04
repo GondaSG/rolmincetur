@@ -33,7 +33,7 @@ function alertMessage(message, status, location, isautoclosing) {
     // message
     alertMessage.className = "alert-message";
     alertMessage.innerHTML = message;
-   
+    
     // icon
     alertIcon.className = "alert-icon ";
 

@@ -6,7 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/4.5.2/metro.css" />
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/4.5.2/metro.css"/>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
     <title>Centro Monitoreo</title>
     <link
       rel="stylesheet"
@@ -108,10 +109,13 @@
       </div>
     </div>
 
+    
+
     <section class="row StyleBody" style="position: relative">
       <div class="colspan-8">
+
         <!-- Botón con icono de flecha hacia la izquierda que muestra/oculta el panel -->
-        <button
+        <!-- <button
           id="toggleButton"
           style="position: absolute; left: 0; top: 0; z-index: 2"
         >
@@ -147,7 +151,14 @@
                 <img src="./img/factory.svg" alt="Icono 2" class="icon" />
                 <spam class="iconText">Gas Natural</spam>
               </li>
-
+              <button class="button alert"
+              data-role="hint"
+              data-hint-position="left"
+              data-hint-text="This is a hinted button"
+              data-cls-hint="bg-black fg-white drop-shadow"
+              >
+              botón izquierda
+              </button>
               <li>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +211,8 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
+        
 
         <!-- Imagen -->
         <div id="map" style="height: 100%"></div>
@@ -213,9 +225,29 @@
             z-index: 99999;
           "
           id="divTop"
-        ></div>
+        >
+        
+        <button class="button alert"
+              data-role="hint"
+              data-hint-position="left"
+              data-hint-text="This is a hinted button"
+              data-cls-hint="bg-black fg-white drop-shadow">
+              botón izquierda
+        </button>
+
+        </div>
       </div>
 
+      <div data-role="panel"
+      data-title-caption=" "
+      data-title-icon="<span class='mif-apps'></span>"
+      data-width="240"
+      data-collapsible="true"
+      data-draggable="true"
+      >      
+
+      ... Panel Principal
+      </div>
       <div class="colspan-4" style="height: 100%; overflow: auto">
         <div class="Panel" data-role="panel" data-width="auto px">
           <div class="row">
@@ -224,6 +256,7 @@
         </div>
       </div>
     </section>
+
 
     <!---- SERVICIOS ---->
     <div class="position-relative d-none">
@@ -303,6 +336,7 @@
         title="Clear Measurements"
       ></button>
     </div>
+
     <div
       id="divCMO"
       class="d-none esri-expand__content esri-expand__content--expanded"
@@ -471,6 +505,7 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <script src="https://cdn.metroui.org.ua/4.5.2/metro.js"></script>
+    <script src="https://cdn.metroui.org.ua/current/metro.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://js.arcgis.com/4.17/"></script>

@@ -9,56 +9,56 @@ require(
     "dojo/_base/array",
     "dojo/domReady!"
   ],
-  function(
+  function (
     IdentityManager,
-    urlUtils, 
+    urlUtils,
     FeatureLayer,
     QueryTask,
     Query,
     watchUtils,
     array
-  ){
+  ) {
 
-    $(document).ready(function(){     
-      let urlparams= window.location.search;//obtiene parametros de url
+    $(document).ready(function () {
+      let urlparams = window.location.search;//obtiene parametros de url
       paramb64 = urlparams.substring(1);
       (paramb64 == undefined || paramb64 == ' ') ? paramb64 = "undefined" : "";
       //if(paramb64==='MTBkaWNpZW1icmUxOTk1YXV4aWxpb21lZGVzbWF5b2VhZWFlYQ=='){
-      if(paramb64===''){
-          cargarCmbUsuario();        
+      if (paramb64 === '') {
+        cargarCmbUsuario();
         $('#preloader_gral').addClass('hide');//retira preloader gral
         $('#viewDiv').removeClass('hide').addClass("animate__animated animate__fadeInDown");
         //location.replace('http://127.0.0.1:5500/reporte_uppgn/index.html');
         window.history.pushState(null, "", "index.html");
 
-      }else{
+      } else {
         console.log("ingrese parámetros");
       }
     });
-    
+
     _proxyurl = "https://gisem.osinergmin.gob.pe/proxy_dsgn/proxy.ashx";
-	  // AUTENTICACIÓN
+    // AUTENTICACIÓN
     urlUtils.addProxyRule({
       urlPrefix: "https://gisem.osinergmin.gob.pe",
       proxyUrl: _proxyurl
     });
 
-	  //// URL DE WEB SERVICES
-	  var url_attachements = "https://gisem.osinergmin.gob.pe/serverdc/rest/services/FS_OSIC_TSCON4/FeatureServer/0";
-	  var url_attachements2 = "https://gisem.osinergmin.gob.pe/serverdc/rest/services/FS_OSIC_TSCON4/FeatureServer/1";
-	
+    //// URL DE WEB SERVICES
+    var url_attachements = "https://gisem.osinergmin.gob.pe/serverdc/rest/services/FS_OSIC_TSCON4/FeatureServer/0";
+    var url_attachements2 = "https://gisem.osinergmin.gob.pe/serverdc/rest/services/FS_OSIC_TSCON4/FeatureServer/1";
+
     // fields de ws (1)
     var fusuario = "SV_SUPERUSER";
     var fobjectidform = "GLOBALID";
-    
+
     var ffecha = "FECINITSCON";
     var fDescripcion = "NOMRASOTSCON";
     var frd = "SV_RD";
 
     var fobjectidform2 = "OBJECTID";
-    
+
     var ftema = "NUMTSCON";
-    var descFotos = "DESCFOTCTSCON";    
+    var descFotos = "DESCFOTCTSCON";
     var feste = "SV_X";
     var fnorte = "SV_Y";
 
@@ -92,14 +92,14 @@ require(
 
     var $btnLimpiar = $('#btn_limpiar');
     //// DEFINICIÓN DE FEATURE LAYERS 
-    var fl_serv1 = new FeatureLayer({ 
+    var fl_serv1 = new FeatureLayer({
       url: url_attachements,
       outFields: ["*"],
-      visible:true,
+      visible: true,
       definitionExpression: "1=1"
     });
 
-   /******************************* UX *********************************************/
+    /******************************* UX *********************************************/
 
     //CARGAR COMBO FECHA ACTUAL
     debugger;
@@ -108,9 +108,9 @@ require(
     //n.setHours(n.getHours() - 24);
     //var fecha = n.toISOString().split('T')[0];
     document.getElementById("fec_superv").value = fecha;
-    console.log("fecha:"+fecha)
- 
-    var nn =  new Date();
+    console.log("fecha:" + fecha)
+
+    var nn = new Date();
     nn = moment(nn).format('YYYY-MM-DD');
     document.getElementById("fec_fin").value = nn;
 
@@ -121,25 +121,25 @@ require(
     //$('#fechaActual').html('26-jun-2023');
 
     //BUSCA POR USUARIO Y FECHA 
-    $('#btn_buscar').on('click', function(event) {
+    $('#btn_buscar').on('click', function (event) {
       event.preventDefault(); // Evita que el formulario se envíe      
-      clearData("");      
+      clearData("");
       let usuario = $('#cmb_usuario').val();
       let fecha = $('#fec_superv').val();
       let fechaFin = $('#fec_fin').val();
-      
-      if (usuario !== "" && fecha !== "" && fechaFin !== "") {                   
-          //$('#cmb_usuario, #fec_superv, #fec_fin, #btn_buscar').prop('disabled', true);
-          $('#btn_exportword').prop('disabled', true).html(showPreloaderBar());
-          //$('#btn_exportExcel').prop('disabled', true);
-          $('#div_barprogress').html(showPreloaderBar());
-          $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
-          filtrar(usuario, fecha, fechaFin);
-          $('#div_barprogress').html(showPreloaderProgress(100));
+
+      if (usuario !== "" && fecha !== "" && fechaFin !== "") {
+        //$('#cmb_usuario, #fec_superv, #fec_fin, #btn_buscar').prop('disabled', true);
+        $('#btn_exportword').prop('disabled', true).html(showPreloaderBar());
+        //$('#btn_exportExcel').prop('disabled', true);
+        $('#div_barprogress').html(showPreloaderBar());
+        $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
+        filtrar(usuario, fecha, fechaFin);
+        $('#div_barprogress').html(showPreloaderProgress(100));
 
       } else {
-          clearData("Seleccione su usuario y complete las fechas.");
-        }
+        clearData("Seleccione su usuario y complete las fechas.");
+      }
     });
 
     //BOTÓN EXPORTAR 
@@ -153,79 +153,99 @@ require(
     //   return false;   
     // });
 
-    //BOTÓN EXPORTAR 
-    $('#btn_exportExcel').on('click', function(event) {
-      var uri = 'data:application/vnd.ms-excel;base64,',
-      template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-      base64 = function(s) {
-        return window.btoa(unescape(encodeURIComponent(s)))
-      },
-      format = function(s, c) {
-        return s.replace(/{(\w+)}/g, function(m, p) {
-          return c[p];
-        })
-      }
-      var toExcel = document.getElementById("tbl_data2").innerHTML;
-      var ctx = {
-        worksheet: name || '',
-        table: toExcel
-      };
-      var link = document.createElement("a");
-      link.download = "Reporte.xls";
-      link.href = uri + base64(format(template, ctx))
+    // //BOTÓN EXPORTAR 
+    // $('#btn_exportExcel').on('click', function(event) {
+    //   var uri = 'data:application/vnd.ms-excel;base64,',
+    //   template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+    //   base64 = function(s) {
+    //     return window.btoa(unescape(encodeURIComponent(s)))
+    //   },
+    //   format = function(s, c) {
+    //     return s.replace(/{(\w+)}/g, function(m, p) {
+    //       return c[p];
+    //     })
+    //   }
+    //   var toExcel = document.getElementById("tbl_data2").innerHTML;
+    //   var ctx = {
+    //     worksheet: name || '',
+    //     table: toExcel
+    //   };
+    //   var link = document.createElement("a");
+    //   link.download = "Reporte.xls";
+    //   link.href = uri + base64(format(template, ctx))
+    //   link.click();
+    // });
+
+    // BOTÓN EXPORTAR
+    $('#btn_exportExcel').on('click', function (event) {
+      var ws = XLSX.utils.table_to_sheet(document.getElementById('tbl_data2'));
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+      var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(new Blob([s2ab(blob)], { type: 'application/octet-stream' }));
+      link.download = 'Reporte.xlsx';
       link.click();
     });
 
- 
+    function s2ab(s) {
+      var buf = new ArrayBuffer(s.length);
+      var view = new Uint8Array(buf);
+      for (var i = 0; i < s.length; i++) {
+        view[i] = s.charCodeAt(i) & 0xFF;
+      }
+      return buf;
+    }
+
     //FILTRA DATA DEL WEBSERVICE Y MUESTRA EN TABLA PARA EXPORTAR 
     function filtrar(usuario, fecha, fechaFin) {
       console.log("fecha" + fecha + "fechafin:" + fechaFin)
 
       var fi = moment(fecha).format('DD/MM/YYYY HH:mm:ss');
-      var ff = moment(fechaFin).add(24,'hours').format('DD/MM/YYYY HH:mm:ss');
+      var ff = moment(fechaFin).add(24, 'hours').format('DD/MM/YYYY HH:mm:ss');
 
-      var sql = fusuario + " = '"+usuario+"' and "+ffecha+" between '"+fi+"' and '"+ff+"'";
+      var sql = fusuario + " = '" + usuario + "' and " + ffecha + " between '" + fi + "' and '" + ff + "'";
       console.log("sql" + sql);
       //sql = fusuario + " = '"+usuario+"' ";
-      var query = new QueryTask({url:url_attachements}); 
-      var params  = new Query();  
+      var query = new QueryTask({ url: url_attachements });
+      var params = new Query();
       params.returnGeometry = false;
       params.outFields = ["*"];
-      params.orderByFields= [`${ffecha} asc`];
+      params.orderByFields = [`${ffecha} asc`];
       params.where = sql;
-      query.execute(params).then(function(response){
+      query.execute(params).then(function (response) {
         //$cmbuser.prop('disabled', false);
         //$fecsuperv.prop('disabled', false);
         //$fecfin.prop('disabled', false);
         var n = 0;
-        if(response.features.length === 0){ 
-          clearData('No hay registros coincidentes'); 
-        }else{          
+        if (response.features.length === 0) {
+          clearData('No hay registros coincidentes');
+        } else {
           var ids = [];
           var ids2 = [];
           responses = response.features;
           var cadena = '';
           var cadena2 = '';
-          let auxlength = responses.length;          
-          
+          let auxlength = responses.length;
+
           for (var i = 0; i < auxlength; i++) {
-            let row = responses[i].attributes; 
+            let row = responses[i].attributes;
             let id = row[fobjectidform];
             let fecha = new Date(row[ffecha]);
-            let fechaformat = moment(fecha).format('D/M/YYYY'); 
+            let fechaformat = moment(fecha).format('D/M/YYYY');
             let fechaCreatedUser = moment(new Date(row["CREATED_DATE"])).format("D/M/YYYY");
             let lastEditedDate = moment(new Date(row["LAST_EDITED_DATE"])).format("D/M/YYYY");
             let fecIniCon = moment(new Date(row["FECINITSCON"])).format("D/M/YYYY");
             let fecFinCon = moment(new Date(row["FECFINTSCON"])).format("D/M/YYYY");
             let fecIniSup = moment(new Date(row["SV_FECHAINISUP"])).format("D/M/YYYY");
 
-            let nreport = row[frd];            
+            let nreport = row[frd];
             let coordenadas = "";
-            if (row[feste] != null && row[fnorte] != null){
+            if (row[feste] != null && row[fnorte] != null) {
               coordenadas = row[feste] + ", " + row[fnorte];
-            }            
+            }
             let tema = row[ftema];
-            let descripcion = row[fDescripcion]; 
+            let descripcion = row[fDescripcion];
             let rc = row[REC_INICIALES];
             cadena = cadena +
               `<tr>                
@@ -285,77 +305,77 @@ require(
                 <td style="text-align: center;">${row["SV_PERIODO"]}</td>
                 <td style="text-align: center;">${row["SV_SUPERUSER"]}</td>                
                 </tr>`;
-            $('#tbody_data').html(cadena); 
-            $('#tbody_data2').html(cadena2); 
-            n++;            
-          }          
+            $('#tbody_data').html(cadena);
+            $('#tbody_data2').html(cadena2);
+            n++;
+          }
           repaginar();
           //getAdjuntos(ids, responses);   
-          $('#total_reg').text(auxlength + " Registros en total");       
+          $('#total_reg').text(auxlength + " Registros en total");
         }
       });
     }
 
 
     //GARANTIZAR QUE SE HAYA TERMINADO DE CARGAR TODAS LAS IMÁGENES
-    function waitLoadImgs(){ 
+    function waitLoadImgs() {
       let totalphotos = $('img').length - 2; //2 imgs precargadas: logo vista y logo reporte
       let realphotos;
-      let loadedphotos = 0;  
-      $('#lbl_numfotos').text((totalphotos)+" fotos");
-      $('img').each(function(){  
-          $(this).on("load", function(){ //load imgs de servidor
-            loadedphotos++;
-            realphotos = totalphotos - _auxsf;
-            let percent = parseInt(loadedphotos/realphotos*100);
-            $('#lbl_percentprogress').text(percent+" %");
-            $('#div_barprogress').html(showPreloaderProgress(percent));
-            if(totalphotos == (loadedphotos+_auxsf)){  
-              $('td.sinfoto').html('Foto no encontrada').css({height: "4em", "font-weight": "bold", color: "#075daa", "font-style": "italic"});
-              $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>').prop('disabled', false); 
-              $('#btn_exportExcel').prop('disabled', false);
-            }  
-          });
+      let loadedphotos = 0;
+      $('#lbl_numfotos').text((totalphotos) + " fotos");
+      $('img').each(function () {
+        $(this).on("load", function () { //load imgs de servidor
+          loadedphotos++;
+          realphotos = totalphotos - _auxsf;
+          let percent = parseInt(loadedphotos / realphotos * 100);
+          $('#lbl_percentprogress').text(percent + " %");
+          $('#div_barprogress').html(showPreloaderProgress(percent));
+          if (totalphotos == (loadedphotos + _auxsf)) {
+            $('td.sinfoto').html('Foto no encontrada').css({ height: "4em", "font-weight": "bold", color: "#075daa", "font-style": "italic" });
+            $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>').prop('disabled', false);
+            $('#btn_exportExcel').prop('disabled', false);
+          }
+        });
       });
     }
 
     // CARGAR CMB USUARIOS
-    function cargarCmbUsuario(){		
-      let query = new QueryTask({url:url_attachements}); 
-      let params  = new Query();            
+    function cargarCmbUsuario() {
+      let query = new QueryTask({ url: url_attachements });
+      let params = new Query();
       params.returnGeometry = false;
       params.outFields = [fusuario];
-      params.orderByFields= [`${fusuario} asc`];
+      params.orderByFields = [`${fusuario} asc`];
       params.where = "1=1";
-	    params.returnDistinctValues = true;
-	    query.execute(params).then(function(response){
+      params.returnDistinctValues = true;
+      query.execute(params).then(function (response) {
         let nreg = response.features.length;
         let cmb = "<option selected value=''>- Seleccione usuario -</option>";
-        for (let i = 0; i < nreg ; i++) {
+        for (let i = 0; i < nreg; i++) {
           let dato = response.features[i].attributes[fusuario];
-          if(dato != null ){
-            cmb = cmb + "<option value='"+dato+"'>"+dato+"</option>";                 
+          if (dato != null) {
+            cmb = cmb + "<option value='" + dato + "'>" + dato + "</option>";
           }
-        }       
+        }
         $cmbuser.html(cmb);
       });
-    }    
-    
+    }
+
     console.log($('#btn_limpiar'));
-    $('#btn_limpiar').on('click', function(event) {
+    $('#btn_limpiar').on('click', function (event) {
       document.getElementById("fec_superv").value = fecha;
       document.getElementById("fec_fin").value = nn;
       $cmbuser.val("");
       // $fecsuperv.val(""); 
       // $fecfin.val('');
-      clearData(""); 
+      clearData("");
     });
 
-   /*************************************FUNCIONES DE APOYO **************************/
+    /*************************************FUNCIONES DE APOYO **************************/
 
     //Preloaders
-    function showPreloader(){
-        return `
+    function showPreloader() {
+      return `
           <div class="preloader-wrapper small active">
             <div class="spinner-layer spinner-blue-only">
               <div class="circle-clipper left">
@@ -367,29 +387,29 @@ require(
               </div>
             </div>
           </div>`;
-      }
+    }
 
-    function showPreloaderPnts(){
+    function showPreloaderPnts() {
       return `<div class="lds-ellipsis"><div></div><div></div><div></div>`;
-    }    
+    }
 
-    function showPreloaderBar(){
+    function showPreloaderBar() {
       return `
         <div class="progress">
             <div class="indeterminate"></div>
         </div>`;
     }
 
-    function showPreloaderProgress(percent){
+    function showPreloaderProgress(percent) {
       return `
         <div class="progress">
             <div class="determinate" style="width: ${percent}%"></div>
-        </div>`;      
+        </div>`;
     }
-   
+
     function clearData(mensaje) {
-      $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${mensaje}</td></tr>`); 
-      $("#tb_fotos").html(mensaje); 
+      $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${mensaje}</td></tr>`);
+      $("#tb_fotos").html(mensaje);
       $('#btn_exportword').html('<i class="small material-icons">filter</i><i class="material-icons">file_download</i>');
       $('#div_barprogress').html("");
       $('#lbl_numfotos').text("");
@@ -398,15 +418,15 @@ require(
       $('.paginador').prop('hidden', true);
     }
 
-    function repaginar(){
+    function repaginar() {
       $('.paginador').prop('hidden', false);
       $('#total_reg').text('');
       $('#myPager').html('');
       $('#tbl_data').pageMe({
         pagerSelector: '#myPager',
-        activeColor: 'blue',          
+        activeColor: 'blue',
         perPage: 15
       });
     }
-      
-});
+
+  });
