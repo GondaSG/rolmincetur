@@ -46,7 +46,8 @@ namespace Services.Controllers
                             indicadorCalculoCache.ID_INDICADOR_CACHE = dr.GetInt32(0);
                             indicadorCalculoCache.ID_INDICADOR_CALCULO = dr.GetInt32(1);
                             indicadorCalculoCache.VALOR = dr.GetString(2);
-                            indicadorCalculoCache.FECHA = dr.GetString(3);
+                            if (dr.GetValue(3).ToString() != "")
+                                indicadorCalculoCache.FECHA = dr.GetDateTime(3);
                             data.Add(indicadorCalculoCache);
                         }
                     }
