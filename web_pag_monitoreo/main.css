@@ -72,7 +72,7 @@
     z-index: 2;
 }
 
-#panel {
+/* #panel {
     position: absolute;
     top: 0;
     left: 0;
@@ -82,31 +82,32 @@
     z-index: 1;
     transition: height 0.3s;
     overflow: hidden;
-}
+} */
 
-.flecha{
+/* .flecha{
     font: 2em sans-serif;
     width: 980px;
-}
+} */
 
-.textParrafo{
+/* .textParrafo{
     margin: 5px;
-}
+} */
 
-.panelTi{
+/* .panelTi{
     margin-top: 55px !important;
     margin-left: 10px ;
-}
+} */
 
-.panelParr {
+/* .panelParr {
     margin-left: 10px ;
-}
+} */
 
-.iconList {
+/* .iconList {
     color: #0072c6;
     font-weight: bold;
     margin-left: 15px ;
-}
+} */
+
 .iconList li {
     display: flex;
     align-items: center; /
@@ -117,4 +118,7 @@
 }
 .iconText {
     padding: 8px;
-}
+    color:rgb(44, 44, 44);
+    font-weight: bold;
+    font-size:large;
+} 

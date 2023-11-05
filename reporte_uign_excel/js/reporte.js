@@ -105,8 +105,6 @@ require(
     debugger;
     var n = new Date();
     fecha = moment(n).subtract(1, 'd').format('YYYY-MM-DD');
-    //n.setHours(n.getHours() - 24);
-    //var fecha = n.toISOString().split('T')[0];
     document.getElementById("fec_superv").value = fecha;
     console.log("fecha:" + fecha)
 
@@ -116,22 +114,17 @@ require(
 
     //VARIABLES DE FILTRO
     var $cmbuser = $('#cmb_usuario');
-    //var $fecsuperv = $('#fec_superv');
-    //var $fecfin = $('#fec_fin');
-    //$('#fechaActual').html('26-jun-2023');
 
     //BUSCA POR USUARIO Y FECHA 
     $('#btn_buscar').on('click', function (event) {
-      event.preventDefault(); // Evita que el formulario se envíe      
+      event.preventDefault(); // Evita que el formulario se envíe
       clearData("");
       let usuario = $('#cmb_usuario').val();
       let fecha = $('#fec_superv').val();
       let fechaFin = $('#fec_fin').val();
 
       if (usuario !== "" && fecha !== "" && fechaFin !== "") {
-        //$('#cmb_usuario, #fec_superv, #fec_fin, #btn_buscar').prop('disabled', true);
         $('#btn_exportword').prop('disabled', true).html(showPreloaderBar());
-        //$('#btn_exportExcel').prop('disabled', true);
         $('#div_barprogress').html(showPreloaderBar());
         $('#tbody_data').html(`<tr><td colspan="6" style="text-align:center;">${showPreloaderBar()}</td></tr>`);
         filtrar(usuario, fecha, fechaFin);
@@ -141,40 +134,6 @@ require(
         clearData("Seleccione su usuario y complete las fechas.");
       }
     });
-
-    //BOTÓN EXPORTAR 
-    // $('#btn_exportword').on('click', function(event) {
-    //   let usuario = $cmbuser.val();
-    //   let fecha = $fecsuperv.val();
-    //   // let hoy = new Date().toLocaleDateString('en-GB');
-    //   let filename = 'Reporte_Supervision_'+usuario+'_'+fecha;      
-    //   let iscomprimido = $('#chb_switch').is(':checked'); 
-    //   $("#div_fotos").wordExport(filename, iscomprimido);     
-    //   return false;   
-    // });
-
-    // //BOTÓN EXPORTAR 
-    // $('#btn_exportExcel').on('click', function(event) {
-    //   var uri = 'data:application/vnd.ms-excel;base64,',
-    //   template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-    //   base64 = function(s) {
-    //     return window.btoa(unescape(encodeURIComponent(s)))
-    //   },
-    //   format = function(s, c) {
-    //     return s.replace(/{(\w+)}/g, function(m, p) {
-    //       return c[p];
-    //     })
-    //   }
-    //   var toExcel = document.getElementById("tbl_data2").innerHTML;
-    //   var ctx = {
-    //     worksheet: name || '',
-    //     table: toExcel
-    //   };
-    //   var link = document.createElement("a");
-    //   link.download = "Reporte.xls";
-    //   link.href = uri + base64(format(template, ctx))
-    //   link.click();
-    // });
 
     // BOTÓN EXPORTAR
     $('#btn_exportExcel').on('click', function (event) {
