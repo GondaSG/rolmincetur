@@ -20,7 +20,10 @@ require(
     "esri/layers/KMLLayer",
     "esri/layers/WebTileLayer",
     "esri/Basemap",
-    "esri/layers/BingMapsLayer"
+    "esri/layers/BingMapsLayer",
+    "esri/layers/TileLayer",
+    "esri/layers/OpenStreetMapLayer",
+    "esri/widgets/BasemapGallery/support/LocalBasemapsSource"
   ],
   function(
     Map,
@@ -40,7 +43,10 @@ require(
     KMLLayer,
     WebTileLayer,
     Basemap,
-    BingMapsLayer
+    BingMapsLayer,
+    TileLayer,
+    OpenStreetMapLayer,
+    LocalBasemapsSource
   ){
 
     $(document).ready(function(){     
@@ -52,31 +58,153 @@ require(
         container: "map" // use same container for views
       };
 
+      
+      var basemaps = [
+        new Basemap({
+            baseLayers: [
+                new WebTileLayer({
+                    urlTemplate: "https://mts1.google.com/vt/lyrs=y@186112443&hl=x-local&src=app&x={col}&y={row}&z={level}&s=Galile",
+                    title: "Google Maps Satélite",
+                    copyright: 'Datos de mapas ©2023 Google, INEGI'
+                })
+            ],
+            title: "Google Maps Satélite",
+            id: "BaseMapGMSalelite",
+            thumbnailUrl: "https://snirh.ana.gob.pe/IconoGis/MiniMapGMSatelite.png"
+        }),
+        new Basemap({
+            baseLayers: [
+                new WebTileLayer({
+                    urlTemplate: "https://mts1.google.com/vt/lyrs=m@221097413&hl=x-local&src=app&x={col}&y={row}&z={level}&s=Galile",
+                    title: "Google Maps Calles",
+                    copyright: 'Datos de mapas ©2023 Google, INEGI'
+                })
+            ],
+            title: "Google Maps Calles",
+            id: "BaseMapGMStreet",
+            thumbnailUrl: "https://snirh.ana.gob.pe/IconoGis/MiniMapGMStreet.png"
+        }),
+        new Basemap({
+            id: 'satellite',
+            baseLayers: new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+            }),
+            thumbnailUrl: 'https://www.arcgis.com/sharing/rest/content/items/c7d2b5c334364e8fb5b73b0f4d6a779b/info/thumbnail/thumbnail1607389529861.jpeg',
+            title: 'Imágenes',
+        }),
+        new Basemap({
+            id: 'streets',
+            baseLayers: [new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+            }), new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer',
+                isReference: true,
+                displayLevels: [0, 1, 2, 3, 4, 5, 6, 7],
+            }),
+            ],
+            thumbnailUrl: 'https://www.arcgis.com/sharing/rest/content/items/ea3befe305494bb5b2acd77e1b3135dc/info/thumbnail/thumbnail1607389425104.jpeg',
+            title: 'Imágenes con Etiquetas',
+        }),
+        new Basemap({
+            id: 'streets-vector',
+            baseLayers: new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
+            }),
+            thumbnailUrl: 'https://www.arcgis.com/sharing/rest/content/items/e3e6df1d2f6a485d8a70f28fdd3ce19e/info/thumbnail/thumbnail1607389307240.jpeg',
+            title: 'Calles'//,
+            //tabindex: 1,
+        }),
+        new Basemap({
+            id: 'topo',
+            baseLayers: new TileLayer({
+                url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer',
+            }),
+            thumbnailUrl: 'https://www.arcgis.com/sharing/rest/content/items/dd247558455c4ffab54566901a14f42c/info/thumbnail/thumbnail1607389112065.jpeg',
+            title: 'Topográfico',
+        }),
+        new Basemap({
+            id: 'gray',
+            baseLayers: [new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer',
+            }), new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer',
+            })],
+            thumbnailUrl: 'https://www.arcgis.com/sharing/rest/content/items/0f74af7609054be8a29e0ba5f154f0a8/info/thumbnail/thumbnail1607388219207.jpeg',
+            title: 'Lona Gris Claro',
+        }),
+        new Basemap({
+            id: 'dark-gray',
+            baseLayers: [new TileLayer({
+                url: 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer',
+            }), new TileLayer({
+                url: 'http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Reference/MapServer',
+            })],
+            thumbnailUrl: 'https://www.arcgis.com/sharing/rest/content/items/7742cd5abef8497288dc81426266df9b/info/thumbnail/thumbnail1607387673856.jpeg',
+            title: 'Lona Gris Oscuro',
+        }),        
+        new Basemap({
+            id: 'osm',
+            baseLayers: new OpenStreetMapLayer(),
+            thumbnailUrl: '//oefa.maps.arcgis.com/sharing/rest/content/items/d415dff75dd042258ceda46f7252ad70/info/thumbnail/temposm.jpg',
+            title: 'OpenStreetMap',
+        }),
+        new Basemap({
+          baseLayers : [
+            new WebTileLayer({
+            urlTemplate: "https://mts1.google.com/vt/lyrs=s@186112443&hl=x-local&src=app&x={col}&y={row}&z={level}&s=Galile",
+            title: "google maps"
+          })
+          ],
+          thumbnailUrl: "img/widget/mapgoogle.png",
+          title: "Google maps"
+        }),
+        new Basemap({
+          baseLayers : [new BingMapsLayer({
+            style : "aerial",
+            key : "AicSAOPnUoCgvinvEKdYlAQ0lHWapVDXrLjbSPtamQME4fpNseNCu3vHRRTuOejk",
+          })],
+          thumbnailUrl: "img/widget/mapabing.png",
+          title: "Bing aerial"
+        }),
+        new Basemap({
+          portalItem: {
+            id: "c50de463235e4161b206d000587af18b" // Mid-Century Map
+          }
+        })
+      ];
+
+      boundsDefault = { xmin: - 81.3867, ymin: -18.4483, xmax: -68.652329, ymax: - 0.038777 };// new google.maps.LatLngBounds(new google.maps.LatLng(-18.4483, -81.3867), new google.maps.LatLng(-0.038777, -68.652329));
+
       const initialViewParams = {
         zoom: 6,
-        center: [-72,-10],
+        ui: {
+          components: ["attribution"]
+        },
+        //center: [-72,-10],
+        extent: boundsDefault,
         container: appConfig.container
       };
 
       var map = new Map({
-        basemap: "osm"
+        basemap: "hybrid",
+        ground: "world-elevation",
       });
 
       // Crea la vista general
-      var overviewMap = new Map({
-        basemap: "topo-vector"
-      });
-
-      var overviewView = new MapView({
-        container: "overviewDiv",
-        map: overviewMap,
-        constraints: {
-          snapToZoom: false
-        }
-      });
-
+      //var overviewMap = new Map({
+      //  basemap: "topo-vector"
+      //});
+      //
+      //var overviewView = new MapView({
+      //  container: "overviewDiv",
+      //  map: overviewMap,
+      //  constraints: {
+      //    snapToZoom: false
+      //  }
+      //});
+      
       // Remove the default widgets
-      overviewView.ui.components = [];
+      //overviewView.ui.components = [];
 
       
       // create 2D view and and set active
@@ -85,41 +213,41 @@ require(
       appConfig.activeView = appConfig.mapView;
 
       // Evento para sincronizar las vistas
-      appConfig.activeView.watch("extent", function() {
-        // Sincroniza la extensión de la vista general con la vista principal
-        overviewView.goTo(appConfig.activeView.extent);
-        
-        // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
-        overviewView.graphics.removeAll(); // Limpia gráficos anteriores
-        overviewView.graphics.add({
-          geometry: appConfig.activeView.extent,
-          symbol: {
-            type: "simple-fill",
-            color: [0, 0, 0, 0.5],
-            outline: null
-          }
-        });
-      });
+      //appConfig.activeView.watch("extent", function() {
+      //  // Sincroniza la extensión de la vista general con la vista principal
+      //  overviewView.goTo(appConfig.activeView.extent);
+      //  
+      //  // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
+      //  overviewView.graphics.removeAll(); // Limpia gráficos anteriores
+      //  overviewView.graphics.add({
+      //    geometry: appConfig.activeView.extent,
+      //    symbol: {
+      //      type: "simple-fill",
+      //      color: [0, 0, 0, 0.5],
+      //      outline: null
+      //    }
+      //  });
+      //});
 
       // create 3D view, won't initialize until container is set
       initialViewParams.container = null;
       initialViewParams.map = map;
       appConfig.sceneView = createView(initialViewParams, "3d");
-      appConfig.sceneView.watch("extent", function() {
-        // Sincroniza la extensión de la vista general con la vista principal
-        overviewView.goTo(appConfig.activeView.extent);
-        
-        // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
-        overviewView.graphics.removeAll(); // Limpia gráficos anteriores
-        overviewView.graphics.add({
-          geometry: appConfig.activeView.extent,
-          symbol: {
-            type: "simple-fill",
-            color: [0, 0, 0, 0.5],
-            outline: null
-          }
-        });
-      });
+      //appConfig.sceneView.watch("extent", function() {
+      //  // Sincroniza la extensión de la vista general con la vista principal
+      //  overviewView.goTo(appConfig.activeView.extent);
+      //  
+      //  // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
+      //  overviewView.graphics.removeAll(); // Limpia gráficos anteriores
+      //  overviewView.graphics.add({
+      //    geometry: appConfig.activeView.extent,
+      //    symbol: {
+      //      type: "simple-fill",
+      //      color: [0, 0, 0, 0.5],
+      //      outline: null
+      //    }
+      //  });
+      //});
 
       // convenience function for creating either a 2D or 3D view dependant on the type parameter
       function createView(params, type) {
@@ -132,6 +260,10 @@ require(
         }
         return view;
       }
+
+      var localSource = new LocalBasemapsSource({
+        basemaps: basemaps
+      });
 
       // Create new instance of the Measurement widget
       const measurement = new Measurement();      
@@ -152,37 +284,12 @@ require(
         view: appConfig.activeView,
       })
 
-      let _webtilegoogle = new WebTileLayer({
-        urlTemplate: "https://mts1.google.com/vt/lyrs=s@186112443&hl=x-local&src=app&x={col}&y={row}&z={level}&s=Galile",
-        title: "google maps"
-      });
-
-      let _basegooglemaps = new Basemap({
-        baseLayers : [_webtilegoogle],
-        thumbnailUrl: "img/widget/mapgoogle.png",
-        title: "Google maps"
-      });
-
-      let bing = new BingMapsLayer({
-        style : "aerial",
-        key : "AicSAOPnUoCgvinvEKdYlAQ0lHWapVDXrLjbSPtamQME4fpNseNCu3vHRRTuOejk",
-      });
-  
-      let _basebing = new Basemap({
-        baseLayers : [bing],
-        thumbnailUrl: "img/widget/mapabing.png",
-        title: "Bing aerial"
-      });
       
-      let basemap = new Basemap({
-        portalItem: {
-          id: "c50de463235e4161b206d000587af18b" // Mid-Century Map
-        }
-      });
+
 
       var basemapGallery = new BasemapGallery({
         view: appConfig.activeView,
-        source: [basemap, _basegooglemaps, _basebing, Basemap.fromId("satellite"), Basemap.fromId("osm"), Basemap.fromId("topo-vector"), Basemap.fromId("hybrid")]
+      //  source: [basemap, _basegooglemaps, _basebing, Basemap.fromId("satellite"), Basemap.fromId("osm"), Basemap.fromId("topo-vector"), Basemap.fromId("hybrid")]
       });
 //
       var expBasemapGallery = new Expand({
@@ -253,16 +360,70 @@ require(
       let compass = new Compass({
         view: appConfig.activeView,
       });
+
+      CreateCustomButton({
+        mapView: appConfig.activeView,
+        position: "top-right",
+        innerHTML: "3D",
+        className: "switch-btn-3d esri-widget--button esri-widget esri-interactive",
+        toolTip: "Mapa 3D",
+        onClick: function (e) {
+            switchView(this);
+        }
+      });
+
+      //function switchView(pBtn) {
+      //  var is3D = appConfig.activeView.type === "3d";
+      //  var activeViewpoint = appConfig.activeView.viewpoint.clone();
+      //  // remove the reference to the container for the previous view
+      //  appConfig.activeView.container = null;
+      //  if (is3D) {
+//
+      //      appConfig.mapView.viewpoint = activeViewpoint;
+      //      appConfig.mapView.container = appConfig.container;
+      //      appConfig.activeView = appConfig.mapView;
+      //      pBtn.innerHTML = "2D";
+      //  } else {
+//
+      //      appConfig.sceneView.viewpoint = activeViewpoint;
+      //      appConfig.sceneView.container = appConfig.container;
+      //      appConfig.activeView = appConfig.sceneView;
+      //      pBtn.innerHTML = "3D";
+      //  }
+      //  measurement.view = appConfig.activeView;
+      //  basemapGallery.view = appConfig.activeView;
+      //  appConfig.activeView.when(function () {
+      //      ConfigOverviewMap(appConfig.mapView);
+      //      ConfigToolTipBotones();
+      //  });
+      //}
+
+      function CreateCustomButton(pParams) {
+        var element = document.createElement('div');
+        element.className = pParams.className;
+        element.setAttribute("data-role", "hint");
+        if (pParams.dataHintPosition)
+            element.setAttribute("data-hint-position", pParams.dataHintPosition);
+        else
+            element.setAttribute("data-hint-position", "left");
+        element.setAttribute("data-hint-text", pParams.toolTip);
+        element.setAttribute("data-cls-hint", "custom-hint");
+        if (pParams.innerHTML)
+            element.innerHTML = pParams.innerHTML;
+        if (pParams.onClick)
+            element.onclick = pParams.onClick;
+        pParams.mapView.ui.add(element, pParams.position);
+    }
       
       // Set-up event handlers for buttons and click events
-      const switchButton = document.getElementById("switch-btn");
+      //const switchButton = document.getElementById("switch-btn");
       const distanceButton = document.getElementById('distance');
       const areaButton = document.getElementById('area');
       const clearButton = document.getElementById('clear');
 
-      switchButton.addEventListener("click", () => {
-        switchView();
-      });
+      //switchButton.addEventListener("click", () => {
+      //  switchView();
+      //});
       distanceButton.addEventListener("click", () => {
         distanceMeasurement();
       });
@@ -303,12 +464,12 @@ require(
         }
         else activeView.ui.move(["zoom"], "top-right");
         //activeView.ui.add(measurement, "top-right");
-        activeView.ui.add([expBasemapGallery, locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
+        activeView.ui.add([locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
         //activeView.ui.add(overview, "bottom-right");
       }
 
       // Switches the view from 2D to 3D and vice versa
-      function switchView() {
+      function switchView(switchButton) {
         const is3D = appConfig.activeView.type === "3d";
         const activeViewpoint = appConfig.activeView.viewpoint.clone();
 
@@ -329,7 +490,10 @@ require(
           appConfig.activeView = appConfig.sceneView;
           switchButton.innerHTML = "2D";
         }
-        loadWidgets(appConfig.activeView);
+        appConfig.activeView.when(function () {
+          loadWidgets(appConfig.activeView);
+        });
+        
       }
 
       // Call the appropriate DistanceMeasurement2D or DirectLineMeasurement3D
