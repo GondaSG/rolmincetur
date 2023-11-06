@@ -74,6 +74,7 @@
       }
 
       #overviewDiv {
+        display: none;
         position: absolute;
         bottom: 12px;
         left: 50%;
@@ -317,7 +318,7 @@
 
       </div>
 
-      <div class="colspan-4" style="height: 100%; overflow: auto">
+      <div class="colspan-4" style="height: 100%; width: 100%; overflow: auto">
         <div class="Panel" data-role="panel" data-width="auto px">
           <div class="row">
             <div id="divCharts"></div>
@@ -536,21 +537,21 @@
 
     <script>
       // Agregar un controlador de eventos al botón para mostrar/ocultar el panel
-      const toggleButton = document.getElementById("toggleButton");
-      const panel = document.getElementById("panel");
-      let panelVisible = false;
-
-      toggleButton.addEventListener("click", () => {
-        if (panelVisible) {
-          panel.style.height = "0";
-          panelVisible = false;
-        } else {
-          panel.style.height = "100%";
-          panelVisible = true;
-        }
-      });
-      panel.style.height = "100%";
-      panelVisible = true;
+      //const toggleButton = document.getElementById("toggleButton");
+      //const panel = document.getElementById("panel");
+      //let panelVisible = false;
+//
+      //toggleButton.addEventListener("click", () => {
+      //  if (panelVisible) {
+      //    panel.style.height = "0";
+      //    panelVisible = false;
+      //  } else {
+      //    panel.style.height = "100%";
+      //    panelVisible = true;
+      //  }
+      //});
+      //panel.style.height = "100%";
+      //panelVisible = true;
     </script>
 
     <!-- <div class="card card-body fw-bold fs-5"> Ambito Nacional

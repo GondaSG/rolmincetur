@@ -186,7 +186,7 @@ require(
       };
 
       var map = new Map({
-        basemap: "hybrid",
+        basemap: basemaps[3],
         ground: "world-elevation",
       });
 
@@ -261,17 +261,38 @@ require(
         return view;
       }
 
+      const measurement = new Measurement();      
+      measurement.view = appConfig.activeView;
+
       var localSource = new LocalBasemapsSource({
         basemaps: basemaps
       });
 
+      var basemapGallery = new BasemapGallery({ container: document.createElement("div"), view: appConfig.activeView, source: localSource });
+        
       // Create new instance of the Measurement widget
-      const measurement = new Measurement();      
+      ConfigBotonesMap(appConfig.mapView);
+      ConfigBotonesMap(appConfig.sceneView);
 
-      var _mil_electricidad = new MapImageLayer({
-        url: url_electricidad,
-        title: 'ELECTRICIDAD'
+      function ConfigBotonesMap(pView) {
+        
+
+        CreateCustomButton({
+          mapView: pView,
+          position: "top-right",
+          innerHTML: "3D",
+          className: "switch-btn-3d esri-widget--button esri-widget esri-interactive",
+          toolTip: "Mapa 3D",
+          onClick: function (e) {
+              switchView(this);
+          }
+        });
+
+      }
+      var homeBtn = new Home({
+        view: appConfig.activeView,
       });
+      appConfig.activeView.ui.add(homeBtn, "top-right");
 
       const searchWidget = new Search({
         view: appConfig.activeView,
@@ -279,31 +300,24 @@ require(
         allPlaceholder: "Buscar en Google Maps",
         placeholder: "Buscar en Google Maps"
       });
-//
-      var homeBtn = new Home({
-        view: appConfig.activeView,
-      })
-
       
-
-
-      var basemapGallery = new BasemapGallery({
-        view: appConfig.activeView,
-      //  source: [basemap, _basegooglemaps, _basebing, Basemap.fromId("satellite"), Basemap.fromId("osm"), Basemap.fromId("topo-vector"), Basemap.fromId("hybrid")]
+      var zoomBtn = new Zoom({ view: appConfig.activeView });
+      zoomBtn.render(function () { Metro.makePlugin($(".esri-icon-plus").parent(), "hint", { hintText: "Acercar", hintPosition: "left", clsHint: "custom-hint" }); })
+      appConfig.activeView.ui.add(zoomBtn, "top-right");
+      
+      var btnMapaBaseGallery = new Expand({ view: appConfig.activeView, content: basemapGallery, expandIconClass: "esri-icon-basemap btnMapaBaseGallery" });
+      basemapGallery.watch("activeBasemap", function () {
+          var mobileSize = appConfig.activeView.heightBreakpoint === "xsmall" || appConfig.activeView.widthBreakpoint === "xsmall";
+          if (mobileSize) {
+              btnMapaBaseGallery.collapse();
+          }
       });
-//
-      var expBasemapGallery = new Expand({
-        expandIcon: "home",  // see https://developers.arcgis.com/calcite-design-system/icons/
-        view: appConfig.activeView,
-        content: basemapGallery,
-        group: "top-right",
-        expandTooltip: "Mapas Base"
-      });
-//
+      appConfig.activeView.ui.add(btnMapaBaseGallery, "top-right");
+
       let locate = new Locate({
         view: appConfig.activeView,
       });
-//
+      //
       var print = new Print({
         view: appConfig.activeView,
         templateOptions: {
@@ -315,7 +329,7 @@ require(
         },
         printServiceUrl: "https://gisem.osinergmin.gob.pe/serverosih/rest/services/ExportWebMapMEM/GPServer/Export%20Web%20Map"
       });
-//
+      //
       var _print = new Expand({
         expandIcon: "print",  // see https://developers.arcgis.com/calcite-design-system/icons/
         view: appConfig.activeView,
@@ -323,7 +337,7 @@ require(
         expandTooltip: "Imprimir",
         group: "top-right"
       });
-//
+      //
       var _medicion = new Expand({
         expandIcon: "legend",  // see https://developers.arcgis.com/calcite-design-system/icons/
         expandIconClass : "esri-icon-measure-line",
@@ -332,7 +346,7 @@ require(
         group: "top-right",
         expandTooltip: "Medición",
       });
-//
+      //
       var _cmo = new Expand({
         expandIconClass : "esri-icon-drag-horizontal",
         view: appConfig.activeView,
@@ -340,7 +354,7 @@ require(
         group: "top-right",
         expandTooltip: "Formulario CMO",
       });
-//
+      //
       var _addLayers = new Expand({
         expandIconClass : "esri-icon-plus",
         view: appConfig.activeView,
@@ -348,7 +362,7 @@ require(
         group: "top-right",
         expandTooltip: "Añadir Capas",
       });
-//
+      //
       var _upload = new Expand({
         expandIconClass : "esri-icon-up-arrow-circled",
         view: appConfig.activeView,
@@ -356,47 +370,12 @@ require(
         group: "top-right",
         expandTooltip: "Subir KML",
       });
-//
+      //
       let compass = new Compass({
         view: appConfig.activeView,
-      });
+      }); 
 
-      CreateCustomButton({
-        mapView: appConfig.activeView,
-        position: "top-right",
-        innerHTML: "3D",
-        className: "switch-btn-3d esri-widget--button esri-widget esri-interactive",
-        toolTip: "Mapa 3D",
-        onClick: function (e) {
-            switchView(this);
-        }
-      });
-
-      //function switchView(pBtn) {
-      //  var is3D = appConfig.activeView.type === "3d";
-      //  var activeViewpoint = appConfig.activeView.viewpoint.clone();
-      //  // remove the reference to the container for the previous view
-      //  appConfig.activeView.container = null;
-      //  if (is3D) {
-//
-      //      appConfig.mapView.viewpoint = activeViewpoint;
-      //      appConfig.mapView.container = appConfig.container;
-      //      appConfig.activeView = appConfig.mapView;
-      //      pBtn.innerHTML = "2D";
-      //  } else {
-//
-      //      appConfig.sceneView.viewpoint = activeViewpoint;
-      //      appConfig.sceneView.container = appConfig.container;
-      //      appConfig.activeView = appConfig.sceneView;
-      //      pBtn.innerHTML = "3D";
-      //  }
-      //  measurement.view = appConfig.activeView;
-      //  basemapGallery.view = appConfig.activeView;
-      //  appConfig.activeView.when(function () {
-      //      ConfigOverviewMap(appConfig.mapView);
-      //      ConfigToolTipBotones();
-      //  });
-      //}
+      appConfig.activeView.ui.add([locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
 
       function CreateCustomButton(pParams) {
         var element = document.createElement('div');
@@ -413,17 +392,13 @@ require(
         if (pParams.onClick)
             element.onclick = pParams.onClick;
         pParams.mapView.ui.add(element, pParams.position);
-    }
+      }
       
       // Set-up event handlers for buttons and click events
-      //const switchButton = document.getElementById("switch-btn");
       const distanceButton = document.getElementById('distance');
       const areaButton = document.getElementById('area');
       const clearButton = document.getElementById('clear');
-
-      //switchButton.addEventListener("click", () => {
-      //  switchView();
-      //});
+      
       distanceButton.addEventListener("click", () => {
         distanceMeasurement();
       });
@@ -433,12 +408,7 @@ require(
       clearButton.addEventListener("click", () => {
         clearMeasurements();
       });
-
-      // Crea el widget de zoom
-      var zoomWidget = new Zoom({
-        view: appConfig.activeView
-      });
-
+      
       //map.add(_mil_electricidad);
 
       var _lyl_gasnatural = new LayerList({
@@ -451,18 +421,20 @@ require(
 
       function loadWidgets(activeView){
         measurement.view = activeView;
-        basemapGallery.view = activeView;
+        btnMapaBaseGallery.view = activeView;
         locate.view = activeView;
         homeBtn.view = activeView;
         print.view = activeView;
         compass.view = activeView;
-        zoomWidget.view = activeView;
+        zoomBtn.view = activeView;
         activeView.ui.add(homeBtn, "top-right");
-        if (activeView.type === "3d") {
-          activeView.ui.components = [];
-          activeView.ui.add(zoomWidget, "top-right");
-        }
-        else activeView.ui.move(["zoom"], "top-right");
+        activeView.ui.add(zoomBtn, "top-right");
+        activeView.ui.add(btnMapaBaseGallery, "top-right");
+        //if (activeView.type === "3d") {
+        //  activeView.ui.components = [];
+        //  
+        //}
+        //else activeView.ui.move(["zoom"], "top-right");
         //activeView.ui.add(measurement, "top-right");
         activeView.ui.add([locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
         //activeView.ui.add(overview, "bottom-right");
@@ -483,12 +455,12 @@ require(
           appConfig.mapView.viewpoint = activeViewpoint;
           appConfig.mapView.container = appConfig.container;
           appConfig.activeView = appConfig.mapView;
-          switchButton.innerHTML = "3D";
+          switchButton.innerHTML = "2D";
         } else {
           appConfig.sceneView.viewpoint = activeViewpoint;
           appConfig.sceneView.container = appConfig.container;
           appConfig.activeView = appConfig.sceneView;
-          switchButton.innerHTML = "2D";
+          switchButton.innerHTML = "3D";
         }
         appConfig.activeView.when(function () {
           loadWidgets(appConfig.activeView);
@@ -520,7 +492,7 @@ require(
 
       $("#widgetUpload").on("change", "#form_uploadkml", function(event) {
         let files = event.target.files;
-        if(files.length == 1 ){
+        if(files.length == 1){
           let filename = event.target.value.toLowerCase();
           if (filename.indexOf(".kml") !== -1 || filename.indexOf(".kmz") !== -1) { //Si archivo es .kml o .kmz
             let file = files[0];
@@ -532,11 +504,6 @@ require(
       });  
   
       function addKmlLayer(file){   
-        //let $preloader = $('#tabpane_addlayer_kml .preuploader').removeClass('notvisible').addClass('visible');
-        //let $placeholder = $('#tabpane_addlayer_kml .drop-zone-placeholder').removeClass('visible').addClass('notvisible');
-        //let $infile = $('#tabpane_addlayer_kml .infile').removeClass('visible').addClass('notvisible');
-        //let $msgstatus = $("#sp_uploadstatus_kml").removeClass('failed ok').html("<b>Cargando…  </b>" + file.name);
-  
         if (window.FormData !== undefined) {
             let data = new FormData();
             data.append("file", file);
@@ -553,23 +520,11 @@ require(
                     let urlkml = "https://gisem.osinergmin.gob.pe/validar/servicekml/files/"+ filename;
                     let nuevacapa = new KMLLayer(urlkml, {
                         id: 'KMLLayer'
-                    });
-                    
+                    });                    
                     map.add(nuevacapa);
                     nuevacapa.when(function(){
                       appConfig.activeView.extent = nuevacapa.fullExtent;
                     });
-                    //nuevacapa.load().then(function(){
-                    //  __gru_aniadido.visible = true;
-                    //  __gru_aniadido.layers.add(nuevacapa);
-                    //  if(nuevacapa.extent){
-                    //    view.goTo(nuevacapa.extent);
-                    //  }
-                    //  //handleSuccess($msgstatus, $preloader, $placeholder, $infile, filename);
-                    //}, function(error){
-                    //  //handleError($msgstatus, $preloader, $placeholder, $infile, 'Error al cargar capa', error);
-                    //});                         
-  
                   }else{
                     //handleError($msgstatus, $preloader, $placeholder, $infile, 'Error al subir archivo', $.trim(filename));
                   }
@@ -672,7 +627,7 @@ require(
 
       Highcharts.chart('divCharts', response);
     
-      //$('#toolbarDiv').removeClass("d-none");
+      $('#toolbarDiv').removeClass("d-none");
       $('#divCMO').removeClass("d-none");
       $('#widgetAddLayers').removeClass("d-none");
       $('#widgetUpload').removeClass("d-none");  

@@ -122,3 +122,19 @@
     font-weight: bold;
     font-size:large;
 } 
+
+.custom-hint {
+    background: rgba(0,0,0,.8);
+    color: #fff;
+    padding: 5px 10px 5px 10px;
+    transition: transform 200ms ease,opacity 200ms;
+    z-index: 1095000 !important
+}
+
+.custom-hint:after {
+    border-top-color: #000;
+    border-bottom: none;
+    bottom: 101%;
+    left: calc(50% - 6px);
+    margin-bottom: 4px
+}
