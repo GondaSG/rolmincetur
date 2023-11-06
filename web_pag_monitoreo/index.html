@@ -135,11 +135,37 @@
             <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
             </div>
           </div>
+          <div id="panel-bottom" class="panel pos-absolute container-fluid p-3 d-none d-block-md">
+            <div class="grid demo-grid">
+              <div class="row">
+                  <div class="cell-2"><div>cell-3</div></div>
+                  <div class="cell-2"><div>cell-3</div></div>
+                  <div class="cell-2"><div>cell-3</div></div>
+                  <div class="cell-2"><div>cell-3</div></div>
+                  <div class="cell-2"><div>cell-3</div></div>
+                  <div class="cell-2"><div>cell-3</div></div>
+              </div>
+              <div class="row">
+                <div class="cell-6"><div>cell-3</div></div>
+                <div class="cell-2"><div>cell-3</div></div>
+                <div class="cell-2"><div>cell-3</div></div>
+                <div class="cell-2"><div>cell-3</div></div>
+              </div>
+              <div class="row mt-2">
+                <table class="table subcompact table-border cell-border">
+                  <thead><tr><th>Responsable</th><th>Actividad</th><th>Fecha y Hora</th><th>Tiempo</th></tr></thead>
+                  <tbody id="tbResult">                  
+                  </tbody>
+                </table>
+              </div>              
+            </div>
+
+          </div>
         </div>
       </div>
     <!-- </section> -->
     
-    <div class="btn-expand-panel btnEPanelCapas" onclick="Metro.sidebar.toggle('#sb1');" data-role="hint" data-hint-text="Expandir panel"
+    <div class="btn-expand-panel btnEPanelCapas" onclick="Metro.sidebar.toggle('#sb1'); return false;" data-role="hint" data-hint-text="Expandir panel"
      data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true" style="display: block;">
      <span class="mif-chevron-right"></span>
     </div>
@@ -161,6 +187,8 @@
         <li><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
       </ul>
   </aside>
+
+  
 
   
 

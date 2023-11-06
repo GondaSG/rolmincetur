@@ -65,3 +65,17 @@
 .sidebar{
     top: 60px;
 }
+
+.demo-grid [class*=cell] {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: 1px solid #bebebe !important;
+    text-align: center;
+}
+
+#panel-bottom{
+    bottom: 0;
+    right: 0;
+    height: 300px;
+    overflow: overlay;
+}

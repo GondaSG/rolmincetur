@@ -432,6 +432,7 @@ require(
       var url2 =  "https://services5.arcgis.com/oAvs2fapEemUpOTy/ArcGIS/rest/services/RegEmergencias__Bitacora_vista/FeatureServer/0";
 
       function populationChange(feature) {
+        appConfig.activeView.popup.close();
         console.log(feature.graphic.attributes.codigo);
         const div = document.createElement("div");
         div.className = "esri-feature__fields esri-feature__content-element";
@@ -447,14 +448,16 @@ require(
               var features = response.features;
               var html2 = "";
               features.forEach( (t, i) => {
-                  html2 +=  `<tr><td style="width:33%" class="esri-feature__field-data">${t.attributes.codigo}</td>`;
+                  html2 +=  `<tr><td style="width:33%" class="esri-feature__field-data">${t.attributes.selected_gerencia}</td>`;
                   html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.actividad}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.selected_departamento}</td></tr>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.fecha_y_hora_registro}</td>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.fecha_y_hora_registro}</td></tr>`;
               });
-              var html = `<table class="esri-widget__table"><thead><tr><th style="width:33%" class="esri-feature__field-data">Código</th><th style="width:33%" class="esri-feature__field-data">Actividad</th><th>Departamento</th></tr><tbody>${html2}</tbody></table>`;
-              div.innerHTML = html;
-        });          
-       return div;
+              $("#tbResult").html(html2);
+        });
+        appConfig.activeView.popup.close();
+        return null;
+        return div;
       }
 
       map.add(layer);
