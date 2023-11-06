@@ -433,10 +433,19 @@ require(
 
       function populationChange(feature) {
         appConfig.activeView.popup.close();
-        console.log(feature.graphic.attributes.codigo);
-        const div = document.createElement("div");
-        div.className = "esri-feature__fields esri-feature__content-element";
-        //div.classList.add("esri-feature__fields esri-feature__content-element");
+        var featureD = feature.graphic.attributes;
+        console.log(featureD);
+        $("#dteRegistro").html(moment(new Date(featureD.fecha_y_hora_registro)).format("D/M/YYYY"));
+        $("#spanSector").html(featureD.selected_sector);
+        $("#spanCriticidad").html(featureD);
+        $("#spanOficina").html(featureD.oficina_regional);
+        $("#spanIncidente").html(featureD);
+        $("#spanEstado").html(featureD);
+        $("#spanOperativa").html(featureD);
+        $("#spanMedios").html(featureD);
+        $("#spanAtencion").html(featureD);
+        $("#txtDes").html(featureD.descripcion);
+        
         var id_um = feature.graphic.attributes.codigo;
         var query = new QueryTask({url:url2}); 
         var params  = new Query();  
@@ -450,14 +459,13 @@ require(
               features.forEach( (t, i) => {
                   html2 +=  `<tr><td style="width:33%" class="esri-feature__field-data">${t.attributes.selected_gerencia}</td>`;
                   html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.actividad}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.fecha_y_hora_registro}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.fecha_y_hora_registro}</td></tr>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${moment(new Date(t.attributes.fecha_y_hora_registro)).format("D/M/YYYY")}</td>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${moment(new Date(t.attributes.fecha_y_hora_registro)).format("D/M/YYYY")}</td></tr>`;
               });
               $("#tbResult").html(html2);
         });
         appConfig.activeView.popup.close();
         return null;
-        return div;
       }
 
       map.add(layer);
