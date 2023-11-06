@@ -1,4 +1,4 @@
-var url_electricidad = 'https://gisem.osinergmin.gob.pe/serverosih/rest/services/Electricidad/ELECTRICIDAD_TOTAL/MapServer';
+var url_electricidad = 'https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/Registro_de_Emergencias_View/FeatureServer';
 
 
 require(
@@ -23,7 +23,10 @@ require(
     "esri/layers/BingMapsLayer",
     "esri/layers/TileLayer",
     "esri/layers/OpenStreetMapLayer",
-    "esri/widgets/BasemapGallery/support/LocalBasemapsSource"
+    "esri/widgets/BasemapGallery/support/LocalBasemapsSource",
+    "esri/layers/FeatureLayer",
+    "esri/tasks/QueryTask",
+    "esri/tasks/support/Query"
   ],
   function(
     Map,
@@ -46,7 +49,10 @@ require(
     BingMapsLayer,
     TileLayer,
     OpenStreetMapLayer,
-    LocalBasemapsSource
+    LocalBasemapsSource,
+    FeatureLayer,
+    QueryTask,
+    Query
   ){
 
     $(document).ready(function(){     
@@ -409,7 +415,49 @@ require(
         clearMeasurements();
       });
       
-      //map.add(_mil_electricidad);
+      var _mil_electricidad = new MapImageLayer({
+        url: url_electricidad,
+        title: 'ELECTRICIDAD'
+      });
+
+      const layer = new FeatureLayer({
+        // URL to the service
+        url: url_electricidad,
+        outFields: ["*"],
+        popupTemplate: {
+          outFields: ["*"],
+          content: populationChange
+        }        
+      });
+      var url2 =  "https://services5.arcgis.com/oAvs2fapEemUpOTy/ArcGIS/rest/services/RegEmergencias__Bitacora_vista/FeatureServer/0";
+
+      function populationChange(feature) {
+        console.log(feature.graphic.attributes.codigo);
+        const div = document.createElement("div");
+        div.className = "esri-feature__fields esri-feature__content-element";
+        //div.classList.add("esri-feature__fields esri-feature__content-element");
+        var id_um = feature.graphic.attributes.codigo;
+        var query = new QueryTask({url:url2}); 
+        var params  = new Query();  
+        params.returnGeometry = false;
+        params.outFields = ["*"];
+        params.where = "codigo = '"+id_um+"'";
+        query.execute(params).then(function(response){
+              console.log(response);
+              var features = response.features;
+              var html2 = "";
+              features.forEach( (t, i) => {
+                  html2 +=  `<tr><td style="width:33%" class="esri-feature__field-data">${t.attributes.codigo}</td>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.actividad}</td>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.selected_departamento}</td></tr>`;
+              });
+              var html = `<table class="esri-widget__table"><thead><tr><th style="width:33%" class="esri-feature__field-data">Código</th><th style="width:33%" class="esri-feature__field-data">Actividad</th><th>Departamento</th></tr><tbody>${html2}</tbody></table>`;
+              div.innerHTML = html;
+        });          
+       return div;
+      }
+
+      map.add(layer);
 
       var _lyl_gasnatural = new LayerList({
         view: appConfig.activeView,
@@ -533,6 +581,31 @@ require(
         }
       }
 
+      $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/indicadorCalculoCache", function( response ) {
+         console.log(response);
+         if (response.length > 0) {
+          response.forEach( (t, i) =>{
+            if (i > 0) {
+              return;
+            }
+            var id = "div" + t.iD_INDICADOR_CALCULO;
+            $div = $("<div id='"+id+"'></div>");
+            $("#divCharts").append($div);
+            //var json = response[0];
+            var indicador = JSON.parse(t.valor);
+            indicador.credits = {
+              enabled: false
+            };
+            console.log(indicador);
+            Highcharts.chart(id, indicador);
+          });
+
+          
+
+          
+         }
+      });
+
       var response = {
         chart: {
             "type": "cylinder",
@@ -581,51 +654,64 @@ require(
 
       response = {
         chart: {
-          type: 'column', // Tipo de gráfico de columnas
-          options3d: {
-              enabled: true,
-              alpha: 15,
-              beta: 15,
-              depth: 50,
-              viewDistance: 25
-          }
+          type: 'bar'
         },
         title: {
-            text: 'Number of confirmed COVID-19'
-        },
-        subtitle: {
-            text: 'Source: <a href="https://www.fhi.no/en/id/infectious-diseases/coronavirus/daily-reports/daily-reports-COVID19/" target="_blank">FHI</a>'
+            text: 'Incidentes por sector'
         },
         xAxis: {
-            categories: ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90+'],
-            title: {
-                text: 'Age groups'
-            }
+            categories: ['ELECTRICIDAD', 'HIDROCARBUROS LIQ...', 'GENERAL', 'GAS NATURAL', 'MINERIA']
         },
         yAxis: {
+            min: 0,
             title: {
-                margin: 20,
-                text: 'Reported cases'
+                text: ''
             }
         },
-        tooltip: {
-            headerFormat: '<b>Age: {point.key}</b><br>',
-            pointFormat: 'Cases: {point.y}'
+        legend: {
+            reversed: true
         },
+        tooltip: {
+            headerFormat: '<b>Sector: {point.x}</b><br/>',
+            pointFormat: ' Criticidad: {series.name}<br/> Incidencias: {point.y} <br/>Total: {point.stackTotal}'
+        }, 
+        credits: {
+          enabled: false
+        }, 
         plotOptions: {
-            column: {
-                depth: 25,
-                colorByPoint: true
+            series: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: '#FFFFFF',
+                    formatter: function() {
+                      if (this.y > 0)
+                        return '<span style="color: white">' + this.y + ' </span>';
+                      else '';
+                  },
+                }
             }
         },
         series: [{
-            data: [95321, 169339, 121105, 136046, 106800, 58041, 26766, 14291, 7065, 3283],
-            name: 'Cases',
-            showInLegend: false
+            name: 'POR DEFINIR',
+            data: [16, 1, 0, 2, 1],
+            color: '#41A4FF',
+        }, {
+            name: 'MEDIO',
+            data: [15, 13, 4, 1, 3],
+            color: '#D9B300',
+        }, {
+            name: 'BAJO',
+            data: [118, 40, 9, 8, 1],
+            color: '#317F43',
+        }, {
+            name: 'ALTO',
+            data: [13, 8, 1, 0, 1],
+            color: '#FF0000',
         }]
       };
-
-      Highcharts.chart('divCharts', response);
+      console.log(JSON.stringify(response));
+      //Highcharts.chart('divCharts', response);
     
       $('#toolbarDiv').removeClass("d-none");
       $('#divCMO').removeClass("d-none");

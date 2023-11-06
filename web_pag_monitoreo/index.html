@@ -233,10 +233,7 @@
 
         <div class="d-flex flex-justify-center flex-align-center">
           <div class="" style="height: 100%; width: 100%; overflow: auto">
-            <div class="Panel" data-role="panel" data-width="auto px">
-              <div class="row">
-                <div id="divCharts"></div>
-              </div>
+            <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
             </div>
           </div>
         </div>
@@ -248,7 +245,7 @@
       
       <div class="sidebar-header" data-image="images/sb-bg-1.jpg">
         <a href="/" class="fg-white sub-action"
-          onclick="Metro.sidebar.close('#sb1'); $('.btnEPanelCapas').show(); return false;">
+        onclick="Metro.sidebar.close('#sb1'); $('.btnEPanelCapas').show(); return false;">
             <span class="mif-arrow-left mif-2x"></span>
         </a>
           <div class="avatar">
@@ -494,6 +491,7 @@
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <script src="https://cdn.metroui.org.ua/4.5.2/metro.js"></script>
