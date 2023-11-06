@@ -20,23 +20,10 @@
     width: 100% ;
 }
 
-.iconList li {
-    display: flex;
-    align-items: center;
+.icon{   
+    width: 20px;
+    height: 20px;
 }
-
-.icon{
-    color:#202020;
-    width: 28px;
-    height: 28px;
-}
-
-.iconText {
-    padding: 8px;
-    color:rgb(45, 45, 48);
-    font-weight: bold;
-    font-size:large;
-} 
 
 .custom-hint {
     background: rgba(0,0,0,.8);
@@ -53,8 +40,6 @@
     left: calc(50% - 6px);
     margin-bottom: 4px
 }
-
-
 
 .btn-collapse-panel,.btn-expand-panel {
     width: 19px;
