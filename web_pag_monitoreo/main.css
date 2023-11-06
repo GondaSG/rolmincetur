@@ -78,3 +78,7 @@
     height: 300px;
     overflow: overlay;
 }
+
+.sidebar-header{
+    height: 35px !important;
+}

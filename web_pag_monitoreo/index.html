@@ -135,7 +135,7 @@
             <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
             </div>
           </div>
-          <div id="panel-bottom" class="panel pos-absolute container-fluid p-3 d-none d-block-md">
+          <div id="panel-bottom" style="display: none !important;" class="panel pos-absolute container-fluid p-3 d-none d-block-md">
             <div class="grid demo-grid">
               <div class="row">
                   <div class="cell-2"><p>Fecha Registro</p><span id="dteRegistro"></span></div>
@@ -166,15 +166,17 @@
     <!-- </section> -->
     
     <div class="btn-expand-panel btnEPanelCapas" onclick="Metro.sidebar.toggle('#sb1'); return false;" data-role="hint" data-hint-text="Expandir panel"
-     data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true" style="display: block;">
+      data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true" style="display: block;">
      <span class="mif-chevron-right"></span>
     </div>
 
-    <aside id="sb1" class="sidebar pos-absolute z-2 sidebar-shadow on-left open"  data-role="sidebar" data-toggle="#sidebar-toggle-2">
-      <div class="sidebar-header" data-image="images/sb-bg-1.jpg">
-        <a href="/" class="fg-black sub-action" onclick="Metro.sidebar.close('#sb1'); $('.btnEPanelCapas').show(); return false;">
-          <span class='mif-chevron-left'></span>
-        </a>
+    <aside id="sb1" class="sidebar pos-absolute z-2 sidebar-shadow open"  data-role="sidebar" data-toggle="#sidebar-toggle-2">
+      <!-- <a href="/" class="fg-black sub-action" onclick="Metro.sidebar.close('#sb1'); $('.btnEPanelCapas').show(); return false;">
+        <span class='mif-chevron-left'></span>
+      </a> -->
+      <div class="btn-collapse-panel" onclick="Metro.sidebar.toggle('#sb1'); $('.btnEPanelCapas').show();" data-role="hint" data-hint-text="Ocultar panel" 
+        data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true">
+        <span class="mif-chevron-left"></span>
       </div>
       <ul class="sidebar-menu">
         <li><a><img src="./img/organization.svg" alt="Icono 2" class="icon" />Gestión</a></li>
@@ -421,6 +423,9 @@
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/cylinder.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
+    
     <script src="assets/moment/moment.js"></script>  
     <!-- <script src="https://cdn.metroui.org.ua/4.5.2/metro.js"></script> -->
     <script src="https://cdn.metroui.org.ua/current/metro.js"></script>

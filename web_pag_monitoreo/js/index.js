@@ -460,11 +460,12 @@ require(
                   html2 +=  `<tr><td style="width:33%" class="esri-feature__field-data">${t.attributes.selected_gerencia}</td>`;
                   html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.actividad}</td>`;
                   html2 +=  `<td style="width:33%" class="esri-feature__field-data">${moment(new Date(t.attributes.fecha_y_hora_registro)).format("D/M/YYYY")}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${moment(new Date(t.attributes.fecha_y_hora_registro)).format("D/M/YYYY")}</td></tr>`;
+                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">''</td></tr>`;
               });
               $("#tbResult").html(html2);
         });
         appConfig.activeView.popup.close();
+        $("#panel-bottom").show();
         return null;
       }
 
@@ -604,9 +605,13 @@ require(
             $("#divCharts").append($div);
             //var json = response[0];
             var indicador = JSON.parse(t.valor);
-            indicador.credits = {
-              enabled: false
-            };
+            //indicador.credits = {
+            //  enabled: false
+            //};
+            //indicador.lang = {
+            //  downloadCSV:"Descarga CSV",       
+            //  viewFullscreen:"Ver en pantalla completa"
+            //},
             console.log(indicador);
             Highcharts.chart(id, indicador);
           });
@@ -728,6 +733,25 @@ require(
       $('#divCMO').removeClass("d-none");
       $('#widgetAddLayers').removeClass("d-none");
       $('#widgetUpload').removeClass("d-none");  
+
+
+      Highcharts.setOptions({
+        lang: {
+          // downloadCSV:"Descarga CSV",       
+          viewFullscreen:"Ver en pantalla completa",
+          downloadJPEG:"Descarga JPEG",
+          downloadPDF:"Descarga PDF",
+          downloadPNG:"Descarga PNG ",
+          downloadSVG:"Descarga SVG",
+          // downloadXLS:"Descarga XLS",
+          printChart:"Imprimir"
+        },
+        credits : {
+          enabled: false
+        }
+      });
+
+
     });
     
     
