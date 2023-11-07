@@ -82,3 +82,107 @@
 .sidebar-header{
     height: 35px !important;
 }
+
+.etiqueta{
+    background: #f8f8f8;
+    font-weight: bolder;
+    color: #00aceb;
+}
+
+.etiqueta2{
+    background: rgb(148, 192, 233);
+    font-weight: bolder;
+}
+
+#txtDes {
+    font-size: 8pt;
+    padding: 0px;
+}
+
+.textarea{
+    border: 0px solid #bebebe !important;
+}
+
+
+
+#CapaGeoInfo {
+    top: 50%;
+    height: 520px !important;
+    width: 660px !important;
+    min-width: 520px !important;
+    padding: 0;
+    background: #fff;
+    box-sizing: content-box;
+    box-shadow: 0 0 0 3px rgba(68, 68, 68, 0.11);
+    border: 5px solid #000;
+    border-top: 5px solid #000;
+}
+
+#CapaGeoInfoContenido {
+    font-size: 0.75rem;
+    color: #414141;
+    height: 520px !important;
+}
+
+#CapaGeoInfoContenido .etiqueta {
+    background: #f8f8f8;
+}
+
+#CapaGeoInfoContenido .titulo-capa {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: 500;
+    border: 0;
+}
+
+.geoinfo-grid {
+    border-bottom: 1px solid #bebebe;
+}
+
+.geoinfo-grid [class*="cell"] {
+    display: inline-block;
+    text-align: left;
+    font-weight: normal;
+    font-size: 0.75rem;
+    border-left: 1px solid #dfdfdf;
+    border-top: 1px solid #dfdfdf;
+    padding: 0.3rem 0.4rem 0.3rem 0.4rem !important;
+}
+
+.grid.no-gapP .row+.row {
+    margin-top: 0;
+}
+
+.grid.no-gapP .row {
+    margin-left: 0;
+    margin-right: 0;
+}       
+
+.geoinfo-cont {
+    height: calc(100% - 120px);
+}
+
+.btnclosebtn {
+    width: 20px;
+    position: absolute;
+    z-index: 0;
+    right: 100%;
+    opacity: 0.5;
+    text-align: center;
+    top: -5px;
+    margin-right: 5px;
+}
+
+.scroll,
+[class*="scroll"],
+body {
+    --thumb-color: #dfdfe8;
+    --thumb-color-hover: #c1c1d3;
+    --track-color: #fdfdfe;
+    --scroll-size: 10px;
+    --scroll-radius: calc(var(--scroll-size) / 2);
+    --display: block;
+}

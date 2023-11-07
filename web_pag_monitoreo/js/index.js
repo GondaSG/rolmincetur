@@ -465,7 +465,7 @@ require(
               $("#tbResult").html(html2);
         });
         appConfig.activeView.popup.close();
-        $("#panel-bottom").show();
+        $("#CapaGeoInfo").show();
         return null;
       }
 
