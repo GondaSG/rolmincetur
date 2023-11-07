@@ -445,7 +445,11 @@ require(
         $("#spanMedios").html(featureD);
         $("#spanAtencion").html(featureD);
         $("#txtDes").html(featureD.descripcion);
-        
+        $('.btnclosebtn').show();
+        //Metro.charms.open("#CapaGeoInfo");
+        //$('#CapaGeoInfo').data('charms').open();
+        var charms = Metro.getPlugin('#CapaGeoInfo', 'charms');
+        charms.open();
         var id_um = feature.graphic.attributes.codigo;
         var query = new QueryTask({url:url2}); 
         var params  = new Query();  
@@ -465,7 +469,7 @@ require(
               $("#tbResult").html(html2);
         });
         appConfig.activeView.popup.close();
-        $("#CapaGeoInfo").show();
+        //$("#CapaGeoInfo").show();
         return null;
       }
 
@@ -751,9 +755,22 @@ require(
         }
       });
 
-
+      Metro.makePlugin("#CapaGeoInfo", 'charms', {});
+      
     });
     
     
       
 });
+
+function CerrarCapaGeoInfo() {
+  var charms = Metro.getPlugin('#CapaGeoInfo', 'charms');
+  charms.close();
+  $('.btnclosebtn').hide(); 
+}
+
+function openCapaGeoInfo(e) {
+  $('#sb1').addClass("open");
+  $('.btnEPanelCapas').hide();
+  return null;
+}

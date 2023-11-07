@@ -41,7 +41,7 @@
     margin-bottom: 4px
 }
 
-.btn-collapse-panel,.btn-expand-panel {
+.btn-collapse-panel {
     width: 19px;
     height: 28px;
     background: #fff;
@@ -52,14 +52,24 @@
     color: #2e2e2e;
     border: 1px #d9d9d9 solid;
     text-align: center;
-    top: 60px;
+    right: 0;
+    /* top: 60px; */
 }
 
 .btn-expand-panel {
     left: 1px;
     z-index: 2;
     display: none;
-    top: 60px;
+    top: 65px;
+    width: 19px;
+    height: 28px;
+    background: #fff;
+    position: absolute !important;
+    z-index: 10;
+    background-color: #f3f3f3;
+    color: #2e2e2e;
+    border: 1px #d9d9d9 solid;
+    text-align: center;
 }
 
 .sidebar{
@@ -77,10 +87,6 @@
     right: 0;
     height: 300px;
     overflow: overlay;
-}
-
-.sidebar-header{
-    height: 35px !important;
 }
 
 .etiqueta{
@@ -107,7 +113,7 @@
 
 #CapaGeoInfo {
     top: 50%;
-    height: 520px !important;
+    height: 420px !important;
     width: 660px !important;
     min-width: 520px !important;
     padding: 0;
@@ -121,7 +127,7 @@
 #CapaGeoInfoContenido {
     font-size: 0.75rem;
     color: #414141;
-    height: 520px !important;
+    height: 420px !important;
 }
 
 #CapaGeoInfoContenido .etiqueta {
@@ -138,7 +144,7 @@
     border: 0;
 }
 
-.geoinfo-grid {
+/* .geoinfo-grid {
     border-bottom: 1px solid #bebebe;
 }
 
@@ -163,7 +169,7 @@
 
 .geoinfo-cont {
     height: calc(100% - 120px);
-}
+} */
 
 .btnclosebtn {
     width: 20px;
