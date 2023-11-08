@@ -14,7 +14,7 @@ namespace Services.Controllers
     {
         private readonly AppSettings _mySettings;
 
-        public IndicadorCalculoCacheController(IOptions<AppSettings> settings) 
+        public IndicadorCalculoCacheController(IOptions<AppSettings> settings)
         {
             _mySettings = settings.Value;
         }
@@ -46,8 +46,7 @@ namespace Services.Controllers
                             indicadorCalculoCache.ID_INDICADOR_CACHE = dr.GetInt32(0);
                             indicadorCalculoCache.ID_INDICADOR_CALCULO = dr.GetInt32(1);
                             indicadorCalculoCache.VALOR = dr.GetString(2);
-                            if (dr.GetValue(3).ToString() != "")
-                                indicadorCalculoCache.FECHA = dr.GetDateTime(3);
+                            indicadorCalculoCache.FECHA = DBNull.Value != dr.GetValue(3) ? new DateTime() : dr.GetDateTime(3);
                             data.Add(indicadorCalculoCache);
                         }
                     }

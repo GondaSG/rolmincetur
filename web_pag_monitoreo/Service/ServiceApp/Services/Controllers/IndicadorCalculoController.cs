@@ -52,7 +52,7 @@ namespace Services.Controllers
                             indicadorCalculo.ID_TIPO_REPRESENTACION = dr.GetInt32(6);
                             indicadorCalculo.TEXTO_INTELIGENTE = dr.GetString(7);
                             indicadorCalculo.ID_INDICADOR = dr.GetInt32(8);
-                            indicadorCalculo.FECHA_HORA_ACTUALIZACION = dr.GetDateTime(9);
+                            indicadorCalculo.FECHA_HORA_ACTUALIZACION = DBNull.Value != dr.GetValue(9) ? new DateTime() : dr.GetDateTime(9);
                             data.Add(indicadorCalculo);
                         }
                     }
