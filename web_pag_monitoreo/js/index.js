@@ -437,10 +437,10 @@ require(
         console.log(featureD);
         $("#dteRegistro").html(moment(new Date(featureD.fecha_y_hora_registro)).format("D/M/YYYY"));
         $("#spanSector").html(featureD.selected_sector);
-        $("#spanCriticidad").html(featureD);
+        
         $("#spanOficina").html(featureD.oficina_regional);
         $("#spanIncidente").html(featureD);
-        $("#spanEstado").html(featureD);
+        
         $("#spanOperativa").html(featureD);
         $("#spanMedios").html(featureD);
         $("#spanAtencion").html(featureD);
@@ -451,6 +451,16 @@ require(
         var charms = Metro.getPlugin('#CapaGeoInfo', 'charms');
         charms.open();
         var id_um = feature.graphic.attributes.codigo;
+        $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/"+id_um, function( response ) {
+          console.log(response);
+          if (response.length > 0) {
+           var attr = response[0];
+            console.log(attr);
+            $("#spanCriticidad").html(attr.criticidad);
+            $("#spanEstado").html(attr.estadO_EVENTO);
+          }
+       });
+       
         var query = new QueryTask({url:url2}); 
         var params  = new Query();  
         params.returnGeometry = false;
@@ -494,14 +504,7 @@ require(
         activeView.ui.add(homeBtn, "top-right");
         activeView.ui.add(zoomBtn, "top-right");
         activeView.ui.add(btnMapaBaseGallery, "top-right");
-        //if (activeView.type === "3d") {
-        //  activeView.ui.components = [];
-        //  
-        //}
-        //else activeView.ui.move(["zoom"], "top-right");
-        //activeView.ui.add(measurement, "top-right");
         activeView.ui.add([locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
-        //activeView.ui.add(overview, "bottom-right");
       }
 
       // Switches the view from 2D to 3D and vice versa
@@ -607,22 +610,10 @@ require(
             var id = "div" + t.iD_INDICADOR_CALCULO;
             $div = $("<div id='"+id+"'></div>");
             $("#divCharts").append($div);
-            //var json = response[0];
             var indicador = JSON.parse(t.valor);
-            //indicador.credits = {
-            //  enabled: false
-            //};
-            //indicador.lang = {
-            //  downloadCSV:"Descarga CSV",       
-            //  viewFullscreen:"Ver en pantalla completa"
-            //},
             console.log(indicador);
             Highcharts.chart(id, indicador);
           });
-
-          
-
-          
          }
       });
 
