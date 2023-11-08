@@ -471,10 +471,10 @@ require(
               var features = response.features;
               var html2 = "";
               features.forEach( (t, i) => {
-                  html2 +=  `<tr><td style="width:33%" class="esri-feature__field-data">${t.attributes.selected_gerencia}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${t.attributes.actividad}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">${moment(new Date(t.attributes.fecha_y_hora_registro)).format("D/M/YYYY")}</td>`;
-                  html2 +=  `<td style="width:33%" class="esri-feature__field-data">''</td></tr>`;
+                  html2 +=  `<tr><td style="width:15%" class="esri-feature__field-data">${t.attributes.selected_gerencia}</td>`;
+                  html2 +=  `<td style="width:35%" class="esri-feature__field-data">${t.attributes.actividad}</td>`;
+                  html2 +=  `<td style="width:20%" class="esri-feature__field-data">${moment(new Date(t.attributes.fecha_y_hora_registro)).format("D/M/YYYY")}</td>`;
+                  html2 +=  `<td style="width:10%" class="esri-feature__field-data">''</td></tr>`;
               });
               $("#tbResult").html(html2);
         });
