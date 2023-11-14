@@ -82,92 +82,83 @@
         <p class="text-right">Centro de Monitoreo</p>
       </div>
     </div>
-    
-    <!-- <section class="row StyleBody" style="position: relative"> -->
-      <div data-role="splitter" class="h-100 StyleBody" data-split-sizes="70,30"> 
-        
-        <div class="map-content2 split-block">
-          <div id="map" style="padding: 0;
-          margin: 0;
-          height: 100%;
-          width: 100%;"></div>
-          <div class="">
-            <div style="top: 10px; left: 40%; text-align: center; position: absolute; z-index: 99999;" id="divTop">
-            
-            <!-- <button class="button alert"
-                  data-role="hint"
-                  data-hint-position="left"
-                  data-hint-text="This is a hinted button"
-                  data-cls-hint="bg-black fg-white drop-shadow">
-                  botón izquierda
-            </button> -->
-            </div>
-          </div>          
-        </div>       
-        
-        <div class="d-flex flex-justify-center flex-align-center">
-          <div class="" style="height: 100%; width: 100%; overflow: auto">
-            <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
-            </div>
+
+    <div data-role="splitter" class="h-100 StyleBody" data-split-sizes="70,30"> 
+      <div class="map-content2 split-block">
+        <div id="map" style="position: absolute;height: 100%;width: 100%;"></div>
+        <div class="">
+          <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;" id="divTop">            
+          <!-- <button class="button alert"
+                data-role="hint"
+                data-hint-position="left"
+                data-hint-text="This is a hinted button"
+                data-cls-hint="bg-black fg-white drop-shadow">
+                botón izquierda
+          </button> -->
           </div>
           
-          <div id="CapaGeoInfo" data-role="charms" data-position="right" style="background-color: rgb(255, 255, 255)"
-            data-role-charms="true" class="charms right-side">
-            <div id="CapaGeoInfoContenido">
-              <div class="d-flex flex-justify-center flex-align-center">
-                <div  class="panel container-fluid p-2">
-                    <div class="row titulo-capa">Incidencias</div>
+        </div>          
+      </div>       
+      
+      <div class="d-flex flex-justify-center flex-align-center">
+        <div class="" style="height: 100%; width: 100%; overflow: auto">
+          <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
+          </div>
+        </div>          
+        <div id="CapaGeoInfo" data-role="charms" data-position="right" style="background-color: rgb(255, 255, 255)"
+          data-role-charms="true" class="charms right-side">
+          <div id="CapaGeoInfoContenido">
+            <div class="d-flex flex-justify-center flex-align-center">
+              <div  class="panel container-fluid p-2">
+                  <div class="row titulo-capa">Incidencias</div>
 
-                    <div class="grid d-grid">                    
-                      <div class="row">
-                          <div class="cell-2"><p class="fg-blue">Fecha Registro</p><span id="dteRegistro"></span></div>
-                          <div class="cell-2"><p class="fg-blue">Sector</p><span id="spanSector"></p></div>
-                          <div class="cell-2"><p class="fg-blue">Criticidad</p><span id="spanCriticidad"></span></div>
-                          <div class="cell-2"><p class="fg-blue">Oficina Regional</p><span id="spanOficina"></span></div>
-                          <div class="cell-2"><p class="fg-blue">Incidente</p><span id="spanIncidente"></span></div>
-                          <div class="cell-2"><p class="fg-blue">Estado</p><span id="spanEstado"></span></div>
-                      </div>
+                  <div class="grid d-grid">                    
+                    <div class="row">
+                        <div class="cell-2"><p class="fg-blue">Fecha Registro</p><span id="dteRegistro"></span></div>
+                        <div class="cell-2"><p class="fg-blue">Sector</p><span id="spanSector"></p></div>
+                        <div class="cell-2"><p class="fg-blue">Criticidad</p><span id="spanCriticidad"></span></div>
+                        <div class="cell-2"><p class="fg-blue">Oficina Regional</p><span id="spanOficina"></span></div>
+                        <div class="cell-2"><p class="fg-blue">Incidente</p><span id="spanIncidente"></span></div>
+                        <div class="cell-2"><p class="fg-blue">Estado</p><span id="spanEstado"></span></div>
+                    </div>
 
 
-                      <div class="row">
-                        <div class="cell-6"><textarea data-role="textarea" rows="2" id="txtDes"></textarea></div>
-                        <div class="cell-2"><p class="fg-blue">Respuesta Operativa</p><span id="spanOperativa"></span></div>
-                        <div class="cell-2"><p class="fg-blue">Respuesta en medios</p><span id="spanMedios"></span></div>
-                        <div class="cell-2"><p class="fg-blue">Tiempo de atención</p><span id="spanAtencion"></span></div>
-                      </div>
+                    <div class="row">
+                      <div class="cell-6"><textarea data-role="textarea" rows="2" id="txtDes"></textarea></div>
+                      <div class="cell-2"><p class="fg-blue">Respuesta Operativa</p><span id="spanOperativa"></span></div>
+                      <div class="cell-2"><p class="fg-blue">Respuesta en medios</p><span id="spanMedios"></span></div>
+                      <div class="cell-2"><p class="fg-blue">Tiempo de atención</p><span id="spanAtencion"></span></div>
+                    </div>
 
-                      
+                    
 
-                      <div class=" row mt-2 custom-scroll">	
-                        <table class="table subcompact table-border cell-border" >
-                          <thead>
-                            <tr>
-                              <th class="etiqueta2" style="width:15%">Responsable</th>
-                              <th class="etiqueta2" style="width:35%">Actividad</th>
-                              <th class="etiqueta2" style="width:20%">Fecha y Hora</th>
-                              <th class="etiqueta2" style="width:10% !important">Tiempo</th>
-                            </tr>
-                          </thead>
-                          <tbody id="tbResult" >                  
-                          </tbody>                          
-                        </table>
-                      </div>
-                      
-                    </div>          
-                </div>
+                    <div class=" row mt-2 custom-scroll">	
+                      <table class="table subcompact table-border cell-border" >
+                        <thead>
+                          <tr>
+                            <th class="etiqueta2" style="width:15%">Responsable</th>
+                            <th class="etiqueta2" style="width:35%">Actividad</th>
+                            <th class="etiqueta2" style="width:20%">Fecha y Hora</th>
+                            <th class="etiqueta2" style="width:10% !important">Tiempo</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbResult" >                  
+                        </tbody>                          
+                      </table>
+                    </div>
+                    
+                  </div>          
               </div>
             </div>
-        
-          <div class="btnclosebtn bg-dark fg-white h-10" style="display: none;">
-              <span id="rbsalir" onclick="CerrarCapaGeoInfo();" class="mif-chevron-right"
-                  style="font-size: 1.25rem; top: 20%"></span>
           </div>
-    </div>
-
+      
+        <div class="btnclosebtn bg-dark fg-white h-10" style="display: none;">
+            <span id="rbsalir" onclick="CerrarCapaGeoInfo();" class="mif-chevron-right"
+                style="font-size: 1.25rem; top: 20%"></span>
         </div>
-
+        </div>
       </div>
-    <!-- </section> -->
+    </div>
     
     <div class="btn-expand-panel btnEPanelCapas" style="display: none;" onclick="openCapaGeoInfo();" data-role="hint" data-hint-text="Expandir panel"
       data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true" style="display: block;">
@@ -179,14 +170,14 @@
         <span class="mif-chevron-left"></span>
       </div>
       <ul class="sidebar-menu">
-        <li><a><img src="./img/organization.svg" alt="Icono 2" class="icon" />Gestión</a></li>
-        <li><a><img src="./img/hidro.svg" alt="Icono 2" class="icon" />Hidrocarburos</a></li>
-        <li><a><img src="./img/factory.svg" alt="Icono 2" class="icon" />Gas Natural</a></li>
-        <li><a><img src="./img/ima01.svg" alt="Icono 2" class="icon" />Electricidad</a></li>
-        <li><a><img src="./img/mineria.svg" alt="Icono 2" class="icon" />Minería</a></li>
-        <li><a><img src="./img/security_icon.svg" alt="Icono 2" class="icon" />Emergencia</a></li>
-        <li><a><img src="./img/books_icon.png" alt="Icono 2" class="icon" />Otros</a></li>
-        <li><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
+        <li class="item-element" data-item="2"><a><img src="./img/organization.svg" alt="Icono 2" class="icon" />Gestión</a></li>
+        <li class="item-element" data-item="2"><a><img src="./img/hidro.svg" alt="Icono 2" class="icon" />Hidrocarburos</a></li>
+        <li class="item-element" data-item="2"><a><img src="./img/factory.svg" alt="Icono 2" class="icon" />Gas Natural</a></li>
+        <li class="item-element" data-item="3"><a><img src="./img/ima01.svg" alt="Icono 2" class="icon" />Electricidad</a></li>
+        <li class="item-element" data-item="3"><a><img src="./img/mineria.svg" alt="Icono 2" class="icon" />Minería</a></li>
+        <li class="item-element" data-item="1"><a><img src="./img/security_icon.svg" alt="Icono 2" class="icon" />Emergencia</a></li>
+        <li class="item-element" data-item="2"><a><img src="./img/books_icon.png" alt="Icono 2" class="icon" />Otros</a></li>
+        <li class="item-element" data-item="2"><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
       </ul>
     </aside>
   

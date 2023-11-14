@@ -422,6 +422,7 @@ require(
 
       const layer = new FeatureLayer({
         // URL to the service
+        visible:false,
         url: url_electricidad,
         outFields: ["*"],
         popupTemplate: {
@@ -747,6 +748,15 @@ require(
       });
 
       Metro.makePlugin("#CapaGeoInfo", 'charms', {});
+
+      $("li.item-element").click(function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).addClass("active").siblings().removeClass("active")
+        console.log('e', e);
+        if (e.currentTarget.dataset.item=="1")
+          layer.visible=true;
+      })
       
     });
     
