@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Centro Monitoreo</title>
-    <!-- <link rel="stylesheet" href="assets/metro.css"> -->
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
+    <link rel="stylesheet" href="assets/metro.css"> 
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/4.5.2/metro.css"/>
+    <!--<link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">-->
     <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/css/main.css"/>
     <link rel="stylesheet" href="./main.css"/>    
     <style>
@@ -92,12 +93,12 @@
           </div>
         </div>
         
-        <div id="CapaGeoInfo" data-role="charms" data-position="right" style="background-color: rgb(255, 255, 255)"
+        <div id="layerInfo" data-role="charms" data-position="right" style="background-color: rgb(255, 255, 255)"
           data-role-charms="true" class="charms right-side">
-          <div id="CapaGeoInfoContenido">
+          <div id="layerContainer">
             <div class="d-flex flex-justify-center flex-align-center">
               <div  class="panel container-fluid p-2">
-                <div class="row titulo-capa">Incidencias</div>
+                <div class="row title">Incidencias</div>
 
                 <div class="grid d-grid">                    
                   <div class="row">
@@ -136,14 +137,14 @@
           </div>
           
           <div class="btnclosebtn bg-dark fg-white h-10" style="display: none;">
-            <span id="rbsalir" onclick="CerrarCapaGeoInfo();" class="mif-chevron-right"
+            <span id="rbsalir" onclick="closeLayerContainer();" class="mif-chevron-right"
             style="font-size: 1.25rem; top: 20%"></span>
           </div>
         </div>
       </div>
     </div>
     
-    <div class="btn-expand-panel btnEPanelCapas" style="display: none;" onclick="openCapaGeoInfo();" data-role="hint" data-hint-text="Expandir panel"
+    <div class="btn-expand-panel btnEPanelCapas" style="display: none;" onclick="openLayerContainer();" data-role="hint" data-hint-text="Expandir panel"
       data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true" style="display: block;">
       <span class="mif-chevron-right"></span>
     </div>
@@ -163,51 +164,7 @@
         <li class="item-element" data-item="2"><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
       </ul>
     </aside>
-    
-    <!---- SERVICIOS ---->
-    <div class="position-relative d-none">
-      <div class="position-absolute bottom-0 start-50 translate-middle-x d-inline-flex gap-1">
-        <button
-          class="btn btn-danger"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseTable"
-          aria-expanded="false"
-          aria-controls="collapseTable">
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-            <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="collapseTable position-relative collapse" id="collapseTable" style="width: 1000px">
-      <table class="table m-4 p-5 position-absolute bottom-0 start-0" id="tableId">
-        <thead class="table-light">
-          <tr>
-            <th>#</th>
-            <th>Columna 2</th>
-            <th>Columna 3</th>
-            <th>Columna 4</th>
-            <th>Columna 5</th>
-            <th>Columna 6</th>
-            <th>Columna 7</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Fila</td>
-            <td>Fila</td>
-            <td>Fila</td>
-            <td>Fila</td>
-            <td>Fila</td>
-            <td>Fila</td>
-            <td>Fila</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+       
     <!--widget -->
     <div id="toolbarDiv" class="d-none esri-component esri-widget">
       <button id="distance" class="esri-widget--button esri-interactive esri-icon-measure-line"
@@ -357,9 +314,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     
     <script src="assets/moment/moment.js"></script>  
-    <!-- <script src="https://cdn.metroui.org.ua/4.5.2/metro.js"></script> -->
-    <script src="https://cdn.metroui.org.ua/current/metro.js"></script>
-    <!-- <script src="assets/metro.js"></script> -->
+    <script src="assets/metro.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://js.arcgis.com/4.17/"></script>

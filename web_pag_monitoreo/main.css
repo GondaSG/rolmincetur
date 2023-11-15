@@ -92,7 +92,7 @@
     border: 0px solid #bebebe !important;
 }
 
-#CapaGeoInfo {
+#layerInfo {
     top: unset;
     bottom: 0;
     height: 350px !important;
@@ -106,17 +106,17 @@
     border-top: 5px solid #000;
 }
 
-#CapaGeoInfoContenido {
+#layerContainer {
     font-size: 0.75rem;
     color: #414141;
     height: 350px !important;
 }
 
-#CapaGeoInfoContenido .etiqueta {
+/* #layerContainer .etiqueta {
     background: #f8f8f8;
-}
+} */
 
-#CapaGeoInfoContenido .titulo-capa {
+#layerContainer .title {
     background: #000;
     color: #fff;
     text-align: center;

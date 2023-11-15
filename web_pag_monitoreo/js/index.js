@@ -184,7 +184,6 @@ require(
         ui: {
           components: ["attribution"]
         },
-        //center: [-72,-10],
         extent: boundsDefault,
         container: appConfig.container
       };
@@ -279,8 +278,6 @@ require(
       ConfigBotonesMap(appConfig.sceneView);
 
       function ConfigBotonesMap(pView) {
-        
-
         CreateCustomButton({
           mapView: pView,
           position: "top-right",
@@ -291,7 +288,6 @@ require(
               switchView(this);
           }
         });
-
       }
       var homeBtn = new Home({
         view: appConfig.activeView,
@@ -436,7 +432,6 @@ require(
       });
 
       const layer = new FeatureLayer({
-        // URL to the service
         visible:false,
         url: url_electricidad,
         outFields: ["*"],
@@ -462,9 +457,7 @@ require(
         $("#spanAtencion").html(featureD);
         $("#txtDes").html(featureD.descripcion);
         $('.btnclosebtn').show();
-        //Metro.charms.open("#CapaGeoInfo");
-        //$('#CapaGeoInfo').data('charms').open();
-        var charms = Metro.getPlugin('#CapaGeoInfo', 'charms');
+        var charms = Metro.getPlugin('#layerInfo', 'charms');
         charms.open();
         var id_um = feature.graphic.attributes.codigo;
         $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/"+id_um, function( response ) {
@@ -495,7 +488,6 @@ require(
               $("#tbResult").html(html2);
         });
         appConfig.activeView.popup.close();
-        //$("#CapaGeoInfo").show();
         return null;
       }
 
@@ -635,52 +627,6 @@ require(
 
       var response = {
         chart: {
-            "type": "cylinder",
-            "options3d": {
-                "enabled": true,
-                "alpha": 15,
-                "beta": 15,
-                "depth": 50,
-                "viewDistance": 25
-            }
-        },
-        title: {
-            "text": "Number of confirmed COVID-19"
-        },
-        subtitle: {
-            "text": "Source: <a href=\"https://www.fhi.no/en/id/infectious-diseases/coronavirus/daily-reports/daily-reports-COVID19/\"target=\"_blank\">FHI</a>"
-        },
-        xAxis: {
-            "categories": ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90+"],
-            "title": {
-                "text": "Age groups"
-            }
-        },
-        yAxis: {
-            "title": {
-                "margin": 20,
-                "text": "Reported cases"
-            }
-        },
-        tooltip: {
-            "headerFormat": "<b>Age: {point.x}</b><br>"
-        },
-        plotOptions: {
-            "series": {
-                "depth": 25,
-                "colorByPoint": true
-            }
-        },
-        series: [{
-            "data": [95321, 169339, 121105, 136046, 106800, 58041, 26766, 14291,
-                7065, 3283],
-            "name": "Cases",
-            "showInLegend": false
-        }]
-      };
-
-      response = {
-        chart: {
           type: 'bar'
         },
         title: {
@@ -738,7 +684,6 @@ require(
         }]
       };
       console.log(JSON.stringify(response));
-      //Highcharts.chart('divCharts', response);
     
       $('#toolbarDiv').removeClass("d-none");
       $('#divCMO').removeClass("d-none");
@@ -748,13 +693,11 @@ require(
 
       Highcharts.setOptions({
         lang: {
-          // downloadCSV:"Descarga CSV",       
           viewFullscreen:"Ver en pantalla completa",
           downloadJPEG:"Descarga JPEG",
           downloadPDF:"Descarga PDF",
           downloadPNG:"Descarga PNG ",
           downloadSVG:"Descarga SVG",
-          // downloadXLS:"Descarga XLS",
           printChart:"Imprimir"
         },
         credits : {
@@ -762,7 +705,7 @@ require(
         }
       });
 
-      //Metro.makePlugin("#CapaGeoInfo", 'charms', {});
+      Metro.makePlugin("#layerInfo", 'charms', {});
 
       $("li.item-element").click(function(e){
         e.stopPropagation();
@@ -822,13 +765,13 @@ require(
       
 });
 
-function CerrarCapaGeoInfo() {
-  var charms = Metro.getPlugin('#CapaGeoInfo', 'charms');
+function closeLayerContainer() {
+  var charms = Metro.getPlugin('#layerInfo', 'charms');
   charms.close();
   $('.btnclosebtn').hide(); 
 }
 
-function openCapaGeoInfo(e) {
+function openLayerContainer(e) {
   $('#sb1').addClass("open");
   $('.btnEPanelCapas').hide();
   return null;
