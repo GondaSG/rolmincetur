@@ -2,18 +2,12 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/4.5.2/metro.css"/> -->
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Centro Monitoreo</title>
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.17/esri/css/main.css"
-    />
-    <link rel="stylesheet" href="./main.css" />
+    <!-- <link rel="stylesheet" href="assets/metro.css"> -->
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/css/main.css"/>
+    <link rel="stylesheet" href="./main.css"/>    
     <style>
       #toolbarDiv {
         position: absolute;
@@ -87,82 +81,71 @@
       <div class="map-content2 split-block">
         <div id="map" style="position: absolute;height: 100%;width: 100%;"></div>
         <div class="">
-          <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;" id="divTop">            
-          <!-- <button class="button alert"
-                data-role="hint"
-                data-hint-position="left"
-                data-hint-text="This is a hinted button"
-                data-cls-hint="bg-black fg-white drop-shadow">
-                botón izquierda
-          </button> -->
+          <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;" id="divTop">
           </div>
-          
-        </div>          
-      </div>       
+        </div>
+      </div>
       
       <div class="d-flex flex-justify-center flex-align-center">
         <div class="" style="height: 100%; width: 100%; overflow: auto">
           <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
           </div>
-        </div>          
+        </div>
+        
         <div id="CapaGeoInfo" data-role="charms" data-position="right" style="background-color: rgb(255, 255, 255)"
           data-role-charms="true" class="charms right-side">
           <div id="CapaGeoInfoContenido">
             <div class="d-flex flex-justify-center flex-align-center">
               <div  class="panel container-fluid p-2">
-                  <div class="row titulo-capa">Incidencias</div>
+                <div class="row titulo-capa">Incidencias</div>
 
-                  <div class="grid d-grid">                    
-                    <div class="row">
-                        <div class="cell-2"><p class="fg-blue">Fecha Registro</p><span id="dteRegistro"></span></div>
-                        <div class="cell-2"><p class="fg-blue">Sector</p><span id="spanSector"></p></div>
-                        <div class="cell-2"><p class="fg-blue">Criticidad</p><span id="spanCriticidad"></span></div>
-                        <div class="cell-2"><p class="fg-blue">Oficina Regional</p><span id="spanOficina"></span></div>
-                        <div class="cell-2"><p class="fg-blue">Incidente</p><span id="spanIncidente"></span></div>
-                        <div class="cell-2"><p class="fg-blue">Estado</p><span id="spanEstado"></span></div>
-                    </div>
-
-
-                    <div class="row">
-                      <div class="cell-6"><textarea data-role="textarea" rows="2" id="txtDes"></textarea></div>
-                      <div class="cell-2"><p class="fg-blue">Respuesta Operativa</p><span id="spanOperativa"></span></div>
-                      <div class="cell-2"><p class="fg-blue">Respuesta en medios</p><span id="spanMedios"></span></div>
-                      <div class="cell-2"><p class="fg-blue">Tiempo de atención</p><span id="spanAtencion"></span></div>
-                    </div>
-
-                    
-
-                    <div class=" row mt-2 custom-scroll">	
-                      <table class="table subcompact table-border cell-border" >
-                        <thead>
-                          <tr>
-                            <th class="etiqueta2" style="width:15%">Responsable</th>
-                            <th class="etiqueta2" style="width:35%">Actividad</th>
-                            <th class="etiqueta2" style="width:20%">Fecha y Hora</th>
-                            <th class="etiqueta2" style="width:10% !important">Tiempo</th>
-                          </tr>
-                        </thead>
-                        <tbody id="tbResult" >                  
-                        </tbody>                          
-                      </table>
-                    </div>
-                    
-                  </div>          
+                <div class="grid d-grid">                    
+                  <div class="row">
+                      <div class="cell-2"><p class="fg-blue">Fecha Registro</p><span id="dteRegistro"></span></div>
+                      <div class="cell-2"><p class="fg-blue">Sector</p><span id="spanSector"></p></div>
+                      <div class="cell-2"><p class="fg-blue">Criticidad</p><span id="spanCriticidad"></span></div>
+                      <div class="cell-2"><p class="fg-blue">Oficina Regional</p><span id="spanOficina"></span></div>
+                      <div class="cell-2"><p class="fg-blue">Incidente</p><span id="spanIncidente"></span></div>
+                      <div class="cell-2"><p class="fg-blue">Estado</p><span id="spanEstado"></span></div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="cell-6"><textarea data-role="textarea" rows="2" id="txtDes"></textarea></div>
+                    <div class="cell-2"><p class="fg-blue">Respuesta Operativa</p><span id="spanOperativa"></span></div>
+                    <div class="cell-2"><p class="fg-blue">Respuesta en medios</p><span id="spanMedios"></span></div>
+                    <div class="cell-2"><p class="fg-blue">Tiempo de atención</p><span id="spanAtencion"></span></div>
+                  </div>
+                  
+                  <div class=" row mt-2 custom-scroll">	
+                    <table class="table subcompact table-border cell-border" >
+                      <thead>
+                        <tr>
+                          <th class="etiqueta2" style="width:15%">Responsable</th>
+                          <th class="etiqueta2" style="width:35%">Actividad</th>
+                          <th class="etiqueta2" style="width:20%">Fecha y Hora</th>
+                          <th class="etiqueta2" style="width:10% !important">Tiempo</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbResult" >                  
+                      </tbody>                          
+                    </table>
+                  </div>
+                </div>          
               </div>
             </div>
           </div>
-      
-        <div class="btnclosebtn bg-dark fg-white h-10" style="display: none;">
+          
+          <div class="btnclosebtn bg-dark fg-white h-10" style="display: none;">
             <span id="rbsalir" onclick="CerrarCapaGeoInfo();" class="mif-chevron-right"
-                style="font-size: 1.25rem; top: 20%"></span>
-        </div>
+            style="font-size: 1.25rem; top: 20%"></span>
+          </div>
         </div>
       </div>
     </div>
     
     <div class="btn-expand-panel btnEPanelCapas" style="display: none;" onclick="openCapaGeoInfo();" data-role="hint" data-hint-text="Expandir panel"
       data-hint-position="right" data-cls-hint="custom-hint" data-role-hint="true" style="display: block;">
-     <span class="mif-chevron-right"></span>
+      <span class="mif-chevron-right"></span>
     </div>
 
     <aside id="sb1" class="sidebar pos-absolute z-2 sidebar-shadow open"  data-role="sidebar" data-toggle="#sidebar-toggle-2">
@@ -180,43 +163,26 @@
         <li class="item-element" data-item="2"><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
       </ul>
     </aside>
-  
-
+    
     <!---- SERVICIOS ---->
     <div class="position-relative d-none">
-      <div
-        class="position-absolute bottom-0 start-50 translate-middle-x d-inline-flex gap-1"
-      >
+      <div class="position-absolute bottom-0 start-50 translate-middle-x d-inline-flex gap-1">
         <button
           class="btn btn-danger"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseTable"
           aria-expanded="false"
-          aria-controls="collapseTable"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="1em"
-            viewBox="0 0 448 512"
-          >
-            <path
-              d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
-            />
+          aria-controls="collapseTable">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+            <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
           </svg>
         </button>
       </div>
     </div>
 
-    <div
-      class="collapseTable position-relative collapse"
-      id="collapseTable"
-      style="width: 1000px"
-    >
-      <table
-        class="table m-4 p-5 position-absolute bottom-0 start-0"
-        id="tableId"
-      >
+    <div class="collapseTable position-relative collapse" id="collapseTable" style="width: 1000px">
+      <table class="table m-4 p-5 position-absolute bottom-0 start-0" id="tableId">
         <thead class="table-light">
           <tr>
             <th>#</th>
@@ -244,21 +210,15 @@
 
     <!--widget -->
     <div id="toolbarDiv" class="d-none esri-component esri-widget">
-      <button
-        id="distance"
-        class="esri-widget--button esri-interactive esri-icon-measure-line"
-        title="Distance Measurement Tool"
-      ></button>
-      <button
-        id="area"
-        class="esri-widget--button esri-interactive esri-icon-measure-area"
-        title="Area Measurement Tool"
-      ></button>
-      <button
-        id="clear"
-        class="esri-widget--button esri-interactive esri-icon-trash"
-        title="Clear Measurements"
-      ></button>
+      <button id="distance" class="esri-widget--button esri-interactive esri-icon-measure-line"
+        title="Distance Measurement Tool">
+      </button>
+      <button id="area" class="esri-widget--button esri-interactive esri-icon-measure-area"
+        title="Area Measurement Tool">
+      </button>
+      <button id="clear" class="esri-widget--button esri-interactive esri-icon-trash"
+        title="Clear Measurements">
+      </button>
     </div>
 
     <div
@@ -387,6 +347,7 @@
         </div>
       </div>
     </div>
+
     <div id="overviewDiv"><div id="extentDiv"></div></div>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -398,6 +359,7 @@
     <script src="assets/moment/moment.js"></script>  
     <!-- <script src="https://cdn.metroui.org.ua/4.5.2/metro.js"></script> -->
     <script src="https://cdn.metroui.org.ua/current/metro.js"></script>
+    <!-- <script src="assets/metro.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://js.arcgis.com/4.17/"></script>

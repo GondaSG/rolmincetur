@@ -56,14 +56,12 @@ require(
   ){
 
     $(document).ready(function(){     
-
       const appConfig = {
         mapView: null,
         sceneView: null,
         activeView: null,
         container: "map" // use same container for views
       };
-
       
       var basemaps = [
         new Basemap({
@@ -747,7 +745,7 @@ require(
         }
       });
 
-      Metro.makePlugin("#CapaGeoInfo", 'charms', {});
+      //Metro.makePlugin("#CapaGeoInfo", 'charms', {});
 
       $("li.item-element").click(function(e){
         e.stopPropagation();
