@@ -317,6 +317,23 @@ require(
           }
       });
       appConfig.activeView.ui.add(btnMapaBaseGallery, "top-right");
+      appConfig.activeView.when(function() {
+        configIconos();
+        $(".esri-attribution__link").after('<span id="sMapLonLat"><\/span>');
+      });
+      appConfig.mapView.on("pointer-move", function(n) {
+        let t = appConfig.mapView.toMap(n)
+          , i = document.getElementById("sMapLonLat");
+        i && (i.innerHTML = " | Lon:" + t.longitude.toFixed(6) + ", Lat:" + t.latitude.toFixed(6));
+      });
+      appConfig.sceneView.when(function() {
+          $(".esri-attribution__link").after('<span id="sMapLonLat3D"><\/span>')
+      });
+      appConfig.sceneView.on("pointer-move", function(n) {
+          let t = appConfig.sceneView.toMap(n);
+          if (t!=null)
+            document.getElementById("sMapLonLat3D").innerHTML = " | Lon:" + t.longitude.toFixed(6) + ", Lat:" + t.latitude.toFixed(6)
+      });
 
       let locate = new Locate({
         view: appConfig.activeView,
@@ -757,6 +774,49 @@ require(
       })
       
     });
+
+    function configIconos() {
+      Metro.makePlugin(".esri-home", "hint", {
+          hintText: "Vista de mapa predeterminada",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin(".esri-fullscreen", "hint", {
+          hintText: "Activar pantalla completa",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".esri-icon-plus").parent(), "hint", {
+          hintText: "Acercar",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".esri-icon-minus").parent(), "hint", {
+          hintText: "Alejar",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".btnMapaBaseGallery").parent(), "hint", {
+          hintText: "Mapa base",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin(".esri-compass", "hint", {
+          hintText: "Restablecer orientación de brújula",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".btnPrint").parent(), "hint", {
+          hintText: "Imprimir",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".btnDrawingTools").parent(), "hint", {
+          hintText: "Dibujar",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      })
+  }
     
     
       
