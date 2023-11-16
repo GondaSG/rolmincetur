@@ -62,7 +62,7 @@ require(
         activeView: null,
         container: "map" // use same container for views
       };
-      
+
       var basemaps = [
         new Basemap({
             baseLayers: [
@@ -272,7 +272,7 @@ require(
       });
 
       var basemapGallery = new BasemapGallery({ container: document.createElement("div"), view: appConfig.activeView, source: localSource });
-        
+      
       // Create new instance of the Measurement widget
       ConfigBotonesMap(appConfig.mapView);
       ConfigBotonesMap(appConfig.sceneView);
@@ -356,7 +356,7 @@ require(
       });
       //
       var _medicion = new Expand({
-        expandIcon: "legend",  // see https://developers.arcgis.com/calcite-design-system/icons/
+        // expandIcon: "legend",  // see https://developers.arcgis.com/calcite-design-system/icons/
         expandIconClass : "esri-icon-measure-line",
         view: appConfig.activeView,
         content: document.getElementById("toolbarDiv"),
@@ -364,34 +364,36 @@ require(
         expandTooltip: "Medición",
       });
       //
-      var _cmo = new Expand({
-        expandIconClass : "esri-icon-drag-horizontal",
-        view: appConfig.activeView,
-        content: document.getElementById("divCMO"),
-        group: "top-right",
-        expandTooltip: "Formulario CMO",
-      });
-      //
       var _addLayers = new Expand({
-        expandIconClass : "esri-icon-plus",
+        expandIconClass : "mif-download",
         view: appConfig.activeView,
         content: document.getElementById("widgetAddLayers"),
         group: "top-right",
-        expandTooltip: "Añadir Capas",
+        expandTooltip: "Descargar capas",
+        position: "top-right"
       });
       //
       var _upload = new Expand({
-        expandIconClass : "esri-icon-up-arrow-circled",
+        expandIconClass : "mif-file-upload",
         view: appConfig.activeView,
         content: document.getElementById("widgetUpload"),
         group: "top-right",
-        expandTooltip: "Subir KML",
+        expandTooltip: "Subir KML"
       });
       //
       let compass = new Compass({
         view: appConfig.activeView,
-      }); 
-
+      });
+      //
+      var _cmo = new Expand({
+        expandIconClass : "mif-comment",
+        view: appConfig.activeView,
+        content: document.getElementById("divCMO"),
+        group: "top-right",
+        expandTooltip: "Formulario CMO",
+        mode:'floating'
+      });   
+      
       appConfig.activeView.ui.add([locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
 
       function CreateCustomButton(pParams) {
@@ -512,7 +514,7 @@ require(
         activeView.ui.add(homeBtn, "top-right");
         activeView.ui.add(zoomBtn, "top-right");
         activeView.ui.add(btnMapaBaseGallery, "top-right");
-        activeView.ui.add([locate, _print, compass, _medicion, _cmo, _addLayers, _upload], "top-right");
+        activeView.ui.add([compass, locate, _medicion, _print, _addLayers, _upload, _cmo], "top-right");
       }
 
       // Switches the view from 2D to 3D and vice versa
@@ -749,13 +751,33 @@ require(
           hintPosition: "left",
           clsHint: "custom-hint"
       });
-      Metro.makePlugin($(".btnPrint").parent(), "hint", {
+      Metro.makePlugin($(".esri-icon-printer").parent(), "hint", {
           hintText: "Imprimir",
           hintPosition: "left",
           clsHint: "custom-hint"
       });
-      Metro.makePlugin($(".btnDrawingTools").parent(), "hint", {
+      Metro.makePlugin($(".esri-icon-measure-line").parent(), "hint", {
           hintText: "Dibujar",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".mif-comment").parent(), "hint", {
+          hintText: "Enviar Comentarios",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".mif-file-upload").parent(), "hint", {
+          hintText: "Subir KML",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".mif-download").parent(), "hint", {
+          hintText: "Descargar Capas",
+          hintPosition: "left",
+          clsHint: "custom-hint"
+      });
+      Metro.makePlugin($(".esri-icon-locate").parent(), "hint", {
+          hintText: "Mi ubicación",
           hintPosition: "left",
           clsHint: "custom-hint"
       })

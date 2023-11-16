@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Centro Monitoreo</title>
-    <link rel="stylesheet" href="assets/metro.css"> 
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/4.5.2/metro.css"/>
+    <!-- <link type="text/css" rel="stylesheet" href="https://snirh.ana.gob.pe/LibreriasSNIRH/MetroUI/css/metro-iconsDARH20190612.min.css" media="screen,projection"> -->
     <!--<link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">-->
     <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/css/main.css"/>
+    <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/4.5.2/metro.css"/> -->
+    <link type="text/css" rel="stylesheet" href="assets/metro-all.min.css" media="screen,projection">
     <link rel="stylesheet" href="./main.css"/>    
     <style>
       #toolbarDiv {
@@ -69,14 +70,24 @@
   </head>
 
   <body>
-    <div class="row NavPrim">      
+    <!-- <div class="row NavPrim">      
       <div class="colspan-4 NavStyle">
+        <span class="mif-logo-osi" style="font-size:4rem !important;"></span>
         <img src="./img/logo.png" alt="Logo" style="width: 185px" />
       </div>
       <div class="colspan-5 NavStyle">
         <p class="text-right">Centro de Monitoreo</p>
       </div>
-    </div>
+    </div> -->
+
+    <header class="fg-white row" style="height: 60px;background-color: #000090;align-items: center;"> 
+      <a style="line-height: 0.3; font-size:8rem; padding-left: 20px; padding-top: 10px;">
+        <p><span class="mif-logo-osi" style=""></span></p>
+      </a>
+      <div style="left: 50%;">
+        <p class="text-bold h5" style="font-size: 1.5rem;">Centro de Monitoreo</p>
+      </div>
+    </header>
 
     <div data-role="splitter" class="h-100 StyleBody" data-split-sizes="70,30"> 
       <div class="map-content2 split-block">
@@ -154,11 +165,11 @@
         <span class="mif-chevron-left"></span>
       </div>
       <ul class="sidebar-menu">
-        <li class="item-element" data-item="2"><a><img src="./img/organization.svg" alt="Icono 2" class="icon" />Gestión</a></li>
-        <li class="item-element" data-item="2"><a><img src="./img/hidro.svg" alt="Icono 2" class="icon" />Hidrocarburos</a></li>
-        <li class="item-element" data-item="2"><a><img src="./img/factory.svg" alt="Icono 2" class="icon" />Gas Natural</a></li>
+        <li class="item-element" data-item="2"><a><span class="mif-energia icon"></span>Gestión</a></li>
+        <li class="item-element" data-item="2"><a><span class="mif-hidrocarburo icon"></span>Hidrocarburos</a></li>
+        <li class="item-element" data-item="2"><a><span class="mif-gas icon"></span>Gas Natural</a></li>
         <li class="item-element" data-item="3"><a><img src="./img/ima01.svg" alt="Icono 2" class="icon" />Electricidad</a></li>
-        <li class="item-element" data-item="3"><a><img src="./img/mineria.svg" alt="Icono 2" class="icon" />Minería</a></li>
+        <li class="item-element" data-item="3"><a><span class="mif-mina icon"></span>Minería</a></li>
         <li class="item-element" data-item="1"><a><img src="./img/security_icon.svg" alt="Icono 2" class="icon" />Emergencia</a></li>
         <li class="item-element" data-item="2"><a><img src="./img/books_icon.png" alt="Icono 2" class="icon" />Otros</a></li>
         <li class="item-element" data-item="2"><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
