@@ -169,3 +169,7 @@ body {
 .custom-scroll::-webkit-scrollbar-thumb:hover {
     background-color: #2a7fb7;
 } 
+
+.textarea{
+    border: 0px solid #bebebe !important;
+}
