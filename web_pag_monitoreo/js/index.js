@@ -495,6 +495,13 @@ require(
 
       map.add(layer);
 
+      //setInterval(() => {
+      //  console.log('intervalos');
+      //  if (layer)  {
+      //      layer.visible=!layer.visible?true:false;
+      //  }
+      //}, 1000);
+
       var _lyl_gasnatural = new LayerList({
         view: appConfig.activeView,
         container: 'collapseExample',
@@ -781,7 +788,7 @@ require(
           hintPosition: "left",
           clsHint: "custom-hint"
       })
-  }
+    }
     
     
       
