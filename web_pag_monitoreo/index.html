@@ -50,21 +50,50 @@
       }
 
       #overviewDiv {
-        display:none;
         position: absolute;
-        bottom: 12px;
-        left: 50%;
+        bottom: 60px;
+        right: 12px;
         width: 150px;
-        height: 100px;
-        border: 1px solid black;
+        height: 150px;
         z-index: 1;
         overflow: hidden;
+        border: solid rgba(255,255,255,1) 4px;
+        box-shadow: 0 1px 2px rgba(0,0,0,.65);
+        border-radius: 3px;
+        background: #f8f8f9;
+        transition: all .6s;
       }
-
+      #overviewDiv.hide {
+        width: 40px;
+        height: 40px;
+        border: 0 solid #000;
+      }
       #extentDiv {
         background-color: rgba(0, 0, 0, 0.5);
         position: absolute;
         z-index: 2;
+      }
+      #ovwButton {
+        background-image: url(./img/toggle.svg);
+        background-size: cover;
+        border-radius: 3px 0 0 0;
+        background-color: rgba(255,255,255,1);
+        background-repeat: no-repeat;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        z-index: 99;
+        transition: all .6s;
+      }
+      .ovwHide {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        border-radius: 0;
+        margin-bottom: -5px;
+        margin-right: -5px;
       }
     </style>
   </head>
@@ -84,7 +113,7 @@
       <a style="line-height: 0.3; font-size:10rem; padding-left: 20px;">
         <p class="pt-2"><span class="mif-logo-osi" style=""></span></p>
       </a>
-      <div style="left: 50%;">
+      <div style="left: 50%;position: absolute;">
         <p class="text-bold" style="font-size: 2rem;">Centro de Monitoreo</p>
       </div>
     </header>
@@ -105,9 +134,10 @@
       <div class="map-content2 split-block">
         <div id="map" style="position: absolute;height: 100%;width: 100%;"></div>
         <div class="">
-          <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;" id="divTop">
+          <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;position: absolute;" id="divTop">
           </div>
         </div>
+        <div id="overviewDiv"><div id="ovwButton" title="Ocultar" class=""></div></div>
       </div>
       
       <div class="d-flex flex-justify-center flex-align-center">
@@ -303,32 +333,51 @@
         </div>
       </div>
     </div>
-    <div
-      id="widgetUpload"
-      class="d-none esri-expand__content esri-expand__content--expanded"
-    >
-      <div class="p-3 esri-widget esri-widget--panel">
-        <div class="form-group">
-          <label for="form_uploadkml" class="form-label"
-            >Seleccionar archivo KML</label
-          >
-          <input
-            type="file"
-            data-role="file"
-            data-button-title="<span class='mif-folder'></span>"
-            class=""
-            id="form_uploadkml"
-            placeholder="¿Que estas buscando?"
-          />
+    <div id="widgetUpload" class="d-none esri-expand__content esri-expand__content--expanded esri-widget esri-widget--panel esri-widget--panel-xl">
+      <ul data-role="tabs" data-expand="true">
+        <li><a href="#_target_1">WFS y WMS</a></li>
+        <li><a href="#_target_2">KML y KMZ</a></li>
+    </ul>
+    <div class="border bd-default no-border-top p-2">
+        <div id="_target_1">
+          <form>
+            <div class="form-group">
+                <label for="cmb_tiposervice">Tipo:</label>
+                <select id="cmb_tiposervice" class="form-control">
+                  <option value="shape">Servicio web de ArcGis for Server</option>
+                  <option value="wms">Servicio web de WMS - OGC</option>
+                  <!-- <option value="kml">Servicio web KML o KMZ</option> -->
+                  <!-- <option value="geojson">Servicio web GeoJson</option> -->
+                  <!-- <option value="georss">Servicio web GeoRss</option> -->
+                  <!-- <option value="csv">Servicio web CSV</option> -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="txt_urlservice">Dirección URL:</label>
+                <input type="text" class="form-control" id="txt_urlservice" autofocus>
+            </div>
+            <div class="form-group">
+              <button type="button" class="button dark" id="btn_addlayer"><span class="mif-checkmark"></span> Agregar capa</button>
+              <button type="submit" class="button dark"><span class="mif-cancel"></span> Limpiar</button>
+            </div>
+          </form>
         </div>
-        <div class="form-group">
-          <button type="submit" class="button dark">Limpiar</button>
+        <div id="_target_2">
+          <div class="p-3">
+            <div class="form-group">
+              <label for="form_uploadkml" class="form-label">Seleccionar archivo KML</label>
+              <input type="file" data-role="file" data-button-title="<span class='mif-folder'></span>" class="" id="form_uploadkml" placeholder="¿Que estas buscando?"/>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="button dark">Limpiar</button>
+            </div>
+          </div>
         </div>
-      </div>
+    </div>
+      
     </div>
 
-    <div id="overviewDiv"><div id="extentDiv"></div></div>
-
+    
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/cylinder.js"></script>

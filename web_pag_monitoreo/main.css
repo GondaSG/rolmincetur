@@ -2,6 +2,14 @@
     font-family: 'Roboto', sans-serif;
 }
 
+div {
+    position: unset
+}
+
+.sidebar div,.gutter,.sidenav-right .lista-estadis div {
+    position: relative
+}
+
 .NavPrim {
     background-color: #000090;
     height: 60px;
@@ -172,4 +180,8 @@ body {
 
 .textarea{
     border: 0px solid #bebebe !important;
+}
+
+.esri-widget--panel-xl{
+    width: 400px !important;
 }

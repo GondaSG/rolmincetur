@@ -25,6 +25,7 @@ require(
     "esri/layers/OpenStreetMapLayer",
     "esri/widgets/BasemapGallery/support/LocalBasemapsSource",
     "esri/layers/FeatureLayer",
+    "esri/layers/WMSLayer",
     "esri/tasks/QueryTask",
     "esri/tasks/support/Query"
   ],
@@ -51,6 +52,7 @@ require(
     OpenStreetMapLayer,
     LocalBasemapsSource,
     FeatureLayer,
+    WMSLayer,
     QueryTask,
     Query
   ){
@@ -194,17 +196,20 @@ require(
       });
 
       // Crea la vista general
-      //var overviewMap = new Map({
-      //  basemap: "topo-vector"
-      //});
-      //
-      //var overviewView = new MapView({
-      //  container: "overviewDiv",
-      //  map: overviewMap,
-      //  constraints: {
-      //    snapToZoom: false
-      //  }
-      //});
+      var overviewMap = new Map({
+        basemap: basemaps[4],
+      });
+      
+      var overviewView = new MapView({
+        container: "overviewDiv",
+        map: overviewMap,
+        constraints: {
+          snapToZoom: false
+        },
+        ui: {
+          components : []
+        }
+      });
       
       // Remove the default widgets
       //overviewView.ui.components = [];
@@ -216,41 +221,41 @@ require(
       appConfig.activeView = appConfig.mapView;
 
       // Evento para sincronizar las vistas
-      //appConfig.activeView.watch("extent", function() {
-      //  // Sincroniza la extensión de la vista general con la vista principal
-      //  overviewView.goTo(appConfig.activeView.extent);
-      //  
-      //  // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
-      //  overviewView.graphics.removeAll(); // Limpia gráficos anteriores
-      //  overviewView.graphics.add({
-      //    geometry: appConfig.activeView.extent,
-      //    symbol: {
-      //      type: "simple-fill",
-      //      color: [0, 0, 0, 0.5],
-      //      outline: null
-      //    }
-      //  });
-      //});
+      appConfig.activeView.watch("extent", function() {
+        // Sincroniza la extensión de la vista general con la vista principal
+        overviewView.goTo(appConfig.activeView.extent);
+        
+        // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
+        overviewView.graphics.removeAll(); // Limpia gráficos anteriores
+        overviewView.graphics.add({
+          geometry: appConfig.activeView.extent,
+          symbol: {
+            type: "simple-fill",
+            color: [0, 0, 0, 0.5],
+            outline: null
+          }
+        });
+      });
 
       // create 3D view, won't initialize until container is set
       initialViewParams.container = null;
       initialViewParams.map = map;
       appConfig.sceneView = createView(initialViewParams, "3d");
-      //appConfig.sceneView.watch("extent", function() {
-      //  // Sincroniza la extensión de la vista general con la vista principal
-      //  overviewView.goTo(appConfig.activeView.extent);
-      //  
-      //  // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
-      //  overviewView.graphics.removeAll(); // Limpia gráficos anteriores
-      //  overviewView.graphics.add({
-      //    geometry: appConfig.activeView.extent,
-      //    symbol: {
-      //      type: "simple-fill",
-      //      color: [0, 0, 0, 0.5],
-      //      outline: null
-      //    }
-      //  });
-      //});
+      appConfig.sceneView.watch("extent", function() {
+        // Sincroniza la extensión de la vista general con la vista principal
+        overviewView.goTo(appConfig.activeView.extent);
+        
+        // Dibuja un rectángulo que representa la extensión actual del mapa principal en la vista general
+        overviewView.graphics.removeAll(); // Limpia gráficos anteriores
+        overviewView.graphics.add({
+          geometry: appConfig.activeView.extent,
+          symbol: {
+            type: "simple-fill",
+            color: [0, 0, 0, 0.5],
+            outline: null
+          }
+        });
+      });
 
       // convenience function for creating either a 2D or 3D view dependant on the type parameter
       function createView(params, type) {
@@ -302,7 +307,7 @@ require(
       });
       
       var zoomBtn = new Zoom({ view: appConfig.activeView });
-      zoomBtn.render(function () { Metro.makePlugin($(".esri-icon-plus").parent(), "hint", { hintText: "Acercar", hintPosition: "left", clsHint: "custom-hint" }); })
+      //zoomBtn.render(function () { Metro.makePlugin($(".esri-icon-plus").parent(), "hint", { hintText: "Acercar", hintPosition: "left", clsHint: "custom-hint" }); })
       appConfig.activeView.ui.add(zoomBtn, "top-right");
       
       var btnMapaBaseGallery = new Expand({ view: appConfig.activeView, content: basemapGallery, expandIconClass: "esri-icon-basemap btnMapaBaseGallery" });
@@ -617,6 +622,47 @@ require(
         }
       }
 
+      $("#btn_addlayer").on("click", function(event) {
+        //$('#sp_uploadstatus_url').html("");
+        debugger;
+        let //$preloader = $('#btn_preuploader').removeClass('notvisible').addClass('visible'),
+          $btnadd = $(this).removeClass('visible').addClass('notvisible'),
+          tipo = $('#cmb_tiposervice').val(),
+          url_newcapa = $.trim($('#txt_urlservice').val()),
+          nuevacapa = "";
+  
+        switch (tipo) {
+          case 'shape':
+            nuevacapa = new FeatureLayer(url_newcapa);
+            break;
+          case 'wms':
+            nuevacapa = new WMSLayer({
+              url: url_newcapa,
+              legendEnabled: true,
+            });
+            break;
+          default: ''; break;
+        }
+
+        nuevacapa.load().then(function(){
+          nuevacapa.opacity = 0.75;
+          map.add(nuevacapa);
+          //Zoom to new layer
+          if(tipo == 'wms' && nuevacapa.fullExtent) {
+            appConfig.activeView.goTo(nuevacapa.fullExtent);
+          }else {
+            zoomTolayer(nuevacapa);
+          } 
+        });
+        
+      });
+
+      function zoomTolayer(layer){
+        return layer.queryExtent().then(function(response){
+          appConfig.activeView.goTo(response.extent);
+        });
+      }
+
       $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/indicadorCalculoCache", function( response ) {
          console.log(response);
          if (response.length > 0) {
@@ -706,7 +752,7 @@ require(
           downloadJPEG:"Descarga JPEG",
           downloadPDF:"Descarga PDF",
           downloadPNG:"Descarga PNG ",
-          downloadSVG:"Descarga SVG",
+          downloadSVG:"Descarga SVG", 
           printChart:"Imprimir"
         },
         credits : {
@@ -726,6 +772,15 @@ require(
       })
       
     });
+    document.getElementById("ovwButton").addEventListener("click", function() {
+      var n = document.getElementById("overviewDiv")
+        , t = document.getElementById("ovwButton");
+      t.classList.toggle("ovwHide");
+      n.classList.toggle("hide")
+    });
+    document.getElementById("ovwButton").classList.toggle("ovwHide");
+    document.getElementById("overviewDiv").classList.toggle("hide");
+    //$('#overviewDiv').addClass("hide");
 
     function configIconos() {
       Metro.makePlugin(".esri-home", "hint", {
