@@ -63,7 +63,7 @@ namespace Services.Controllers
             return data;
         }
 
-        private OracleCommand ConexionBDSNIRH_ORCL(string sql)
+        private OracleCommand ConexionBD_ORCL(string sql)
         {
             string cadena = _mySettings.oracle;
             OracleConnection cn = new OracleConnection(cadena);
@@ -72,7 +72,7 @@ namespace Services.Controllers
 
         public string GetDataQueryJson(string jsonParams)
         {
-            using (OracleCommand cm = ConexionBDSNIRH_ORCL("CAL_CONSULTA_INDICADOR_CALCULO_CACHE"))
+            using (OracleCommand cm = ConexionBD_ORCL("CAL_CONSULTA_INDICADOR_CALCULO_CACHE"))
             {
                 string Resp = "";
                 try
