@@ -829,7 +829,7 @@ require(
           clsHint: "custom-hint"
       });
       Metro.makePlugin($(".mif-file-upload").parent(), "hint", {
-          hintText: "Subir KML",
+          hintText: "Subir Capas",
           hintPosition: "left",
           clsHint: "custom-hint"
       });
