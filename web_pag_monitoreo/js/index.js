@@ -661,19 +661,26 @@ require(
 
       $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/indicadorCalculoCache", function( response ) {
          console.log(response);
-         if (response.length > 0) {
+         if (typeof response == "object") {
+          var id = "div" + response.ID_INDICADOR_CALCULO;
+          $div = $("<div id='"+id+"'></div>");
+          $("#divCharts").append($div);
+          var indicador = JSON.parse(response.VALOR);
+          console.log(indicador);
+          Highcharts.chart(id, indicador);
+         }
+         else 
           response.forEach( (t, i) =>{
             if (i > 0) {
               return;
             }
-            var id = "div" + t.iD_INDICADOR_CALCULO;
+            var id = "div" + t.ID_INDICADOR_CALCULO;
             $div = $("<div id='"+id+"'></div>");
             $("#divCharts").append($div);
-            var indicador = JSON.parse(t.valor);
+            var indicador = JSON.parse(t.VALOR);
             console.log(indicador);
             Highcharts.chart(id, indicador);
           });
-         }
       });
 
       var response = {
