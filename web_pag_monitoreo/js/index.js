@@ -623,11 +623,7 @@ require(
       }
 
       $("#btn_addlayer").on("click", function(event) {
-        //$('#sp_uploadstatus_url').html("");
-        debugger;
-        let //$preloader = $('#btn_preuploader').removeClass('notvisible').addClass('visible'),
-          $btnadd = $(this).removeClass('visible').addClass('notvisible'),
-          tipo = $('#cmb_tiposervice').val(),
+        let tipo = $('#cmb_tiposervice').val(),
           url_newcapa = $.trim($('#txt_urlservice').val()),
           nuevacapa = "";
   
@@ -780,7 +776,6 @@ require(
     });
     document.getElementById("ovwButton").classList.toggle("ovwHide");
     document.getElementById("overviewDiv").classList.toggle("hide");
-    //$('#overviewDiv').addClass("hide");
 
     function configIconos() {
       Metro.makePlugin(".esri-home", "hint", {
