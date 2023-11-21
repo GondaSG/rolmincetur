@@ -91,19 +91,44 @@
         margin-bottom: -5px;
         margin-right: -5px;
       }
+      #floating-panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        width: 500px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+      }
+      .frm-visor-custom {
+      }
+
+      .frm-visor-custom label, .frm-visor-custom .label {
+          font-size: .9rem !important;
+      }
+
+      .frm-visor-custom input[type=text],
+      .frm-visor-custom select,
+      .frm-visor-custom .select,
+      .frm-visor-custom textarea,
+      .frm-visor-custom .textarea,
+      .frm-visor-custom .file,
+      .frm-visor-custom input {
+          /*
+          border-left: 2px !important;
+          border-left-style: solid !important;
+          */
+          line-height: 1.7rem !important;
+          font-size: .9rem !important;
+      }
     </style>
   </head>
 
   <body>
-    <!-- <div class="row NavPrim">      
-      <div class="colspan-4 NavStyle">
-        <span class="mif-logo-osi" style="font-size:4rem !important;"></span>
-        <img src="./img/logo.png" alt="Logo" style="width: 185px" />
-      </div>
-      <div class="colspan-5 NavStyle">
-        <p class="text-right">Centro de Monitoreo</p>
-      </div>
-    </div> -->
 
     <header class="fg-white row" style="height: 60px;background-color: #000090;align-items: center;"> 
       <a style="line-height: 0.3; font-size:10rem; padding-left: 20px;">
@@ -129,10 +154,63 @@
       </div>
       <div class="map-content2 split-block">
         <div id="map" style="position: absolute;height: 100%;width: 100%;"></div>
-        <div class="">
+        <div class="hide" style="display: none;">
           <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;position: absolute;" id="divTop">
           </div>
         </div>
+        <div id="floating-panel">
+          <div class="row m-0 p-0">
+              <div class="cell-md-1 m-0 p-0">
+                  <ul class="t-menu horizontal compact open">
+                      <li class="active-container"><a href="#" class="dropdown-toggle active-toggle active-control" style="height: 35px!important;"><span id="btPrincipal" class="mif-search"></span></a>
+                          <ul class="t-menu compact" data-role="dropdown" data-role-dropdown="true" style="display: block;">
+                              <li onclick="cambiarTipoBusqueda(1);"><a href="#"><span class="mif-search"></span></a></li>
+                              <li onclick="cambiarTipoBusqueda(2);"><a href="#"><span class="ana-pointXY"></span></a></li>
+                              <li onclick="cambiarTipoBusqueda(3);"><a href="#"><span class="mif-map"></span></a></li>
+                          </ul>
+                      </li>
+                  </ul>
+              </div>
+              <div class="cell-md-11 m-0 p-0 frm-visor-custom" style="padding-left: 5px !important;">
+                  <div class="row m-0 p-0" id="busWGSGeo" style="display: none;">
+                      <div style="width:180px;">
+                          <input id="txtBusLat" placeholder="Latitud" type="text">
+                      </div>
+                      <div style="width:180px; padding-left: 5px !important;">
+                          <input id="txtBusLong" placeholder="Longitud" type="text">
+                      </div>
+                      <div style="width:40px; padding-left: 5px !important;">
+                          <button onclick="BuscarUbicacion(2)" class="button info square outline" type="button" title="Ubicar coordenada"><span class="mif-keyboard-return"></span></button>
+                      </div>
+                      <div style=" width:40px; padding-left: 5px !important;">
+                          <button onclick="EliminarUbicacionMarker(2)" class="button info square outline" type="button" title="Eliminar coordenadas"><span class="mif-cross"></span></button>
+                      </div>
+                  </div>
+                  <div class="row m-0 p-0" id="busWGSUTM" style="display: none;">
+                      <div style="width:80px;">
+                          <select id="ddlBusZona" class="select-mu"><option value="0">Zona</option><option value="19">19</option><option value="18">18</option><option value="17">17</option> </select>
+                      </div>
+                      <div style="width:140px; padding-left: 5px !important;">
+                          <input id="txtBusCoorEste" placeholder="Coor. Este" type="text">
+                      </div>
+                      <div style="width:140px; padding-left: 5px !important;">
+                          <input id="txtBusCoorNorte" placeholder="Coor. Norte" type="text">
+                      </div>
+                      <div style="width:40px; padding-left: 5px !important;">
+                          <button onclick="BuscarUbicacion(3)" class="button info square outline" type="button" title="Ubicar coordenada"><span class="mif-keyboard-return"></span></button>
+                      </div>
+                      <div style=" width:40px; padding-left: 5px !important;">
+                          <button onclick="EliminarUbicacionMarker(3)" class="button info square outline" type="button" title="Eliminar coordenadas"><span class="mif-cross"></span></button>
+                      </div>
+                  </div>
+                  <div class="row m-0 p-0" id="busDireccion" style="">
+                      <div class="cell-md-12 m-0 p-0">
+                          <input class="d-block controls pac-target-input" id="txtBuscar" type="text" autocomplete="off" placeholder="Buscar en Google Maps">
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
         <div id="overviewDiv"><div id="ovwButton" title="Ocultar" class=""></div></div>
       </div>
       
