@@ -26,9 +26,61 @@ namespace Services.Controllers
             return new OracleCommand(sql, cn);
         }
 
+        private OracleCommand ConexionBD_ORCL2(string sql)
+        {
+            string cadena = _mySettings.oracle2;
+            OracleConnection cn = new OracleConnection(cadena);
+            return new OracleCommand(sql, cn);
+        }
+
         public string GetDataQueryJson(string jsonParams, string storeName)
         {
             using (OracleCommand cm = ConexionBD_ORCL(storeName))
+            {
+                string Resp = "";
+                try
+                {
+                    cm.CommandType = CommandType.StoredProcedure;
+                    cm.Connection.Open();
+                    cm.Parameters.Add("p_json_param", OracleDbType.Clob).Value = jsonParams;
+                    OracleParameter outParam = new OracleParameter("p_result", OracleDbType.Clob);
+                    outParam.Direction = ParameterDirection.Output;
+                    cm.Parameters.Add(outParam);
+                    cm.ExecuteNonQuery();
+                    Resp = ReadClob(outParam.Value as OracleClob);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    if ((cm.Connection.State == ConnectionState.Open))
+                    {
+                        cm.Connection.Close();
+                    }
+                }
+                return Resp;
+            }
+
+            static string ReadClob(OracleClob clob)
+            {
+                if (clob == null || clob.IsEmpty)
+                {
+                    return string.Empty;
+                }
+
+                // Leer el CLOB y convertirlo a cadena
+                using (var reader = new StreamReader(clob, Encoding.Unicode))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
+        public string GetDataQueryJson2(string jsonParams, string storeName)
+        {
+            using (OracleCommand cm = ConexionBD_ORCL2(storeName))
             {
                 string Resp = "";
                 try

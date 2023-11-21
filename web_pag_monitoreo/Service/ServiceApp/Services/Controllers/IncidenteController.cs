@@ -40,13 +40,13 @@ namespace Services.Controllers
         [HttpGet("list")]
         public ActionResult<string> Get()
         {
-            return this.GetDataQueryJson("", "CAL_LISTADO_INCIDENTE_CMO");
+            return this.GetDataQueryJson2("", "CAL_LISTADO_INCIDENTE_CMO");
         }
 
         [HttpGet("listspatial")]
         public ActionResult<string> QuerySpatial()
         {
-            return this.GetDataQueryJson("", "CAL_CONSULTA_ESPACIAL_INCIDENTE_CMO");
+            return this.GetDataQueryJson2("", "CAL_CONSULTA_ESPACIAL_INCIDENTE_CMO");
         }
 
         private List<Incidente> GetDatosSQL(string sql)
