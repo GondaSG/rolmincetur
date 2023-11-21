@@ -8,19 +8,18 @@ using Services.Models;
 
 namespace Services.Controllers
 {
-    [Route("api/incidente/{codigo}")]
+    [Route("api/incidente")]
     [ApiController]
-    public class IncidenteController : ControllerBase
+    public class IncidenteController : BaseController
     {
         private readonly AppSettings _mySettings;
 
-        public IncidenteController(IOptions<AppSettings> settings)
+        public IncidenteController(IOptions<AppSettings> settings) : base(settings)
         {
             _mySettings = settings.Value;
         }
 
-
-        [HttpGet]
+        [HttpGet("{codigo}")]
         public ActionResult<IEnumerable<Incidente>> Get(string codigo)
         {
             if (string.IsNullOrEmpty(codigo))
@@ -38,6 +37,17 @@ namespace Services.Controllers
             return incidentes;
         }
 
+        [HttpGet("list")]
+        public ActionResult<string> Get()
+        {
+            return this.GetDataQueryJson("", "CAL_LISTADO_INCIDENTE_CMO");
+        }
+
+        [HttpGet("listspatial")]
+        public ActionResult<string> QuerySpatial()
+        {
+            return this.GetDataQueryJson("", "CAL_CONSULTA_ESPACIAL_INCIDENTE_CMO");
+        }
 
         private List<Incidente> GetDatosSQL(string sql)
         {

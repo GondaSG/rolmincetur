@@ -162,17 +162,17 @@
           <div class="row m-0 p-0">
               <div class="cell-md-1 m-0 p-0">
                   <ul class="t-menu horizontal compact open">
-                      <li class="active-container"><a href="#" class="dropdown-toggle active-toggle active-control" style="height: 35px!important;"><span id="btPrincipal" class="mif-search"></span></a>
-                          <ul class="t-menu compact" data-role="dropdown" data-role-dropdown="true" style="display: block;">
-                              <li onclick="cambiarTipoBusqueda(1);"><a href="#"><span class="mif-search"></span></a></li>
-                              <li onclick="cambiarTipoBusqueda(2);"><a href="#"><span class="ana-pointXY"></span></a></li>
-                              <li onclick="cambiarTipoBusqueda(3);"><a href="#"><span class="mif-map"></span></a></li>
+                      <li><a href="#" class="dropdown-toggle" style="height: 35px!important;"><span id="btPrincipal" class="mif-search"></span></a>
+                          <ul class="t-menu compact" data-role="dropdown" id="ulContent">
+                              <li data-index="1"><a href="#"><span class="mif-search"></span></a></li>
+                              <li data-index="2"><a href="#"><span class="esri-icon-applications"></span></a></li>
+                              <li data-index="3"><a href="#"><span class="mif-map"></span></a></li>
                           </ul>
                       </li>
                   </ul>
               </div>
               <div class="cell-md-11 m-0 p-0 frm-visor-custom" style="padding-left: 5px !important;">
-                  <div class="row m-0 p-0" id="busWGSGeo" style="display: none;">
+                  <div class="row m-0 p-0" id="busWGSGeo" style="display:none">
                       <div style="width:180px;">
                           <input id="txtBusLat" placeholder="Latitud" type="text">
                       </div>
@@ -180,13 +180,13 @@
                           <input id="txtBusLong" placeholder="Longitud" type="text">
                       </div>
                       <div style="width:40px; padding-left: 5px !important;">
-                          <button onclick="BuscarUbicacion(2)" class="button info square outline" type="button" title="Ubicar coordenada"><span class="mif-keyboard-return"></span></button>
+                          <button id="btnBuscarUbicacion" class="button info square outline" type="button" title="Ubicar coordenada"><span class="mif-keyboard-return"></span></button>
                       </div>
                       <div style=" width:40px; padding-left: 5px !important;">
-                          <button onclick="EliminarUbicacionMarker(2)" class="button info square outline" type="button" title="Eliminar coordenadas"><span class="mif-cross"></span></button>
+                          <button id="btnEliminarUbicacionMarker" class="button info square outline" type="button" title="Eliminar coordenadas"><span class="mif-cross"></span></button>
                       </div>
                   </div>
-                  <div class="row m-0 p-0" id="busWGSUTM" style="display: none;">
+                  <div class="row m-0 p-0" id="busWGSUTM" style="display:none">
                       <div style="width:80px;">
                           <select id="ddlBusZona" class="select-mu"><option value="0">Zona</option><option value="19">19</option><option value="18">18</option><option value="17">17</option> </select>
                       </div>
@@ -197,13 +197,13 @@
                           <input id="txtBusCoorNorte" placeholder="Coor. Norte" type="text">
                       </div>
                       <div style="width:40px; padding-left: 5px !important;">
-                          <button onclick="BuscarUbicacion(3)" class="button info square outline" type="button" title="Ubicar coordenada"><span class="mif-keyboard-return"></span></button>
+                          <button id="btnBuscarUbicacion2" class="button info square outline" type="button" title="Ubicar coordenada"><span class="mif-keyboard-return"></span></button>
                       </div>
                       <div style=" width:40px; padding-left: 5px !important;">
-                          <button onclick="EliminarUbicacionMarker(3)" class="button info square outline" type="button" title="Eliminar coordenadas"><span class="mif-cross"></span></button>
+                          <button id="btnEliminarUbicacionMarker2" class="button info square outline" type="button" title="Eliminar coordenadas"><span class="mif-cross"></span></button>
                       </div>
                   </div>
-                  <div class="row m-0 p-0" id="busDireccion" style="">
+                  <div class="row m-0 p-0" id="busDireccion">
                       <div class="cell-md-12 m-0 p-0">
                           <input class="d-block controls pac-target-input" id="txtBuscar" type="text" autocomplete="off" placeholder="Buscar en Google Maps">
                       </div>
@@ -429,8 +429,8 @@
     </div>
       
     </div>
-
-    
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3H5ejfih4j3OOp9LZNcpypY8upbteU3w&region=PE&libraries=places"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/cylinder.js"></script>
@@ -443,5 +443,7 @@
 
     <script src="https://js.arcgis.com/4.17/"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    
+
   </body>
 </html>

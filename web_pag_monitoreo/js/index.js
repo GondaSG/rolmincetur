@@ -27,7 +27,9 @@ require(
     "esri/layers/FeatureLayer",
     "esri/layers/WMSLayer",
     "esri/tasks/QueryTask",
-    "esri/tasks/support/Query"
+    "esri/tasks/support/Query",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer",
   ],
   function(
     Map,
@@ -54,7 +56,9 @@ require(
     FeatureLayer,
     WMSLayer,
     QueryTask,
-    Query
+    Query,
+    Graphic,
+    GraphicsLayer
   ){
 
     $(document).ready(function(){     
@@ -64,7 +68,7 @@ require(
         activeView: null,
         container: "map" // use same container for views
       };
-
+      var LayerConsultaUbicacion = null,   RutaIconos = "https://snirh.ana.gob.pe/";
       var basemaps = [
         new Basemap({
             baseLayers: [
@@ -190,7 +194,7 @@ require(
         container: appConfig.container
       };
 
-      var map = new Map({
+      let map = new Map({
         basemap: basemaps[3],
         ground: "world-elevation",
       });
@@ -210,11 +214,7 @@ require(
           components : []
         }
       });
-      
-      // Remove the default widgets
-      //overviewView.ui.components = [];
-
-      
+            
       // create 2D view and and set active
       appConfig.mapView = createView(initialViewParams, "2d");
       appConfig.mapView.map = map;
@@ -772,83 +772,245 @@ require(
         console.log('e', e);
         if (e.currentTarget.dataset.item=="1")
           layer.visible=true;
-      })
-      
-    });
-    document.getElementById("ovwButton").addEventListener("click", function() {
-      var n = document.getElementById("overviewDiv")
-        , t = document.getElementById("ovwButton");
-      t.classList.toggle("ovwHide");
-      n.classList.toggle("hide")
-    });
-    document.getElementById("ovwButton").classList.toggle("ovwHide");
-    document.getElementById("overviewDiv").classList.toggle("hide");
+      });
 
-    function configIconos() {
-      Metro.makePlugin(".esri-home", "hint", {
-          hintText: "Vista de mapa predeterminada",
-          hintPosition: "left",
-          clsHint: "custom-hint"
+      document.getElementById("ovwButton").addEventListener("click", function() {
+        var n = document.getElementById("overviewDiv")
+          , t = document.getElementById("ovwButton");
+        t.classList.toggle("ovwHide");
+        n.classList.toggle("hide")
       });
-      Metro.makePlugin(".esri-fullscreen", "hint", {
-          hintText: "Activar pantalla completa",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".esri-icon-plus").parent(), "hint", {
-          hintText: "Acercar",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".esri-icon-minus").parent(), "hint", {
-          hintText: "Alejar",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".btnMapaBaseGallery").parent(), "hint", {
-          hintText: "Mapa base",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin(".esri-compass", "hint", {
-          hintText: "Restablecer orientación de brújula",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".esri-icon-printer").parent(), "hint", {
-          hintText: "Imprimir",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".esri-icon-measure-line").parent(), "hint", {
-          hintText: "Dibujar",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".mif-comment").parent(), "hint", {
-          hintText: "Enviar Comentarios",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".mif-file-upload").parent(), "hint", {
-          hintText: "Subir Capas",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".mif-download").parent(), "hint", {
-          hintText: "Descargar Capas",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      });
-      Metro.makePlugin($(".esri-icon-locate").parent(), "hint", {
-          hintText: "Mi ubicación",
-          hintPosition: "left",
-          clsHint: "custom-hint"
-      })
-    }
-    
-    
+      document.getElementById("ovwButton").classList.toggle("ovwHide");
+      document.getElementById("overviewDiv").classList.toggle("hide");
+  
+      function configIconos() {
+        Metro.makePlugin(".esri-home", "hint", {
+            hintText: "Vista de mapa predeterminada",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin(".esri-fullscreen", "hint", {
+            hintText: "Activar pantalla completa",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".esri-icon-plus").parent(), "hint", {
+            hintText: "Acercar",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".esri-icon-minus").parent(), "hint", {
+            hintText: "Alejar",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".btnMapaBaseGallery").parent(), "hint", {
+            hintText: "Mapa base",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin(".esri-compass", "hint", {
+            hintText: "Restablecer orientación de brújula",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".esri-icon-printer").parent(), "hint", {
+            hintText: "Imprimir",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".esri-icon-measure-line").parent(), "hint", {
+            hintText: "Dibujar",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".mif-comment").parent(), "hint", {
+            hintText: "Enviar Comentarios",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".mif-file-upload").parent(), "hint", {
+            hintText: "Subir Capas",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".mif-download").parent(), "hint", {
+            hintText: "Descargar Capas",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        });
+        Metro.makePlugin($(".esri-icon-locate").parent(), "hint", {
+            hintText: "Mi ubicación",
+            hintPosition: "left",
+            clsHint: "custom-hint"
+        })
+      }
       
+      ii = document.getElementById("txtBuscar");
+      wt = new google.maps.places.SearchBox(ii);
+      wt.addListener("places_changed", function() {
+          let n = 999;
+          oDataLayers[n] = new GraphicsLayer({
+              IdCapa: n,
+              VerInfo: !0
+          });
+          map.layers.add(oDataLayers[n], 999999);
+          var t = wt.getPlaces();
+          if (t.length != 0) {
+              let i, r;
+              t.forEach(function(n) {
+                  i = n.geometry.location.lat();
+                  r = n.geometry.location.lng()
+              });
+              DibujarConsultaUbicacion(r, i)
+          }
+      })
+
+      $("#ulContent").on("click", "li", function(e){
+        console.log('ulContent', e);
+        console.log($(e));
+        cambiarTipoBusqueda(e.currentTarget.dataset.index);
+      });
+      function cambiarTipoBusqueda(n) {
+        //debugger;
+        switch (n) {
+        case "1":
+            $("#busDireccion").show();
+            $("#busWGSGeo").hide();
+            $("#busWGSUTM").hide();
+            break;
+        case "2":
+            $("#busDireccion").hide();
+            $("#busWGSGeo").show();
+            $("#busWGSUTM").hide();
+            break;
+        case "3":
+            $("#busDireccion").hide();
+            $("#busWGSGeo").hide();
+            $("#busWGSUTM").show();
+            break;
+        }
+      }
+      
+      $("#btnBuscarUbicacion").on("click", function(e){
+        console.log('btnBuscarUbicacion', e);
+        BuscarUbicacion(2);
+      });
+  
+      $("#btnBuscarUbicacion2").on("click", function(e){
+        console.log('btnBuscarUbicacion2', e);
+        BuscarUbicacion(3);
+      });
+  
+      $("#btnEliminarUbicacionMarker").on("click", function(e){
+        console.log('btnEliminarUbicacionMarker', e);
+        EliminarUbicacionMarker(2);
+      });
+  
+      $("#btnEliminarUbicacionMarker2").on("click", function(e){
+        console.log('btnEliminarUbicacionMarker2', e);
+        EliminarUbicacionMarker(3);
+      });
+  
+      function BuscarUbicacion(n) {
+        if (n == 2) {
+            if ($("#txtBusLat").val().trim().length == 0)
+                return Metro.toast.create("Ingresar Latitud", null, null, "yellow", {
+                    distance: 80,
+                    showTop: !0
+                }),
+                $("#txtBusLat").focus(),
+                !1;
+            if ($("#txtBusLong").val().trim().length == 0)
+                return Metro.toast.create("Ingresar Longitud", null, null, "yellow", {
+                    distance: 80,
+                    showTop: !0
+                }),
+                $("#txtBusLong").focus(),
+                !1;
+            let n = parseFloat($("#txtBusLat").val())
+              , t = parseFloat($("#txtBusLong").val());
+            DibujarConsultaUbicacion(t, n)
+        } else if (n == 3) {
+            if ($("#ddlBusZona").val() == "0")
+                return Metro.toast.create("Seleccione la Zona UTM", null, null, "yellow", {
+                    distance: 80,
+                    showTop: !0
+                }),
+                $("#ddlBusZona").focus(),
+                !1;
+            if ($("#txtBusCoorEste").val().trim().length == 0)
+                return Metro.toast.create("Ingresar coordenada Este", null, null, "yellow", {
+                    distance: 80,
+                    showTop: !0
+                }),
+                $("#txtBusCoorEste").focus(),
+                !1;
+            if ($("#txtBusCoorNorte").val().trim().length == 0)
+                return Metro.toast.create("Ingresar coordenada Norte", null, null, "yellow", {
+                    distance: 80,
+                    showTop: !0
+                }),
+                $("#txtBusCoorNorte").focus(),
+                !1;
+            let n = parseInt($("#ddlBusZona").val())
+              , i = parseFloat($("#txtBusCoorEste").val())
+              , r = parseFloat($("#txtBusCoorNorte").val());
+            var t = ConverPuntoToGeo(i, r, 1, n);
+            if (t.lat == 0 && t.lng == 0)
+                return Metro.toast.create("Coordenadas incorrectas, verificar", null, null, "yellow", {
+                    distance: 80,
+                    showTop: !0
+                }),
+                !1;
+            DibujarConsultaUbicacion(t.lng, t.lat)
+        }
+      }
+      
+      function DibujarConsultaUbicacion(n, t) {
+        LayerConsultaUbicacion = new GraphicsLayer({
+            IdCapa: 999,
+            VerInfo: !0
+        });
+        //map.layers.add(LayerConsultaUbicacion);
+        map.add(LayerConsultaUbicacion);
+        var r = numeral(n).format("00.0000000") + " " + numeral(t).format("00.0000000");
+        let i = new Graphic({
+            type: "Graphic",
+            geometry: {
+                type: "point",
+                longitude: n,
+                latitude: t
+            },
+            symbol: {
+                type: "picture-marker",
+                url: RutaIconos + "/IconoGis/localizacion.png",
+                width: 17,
+                height: 40
+            },
+            attributes: {
+                CODIGO: r
+            }
+        });
+        LayerConsultaUbicacion.add(i);
+        appConfig.activeView.goTo({
+            target: i,
+            zoom: 12
+        })
+      }
+      
+      function EliminarUbicacionMarker(n) {
+        n == 2 ? ($("#txtBusLat").val(""),
+        $("#txtBusLong").val("")) : n == 3 && ($("#ddlBusZona").val("0"),
+        $("#txtBusCoorEste").val(""),
+        $("#txtBusCoorNorte").val(""));
+        LayerConsultaUbicacion && (map.layers.remove(LayerConsultaUbicacion),
+        LayerConsultaUbicacion = null)
+      }
+      
+    });
+    
+    
 });
 
 function closeLayerContainer() {
@@ -862,3 +1024,4 @@ function openLayerContainer(e) {
   $('.btnEPanelCapas').hide();
   return null;
 }
+
