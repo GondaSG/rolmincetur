@@ -683,6 +683,66 @@ require(
           });
       });
 
+      $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/list", function( response ) {
+         console.log('incidente list', response);
+         
+      });
+      const graphicsLayer = new GraphicsLayer();
+      graphicsLayer.visible=false;
+      map.add(graphicsLayer);
+
+      const simpleMarkerSymbol = {
+        "BAJO" : {
+          type: "simple-marker",
+          color: [0, 143, 57],  // GREEN
+          outline: {
+              color: [255, 255, 255], // White
+              width: 1
+          }
+        },
+        "MEDIO" : {
+          type: "simple-marker",
+          color: [255, 255, 0],  // YELLOW
+          outline: {
+              color: [255, 255, 255], // White
+              width: 1
+          }
+        },
+        "ALTO" : {
+          type: "simple-marker",
+          color: [255, 0, 0],  // RED
+          outline: {
+              color: [255, 255, 255], // White
+              width: 1
+          }
+        }     
+     };
+    
+      $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/listspatial", function( response ) {
+         console.log('incidente listspatial', response);
+         response.forEach(t => {
+            const pointGraphic = new Graphic({
+              geometry: { //Create a point
+                type: "point",
+                longitude: t.COORD_X,
+                latitude: t.COORD_Y
+              },
+              attributes:{
+                codigo:t.CODIGO,
+                selected_sector:"", 
+                oficina_regional:"",
+                descripcion:""
+              },
+              symbol: simpleMarkerSymbol[t.CRITICIDAD],
+              popupTemplate: {
+                outFields: ["*"],
+                content: populationChange
+              } 
+            });
+            graphicsLayer.add(pointGraphic);
+         })
+      });
+
       var response = {
         chart: {
           type: 'bar'
@@ -771,7 +831,7 @@ require(
         $(this).addClass("active").siblings().removeClass("active")
         console.log('e', e);
         if (e.currentTarget.dataset.item=="1")
-          layer.visible=true;
+          graphicsLayer.visible=true;
       });
 
       document.getElementById("ovwButton").addEventListener("click", function() {

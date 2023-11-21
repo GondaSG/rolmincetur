@@ -96,7 +96,7 @@
         top: 5px;
         left: 50%;
         margin-left: -180px;
-        width: 500px;
+        width: 400px;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
@@ -118,12 +118,93 @@
       .frm-visor-custom .textarea,
       .frm-visor-custom .file,
       .frm-visor-custom input {
-          /*
-          border-left: 2px !important;
-          border-left-style: solid !important;
-          */
           line-height: 1.7rem !important;
           font-size: .9rem !important;
+      }
+      .lista-estadis {
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      .lista-estadis div {
+        position: relative
+      }
+
+      .lista-estadis .item {
+          display: inline-block;
+          width: calc(33.333% - 4px) !important;
+          border: 0 !important;
+          margin: 0 !important;
+          background: #1b82bb url('../Images/') no-repeat top 5px right 5px;
+          color: #fff;
+          padding: 10px;
+          box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          margin-left: 4px!important
+      }
+
+      .lista-estadis .item:hover {
+          opacity: .95
+      }
+
+      .lista-estadis .item .titulo {
+          display: block;
+          font-size: .86rem;
+          height: 38px;
+          width: 80%;
+          line-height: 1rem
+      }
+
+      .lista-estadis .item .valor {
+          display: block;
+          font-size: 1.2rem
+      }
+
+      .lista-estadis .item .umedida {
+          font-size: .75rem;
+          opacity: .7
+      }
+
+      .lista-estadis .item .fuente {
+          display: block;
+          font-size: .7rem;
+          opacity: .5;
+          text-align: left;
+          padding-top: 0
+      }
+
+      .more-info-box {
+          height: 70px
+      }
+
+      .more-info-box .text-leader {
+          margin-bottom: 0
+      }
+
+      .more-info-box .content {
+          padding-bottom: 0
+      }
+
+      .more-info-box a {
+          cursor: default
+      }
+
+      .more-info-box .icon {
+          height: 32px;
+          width: 32px !important;
+          right: 5px !important;
+          top: 8px !important;
+          position: absolute !important;
+          z-index: 5 !important
+      }
+
+      .more-info-box .icon>* {
+          font-size: 32px;
+          width: 32px;
+          height: 32px
+      }
+      .more-info-box .more{
+        text-align: left !important;
       }
     </style>
   </head>
@@ -214,8 +295,56 @@
         <div id="overviewDiv"><div id="ovwButton" title="Ocultar" class=""></div></div>
       </div>
       
-      <div class="d-flex flex-justify-center flex-align-center">
+      <div class="d-flex flex-justify-center flex-align-center">        
         <div class="" style="height: 100%; width: 100%; overflow: auto">
+          <div class="lista-estadis">
+            <div class="row">
+              <div class="cell-lg-6 cell-md-6 m-0">
+                <div class="more-info-box bg-red fg-white">
+                  <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
+                    <h2 class="text-leader">52</h2>
+                  </div>
+                  <div class="icon m-0" style="">
+                    <span class="mif-water" style="float: right;"></span>
+                  </div>
+                  <a href="#" class="more">Emergencias Activas <span class="umedida"> 06/08/2023</span></a>
+                </div>
+              </div>
+              <div class="cell-lg-2 cell-md-6 m-0">
+                <div class="more-info-box bg-red fg-white">
+                  <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
+                    <h2 class="text-leader">10</h2>
+                  </div>
+                  <div class="icon m-0" style="">
+                    <span class="mif-map2" style="float: right;"></span>
+                  </div>
+                  <a href="#" class="more">Alta</a>
+                </div>
+              </div>
+              <div class="cell-lg-2 cell-md-6 m-0">
+                <div class="more-info-box bg-orange fg-white">
+                  <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
+                    <h2 class="text-leader">14</h2>
+                  </div>
+                  <div class="icon m-0" style="">
+                    <span class="ana-poblacional" style="float: right;"></span>
+                  </div>
+                  <a href="#" class="more">Media</a>
+                </div>
+              </div>
+              <div class="cell-lg-2 cell-md-6 m-0">
+                <div class="more-info-box bg-green fg-white">
+                  <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
+                    <h2 class="text-leader">14</h2>
+                  </div>
+                  <div class="icon m-0" style="">
+                    <span class="ana-poblacional" style="float: right;"></span>
+                  </div>
+                  <a href="#" class="more">Baja</a>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
           </div>
         </div>        
