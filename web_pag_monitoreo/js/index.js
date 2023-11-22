@@ -68,7 +68,7 @@ require(
         activeView: null,
         container: "map" // use same container for views
       };
-      var LayerConsultaUbicacion = null,   RutaIconos = "https://snirh.ana.gob.pe/";
+      var LayerConsultaUbicacion = null, oDataLayers = [], RutaIconos = "https://snirh.ana.gob.pe/";
       var basemaps = [
         new Basemap({
             baseLayers: [

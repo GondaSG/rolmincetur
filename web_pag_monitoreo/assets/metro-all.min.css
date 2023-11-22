@@ -56678,3 +56678,9 @@ body.vegas-container>.vegas-overlay,body.vegas-container>.vegas-slide,body.vegas
 .mif-logo-osi:before {
     content: "\f328"
 }
+.mif-emergencia:before {
+    content: "\f329"
+}
+.mif-otros:before {
+    content: "\f330"
+}

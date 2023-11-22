@@ -205,6 +205,7 @@
       }
       .more-info-box .more{
         text-align: left !important;
+        background: unset !important;
       }
     </style>
   </head>
@@ -228,17 +229,13 @@
           <li class="item-element" data-item="2"><a><span class="mif-gas icon"></span>Gas Natural</a></li>
           <li class="item-element" data-item="3"><a><span class="mif-energia icon"></span>Electricidad</a></li>
           <li class="item-element" data-item="3"><a><span class="mif-mina icon"></span>Minería</a></li>
-          <li class="item-element" data-item="1"><a><img src="./img/security_icon.svg" alt="Icono 2" class="icon" />Emergencia</a></li>
-          <li class="item-element" data-item="2"><a><img src="./img/books_icon.png" alt="Icono 2" class="icon" />Otros</a></li>
+          <li class="item-element" data-item="1"><a><span class="mif-emergencia icon"></span>Emergencia</a></li>
+          <li class="item-element" data-item="2"><a><span class="mif-otros icon"></span>Otros</a></li>
           <li class="item-element" data-item="2"><a><img src="./img/books-education.svg" alt="Icono 2" class="icon" />Noticias</a></li> 
         </ul>
       </div>
       <div class="map-content2 split-block">
         <div id="map" style="position: absolute;height: 100%;width: 100%;"></div>
-        <div class="hide" style="display: none;">
-          <div style="top: 10px; left: 40%; text-align: center; z-index: 99999;position: absolute;" id="divTop">
-          </div>
-        </div>
         <div id="floating-panel">
           <div class="row m-0 p-0">
               <div class="cell-md-1 m-0 p-0">
@@ -254,10 +251,10 @@
               </div>
               <div class="cell-md-11 m-0 p-0 frm-visor-custom" style="padding-left: 5px !important;">
                   <div class="row m-0 p-0" id="busWGSGeo" style="display:none">
-                      <div style="width:180px;">
+                      <div style="width:135px;">
                           <input id="txtBusLat" placeholder="Latitud" type="text">
                       </div>
-                      <div style="width:180px; padding-left: 5px !important;">
+                      <div style="width:135px; padding-left: 5px !important;">
                           <input id="txtBusLong" placeholder="Longitud" type="text">
                       </div>
                       <div style="width:40px; padding-left: 5px !important;">
@@ -268,13 +265,13 @@
                       </div>
                   </div>
                   <div class="row m-0 p-0" id="busWGSUTM" style="display:none">
-                      <div style="width:80px;">
+                      <div style="width:60px;">
                           <select id="ddlBusZona" class="select-mu"><option value="0">Zona</option><option value="19">19</option><option value="18">18</option><option value="17">17</option> </select>
                       </div>
-                      <div style="width:140px; padding-left: 5px !important;">
+                      <div style="width:105px; padding-left: 5px !important;">
                           <input id="txtBusCoorEste" placeholder="Coor. Este" type="text">
                       </div>
-                      <div style="width:140px; padding-left: 5px !important;">
+                      <div style="width:105px; padding-left: 5px !important;">
                           <input id="txtBusCoorNorte" placeholder="Coor. Norte" type="text">
                       </div>
                       <div style="width:40px; padding-left: 5px !important;">
@@ -298,13 +295,16 @@
       <div class="d-flex flex-justify-center flex-align-center">        
         <div class="" style="height: 100%; width: 100%; overflow: auto">
           <div class="lista-estadis">
+            <div class="row fg-black bg-grayWhite" style="justify-content: center;">
+              <h4 class="pt-2"><strong>Estado General de Emergencias</strong></h4>
+            </div>
             <div class="row">
               <div class="cell-lg-6 cell-md-6 m-0">
                 <div class="more-info-box bg-red fg-white">
                   <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
                     <h2 class="text-leader">52</h2>
                   </div>
-                  <div class="icon m-0" style="">
+                  <div class="icon m-0">
                     <span class="mif-water" style="float: right;"></span>
                   </div>
                   <a href="#" class="more">Emergencias Activas <span class="umedida"> 06/08/2023</span></a>
@@ -315,7 +315,7 @@
                   <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
                     <h2 class="text-leader">10</h2>
                   </div>
-                  <div class="icon m-0" style="">
+                  <div class="icon m-0">
                     <span class="mif-map2" style="float: right;"></span>
                   </div>
                   <a href="#" class="more">Alta</a>
@@ -326,8 +326,8 @@
                   <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
                     <h2 class="text-leader">14</h2>
                   </div>
-                  <div class="icon m-0" style="">
-                    <span class="ana-poblacional" style="float: right;"></span>
+                  <div class="icon m-0">
+                    <span class="mif-map2" style="float: right;"></span>
                   </div>
                   <a href="#" class="more">Media</a>
                 </div>
@@ -335,10 +335,10 @@
               <div class="cell-lg-2 cell-md-6 m-0">
                 <div class="more-info-box bg-green fg-white">
                   <div class="content" style="position:relative!important; width:100%!important; z-index:10; max-width: calc(100%)!important;">
-                    <h2 class="text-leader">14</h2>
+                    <h2 class="text-leader">28</h2>
                   </div>
-                  <div class="icon m-0" style="">
-                    <span class="ana-poblacional" style="float: right;"></span>
+                  <div class="icon m-0">
+                    <span class="mif-map2" style="float: right;"></span>
                   </div>
                   <a href="#" class="more">Baja</a>
                 </div>
@@ -528,10 +528,6 @@
                 <select id="cmb_tiposervice" class="form-control">
                   <option value="shape">Servicio web de ArcGis for Server</option>
                   <option value="wms">Servicio web de WMS - OGC</option>
-                  <!-- <option value="kml">Servicio web KML o KMZ</option> -->
-                  <!-- <option value="geojson">Servicio web GeoJson</option> -->
-                  <!-- <option value="georss">Servicio web GeoRss</option> -->
-                  <!-- <option value="csv">Servicio web CSV</option> -->
                 </select>
             </div>
             <div class="form-group">
@@ -558,7 +554,7 @@
     </div>
       
     </div>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3H5ejfih4j3OOp9LZNcpypY8upbteU3w&region=PE&libraries=places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdaW2Kbm41GWklEgi7wE3FBIsBo4nObes&region=PE&libraries=places"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
