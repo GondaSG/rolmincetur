@@ -221,7 +221,7 @@
       </div>
     </header>
 
-    <div data-role="splitter" class="h-100 StyleBody" data-split-sizes="15,55,30">
+    <div data-role="splitter" class="h-100 w-100 divContainer" data-split-sizes="15,55,30">
       <div class='bg-white'>
         <ul class="sidebar-menu">
           <li class="item-element" data-item="2"><a><span class="mif-energia icon"></span>Gestión</a></li>
@@ -288,8 +288,14 @@
                   </div>
               </div>
           </div>
-      </div>
-        <div id="overviewDiv"><div id="ovwButton" title="Ocultar" class=""></div></div>
+        </div>
+        <div id="overviewDiv"><div id="ovwButton" title="Ocultar" class=""></div></div>        
+        <div id="inferior" class="w-100 h-25" style="display:none;overflow: scroll;background: white;">
+          <table class="table striped table-border m-0 bg-white" style="overflow: scroll;" data-role="table" showSearch="false" data-show-search="false" data-show-rows-steps="false">
+            <thead id="tdListado"></thead>
+            <tbody id="tbdListado"></tbody>
+          </table>
+        </div>
       </div>
       
       <div class="d-flex flex-justify-center flex-align-center">        
@@ -345,7 +351,10 @@
               </div>
             </div>
           </div>
-          <div class="Panel" data-role="panel" data-width="auto px" id="divCharts">              
+          <div class="text-center">
+            <button id="btnTableAtributos" class="button primary">Ver tabla de atributos</button>
+          </div>
+          <div class="mt-2" data-role="panel" data-width="auto px" id="divCharts">              
           </div>
         </div>        
         <div id="layerInfo" data-role="charms" data-position="right" style="background-color: rgb(255, 255, 255)"
@@ -554,6 +563,8 @@
     </div>
       
     </div>
+
+
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdaW2Kbm41GWklEgi7wE3FBIsBo4nObes&region=PE&libraries=places"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>

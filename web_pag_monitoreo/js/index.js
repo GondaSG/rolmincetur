@@ -1,5 +1,5 @@
 var url_electricidad = 'https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/Registro_de_Emergencias_View/FeatureServer';
-
+var incidentes = [];
 
 require(
   [
@@ -684,8 +684,23 @@ require(
       });
 
       $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/list", function( response ) {
-         console.log('incidente list', response);
-         
+         if (response.length > 0) {
+          var html2 = "<tr>";
+          var html = "";
+          var attr = Object.keys(response[0]);
+          attr.forEach(t => {
+            html2 += '<td>'+t+'</td>'; 
+          })
+          response.forEach(t => {
+            html += '<tr>';
+            attr.forEach(t2 => {
+              html += '<td>'+t[t2]+'</td>'; 
+            })
+            html += '</tr>';
+          })
+          $('#tdListado').html(html2+'</tr>');
+          $('#tbdListado').html(html);
+         }
       });
       const graphicsLayer = new GraphicsLayer();
       graphicsLayer.visible=false;
@@ -742,66 +757,6 @@ require(
             graphicsLayer.add(pointGraphic);
          })
       });
-
-      var response = {
-        chart: {
-          type: 'bar'
-        },
-        title: {
-            text: 'Incidentes por sector'
-        },
-        xAxis: {
-            categories: ['ELECTRICIDAD', 'HIDROCARBUROS LIQ...', 'GENERAL', 'GAS NATURAL', 'MINERIA']
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: ''
-            }
-        },
-        legend: {
-            reversed: true
-        },
-        tooltip: {
-            headerFormat: '<b>Sector: {point.x}</b><br/>',
-            pointFormat: ' Criticidad: {series.name}<br/> Incidencias: {point.y} <br/>Total: {point.stackTotal}'
-        }, 
-        credits: {
-          enabled: false
-        }, 
-        plotOptions: {
-            series: {
-                stacking: 'normal',
-                dataLabels: {
-                    enabled: true,
-                    color: '#FFFFFF',
-                    formatter: function() {
-                      if (this.y > 0)
-                        return '<span style="color: white">' + this.y + ' </span>';
-                      else '';
-                  },
-                }
-            }
-        },
-        series: [{
-            name: 'POR DEFINIR',
-            data: [16, 1, 0, 2, 1],
-            color: '#41A4FF',
-        }, {
-            name: 'MEDIO',
-            data: [15, 13, 4, 1, 3],
-            color: '#D9B300',
-        }, {
-            name: 'BAJO',
-            data: [118, 40, 9, 8, 1],
-            color: '#317F43',
-        }, {
-            name: 'ALTO',
-            data: [13, 8, 1, 0, 1],
-            color: '#FF0000',
-        }]
-      };
-      console.log(JSON.stringify(response));
     
       $('#toolbarDiv').removeClass("d-none");
       $('#divCMO').removeClass("d-none");
@@ -824,14 +779,18 @@ require(
       });
 
       Metro.makePlugin("#layerInfo", 'charms', {});
+          
+      $("#btnTableAtributos").click(function(e){
+        $('#inferior').toggle();          
+      });
 
       $("li.item-element").click(function(e){
         e.stopPropagation();
         e.preventDefault();
         $(this).addClass("active").siblings().removeClass("active")
-        console.log('e', e);
-        if (e.currentTarget.dataset.item=="1")
-          graphicsLayer.visible=true;
+        if (e.currentTarget.dataset.item=="1") {
+          graphicsLayer.visible = true;
+        }
       });
 
       document.getElementById("ovwButton").addEventListener("click", function() {
@@ -927,12 +886,10 @@ require(
       })
 
       $("#ulContent").on("click", "li", function(e){
-        console.log('ulContent', e);
-        console.log($(e));
         cambiarTipoBusqueda(e.currentTarget.dataset.index);
       });
+      
       function cambiarTipoBusqueda(n) {
-        //debugger;
         switch (n) {
         case "1":
             $("#busDireccion").show();
@@ -953,22 +910,18 @@ require(
       }
       
       $("#btnBuscarUbicacion").on("click", function(e){
-        console.log('btnBuscarUbicacion', e);
         BuscarUbicacion(2);
       });
   
       $("#btnBuscarUbicacion2").on("click", function(e){
-        console.log('btnBuscarUbicacion2', e);
         BuscarUbicacion(3);
       });
   
       $("#btnEliminarUbicacionMarker").on("click", function(e){
-        console.log('btnEliminarUbicacionMarker', e);
         EliminarUbicacionMarker(2);
       });
   
       $("#btnEliminarUbicacionMarker2").on("click", function(e){
-        console.log('btnEliminarUbicacionMarker2', e);
         EliminarUbicacionMarker(3);
       });
   
@@ -1066,8 +1019,7 @@ require(
         $("#txtBusCoorNorte").val(""));
         LayerConsultaUbicacion && (map.layers.remove(LayerConsultaUbicacion),
         LayerConsultaUbicacion = null)
-      }
-      
+      }      
     });
     
     

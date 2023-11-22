@@ -10,22 +10,8 @@ div {
     position: relative
 }
 
-.NavPrim {
-    background-color: #000090;
-    height: 60px;
-    color: white;
-    align-items: center;    
-}
-
-.NavStyle{
-    margin: 10px 0px 10px 80px;
-    font-size: 25px;
-    font-weight: bold;   
-}
-
-.StyleBody{
+.divContainer{
     height:calc((100vh) - 60px) !important; 
-    width: 100%;
 }
 
 .icon{   
@@ -184,4 +170,14 @@ body {
 
 .esri-widget--panel-xl{
     width: 400px !important;
+}
+
+#inferior{
+    position:absolute; /*El div será ubicado con relación a la pantalla*/
+    left:0px; /*A la derecha deje un espacio de 0px*/
+    right:0px; /*A la izquierda deje un espacio de 0px*/
+    bottom:0px; /*Abajo deje un espacio de 0px*/
+    /* height:50px; alto del div */
+    font-size: 12px;
+    z-index:10;
 }
