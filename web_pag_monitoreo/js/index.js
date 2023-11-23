@@ -453,29 +453,28 @@ require(
         appConfig.activeView.popup.close();
         var featureD = feature.graphic.attributes;
         console.log(featureD);
-        $("#dteRegistro").html(moment(new Date(featureD.fecha_y_hora_registro)).format("D/M/YYYY"));
-        $("#spanSector").html(featureD.selected_sector);
-        
-        $("#spanOficina").html(featureD.oficina_regional);
-        $("#spanIncidente").html(featureD);
-        
-        $("#spanOperativa").html(featureD);
+        $("#dteRegistro").html(moment(new Date(featureD.fecha)).format("D/M/YYYY"));
+        $("#spanSector").html(featureD.sector);        
+        $("#spanOficina").html(featureD.oficina);
+        $("#spanIncidente").html(featureD.incidente);        
+        $("#spanOperativa").html(featureD.operativa);
         $("#spanMedios").html(featureD);
-        $("#spanAtencion").html(featureD);
+        $("#spanAtencion").html(featureD.atencion);
         $("#txtDes").html(featureD.descripcion);
+        $("#spanCriticidad").html(featureD.criticidad);
+        $("#spanEstado").html(featureD.estado);
         $('.btnclosebtn').show();
         var charms = Metro.getPlugin('#layerInfo', 'charms');
         charms.open();
-        var id_um = feature.graphic.attributes.codigo;
-        $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/"+id_um, function( response ) {
-          console.log(response);
-          if (response.length > 0) {
-           var attr = response[0];
-            console.log(attr);
-            $("#spanCriticidad").html(attr.criticidad);
-            $("#spanEstado").html(attr.estadO_EVENTO);
-          }
-       });
+        var id_um = featureD.codigo;
+        //$.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/"+id_um, function( response ) {
+        //  console.log(response);
+        //  if (response.length > 0) {
+        //   var attr = response[0];
+        //    console.log(attr);
+        //   
+        //  }
+        //});
        
         var query = new QueryTask({url:url2}); 
         var params  = new Query();  
@@ -739,16 +738,22 @@ require(
             const pointGraphic = new Graphic({
               geometry: { //Create a point
                 type: "point",
-                longitude: t.COORD_X,
-                latitude: t.COORD_Y
+                longitude: t.x,
+                latitude: t.y
               },
               attributes:{
-                codigo:t.CODIGO,
-                selected_sector:"", 
-                oficina_regional:"",
-                descripcion:""
+                codigo: t.codigo,
+                sector: t.sector, 
+                oficina: t.oficina,
+                descripcion: t.descripcion,
+                fecha : t.fecha,
+                operativa: t.operativa,
+                atencion: t.atencion,
+                estado: t.estado,
+                criticidad: t.criticidad,
+                incidente: t.incidente
               },
-              symbol: simpleMarkerSymbol[t.CRITICIDAD],
+              symbol: simpleMarkerSymbol[t.criticidad],
               popupTemplate: {
                 outFields: ["*"],
                 content: populationChange
