@@ -1,5 +1,4 @@
 var url_electricidad = 'https://services5.arcgis.com/oAvs2fapEemUpOTy/arcgis/rest/services/Registro_de_Emergencias_View/FeatureServer';
-var incidentes = [];
 
 require(
   [
@@ -452,7 +451,6 @@ require(
       function populationChange(feature) {
         appConfig.activeView.popup.close();
         var featureD = feature.graphic.attributes;
-        console.log(featureD);
         $("#dteRegistro").html(moment(new Date(featureD.fecha)).format("D/M/YYYY"));
         $("#spanSector").html(featureD.sector);        
         $("#spanOficina").html(featureD.oficina);
@@ -466,23 +464,13 @@ require(
         $('.btnclosebtn').show();
         var charms = Metro.getPlugin('#layerInfo', 'charms');
         charms.open();
-        var id_um = featureD.codigo;
-        //$.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/"+id_um, function( response ) {
-        //  console.log(response);
-        //  if (response.length > 0) {
-        //   var attr = response[0];
-        //    console.log(attr);
-        //   
-        //  }
-        //});
-       
+        var id_um = featureD.codigo;       
         var query = new QueryTask({url:url2}); 
         var params  = new Query();  
         params.returnGeometry = false;
         params.outFields = ["*"];
         params.where = "codigo = '"+id_um+"'";
         query.execute(params).then(function(response){
-              console.log(response);
               var features = response.features;
               var html2 = "";
               features.forEach( (t, i) => {
@@ -500,7 +488,6 @@ require(
       map.add(layer);
 
       //setInterval(() => {
-      //  console.log('intervalos');
       //  if (layer)  {
       //      layer.visible=!layer.visible?true:false;
       //  }
@@ -659,13 +646,11 @@ require(
       }
 
       $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/indicadorCalculoCache", function( response ) {
-         console.log(response);
          if (typeof response == "object") {
           var id = "div" + response.ID_INDICADOR_CALCULO;
           $div = $("<div id='"+id+"'></div>");
           $("#divCharts").append($div);
           var indicador = JSON.parse(response.VALOR);
-          console.log(indicador);
           Highcharts.chart(id, indicador);
          }
          else 
@@ -677,7 +662,6 @@ require(
             $div = $("<div id='"+id+"'></div>");
             $("#divCharts").append($div);
             var indicador = JSON.parse(t.VALOR);
-            console.log(indicador);
             Highcharts.chart(id, indicador);
           });
       });
@@ -733,7 +717,6 @@ require(
      };
     
       $.getJSON("https://gisem.osinergmin.gob.pe/validar/geodash/ws/api/incidente/listspatial", function( response ) {
-         console.log('incidente listspatial', response);
          response.forEach(t => {
             const pointGraphic = new Graphic({
               geometry: { //Create a point
@@ -990,7 +973,6 @@ require(
             IdCapa: 999,
             VerInfo: !0
         });
-        //map.layers.add(LayerConsultaUbicacion);
         map.add(LayerConsultaUbicacion);
         var r = numeral(n).format("00.0000000") + " " + numeral(t).format("00.0000000");
         let i = new Graphic({
